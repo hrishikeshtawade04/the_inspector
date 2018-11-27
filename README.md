@@ -7,7 +7,7 @@
 
 
 <p align="center">
-<img src="TheInspector.gif" width="50%" height="50%">
+<img src="images_for_readme/TheInspector.gif" width="50%" height="50%">
 </p>
 
 ## Project Overview
