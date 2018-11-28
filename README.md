@@ -1,17 +1,17 @@
 <h1 align=center> ENPM808X Final Project </h1>
-<h1 align=center> The Inspector </h1>
-
+<h1 align=center>
 [![Build Status](https://travis-ci.org/hrishikeshtawade04/the_inspector.svg?branch=master)](https://travis-ci.org/hrishikeshtawade04/the_inspector)
 [![Coverage Status](https://coveralls.io/repos/github/hrishikeshtawade04/the_inspector/badge.svg?branch=master)](https://coveralls.io/github/hrishikeshtawade04/the_inspector?branch=master)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-
+</h1>
+<h1 align=center> The Inspector </h1>
 
 <p align="center">
 <img src="images_for_readme/TheInspector.gif" width="50%" height="50%">
 </p>
 
 ## Project Overview
-The Inspector product by Acme robotics is one of its flagship products. It performs warehouse infrastructure leakage inspection and gives the location of the leak in the environment. It is a turtlebot platform equipped with a LIDAR sensor and a RGBD camera on Gazebo which utilizes Mapserver ros package.
+The Inspector product by Acme robotics is one of its flagship products. It performs warehouse infrastructure leakage inspection and gives the location of the leak in the environment and also a photo of the leakage. The user can then decide based on the photo how serious the leakage is actually and based on the leakage coordinates can track down the leakage. The Inpector runs utilizes the famous turtlebot platform, equipped with a LIDAR sensor to find distance from the wall and a RGBD camera to take photos of the leakages.
 
 ## Presentation
 - Presentation slides [LINK]()
@@ -24,6 +24,7 @@ This project is under the [BSD License](https://github.com/hrishikeshtawade04/th
 This product for Acme Robotics has is been developed by following the Solo Iterative Process (SIP), which a agile development process. You can take a look at the log details by going on this [LINK](https://docs.google.com/spreadsheets/d/1YTPVK5r-ZWE2yvQfAulh54kC3Dr284mhhSaxrUf1OMI/edit?usp=sharing).
 
 Planning notes are given in this [LINK](https://docs.google.com/document/d/1v37j9J9pUYrncYB3P4gCmah4dpz-IAK4ekfOWanukgU/edit).
+
 
 #### Authors
 - Hrishikesh Tawade
@@ -41,7 +42,7 @@ The Inspector requires following dependencies.
 - OpenCV
 - Ubuntu 16.04
 
-## Installations
+## Dependencies Installations
 
 - To Install ROS Kinetic Kame, follow the instructions in this link [LINK](http://wiki.ros.org/kinetic/Installation/Ubuntu).
 
@@ -63,6 +64,8 @@ $ sudo apt-get install ros-kinetic-map-server
 ```
 - To install Rviz go through this link [LINK](http://wiki.ros.org/rviz/UserGuide).
 
+## Operation
+To be uploaded
 
 ## Program installation
 ```
@@ -75,7 +78,7 @@ $ git clone --recursive https://github.com/hrishikeshtawade04/the_inspector.git
 $ cd ..
 $ catkin_make
 ```
-Before building the model we need to move the my_Wall file to .gazebo/models/.
+Before building the model we need to move the my_Wall file which is in World folder to .gazebo/models/.
 Execute below commands in new terminal.
 ```
 $ cd ~/.gazebo/models/
@@ -103,3 +106,11 @@ $ cd <path to catkin Workspace>
 $ source devel/setup.bash
 $ rostest the_inspector inspect.launch
 ```
+## Demo
+To be uploaded
+
+## Known issues/ Bugs
+To be uploaded
+
+## API and other developer documentation
+To be uploaded
