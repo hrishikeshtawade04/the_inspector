@@ -1,9 +1,13 @@
 <h1 align=center> ENPM808X Final Project </h1>
-<h1 align=center>
+
+<p align="center">
+
 [![Build Status](https://travis-ci.org/hrishikeshtawade04/the_inspector.svg?branch=master)](https://travis-ci.org/hrishikeshtawade04/the_inspector)
 [![Coverage Status](https://coveralls.io/repos/github/hrishikeshtawade04/the_inspector/badge.svg?branch=master)](https://coveralls.io/github/hrishikeshtawade04/the_inspector?branch=master)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-</h1>
+
+</p>
+
 <h1 align=center> The Inspector </h1>
 
 <p align="center">
@@ -114,3 +118,4 @@ To be uploaded
 
 ## API and other developer documentation
 To be uploaded
+
