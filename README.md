@@ -18,8 +18,8 @@
 The Inspector product by Acme robotics is one of its flagship products. It performs warehouse infrastructure leakage inspection and gives the location of the leak in the environment and also a photo of the leakage. The user can then decide based on the photo how serious the leakage is actually and based on the leakage coordinates can track down the leakage. The Inpector runs utilizes the famous turtlebot platform, equipped with a LIDAR sensor to find distance from the wall and a RGBD camera to take photos of the leakages.
 
 ## Presentation
-- Presentation slides [LINK]()
-- Presentation Video - Presentation [LINK]()|Building packages [LINK]()| Demo [LINK]() |Saving the map [LINK]().
+- Presentation slides [TODO]()
+- Presentation Video - Presentation [TODO]()|Building packages [TODO]()| Demo [TODO]() |Saving the map [TODO]().
 
 ## License
 This project is under the [BSD License](https://github.com/hrishikeshtawade04/the_inspector/blob/master/LICENSE).
@@ -31,8 +31,8 @@ Planning notes are given in this [LINK](https://docs.google.com/document/d/1v37j
 
 
 #### Authors
-- Hrishikesh Tawade
-- Kapil Rawal
+- Hrishikesh Tawade [Github](https://github.com/hrishikeshtawade04).
+- Kapil Rawal [Github](https://github.com/krawal19).
 
 ## Dependencies
 The Inspector requires following dependencies.
@@ -57,7 +57,7 @@ $ sudo apt-get install ros-kinetic-turtlebot-gazebo ros-kinetic-turtlebot-apps r
 
 - To Install Gazebo 7.x follow this link  [LINK](http://gazebosim.org/tutorials?tut=install_ubuntu&ver=7.0).
 
-- To Install OpenCV follow this link  [LINK](https://github.com/kyamagu/mexopencv/wiki/Installation-(Linux,-Octave,-OpenCV-3).
+- To Install OpenCV follow this link [LINK](https://github.com/kyamagu/mexopencv/wiki/Installation-(Linux,-Octave,-OpenCV-3).
 
 - You can install Google Test Framework by going on this  [LINK](https://www.eriksmistad.no/getting-started-with-google-test-on-ubuntu/).
 We are using google test frame work for testing of our classes and their methods.
@@ -69,7 +69,22 @@ $ sudo apt-get install ros-kinetic-map-server
 - To install Rviz go through this link [LINK](http://wiki.ros.org/rviz/UserGuide).
 
 ## Operation
-To be uploaded
+The Inspector by Acme Robotics is one of there flagship products. It has the following features;
+
+- Turtlebot navigate in a mapped environment towards the ideal positions in  front of wall to detect the leakages.
+- Stores picture of walls having leakage and gives positions of leakage on the wall.
+
+The Inspector Robot module has 2 sub modules
+
+##### 1) Path Planning Module
+This module is the basis of inspection of leakages  and has the following features :
+- The turtlebot move in mapped environment to specific locations, from these locations the single wall is completely visible.
+- This location are chosen on the basis of the cameras field of view camera and the size of the wall.
+
+##### 2) Image Processing Module
+This module is the other part of inspection of leakages  and has the following features :
+- This module take pictures of the wall using Asus xtion pro camera and detect any strong discolorations found.
+- It also keeps a record of this images of walls, the location where it is found and the count of the total number of discolorations in the facility.
 
 ## Program installation
 ```
@@ -94,7 +109,7 @@ To run code using launch command, open a new terminal window and run following c
 ```
 $ cd <path to catkin_ws>
 $ source devel/setup.bash
-$ roslaunch the_inspector runTheInspector.launch
+$ roslaunch the_inspector the_inspector.launch
 ```
 
 ## Running ROS test via command-line
@@ -102,7 +117,7 @@ The test is written using gtest and rostest. Close all the running processes bef
 ```
 $ cd <path to catkin Workspace>
 $ source devel/setup.bash
-$ catkin_make run_tests_the_inspector
+$ catkin_make run_tests
 ```
 Or test using launch file
 ```
@@ -110,6 +125,23 @@ $ cd <path to catkin Workspace>
 $ source devel/setup.bash
 $ rostest the_inspector inspect.launch
 ```
+## Coverage
+
+The local code coverage can be found out using the below commands
+```
+$ cd ~/catkin_ws/build
+$ lcov --directory . --capture --output-file coverage.info
+```
+Now to output the coverage of each file in the terminal use the command below
+```
+$ lcov --list coverage.info
+```
+To create an html file of the local coverage, run the below command.
+```
+$ genhtml coverage.info --output-directory covout
+```
+This will be stored in the `index.html` file in the folder `covout`.
+
 ## Demo
 To be uploaded
 
@@ -118,4 +150,3 @@ To be uploaded
 
 ## API and other developer documentation
 To be uploaded
-
