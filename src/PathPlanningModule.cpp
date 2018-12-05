@@ -47,31 +47,56 @@
 
 #include<iostream>
 #include "ros/ros.h"
-#include "sensor_msgs/LaserScan.h"
 #include <tf/transform_listener.h>
 #include "geometry_msgs/Twist.h"
-#include "PathPlanningModule.h"
+#include "../include/PathPlanningModule.h"
 
 PathPlanningModule::PathPlanningModule(){
+ velocityPublish = n.advertise < geometry_msgs::Twist
+      > ("/cmd_vel_mux/input/navi", 1);
  nextX_= 0;
  nextY_= 0;
- currentX_= 0;
- currentY_= 0;
+ currentX_= 0.0;
+ currentY_= 0.0;
+ currentAngle_ =0;
+ 
 }
 
 PathPlanningModule::~PathPlanningModule(){
 }
-
+ 
 void PathPlanningModule::currentLocation() {
-
-}
-
-void PathPlanningModule::moveToAngle(double angle) {
   
 }
 
-void PathPlanningModule::navigate() {
+double PathPlanningModule::getX() { 
+  return currentX_;
+}
 
+double PathPlanningModule::getY() {
+  return currentY_;
+}
+
+double PathPlanningModule::getNextX() { 
+  return nextX_;
+}
+
+double PathPlanningModule::getNextY() {
+  return nextY_;
+}
+
+double PathPlanningModule::getCurrentAngle(){
+  return currentAngle_;
+}
+
+
+void PathPlanningModule::moveToAngle(double angle) {
+  currentAngle_ = angle;
+}
+
+void PathPlanningModule::navigate() {
+  currentX_ = nextX_;
+  currentY_ = nextY_;
 }
 
 void PathPlanningModule::setGoal(double x, double y){

@@ -59,5 +59,8 @@ Robot::~Robot() {
 }
 
 void Robot::findLeakages() {
+}
 
+std::vector<double> Robot::getLeakages() {
+return leakageLocations_;
 }

@@ -61,7 +61,7 @@ ImageProcessingModule::ImageProcessingModule() {
    image_transport::ImageTransport it (n);
    pub_image = it.advertise("camera/image", 10);
    subImage = n.subscribe <sensor_msgs::Image> ("/camera/rgb/image_raw", 10, &ImageProcessingModule::convertImage, this);
-  ROS_INFO("Configuration setting done");
+   ROS_INFO("Configuration setting done");
 }
 
  ImageProcessingModule::~ImageProcessingModule() {
@@ -71,8 +71,11 @@ void ImageProcessingModule::convertImage(const sensor_msgs::Image::ConstPtr& msg
       imageLeakage = cv_ptr->image;
 }
 
+cv::Mat ImageProcessingModule::getImage() {
+      return imageLeakage;
+}
+
 std::vector<double> ImageProcessingModule::detectContour(std::string wallNumber) {
 std::vector<double> countourLocations;
-
 return countourLocations;
 }
