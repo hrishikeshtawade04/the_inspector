@@ -98,6 +98,13 @@ public:
    */
   void convertImage(const sensor_msgs::Image::ConstPtr& dataImage);
   
+  /**
+   *  @brief   Gives the clicked image by the robot
+   *
+   *  @return  Image 
+   */
+  cv::Mat getImage();
+  
  /**
    *  @brief   Detects the contour from the input image taken from turtlebot camera.
    *

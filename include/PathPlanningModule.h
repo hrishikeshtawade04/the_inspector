@@ -51,7 +51,6 @@
 
 #include <iostream>
 #include "ros/ros.h"
-#include "sensor_msgs/LaserScan.h"
 #include "geometry_msgs/Twist.h"
 #include <tf/transform_listener.h>
 
@@ -73,7 +72,7 @@ tf::StampedTransform transform;
 /// Created msg to store robot speed
 geometry_msgs::Twist vel_msg;
 
-double  nextX_, nextY_, currentX_, currentY_;
+double  nextX_, nextY_, currentX_, currentY_, currentAngle_;
 
 public:
 
@@ -104,6 +103,14 @@ public:
    */ 
  void moveToAngle(double);
 
+
+/**
+   *  @brief  Returns current angle of robot
+   *
+   *  @returns current angle of robot
+   */ 
+ double getCurrentAngle();
+ 
  /**
    *  @brief  navigates along the given path
    *
@@ -122,6 +129,33 @@ public:
    *  @returns nothing
    */
  void setGoal(double, double);
+ /**
+   *  @brief  gets current X coordinate of robot
+   *
+   *  @returns returns x coordinate
+   */
+  double getX();
+  
+  /**
+   *  @brief  gets current Y coordinate of robot
+   *
+   *  @returns returns Y coordinate
+   */
+  double getY();
+  
+  /**
+   *  @brief  gets current X coordinate of goal
+   *
+   *  @returns returns x coordinate
+   */
+  double getNextX();
+  
+  /**
+   *  @brief  gets current Y coordinate of goal
+   *
+   *  @returns returns y coordinate
+   */
+  double getNextY();
 
 };
 #endif /// INCLUDE_THEINSPECTOR_PATHPLANNINGMODULE_H_

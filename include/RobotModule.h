@@ -81,7 +81,13 @@ public:
    *  @return nothing
    */
   void findLeakages();
-
+  
+  /**
+   *  @brief  Gives all leakage locations saved
+   *
+   *  @return vector of leakage coordinates
+   */
+  std::vector<double> getLeakages();
 };
 
 #endif /// INCLUDE_THEINSPECTOR_ROBOT_H_
