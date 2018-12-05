@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="the_inspector" name="the_inspector"  type="the_inspector" />
+  <test pkg="the_inspector" test-name="test_the_inspector" type="test_the_inspector" />
+</launch>
