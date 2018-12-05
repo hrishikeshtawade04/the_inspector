@@ -50,7 +50,6 @@
 #include <ros/ros.h>
 #include "RobotModule.h"
 
-
 /**
  * @brief  checks if the findLeakages is executed 
  *
@@ -59,7 +58,7 @@
  * @param  findLeakagesTest name of the test
  */
 TEST(RobotModuleTest, findLeakagesCheck) {
- // RobotModule mapping;
- // EXPECT_TRUE(exists);
- EXPECT_EQ(1, 1);
+ Robot robot;
+ robot.findLeakages();
+ EXPECT_EQ(true , robot.getLeakages().empty());
 }

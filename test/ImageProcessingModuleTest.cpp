@@ -57,7 +57,9 @@
  * @param  convertImageTest name of the test
  */
 TEST(ImageProcessingModuleTest, convertImageTest) { 
-  EXPECT_EQ(1, 1);
+  ImageProcessingModule processor; 
+  ros::spinOnce();
+  EXPECT_EQ(true, processor.getImage().empty());
 }
 
 /**

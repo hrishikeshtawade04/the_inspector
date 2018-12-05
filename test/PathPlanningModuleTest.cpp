@@ -47,7 +47,7 @@
  */
 #include <gtest/gtest.h>
 #include <ros/ros.h>
-#include "PathPlanningModule.h"
+#include "../include/PathPlanningModule.h"
 
 /**
  * @brief  checks if the currentlocation is executed 
@@ -56,8 +56,11 @@
  *
  * @param  currentLocationTest name of the test
  */
-TEST(PathPlanningModuleTest, currentLocationTest) { 
-  EXPECT_EQ(1, 1);
+TEST(PathPlanningModuleTest, currentLocationTest) {
+  PathPlanningModule pathplanner;
+  pathplanner.currentLocation();
+  EXPECT_NEAR(pathplanner.getX(), 0,8);
+  EXPECT_NEAR(pathplanner.getY(), 0,8);
 }
 
 /**
@@ -67,8 +70,24 @@ TEST(PathPlanningModuleTest, currentLocationTest) {
  *
  * @param  moveToAngleTest name of the test
  */
-TEST(PathPlanningModuleTest, moveToAngleTest) { 
-  EXPECT_EQ(1, 1);
+TEST(PathPlanningModuleTest, moveToAngleTest) {
+  PathPlanningModule pathplanner;
+  pathplanner.moveToAngle(90);
+  EXPECT_NEAR(pathplanner.getCurrentAngle(), 90, 2);
+}
+
+/**
+ * @brief  checks if the setGoal is executed 
+ *
+ * @param  PathPlanningModuleTest of the test suite
+ *
+ * @param  setGoalTest name of the test
+ */
+TEST(PathPlanningModuleTest, setGoalTest) { 
+  PathPlanningModule pathplanner;
+  pathplanner.setGoal(1, 2);
+  EXPECT_EQ(pathplanner.getNextX(), 1);
+  EXPECT_EQ(pathplanner.getNextY(), 2);
 }
 
 /**
@@ -79,17 +98,14 @@ TEST(PathPlanningModuleTest, moveToAngleTest) {
  * @param  navigateTest name of the test
  */
 TEST(PathPlanningModuleTest, navigateTest) { 
-  EXPECT_EQ(1, 1);
+
+  PathPlanningModule pathplanner;
+  pathplanner.setGoal(2, 1);
+  pathplanner.navigate();
+  pathplanner.currentLocation();
+  EXPECT_NEAR(2, pathplanner.getX(),0.5);
+  EXPECT_NEAR(1, pathplanner.getY(),0.5);
 }
 
 
-/**
- * @brief  checks if the setGoal is executed 
- *
- * @param  PathPlanningModuleTest of the test suite
- *
- * @param  setGoalTest name of the test
- */
-TEST(PathPlanningModuleTest, setGoalTest) { 
-  EXPECT_EQ(1, 1);
-}
+

@@ -1,4 +1,7 @@
 <launch>
+  <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
+      <arg name="world_file" value="$(find the_inspector)/World/Wall.world"/>
+  </include>
   <node pkg="the_inspector" name="the_inspector"  type="the_inspector" />
   <test pkg="the_inspector" test-name="test_the_inspector" type="test_the_inspector" />
 </launch>
