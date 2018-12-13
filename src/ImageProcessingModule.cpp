@@ -1,8 +1,7 @@
 /**
  * BSD 3-Clause License
-
-
- * Copyright (c) 2018, KapilRawal, Hrishikesh Tawde.
+ *
+ * Copyright (c) 2018, KapilRawal, Hrishikesh Tawade.
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -38,44 +37,133 @@
  *
  *  @copyright   BSD License
  *
- *  @brief    Image processing module file
+ *  @brief    ImageProcessingModule Class Implementation
  *
  *  @section   DESCRIPTION
  *
- *  Image processing module .cpp file which takes image from turtlebot   
- *  camera and gives location of leakges on the wall. 
+ *  This file contains the implementations for class ImageProcessingModule
+ *
  */
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include "ros/ros.h"
 #include "../include/ImageProcessingModule.h"
-#include <opencv2/opencv.hpp>
-#include <opencv2/highgui.hpp>
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
- 
+#include <iostream>
+#include <vector>
+#include <string>
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui.hpp>
+#include "ros/ros.h"
+
+
 ImageProcessingModule::ImageProcessingModule() {
-   image_transport::ImageTransport it (n);
-   pub_image = it.advertise("camera/image", 10);
-   subImage = n.subscribe <sensor_msgs::Image> ("/camera/rgb/image_raw", 10, &ImageProcessingModule::convertImage, this);
-   ROS_INFO("Configuration setting done");
+  image_transport::ImageTransport it(n);
+  pubImage_ = it.advertise("camera/image", 10);
+  subImage =
+      n.subscribe < sensor_msgs::Image
+          > ("/camera/rgb/image_raw",
+          10, &ImageProcessingModule::convertImage, this);
+  ROS_INFO("Configuration setting done");
 }
 
- ImageProcessingModule::~ImageProcessingModule() {
+ImageProcessingModule::~ImageProcessingModule() {
 }
 
-void ImageProcessingModule::convertImage(const sensor_msgs::Image::ConstPtr& msg) {
-      imageLeakage = cv_ptr->image;
+void ImageProcessingModule::convertImage(
+    const sensor_msgs::Image::ConstPtr& msg) {
+  cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+  /// storing the leakage image
+  imageLeakage = cv_ptr->image;
 }
 
 cv::Mat ImageProcessingModule::getImage() {
-      return imageLeakage;
+  return imageLeakage;
 }
 
-std::vector<double> ImageProcessingModule::detectContour(std::string wallNumber) {
-std::vector<double> countourLocations;
-return countourLocations;
+std::vector<double> ImageProcessingModule::detectContour(
+    std::string wallNumber,
+                                                         int storeImage) {
+  std::vector<double> countourLocations;
+  int complete = 0;
+  /// runs till all contours are found.
+  while (ros::ok() && complete == 0) {
+    /// run only if image is available
+    if (!imageLeakage.empty()) {
+      typedef cv::Point2i Point;
+      cv::Scalar lowGreen = cv::Scalar(10, 10, 20);
+      cv::Scalar highGreen = cv::Scalar(67, 110, 180);
+      std::vector < std::vector < Point >> contours;
+      std::vector < cv::Vec4i > hierarchy;
+      int bboxbrX, bboxbrY, bboxtlX, bboxtlY;
+      /// Detect Wall
+      cv::Mat grayImage;
+      cv::Mat threshY;
+      cv::cvtColor(imageLeakage, grayImage, CV_BGR2GRAY);
+      cv::threshold(grayImage, threshY, 120, 155, cv::THRESH_BINARY_INV);
+      cv::findContours(threshY, contours, hierarchy, CV_RETR_TREE,
+                       CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
+      int i = 0;
+      for (std::vector<Point> point : contours) {
+        if (cv::contourArea(point) > 155000) {
+          cv::Scalar color = cv::Scalar(255, 255, 0);
+          cv::drawContours(imageLeakage, contours[i], i, color, 2, 8, hierarchy,
+                           0,
+                           Point());
+          bboxtlY = cv::boundingRect(point).tl().y;
+          bboxbrY = cv::boundingRect(point).br().y;
+          bboxtlX = cv::boundingRect(point).tl().x;
+          bboxbrX = cv::boundingRect(point).br().x;
+        }
+        ++i;
+      }
+      cv::Mat gryImage;
+      cv::Mat hsvImage;
+      cv::Mat greenMask;
+      cv::Mat bitwiseImage;
+      cv::Mat threshImage;
+      cv::cvtColor(imageLeakage, hsvImage, cv::COLOR_BGR2HSV);
+      cv::inRange(hsvImage, lowGreen, highGreen, greenMask);
+      cv::bitwise_and(hsvImage, hsvImage, bitwiseImage, greenMask);
+      cv::cvtColor(bitwiseImage, gryImage, CV_BGR2GRAY);
+      cv::threshold(gryImage, threshImage, 20, 205, cv::THRESH_BINARY);
+      cv::findContours(threshImage, contours, hierarchy, CV_RETR_TREE,
+                       CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
+      i = 0;
+      for (std::vector<Point> point : contours) {
+        if (cv::contourArea(point) < 1000
+            &&
+        cv::contourArea(point) > 500) {
+          cv::Scalar color = cv::Scalar(255, 0, 255);
+          cv::drawContours(imageLeakage, contours[i], i, color, 2, 8, hierarchy,
+                           0,
+                           Point());
+          /// Height of leakage on wall
+          auto sboxhY = cv::boundingRect(point).y;
+          auto positionY = ((3 * 1.0) * (sboxhY - bboxtlY))
+              / (bboxbrY - bboxtlY);
+          /// Width of leakage on wall
+          auto sboxhX = cv::boundingRect(point).x;
+          auto positionX = ((8 * 1.0) * (sboxhX - bboxtlX))
+              / (bboxbrX - bboxtlX);
+          countourLocations.emplace_back(positionX);
+          countourLocations.emplace_back(3 - positionY);
+        }
+       ++i;
+      }
+      /// Storing Image in data folder
+      if (storeImage == 1) {
+        std::stringstream sstream;
+        sstream
+            << "../data/FinalOutput"
+            << wallNumber << ".png";
+        ROS_ASSERT(cv::imwrite(sstream.str(), imageLeakage));
+      }
+      complete = 1;
+    }
+    ros::spinOnce();
+  }
+  return countourLocations;
 }
+
+
