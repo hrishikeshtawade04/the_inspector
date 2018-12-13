@@ -1,0 +1,148 @@
+\hypertarget{class_image_processing_module}{}\section{Image\+Processing\+Module Class Reference}
+\label{class_image_processing_module}\index{Image\+Processing\+Module@{Image\+Processing\+Module}}
+
+
+\mbox{\hyperlink{class_image_processing_module}{Image\+Processing\+Module}} Class.  
+
+
+
+
+{\ttfamily \#include $<$Image\+Processing\+Module.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_image_processing_module_a2c35e6db14ed55d6fc612076aaf1324b}{Image\+Processing\+Module}} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_image_processing_module_a5f5c41eb1df297c230c777a2cac6e56a}{$\sim$\+Image\+Processing\+Module}} ()
+\begin{DoxyCompactList}\small\item\em Destructor of class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_image_processing_module_aad792e04a69c27e628510d316d6fa0be}{convert\+Image}} (const sensor\+\_\+msgs\+::\+Image\+::\+Const\+Ptr \&data\+Image)
+\begin{DoxyCompactList}\small\item\em Converts image from R\+OS sensor\+::\+Image format to open\+CV cv\+::\+Mat format. \end{DoxyCompactList}\item 
+cv\+::\+Mat \mbox{\hyperlink{class_image_processing_module_a445c2a3e209f7d7d757dc68beb9c0829}{get\+Image}} ()
+\begin{DoxyCompactList}\small\item\em Gets the clicked image by the robot. \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_image_processing_module_afd8cec561f96d6d5528b641fdb48e43e}{detect\+Contour}} (std\+::string wall\+Number, int store\+Image)
+\begin{DoxyCompactList}\small\item\em Detects the contour from the input image taken from turtlebot camera. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\mbox{\hyperlink{class_image_processing_module}{Image\+Processing\+Module}} Class. 
+
+Definition at line 63 of file Image\+Processing\+Module.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_image_processing_module_a2c35e6db14ed55d6fc612076aaf1324b}\label{class_image_processing_module_a2c35e6db14ed55d6fc612076aaf1324b}} 
+\index{Image\+Processing\+Module@{Image\+Processing\+Module}!Image\+Processing\+Module@{Image\+Processing\+Module}}
+\index{Image\+Processing\+Module@{Image\+Processing\+Module}!Image\+Processing\+Module@{Image\+Processing\+Module}}
+\subsubsection{\texorpdfstring{Image\+Processing\+Module()}{ImageProcessingModule()}}
+{\footnotesize\ttfamily Image\+Processing\+Module\+::\+Image\+Processing\+Module (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+passing node handle to image transport
+
+cv\+\_\+bridge subscribing to camera topic
+
+subscribing to raw image topic of turtle bot 
+
+Definition at line 60 of file Image\+Processing\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_image_processing_module_a5f5c41eb1df297c230c777a2cac6e56a}\label{class_image_processing_module_a5f5c41eb1df297c230c777a2cac6e56a}} 
+\index{Image\+Processing\+Module@{Image\+Processing\+Module}!````~Image\+Processing\+Module@{$\sim$\+Image\+Processing\+Module}}
+\index{````~Image\+Processing\+Module@{$\sim$\+Image\+Processing\+Module}!Image\+Processing\+Module@{Image\+Processing\+Module}}
+\subsubsection{\texorpdfstring{$\sim$\+Image\+Processing\+Module()}{~ImageProcessingModule()}}
+{\footnotesize\ttfamily Image\+Processing\+Module\+::$\sim$\+Image\+Processing\+Module (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor of class. 
+
+
+
+Definition at line 72 of file Image\+Processing\+Module.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_image_processing_module_aad792e04a69c27e628510d316d6fa0be}\label{class_image_processing_module_aad792e04a69c27e628510d316d6fa0be}} 
+\index{Image\+Processing\+Module@{Image\+Processing\+Module}!convert\+Image@{convert\+Image}}
+\index{convert\+Image@{convert\+Image}!Image\+Processing\+Module@{Image\+Processing\+Module}}
+\subsubsection{\texorpdfstring{convert\+Image()}{convertImage()}}
+{\footnotesize\ttfamily void Image\+Processing\+Module\+::convert\+Image (\begin{DoxyParamCaption}\item[{const sensor\+\_\+msgs\+::\+Image\+::\+Const\+Ptr \&}]{data\+Image }\end{DoxyParamCaption})}
+
+
+
+Converts image from R\+OS sensor\+::\+Image format to open\+CV cv\+::\+Mat format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data\+Image} & is the input image from ros camera topic\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing 
+\end{DoxyReturn}
+storing the leakage image 
+
+Definition at line 75 of file Image\+Processing\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_image_processing_module_afd8cec561f96d6d5528b641fdb48e43e}\label{class_image_processing_module_afd8cec561f96d6d5528b641fdb48e43e}} 
+\index{Image\+Processing\+Module@{Image\+Processing\+Module}!detect\+Contour@{detect\+Contour}}
+\index{detect\+Contour@{detect\+Contour}!Image\+Processing\+Module@{Image\+Processing\+Module}}
+\subsubsection{\texorpdfstring{detect\+Contour()}{detectContour()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Image\+Processing\+Module\+::detect\+Contour (\begin{DoxyParamCaption}\item[{std\+::string}]{wall\+Number,  }\item[{int}]{store\+Image }\end{DoxyParamCaption})}
+
+
+
+Detects the contour from the input image taken from turtlebot camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em wall\+Number} & combines with path to store image\\
+\hline
+{\em store\+Image} & 1 stores image in data folder 0 doesn\textquotesingle{}t store image\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+contour locations for the particular input image 
+\end{DoxyReturn}
+runs till all contours are found.
+
+run only if image is available
+
+Detect Wall
+
+Height of leakage on wall
+
+Width of leakage on wall
+
+Storing Image in data folder 
+
+Definition at line 86 of file Image\+Processing\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_image_processing_module_a445c2a3e209f7d7d757dc68beb9c0829}\label{class_image_processing_module_a445c2a3e209f7d7d757dc68beb9c0829}} 
+\index{Image\+Processing\+Module@{Image\+Processing\+Module}!get\+Image@{get\+Image}}
+\index{get\+Image@{get\+Image}!Image\+Processing\+Module@{Image\+Processing\+Module}}
+\subsubsection{\texorpdfstring{get\+Image()}{getImage()}}
+{\footnotesize\ttfamily cv\+::\+Mat Image\+Processing\+Module\+::get\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the clicked image by the robot. 
+
+\begin{DoxyReturn}{Returns}
+Image 
+\end{DoxyReturn}
+
+
+Definition at line 82 of file Image\+Processing\+Module.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_image_processing_module_8h}{Image\+Processing\+Module.\+h}}\item 
+src/\mbox{\hyperlink{_image_processing_module_8cpp}{Image\+Processing\+Module.\+cpp}}\end{DoxyCompactItemize}

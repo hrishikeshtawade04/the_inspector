@@ -1,0 +1,7 @@
+<map id="include/PathPlanningModule.h" name="include/PathPlanningModule.h">
+<area shape="rect" id="node1" title="PathPlanningModule Class header file." alt="" coords="98,5,295,32"/>
+<area shape="rect" id="node2" href="$_path_planning_module_8cpp.html" title="PathPlanningModule Class implementation." alt="" coords="5,80,193,107"/>
+<area shape="rect" id="node3" href="$_robot_module_8h.html" title="Robot Class Header file." alt="" coords="218,80,373,107"/>
+<area shape="rect" id="node4" href="$main_8cpp.html" title="ROS the_inspector node." alt="" coords="173,155,271,181"/>
+<area shape="rect" id="node5" href="$_robot_module_8cpp.html" title="Robot Class Implementation file." alt="" coords="295,155,442,181"/>
+</map>

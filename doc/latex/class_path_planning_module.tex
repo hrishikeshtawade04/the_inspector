@@ -1,0 +1,302 @@
+\hypertarget{class_path_planning_module}{}\section{Path\+Planning\+Module Class Reference}
+\label{class_path_planning_module}\index{Path\+Planning\+Module@{Path\+Planning\+Module}}
+
+
+Class \mbox{\hyperlink{class_path_planning_module}{Path\+Planning\+Module}}.  
+
+
+
+
+{\ttfamily \#include $<$Path\+Planning\+Module.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_path_planning_module_a45510d19b199ab89cecc1bf6e8b252eb}{Path\+Planning\+Module}} ()
+\begin{DoxyCompactList}\small\item\em Constructor of class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_path_planning_module_acc73ccfa18e08a1771b72bb418d96258}{$\sim$\+Path\+Planning\+Module}} ()
+\begin{DoxyCompactList}\small\item\em Destructor of class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_path_planning_module_a49c334a5359a2ba96d483c86bbcca1b4}{current\+Location}} (int loop\+Once)
+\begin{DoxyCompactList}\small\item\em finds the current location of the turtlebot \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_path_planning_module_a670b9233e62542af0b94a145b489f606}{move\+To\+Angle}} (double)
+\begin{DoxyCompactList}\small\item\em Moves the turtlebot at a desired angle. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_path_planning_module_ad849d7f34033bd02d65fb377cdb0c9c7}{get\+Current\+Angle}} (int loop\+Once)
+\begin{DoxyCompactList}\small\item\em Returns current angle of robot. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_path_planning_module_a31e1be6e29e2acd14e492c6c60104f56}{navigate}} ()
+\begin{DoxyCompactList}\small\item\em navigates to the set next goals \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_path_planning_module_a53bc600d54e6196a36e616fabb1e2c93}{set\+Goal}} (double, double)
+\begin{DoxyCompactList}\small\item\em sets the coordinates of the goal to be reached \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_path_planning_module_ad53f67a8e9e760a394b78e9a5ae53b21}{getX}} ()
+\begin{DoxyCompactList}\small\item\em gets current X coordinate of robot \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_path_planning_module_a327b34fd37c2d1b52c79eb48c8a84faf}{getY}} ()
+\begin{DoxyCompactList}\small\item\em gets current Y coordinate of robot \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_path_planning_module_a94fa12fa16c7321a21a4e3209b9163af}{get\+NextX}} ()
+\begin{DoxyCompactList}\small\item\em gets X coordinate of goal \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_path_planning_module_a8b540e4b6c5031bdedf75194c97a1ba7}{get\+NextY}} ()
+\begin{DoxyCompactList}\small\item\em gets Y coordinate of goal \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_path_planning_module_a88726f5b5c4919595c0027b8ea4776c3}{get\+Exception\+Handled}} ()
+\begin{DoxyCompactList}\small\item\em gets the value of exception\+Handled\+\_\+ \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_path_planning_module_a0772b25a199dd9bbec6452606fdd8722}{get\+Angle\+Exception\+Handled}} ()
+\begin{DoxyCompactList}\small\item\em gets the value ofangle\+Exception\+Handled\+\_\+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class \mbox{\hyperlink{class_path_planning_module}{Path\+Planning\+Module}}. 
+
+Definition at line 54 of file Path\+Planning\+Module.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_path_planning_module_a45510d19b199ab89cecc1bf6e8b252eb}\label{class_path_planning_module_a45510d19b199ab89cecc1bf6e8b252eb}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{Path\+Planning\+Module()}{PathPlanningModule()}}
+{\footnotesize\ttfamily Path\+Planning\+Module\+::\+Path\+Planning\+Module (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor of class. 
+
+publisher for velocity commands to turtlebot
+
+setting variables to initial values 
+
+Definition at line 55 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_acc73ccfa18e08a1771b72bb418d96258}\label{class_path_planning_module_acc73ccfa18e08a1771b72bb418d96258}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!````~Path\+Planning\+Module@{$\sim$\+Path\+Planning\+Module}}
+\index{````~Path\+Planning\+Module@{$\sim$\+Path\+Planning\+Module}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{$\sim$\+Path\+Planning\+Module()}{~PathPlanningModule()}}
+{\footnotesize\ttfamily Path\+Planning\+Module\+::$\sim$\+Path\+Planning\+Module (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor of class. 
+
+
+
+Definition at line 69 of file Path\+Planning\+Module.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_path_planning_module_a49c334a5359a2ba96d483c86bbcca1b4}\label{class_path_planning_module_a49c334a5359a2ba96d483c86bbcca1b4}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!current\+Location@{current\+Location}}
+\index{current\+Location@{current\+Location}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{current\+Location()}{currentLocation()}}
+{\footnotesize\ttfamily void Path\+Planning\+Module\+::current\+Location (\begin{DoxyParamCaption}\item[{int}]{loop\+Once }\end{DoxyParamCaption})}
+
+
+
+finds the current location of the turtlebot 
+
+
+\begin{DoxyParams}{Parameters}
+{\em loop\+Once} & 1 function exits on catch immediately 0 function listens to transform till no exception is thrown \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nothing 
+\end{DoxyReturn}
+read the odometry data and find current robot location
+
+get the base\+\_\+link to odom transform and print any exceptions 
+
+Definition at line 72 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_a0772b25a199dd9bbec6452606fdd8722}\label{class_path_planning_module_a0772b25a199dd9bbec6452606fdd8722}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!get\+Angle\+Exception\+Handled@{get\+Angle\+Exception\+Handled}}
+\index{get\+Angle\+Exception\+Handled@{get\+Angle\+Exception\+Handled}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{get\+Angle\+Exception\+Handled()}{getAngleExceptionHandled()}}
+{\footnotesize\ttfamily bool Path\+Planning\+Module\+::get\+Angle\+Exception\+Handled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+gets the value ofangle\+Exception\+Handled\+\_\+ 
+
+\begin{DoxyReturn}{Returns}
+angle\+Exception\+Handled\+\_\+ value 
+\end{DoxyReturn}
+
+
+Definition at line 99 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_ad849d7f34033bd02d65fb377cdb0c9c7}\label{class_path_planning_module_ad849d7f34033bd02d65fb377cdb0c9c7}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!get\+Current\+Angle@{get\+Current\+Angle}}
+\index{get\+Current\+Angle@{get\+Current\+Angle}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{get\+Current\+Angle()}{getCurrentAngle()}}
+{\footnotesize\ttfamily double Path\+Planning\+Module\+::get\+Current\+Angle (\begin{DoxyParamCaption}\item[{int}]{loop\+Once }\end{DoxyParamCaption})}
+
+
+
+Returns current angle of robot. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em loop\+Once} & 1 function exits on catch immediately 0 function listens to transform till no exception is thrown\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+current angle of robot 
+\end{DoxyReturn}
+get the base\+\_\+link to odom transform and print any exceptions 
+
+Definition at line 214 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_a88726f5b5c4919595c0027b8ea4776c3}\label{class_path_planning_module_a88726f5b5c4919595c0027b8ea4776c3}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!get\+Exception\+Handled@{get\+Exception\+Handled}}
+\index{get\+Exception\+Handled@{get\+Exception\+Handled}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{get\+Exception\+Handled()}{getExceptionHandled()}}
+{\footnotesize\ttfamily bool Path\+Planning\+Module\+::get\+Exception\+Handled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+gets the value of exception\+Handled\+\_\+ 
+
+\begin{DoxyReturn}{Returns}
+exception\+Handled\+\_\+ value 
+\end{DoxyReturn}
+
+
+Definition at line 95 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_a94fa12fa16c7321a21a4e3209b9163af}\label{class_path_planning_module_a94fa12fa16c7321a21a4e3209b9163af}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!get\+NextX@{get\+NextX}}
+\index{get\+NextX@{get\+NextX}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{get\+Next\+X()}{getNextX()}}
+{\footnotesize\ttfamily double Path\+Planning\+Module\+::get\+NextX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+gets X coordinate of goal 
+
+\begin{DoxyReturn}{Returns}
+returns next\+X\+\_\+ coordinate 
+\end{DoxyReturn}
+
+
+Definition at line 206 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_a8b540e4b6c5031bdedf75194c97a1ba7}\label{class_path_planning_module_a8b540e4b6c5031bdedf75194c97a1ba7}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!get\+NextY@{get\+NextY}}
+\index{get\+NextY@{get\+NextY}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{get\+Next\+Y()}{getNextY()}}
+{\footnotesize\ttfamily double Path\+Planning\+Module\+::get\+NextY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+gets Y coordinate of goal 
+
+\begin{DoxyReturn}{Returns}
+returns next\+Y\+\_\+ coordinate 
+\end{DoxyReturn}
+
+
+Definition at line 210 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_ad53f67a8e9e760a394b78e9a5ae53b21}\label{class_path_planning_module_ad53f67a8e9e760a394b78e9a5ae53b21}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!getX@{getX}}
+\index{getX@{getX}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{get\+X()}{getX()}}
+{\footnotesize\ttfamily double Path\+Planning\+Module\+::getX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+gets current X coordinate of robot 
+
+\begin{DoxyReturn}{Returns}
+returns x coordinate 
+\end{DoxyReturn}
+
+
+Definition at line 198 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_a327b34fd37c2d1b52c79eb48c8a84faf}\label{class_path_planning_module_a327b34fd37c2d1b52c79eb48c8a84faf}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!getY@{getY}}
+\index{getY@{getY}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{get\+Y()}{getY()}}
+{\footnotesize\ttfamily double Path\+Planning\+Module\+::getY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+gets current Y coordinate of robot 
+
+\begin{DoxyReturn}{Returns}
+returns Y coordinate 
+\end{DoxyReturn}
+
+
+Definition at line 202 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_a670b9233e62542af0b94a145b489f606}\label{class_path_planning_module_a670b9233e62542af0b94a145b489f606}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!move\+To\+Angle@{move\+To\+Angle}}
+\index{move\+To\+Angle@{move\+To\+Angle}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{move\+To\+Angle()}{moveToAngle()}}
+{\footnotesize\ttfamily void Path\+Planning\+Module\+::move\+To\+Angle (\begin{DoxyParamCaption}\item[{double}]{angle }\end{DoxyParamCaption})}
+
+
+
+Moves the turtlebot at a desired angle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em desired} & angle as input parameter\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nothing 
+\end{DoxyReturn}
+get the base\+\_\+link to odom transform and print any exceptions 
+
+Definition at line 103 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_a31e1be6e29e2acd14e492c6c60104f56}\label{class_path_planning_module_a31e1be6e29e2acd14e492c6c60104f56}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!navigate@{navigate}}
+\index{navigate@{navigate}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{navigate()}{navigate()}}
+{\footnotesize\ttfamily void Path\+Planning\+Module\+::navigate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+navigates to the set next goals 
+
+\begin{DoxyReturn}{Returns}
+nothing 
+\end{DoxyReturn}
+Navigate to x-\/coordinate
+
+navigate to y-\/coordinate 
+
+Definition at line 137 of file Path\+Planning\+Module.\+cpp.
+
+\mbox{\Hypertarget{class_path_planning_module_a53bc600d54e6196a36e616fabb1e2c93}\label{class_path_planning_module_a53bc600d54e6196a36e616fabb1e2c93}} 
+\index{Path\+Planning\+Module@{Path\+Planning\+Module}!set\+Goal@{set\+Goal}}
+\index{set\+Goal@{set\+Goal}!Path\+Planning\+Module@{Path\+Planning\+Module}}
+\subsubsection{\texorpdfstring{set\+Goal()}{setGoal()}}
+{\footnotesize\ttfamily void Path\+Planning\+Module\+::set\+Goal (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})}
+
+
+
+sets the coordinates of the goal to be reached 
+
+
+\begin{DoxyParams}{Parameters}
+{\em X} & coordinate position of goal\\
+\hline
+{\em Y} & coordinate position of goal\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nothing 
+\end{DoxyReturn}
+
+
+Definition at line 236 of file Path\+Planning\+Module.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_path_planning_module_8h}{Path\+Planning\+Module.\+h}}\item 
+src/\mbox{\hyperlink{_path_planning_module_8cpp}{Path\+Planning\+Module.\+cpp}}\end{DoxyCompactItemize}

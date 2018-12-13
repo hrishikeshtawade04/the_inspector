@@ -1,0 +1,7 @@
+<map id="include/ImageProcessingModule.h" name="include/ImageProcessingModule.h">
+<area shape="rect" id="node1" title="ImageProcessingModule Class Header file." alt="" coords="103,5,325,32"/>
+<area shape="rect" id="node2" href="$_image_processing_module_8cpp.html" title="ImageProcessingModule Class Implementation." alt="" coords="5,80,217,107"/>
+<area shape="rect" id="node3" href="$_robot_module_8h.html" title="Robot Class Header file." alt="" coords="241,80,395,107"/>
+<area shape="rect" id="node4" href="$main_8cpp.html" title="ROS the_inspector node." alt="" coords="196,155,293,181"/>
+<area shape="rect" id="node5" href="$_robot_module_8cpp.html" title="Robot Class Implementation file." alt="" coords="318,155,465,181"/>
+</map>
