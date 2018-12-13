@@ -213,9 +213,9 @@ double PathPlanningModule::getNextY() {
 
 double PathPlanningModule::getCurrentAngle(int loopOnce) {
   double yaw;
- 
+  while (ros::ok()) {
     /// get the base_link to odom transform and print any exceptions
-  
+    try {
       listener.lookupTransform("/odom", "/base_link", ros::Time(0), transform);
       tf::Matrix3x3 rotationMatrix(transform.getRotation());
       double roll;
@@ -224,9 +224,14 @@ double PathPlanningModule::getCurrentAngle(int loopOnce) {
       rotationMatrix.getRPY(roll, pitch, prevYaw);
       yaw = ((prevYaw * 180.0 / 3.142));
       return yaw;
-    
-    
-  
+    } catch (tf::TransformException &ex) {
+      angleExceptionHandled_ = true;
+      ros::Duration(0.001).sleep();
+      if (loopOnce == 1) {
+        break;
+      }
+    }
+  }
 }
 void PathPlanningModule::setGoal(double x, double y) {
   nextX_ = x;
