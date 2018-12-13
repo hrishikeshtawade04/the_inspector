@@ -91,8 +91,8 @@ std::vector<double> ImageProcessingModule::detectContour(
     /// run only if image is available
     if (!imageLeakage.empty()) {
       typedef cv::Point2i Point;
-      cv::Scalar lowGreen = cv::Scalar(10, 10, 20);
-      cv::Scalar highGreen = cv::Scalar(67, 110, 180);
+      cv::Scalar lowGreen = cv::Scalar(40, 100, 50);
+      cv::Scalar highGreen = cv::Scalar(67, 255, 255);
       std::vector < std::vector < Point >> contours;
       std::vector < cv::Vec4i > hierarchy;
       int bboxbrX, bboxbrY, bboxtlX, bboxtlY;
@@ -100,14 +100,14 @@ std::vector<double> ImageProcessingModule::detectContour(
       cv::Mat grayImage;
       cv::Mat threshY;
       cv::cvtColor(imageLeakage, grayImage, CV_BGR2GRAY);
-      cv::threshold(grayImage, threshY, 120, 155, cv::THRESH_BINARY_INV);
+      cv::threshold(grayImage, threshY, 125, 255, cv::THRESH_BINARY_INV);
       cv::findContours(threshY, contours, hierarchy, CV_RETR_TREE,
                        CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
       int i = 0;
       for (std::vector<Point> point : contours) {
         if (cv::contourArea(point) > 155000) {
           cv::Scalar color = cv::Scalar(255, 255, 0);
-          cv::drawContours(imageLeakage, contours[i], i, color, 2, 8, hierarchy,
+          cv::drawContours(imageLeakage, contours, i, color, 2, 8, hierarchy,
                            0,
                            Point());
           bboxtlY = cv::boundingRect(point).tl().y;
@@ -126,16 +126,16 @@ std::vector<double> ImageProcessingModule::detectContour(
       cv::inRange(hsvImage, lowGreen, highGreen, greenMask);
       cv::bitwise_and(hsvImage, hsvImage, bitwiseImage, greenMask);
       cv::cvtColor(bitwiseImage, gryImage, CV_BGR2GRAY);
-      cv::threshold(gryImage, threshImage, 20, 205, cv::THRESH_BINARY);
+      cv::threshold(gryImage, threshImage, 40, 255, cv::THRESH_BINARY);
       cv::findContours(threshImage, contours, hierarchy, CV_RETR_TREE,
                        CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
       i = 0;
       for (std::vector<Point> point : contours) {
-        if (cv::contourArea(point) < 1000
+        if (cv::contourArea(point) < 10000
             &&
         cv::contourArea(point) > 500) {
           cv::Scalar color = cv::Scalar(255, 0, 255);
-          cv::drawContours(imageLeakage, contours[i], i, color, 2, 8, hierarchy,
+          cv::drawContours(imageLeakage, contours, i, color, 2, 8, hierarchy,
                            0,
                            Point());
           /// Height of leakage on wall
