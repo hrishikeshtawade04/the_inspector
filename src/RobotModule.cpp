@@ -124,14 +124,9 @@ void Robot::findLeakages(std::vector<std::vector<double>> mapCoordinates) {
     pathPlanner_.moveToAngle(pos[2]);
   ros::Duration(3.0).sleep();
   ROS_INFO("Navigation Completed");
-  leakageLocations_ = imageProcessor_.detectContours(wallcount,1)
-  }
-  ROS_INFO_STREAM("Total Leakages = " << leakageCount_);
-  for (auto leakage : leakageLocations_) {
-    if (counter % 16 == 0) {
-      ROS_INFO_STREAM("Wall " << wallCount << "Leakages");
-      ++wallCount;
-    }
+    locations = imageProcessor_.detectContour(std::to_string(wallCount), 1);
+    ROS_INFO_STREAM("Wall " << wallCount << "Leakages");
+    for (auto leakage : locations) {
     if (counter % 2 == 0) {
       prevX = leakage;
     } else {
@@ -139,6 +134,11 @@ void Robot::findLeakages(std::vector<std::vector<double>> mapCoordinates) {
     }
     ++counter;
   }
+    counter = 0;
+    ++wallCount;
+    leakageCount_ += locations.size() / 2;
+  }
+  ROS_INFO_STREAM("Total Leakages = " << leakageCount_);
   ROS_INFO("Leakge finding complete");
 }
 
