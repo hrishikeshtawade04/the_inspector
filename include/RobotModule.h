@@ -1,8 +1,7 @@
 /**
  * BSD 3-Clause License
-
-
- * Copyright (c) 2018, KapilRawal, Hrishikesh Tawde.
+ *
+ * Copyright (c) 2018, KapilRawal, Hrishikesh Tawade.
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -38,32 +37,27 @@
  *
  *  @copyright   BSD License
  *
- *  @brief    Robot file
+ *  @brief    Robot Class Header file
  *
  *  @section   DESCRIPTION
  *
- *  Header file for the Robot class conatining decleration of the methods
+ *  Defines the methods and variables of Robot Class
  */
 
-#ifndef INCLUDE_THE_INSPECTOR_ROBOT_H_
-#define INCLUDE_THE_INSPECTOR_ROBOT_H_
+#ifndef INCLUDE_ROBOTMODULE_H_
+#define INCLUDE_ROBOTMODULE_H_
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include "ros/ros.h"
 #include "ImageProcessingModule.h"
 #include "PathPlanningModule.h"
+#include <iostream>
+#include <vector>
+#include "ros/ros.h"
 
-class Robot{
-
-private:
-  ImageProcessingModule imageProcessor_;
-  PathPlanningModule pathPlanner_;
-  std::vector<double> leakageLocations_;
-  double leakageCount_;
-  
-public:
+/**
+ * @brief Class for robot
+ */
+class Robot {
+ public:
   /**
    *  @brief   Constructor
    */
@@ -71,23 +65,53 @@ public:
 
   /**
    *  @brief   Destroys the object
-   */ 
+   */
   ~Robot();
 
- /**
-   *  @brief  Finds leakage by calling the pathplanning module and 
-   *          image processing module
-   *
-   *  @return nothing
-   */
-  void findLeakages();
-  
   /**
-   *  @brief  Gives all leakage locations saved
+   * @brief finds leakages in the infrastructure
    *
-   *  @return vector of leakage coordinates
+   * @param mapCoordinates coordinates where the robot should stop and take picture
+   *                       and find leakage
+   *
+   * @return Nothing
    */
-  std::vector<double> getLeakages();
-};
+  void findLeakages(std::vector<std::vector<double>> mapCoordinates);
 
-#endif /// INCLUDE_THEINSPECTOR_ROBOT_H_
+  /**
+   * @brief puts the calculated coordinates in a vector for easy accessibility
+   *
+   * @param wall13 distance from wall 1 and 3
+   *
+   * @param wall24 distance from wall 2 and 4
+   *
+   * @return vector containing the coordinates in a vector
+   */
+  std::vector<std::vector<double>> putCoordinates(double wall13, double wall24);
+
+  /**
+   * @brief finds the coordinates where the robot should stop
+   *        based on map's dimensions
+   *
+   * @param length length of the map
+   *
+   * @param breadth breadth of the map
+   *
+   * @return coordinates where the robot should stop and take picture
+   *         and find leakage
+   */
+  std::vector<std::vector<double>> genClickCoordinates(double length,
+                                                       double breadth);
+  /**
+   * @brief gets the leakage count
+   *
+   * @return private variable leakageCount_
+   */
+  int getLeakageCount();
+
+ private:
+  ImageProcessingModule imageProcessor_;
+  PathPlanningModule pathPlanner_;
+  double leakageCount_;
+};
+#endif  // INCLUDE_ROBOTMODULE_H_
