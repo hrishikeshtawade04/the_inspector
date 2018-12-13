@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/image_transport/publisher.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/image_transport</a> - publisher.h<span style="font-size: 80%;"> (source / <a href="publisher.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*********************************************************************</a>
+<span class="lineNum">       2 </span>            : * Software License Agreement (BSD License)
+<span class="lineNum">       3 </span>            : * 
+<span class="lineNum">       4 </span>            : *  Copyright (c) 2009, Willow Garage, Inc.
+<span class="lineNum">       5 </span>            : *  All rights reserved.
+<span class="lineNum">       6 </span>            : * 
+<span class="lineNum">       7 </span>            : *  Redistribution and use in source and binary forms, with or without
+<span class="lineNum">       8 </span>            : *  modification, are permitted provided that the following conditions
+<span class="lineNum">       9 </span>            : *  are met:
+<span class="lineNum">      10 </span>            : * 
+<span class="lineNum">      11 </span>            : *   * Redistributions of source code must retain the above copyright
+<span class="lineNum">      12 </span>            : *     notice, this list of conditions and the following disclaimer.
+<span class="lineNum">      13 </span>            : *   * Redistributions in binary form must reproduce the above
+<span class="lineNum">      14 </span>            : *     copyright notice, this list of conditions and the following
+<span class="lineNum">      15 </span>            : *     disclaimer in the documentation and/or other materials provided
+<span class="lineNum">      16 </span>            : *     with the distribution.
+<span class="lineNum">      17 </span>            : *   * Neither the name of the Willow Garage nor the names of its
+<span class="lineNum">      18 </span>            : *     contributors may be used to endorse or promote products derived
+<span class="lineNum">      19 </span>            : *     from this software without specific prior written permission.
+<span class="lineNum">      20 </span>            : * 
+<span class="lineNum">      21 </span>            : *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+<span class="lineNum">      22 </span>            : *  &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+<span class="lineNum">      23 </span>            : *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+<span class="lineNum">      24 </span>            : *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+<span class="lineNum">      25 </span>            : *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+<span class="lineNum">      26 </span>            : *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+<span class="lineNum">      27 </span>            : *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+<span class="lineNum">      28 </span>            : *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+<span class="lineNum">      29 </span>            : *  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+<span class="lineNum">      30 </span>            : *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+<span class="lineNum">      31 </span>            : *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+<span class="lineNum">      32 </span>            : *  POSSIBILITY OF SUCH DAMAGE.
+<span class="lineNum">      33 </span>            : *********************************************************************/
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : #ifndef IMAGE_TRANSPORT_PUBLISHER_H
+<span class="lineNum">      36 </span>            : #define IMAGE_TRANSPORT_PUBLISHER_H
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span>            : #include &lt;ros/ros.h&gt;
+<span class="lineNum">      39 </span>            : #include &lt;sensor_msgs/Image.h&gt;
+<span class="lineNum">      40 </span>            : #include &quot;image_transport/single_subscriber_publisher.h&quot;
+<span class="lineNum">      41 </span>            : #include &quot;image_transport/exception.h&quot;
+<span class="lineNum">      42 </span>            : #include &quot;image_transport/loader_fwds.h&quot;
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : namespace image_transport {
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : /**
+<span class="lineNum">      47 </span>            :  * \brief Manages advertisements of multiple transport options on an Image topic.
+<span class="lineNum">      48 </span>            :  *
+<span class="lineNum">      49 </span>            :  * Publisher is a drop-in replacement for ros::Publisher when publishing
+<span class="lineNum">      50 </span>            :  * Image topics. In a minimally built environment, they behave the same; however,
+<span class="lineNum">      51 </span>            :  * Publisher is extensible via plugins to publish alternative representations of
+<span class="lineNum">      52 </span>            :  * the image on related subtopics. This is especially useful for limiting bandwidth and
+<span class="lineNum">      53 </span>            :  * latency over a network connection, when you might (for example) use the theora plugin
+<span class="lineNum">      54 </span>            :  * to transport the images as streamed video. All topics are published only on demand
+<span class="lineNum">      55 </span>            :  * (i.e. if there are subscribers).
+<span class="lineNum">      56 </span>            :  *
+<span class="lineNum">      57 </span>            :  * A Publisher should always be created through a call to ImageTransport::advertise(),
+<span class="lineNum">      58 </span>            :  * or copied from one that was.
+<span class="lineNum">      59 </span>            :  * Once all copies of a specific Publisher go out of scope, any subscriber callbacks
+<span class="lineNum">      60 </span>            :  * associated with that handle will stop being called. Once all Publisher for a
+<a name="61"><span class="lineNum">      61 </span>            :  * given base topic go out of scope the topic (and all subtopics) will be unadvertised.</a>
+<span class="lineNum">      62 </span>            :  */
+<span class="lineNum">      63 </span><span class="lineCov">         45 : class Publisher</span>
+<a name="64"><span class="lineNum">      64 </span>            : {</a>
+<span class="lineNum">      65 </span>            : public:
+<span class="lineNum">      66 </span><span class="lineCov">         15 :   Publisher() {}</span>
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            :   /*!
+<span class="lineNum">      69 </span>            :    * \brief Returns the number of subscribers that are currently connected to
+<span class="lineNum">      70 </span>            :    * this Publisher.
+<span class="lineNum">      71 </span>            :    *
+<span class="lineNum">      72 </span>            :    * Returns the total number of subscribers to all advertised topics.
+<span class="lineNum">      73 </span>            :    */
+<span class="lineNum">      74 </span>            :   uint32_t getNumSubscribers() const;
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            :   /*!
+<span class="lineNum">      77 </span>            :    * \brief Returns the base topic of this Publisher.
+<span class="lineNum">      78 </span>            :    */
+<span class="lineNum">      79 </span>            :   std::string getTopic() const;
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span>            :   /*!
+<span class="lineNum">      82 </span>            :    * \brief Publish an image on the topics associated with this Publisher.
+<span class="lineNum">      83 </span>            :    */
+<span class="lineNum">      84 </span>            :   void publish(const sensor_msgs::Image&amp; message) const;
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            :   /*!
+<span class="lineNum">      87 </span>            :    * \brief Publish an image on the topics associated with this Publisher.
+<span class="lineNum">      88 </span>            :    */
+<span class="lineNum">      89 </span>            :   void publish(const sensor_msgs::ImageConstPtr&amp; message) const;
+<span class="lineNum">      90 </span>            : 
+<span class="lineNum">      91 </span>            :   /*!
+<span class="lineNum">      92 </span>            :    * \brief Shutdown the advertisements associated with this Publisher.
+<span class="lineNum">      93 </span>            :    */
+<span class="lineNum">      94 </span>            :   void shutdown();
+<span class="lineNum">      95 </span>            : 
+<span class="lineNum">      96 </span>            :   operator void*() const;
+<span class="lineNum">      97 </span>            :   bool operator&lt; (const Publisher&amp; rhs) const { return impl_ &lt;  rhs.impl_; }
+<span class="lineNum">      98 </span>            :   bool operator!=(const Publisher&amp; rhs) const { return impl_ != rhs.impl_; }
+<span class="lineNum">      99 </span>            :   bool operator==(const Publisher&amp; rhs) const { return impl_ == rhs.impl_; }
+<span class="lineNum">     100 </span>            : 
+<span class="lineNum">     101 </span>            : private:
+<span class="lineNum">     102 </span>            :   Publisher(ros::NodeHandle&amp; nh, const std::string&amp; base_topic, uint32_t queue_size,
+<span class="lineNum">     103 </span>            :             const SubscriberStatusCallback&amp; connect_cb,
+<span class="lineNum">     104 </span>            :             const SubscriberStatusCallback&amp; disconnect_cb,
+<span class="lineNum">     105 </span>            :             const ros::VoidPtr&amp; tracked_object, bool latch,
+<span class="lineNum">     106 </span>            :             const PubLoaderPtr&amp; loader);
+<span class="lineNum">     107 </span>            : 
+<span class="lineNum">     108 </span>            :   struct Impl;
+<span class="lineNum">     109 </span>            :   typedef boost::shared_ptr&lt;Impl&gt; ImplPtr;
+<span class="lineNum">     110 </span>            :   typedef boost::weak_ptr&lt;Impl&gt; ImplWPtr;
+<span class="lineNum">     111 </span>            :   
+<span class="lineNum">     112 </span>            :   ImplPtr impl_;
+<span class="lineNum">     113 </span>            : 
+<span class="lineNum">     114 </span>            :   static void weakSubscriberCb(const ImplWPtr&amp; impl_wptr,
+<span class="lineNum">     115 </span>            :                                const SingleSubscriberPublisher&amp; plugin_pub,
+<span class="lineNum">     116 </span>            :                                const SubscriberStatusCallback&amp; user_cb);
+<span class="lineNum">     117 </span>            :   
+<span class="lineNum">     118 </span>            :   SubscriberStatusCallback rebindCB(const SubscriberStatusCallback&amp; user_cb);
+<span class="lineNum">     119 </span>            : 
+<span class="lineNum">     120 </span>            :   friend class ImageTransport;
+<span class="lineNum">     121 </span>            : };
+<span class="lineNum">     122 </span>            : 
+<span class="lineNum">     123 </span>            : } //namespace image_transport
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span>            : #endif
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /home/hrishikesh/catkin_ws/src/the_inspector/src/PathPlanningModule.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../index.html">top level</a> - <a href="index.html">home/hrishikesh/catkin_ws/src/the_inspector/src</a> - PathPlanningModule.cpp<span style="font-size: 80%;"> (source / <a href="PathPlanningModule.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">125</td>
+            <td class="headerCovTableEntry">125</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            :  * BSD 3-Clause License
+<span class="lineNum">       3 </span>            :  *
+<span class="lineNum">       4 </span>            :  * Copyright (c) 2018, KapilRawal, Hrishikesh Tawade.
+<span class="lineNum">       5 </span>            :  * All rights reserved.
+<span class="lineNum">       6 </span>            :  * Redistribution and use in source and binary forms, with or without
+<span class="lineNum">       7 </span>            :  * modification, are permitted provided that the following conditions are met:
+<span class="lineNum">       8 </span>            :  *
+<span class="lineNum">       9 </span>            :  * Redistributions of source code must retain the above copyright notice, this
+<span class="lineNum">      10 </span>            :  * list of conditions and the following disclaimer.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            :  * Redistributions in binary form must reproduce the above copyright notice,
+<span class="lineNum">      13 </span>            :  * this list of conditions and the following disclaimer in the documentation
+<span class="lineNum">      14 </span>            :  * and/or other materials provided with the distribution.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            :  * Neither the name of the copyright holder nor the names of its
+<span class="lineNum">      17 </span>            :  * contributors may be used to endorse or promote products derived from
+<span class="lineNum">      18 </span>            :  * this software without specific prior written permission.
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            :  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;
+<span class="lineNum">      21 </span>            :  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+<span class="lineNum">      22 </span>            :  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+<span class="lineNum">      23 </span>            :  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+<span class="lineNum">      24 </span>            :  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+<span class="lineNum">      25 </span>            :  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+<span class="lineNum">      26 </span>            :  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+<span class="lineNum">      27 </span>            :  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+<span class="lineNum">      28 </span>            :  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+<span class="lineNum">      29 </span>            :  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            :  *  @copyright (c) BSD
+<span class="lineNum">      32 </span>            :  *
+<span class="lineNum">      33 </span>            :  *  @file   PathPlanningModule.cpp
+<span class="lineNum">      34 </span>            :  *
+<span class="lineNum">      35 </span>            :  *  @author   Kapil Rawal (krawal@terpmail.umd.edu)
+<span class="lineNum">      36 </span>            :  *  @author   Hrishikesh Tawde (htawade@terpmail.umd.edu)
+<span class="lineNum">      37 </span>            :  *
+<span class="lineNum">      38 </span>            :  *  @copyright   BSD License
+<span class="lineNum">      39 </span>            :  *
+<span class="lineNum">      40 </span>            :  *  @brief    PathPlanningModule Class implementation
+<span class="lineNum">      41 </span>            :  *
+<span class="lineNum">      42 </span>            :  *  @section   DESCRIPTION
+<span class="lineNum">      43 </span>            :  *
+<span class="lineNum">      44 </span>            :  *  This file contains implementation of pathPlanningModule class
+<span class="lineNum">      45 </span>            :  *  methods
+<span class="lineNum">      46 </span>            :  *
+<span class="lineNum">      47 </span>            :  */
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            : #include &quot;../include/PathPlanningModule.h&quot;
+<span class="lineNum">      50 </span>            : #include &lt;tf/transform_listener.h&gt;
+<span class="lineNum">      51 </span>            : #include&lt;iostream&gt;
+<span class="lineNum">      52 </span>            : #include &quot;geometry_msgs/Twist.h&quot;
+<a name="53"><span class="lineNum">      53 </span>            : #include &quot;ros/ros.h&quot;</a>
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span><span class="lineCov">         33 : PathPlanningModule::PathPlanningModule() {</span>
+<span class="lineNum">      56 </span>            :   /// publisher for velocity commands to turtlebot
+<span class="lineNum">      57 </span><span class="lineCov">         33 :   velocityPublish = n.advertise &lt; geometry_msgs::Twist</span>
+<span class="lineNum">      58 </span><span class="lineCov">         66 :       &gt; (&quot;/cmd_vel_mux/input/navi&quot;, 1);</span>
+<span class="lineNum">      59 </span>            :   /// setting variables to initial values
+<span class="lineNum">      60 </span><span class="lineCov">         33 :   nextX_ = 0;</span>
+<span class="lineNum">      61 </span><span class="lineCov">         33 :   nextY_ = 0;</span>
+<span class="lineNum">      62 </span><span class="lineCov">         33 :   currentX_ = 0;</span>
+<span class="lineNum">      63 </span><span class="lineCov">         33 :   currentY_ = 0;</span>
+<span class="lineNum">      64 </span><span class="lineCov">         33 :   currentAngle_ = 0;</span>
+<span class="lineNum">      65 </span><span class="lineCov">         33 :   exceptionHandled_ = false;</span>
+<span class="lineNum">      66 </span><span class="lineCov">         33 :   angleExceptionHandled_ = false;</span>
+<a name="67"><span class="lineNum">      67 </span><span class="lineCov">         33 : }</span></a>
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span><span class="lineCov">         33 : PathPlanningModule::~PathPlanningModule() {</span>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">         33 : }</span></a>
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span><span class="lineCov">   38023413 : void PathPlanningModule::currentLocation(int loopOnce) {</span>
+<span class="lineNum">      73 </span><span class="lineCov">   38023413 :   int in = 0;</span>
+<span class="lineNum">      74 </span>            :   /// read the  odometry data and find current robot location
+<span class="lineNum">      75 </span><span class="lineCov">  114070223 :   while (ros::ok() &amp;&amp; in == 0) {</span>
+<span class="lineNum">      76 </span>            :     /// get the base_link to odom transform and print any exceptions
+<span class="lineNum">      77 </span>            :     try {
+<span class="lineNum">      78 </span><span class="lineCov">   38023411 :       listener.lookupTransform(&quot;/odom&quot;, &quot;/base_link&quot;, ros::Time(0), transform);</span>
+<span class="lineNum">      79 </span><span class="lineCov">   38023405 :       currentX_ = transform.getOrigin().x();</span>
+<span class="lineNum">      80 </span><span class="lineCov">   38023405 :       currentY_ = transform.getOrigin().y();</span>
+<span class="lineNum">      81 </span><span class="lineCov">   38023405 :       in = 1;</span>
+<span class="lineNum">      82 </span><span class="lineCov">          6 :     } catch (tf::TransformException &amp;ex) {</span>
+<span class="lineNum">      83 </span><span class="lineCov">          3 :       ROS_INFO(&quot;Trying again for transform and printing the exception below&quot;);</span>
+<span class="lineNum">      84 </span><span class="lineCov">          3 :       ROS_WARN(&quot;%s&quot;, ex.what());</span>
+<span class="lineNum">      85 </span><span class="lineCov">          3 :       ros::Duration(0.001).sleep();</span>
+<span class="lineNum">      86 </span><span class="lineCov">          3 :       exceptionHandled_ = true;</span>
+<span class="lineNum">      87 </span><span class="lineCov">          3 :       if (loopOnce == 1) {</span>
+<span class="lineNum">      88 </span><span class="lineCov">          3 :         break;</span>
+<span class="lineNum">      89 </span>            :       }
+<span class="lineNum">      90 </span>            :     }
+<span class="lineNum">      91 </span><span class="lineCov">   38023405 :     ros::spinOnce();</span>
+<span class="lineNum">      92 </span>            :   }
+<a name="93"><span class="lineNum">      93 </span><span class="lineCov">   38023413 : }</span></a>
+<span class="lineNum">      94 </span>            : 
+<span class="lineNum">      95 </span><span class="lineCov">          3 : bool PathPlanningModule::getExceptionHandled() {</span>
+<span class="lineNum">      96 </span><span class="lineCov">          3 :   return exceptionHandled_;</span>
+<a name="97"><span class="lineNum">      97 </span>            : }</a>
+<span class="lineNum">      98 </span>            : 
+<span class="lineNum">      99 </span><span class="lineCov">          3 : bool PathPlanningModule::getAngleExceptionHandled() {</span>
+<span class="lineNum">     100 </span><span class="lineCov">          3 :   return angleExceptionHandled_;</span>
+<a name="101"><span class="lineNum">     101 </span>            : }</a>
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span><span class="lineCov">   71072304 : void PathPlanningModule::moveToAngle(double angle) {</span>
+<span class="lineNum">     104 </span><span class="lineCov">  142144539 :   while (ros::ok()) {</span>
+<span class="lineNum">     105 </span>            :     /// get the base_link to odom transform and print any exceptions
+<span class="lineNum">     106 </span>            :     try {
+<span class="lineNum">     107 </span><span class="lineCov">   71072315 :       listener.lookupTransform(&quot;/odom&quot;, &quot;/base_link&quot;, ros::Time(0), transform);</span>
+<span class="lineNum">     108 </span><span class="lineCov">   71072277 :       tf::Matrix3x3 rotationMatrix(transform.getRotation());</span>
+<span class="lineNum">     109 </span>            :       double roll;
+<span class="lineNum">     110 </span>            :       double pitch;
+<span class="lineNum">     111 </span>            :       double prevYaw;
+<span class="lineNum">     112 </span><span class="lineCov">   71072277 :       rotationMatrix.getRPY(roll, pitch, prevYaw);</span>
+<span class="lineNum">     113 </span><span class="lineCov">   71072277 :       double yaw = ((prevYaw * 180.0 / 3.142));</span>
+<span class="lineNum">     114 </span><span class="lineCov">   71072277 :       if ((fabs(angle - yaw) &lt;= 0.5)) {</span>
+<span class="lineNum">     115 </span><span class="lineCov">         61 :         break;</span>
+<span class="lineNum">     116 </span>            :       }
+<span class="lineNum">     117 </span><span class="lineCov">   71072216 :       if (fabs(angle - yaw) &gt;= 20) {</span>
+<span class="lineNum">     118 </span><span class="lineCov">   30734616 :         vel_msg.angular.z = 0.5;</span>
+<span class="lineNum">     119 </span><span class="lineCov">   30734616 :         velocityPublish.publish(vel_msg);</span>
+<span class="lineNum">     120 </span>            :       } else {
+<span class="lineNum">     121 </span><span class="lineCov">   40337600 :         vel_msg.angular.z = 0.05;</span>
+<span class="lineNum">     122 </span><span class="lineCov">   40337600 :         velocityPublish.publish(vel_msg);</span>
+<span class="lineNum">     123 </span>            :       }
+<span class="lineNum">     124 </span><span class="lineCov">         38 :     } catch (tf::TransformException &amp;ex) {</span>
+<span class="lineNum">     125 </span><span class="lineCov">         19 :       ROS_INFO(&quot;Trying again for transform and printing the exception below&quot;);</span>
+<span class="lineNum">     126 </span><span class="lineCov">         19 :       ROS_WARN(&quot;%s&quot;, ex.what());</span>
+<span class="lineNum">     127 </span><span class="lineCov">         19 :       ros::Duration(1.0).sleep();</span>
+<span class="lineNum">     128 </span><span class="lineCov">         19 :       continue;</span>
+<span class="lineNum">     129 </span>            :     }
+<span class="lineNum">     130 </span><span class="lineCov">   71072216 :     ros::spinOnce();</span>
+<span class="lineNum">     131 </span>            :   }
+<span class="lineNum">     132 </span><span class="lineCov">         69 :   vel_msg.angular.z = 0.0;</span>
+<span class="lineNum">     133 </span><span class="lineCov">         69 :   velocityPublish.publish(vel_msg);</span>
+<span class="lineNum">     134 </span><span class="lineCov">         69 :   ros::Duration(0.1).sleep();</span>
+<a name="135"><span class="lineNum">     135 </span><span class="lineCov">         69 : }</span></a>
+<span class="lineNum">     136 </span>            : 
+<span class="lineNum">     137 </span><span class="lineCov">         24 : void PathPlanningModule::navigate() {</span>
+<span class="lineNum">     138 </span>            :   /// Navigate to x-coordinate
+<span class="lineNum">     139 </span><span class="lineCov">         24 :   moveToAngle(0);</span>
+<span class="lineNum">     140 </span><span class="lineCov">         24 :   currentLocation(0);</span>
+<span class="lineNum">     141 </span><span class="lineCov">   38277232 :   while (ros::ok() &amp;&amp; (fabs((currentX_ - nextX_)) &gt;= 0.1)) {</span>
+<span class="lineNum">     142 </span><span class="lineCov">   19138604 :     currentLocation(0);</span>
+<span class="lineNum">     143 </span><span class="lineCov">   19138604 :     if ((currentX_ - nextX_) &lt; 0) {</span>
+<span class="lineNum">     144 </span><span class="lineCov">    7385769 :       if (fabs((currentX_ - nextX_)) &gt; 1.0) {</span>
+<span class="lineNum">     145 </span><span class="lineCov">    1017957 :         vel_msg.linear.x = 1.0;</span>
+<span class="lineNum">     146 </span><span class="lineCov">    6367812 :       } else if (fabs((currentX_ - nextX_)) &gt; 0.75) {</span>
+<span class="lineNum">     147 </span><span class="lineCov">     428421 :         vel_msg.linear.x = 0.5;</span>
+<span class="lineNum">     148 </span>            :       } else {
+<span class="lineNum">     149 </span><span class="lineCov">    5939391 :         vel_msg.linear.x = 0.1;</span>
+<span class="lineNum">     150 </span>            :       }
+<span class="lineNum">     151 </span><span class="lineCov">    7385769 :       velocityPublish.publish(vel_msg);</span>
+<span class="lineNum">     152 </span>            :     } else {
+<span class="lineNum">     153 </span><span class="lineCov">   11752835 :       if (fabs((currentX_ - nextX_)) &gt; 1.0) {</span>
+<span class="lineNum">     154 </span><span class="lineCov">    1851466 :         vel_msg.linear.x = -1.0;</span>
+<span class="lineNum">     155 </span><span class="lineCov">    9901369 :       } else if (fabs((currentX_ - nextX_)) &gt; 0.75) {</span>
+<span class="lineNum">     156 </span><span class="lineCov">     706897 :         vel_msg.linear.x = -0.5;</span>
+<span class="lineNum">     157 </span>            :       } else {
+<span class="lineNum">     158 </span><span class="lineCov">    9194472 :         vel_msg.linear.x = -0.1;</span>
+<span class="lineNum">     159 </span>            :       }
+<span class="lineNum">     160 </span><span class="lineCov">   11752835 :       velocityPublish.publish(vel_msg);</span>
+<span class="lineNum">     161 </span>            :   }
+<span class="lineNum">     162 </span><span class="lineCov">   19138604 :     ros::spinOnce();</span>
+<span class="lineNum">     163 </span>            :   }
+<span class="lineNum">     164 </span><span class="lineCov">         24 :   vel_msg.linear.x = 0.0;</span>
+<span class="lineNum">     165 </span><span class="lineCov">         24 :   velocityPublish.publish(vel_msg);</span>
+<span class="lineNum">     166 </span><span class="lineCov">         24 :   ros::Duration(0.1).sleep();</span>
+<span class="lineNum">     167 </span>            :   /// navigate to y-coordinate
+<span class="lineNum">     168 </span><span class="lineCov">         24 :   moveToAngle(90);</span>
+<span class="lineNum">     169 </span><span class="lineCov">         24 :   currentLocation(0);</span>
+<span class="lineNum">     170 </span><span class="lineCov">   37769516 :   while (ros::ok() &amp;&amp; (fabs((currentY_ - nextY_)) &gt;= 0.1)) {</span>
+<span class="lineNum">     171 </span><span class="lineCov">   18884746 :     currentLocation(0);</span>
+<span class="lineNum">     172 </span><span class="lineCov">   18884746 :     if ((currentY_ - nextY_) &lt; 0) {</span>
+<span class="lineNum">     173 </span><span class="lineCov">   10970449 :       if (fabs((currentY_ - nextY_)) &gt; 1.0) {</span>
+<span class="lineNum">     174 </span><span class="lineCov">    1203420 :         vel_msg.linear.x = 1.0;</span>
+<span class="lineNum">     175 </span><span class="lineCov">    9767029 :       } else if (fabs((currentY_ - nextY_)) &gt; 0.75) {</span>
+<span class="lineNum">     176 </span><span class="lineCov">     622958 :         vel_msg.linear.x = 0.5;</span>
+<span class="lineNum">     177 </span>            :       } else {
+<span class="lineNum">     178 </span><span class="lineCov">    9144071 :         vel_msg.linear.x = 0.1;</span>
+<span class="lineNum">     179 </span>            :       }
+<span class="lineNum">     180 </span><span class="lineCov">   10970449 :       velocityPublish.publish(vel_msg);</span>
+<span class="lineNum">     181 </span>            :     } else {
+<span class="lineNum">     182 </span><span class="lineCov">    7914297 :       if (fabs((currentY_ - nextY_)) &gt; 1.0) {</span>
+<span class="lineNum">     183 </span><span class="lineCov">    1334700 :         vel_msg.linear.x = -1.0;</span>
+<span class="lineNum">     184 </span><span class="lineCov">    6579597 :       } else if (fabs((currentY_ - nextY_)) &gt; 0.75) {</span>
+<span class="lineNum">     185 </span><span class="lineCov">     468861 :         vel_msg.linear.x = -0.5;</span>
+<span class="lineNum">     186 </span>            :       } else {
+<span class="lineNum">     187 </span><span class="lineCov">    6110736 :         vel_msg.linear.x = -0.1;</span>
+<span class="lineNum">     188 </span>            :       }
+<span class="lineNum">     189 </span><span class="lineCov">    7914297 :       velocityPublish.publish(vel_msg);</span>
+<span class="lineNum">     190 </span>            :   }
+<span class="lineNum">     191 </span><span class="lineCov">   18884746 :     ros::spinOnce();</span>
+<span class="lineNum">     192 </span>            :   }
+<span class="lineNum">     193 </span><span class="lineCov">         24 :   vel_msg.linear.x = 0.0;</span>
+<span class="lineNum">     194 </span><span class="lineCov">         24 :   velocityPublish.publish(vel_msg);</span>
+<span class="lineNum">     195 </span><span class="lineCov">         24 :   ros::Duration(0.1).sleep();</span>
+<a name="196"><span class="lineNum">     196 </span><span class="lineCov">         24 : }</span></a>
+<span class="lineNum">     197 </span>            : 
+<span class="lineNum">     198 </span><span class="lineCov">         12 : double PathPlanningModule::getX() {</span>
+<span class="lineNum">     199 </span><span class="lineCov">         12 :   return currentX_;</span>
+<a name="200"><span class="lineNum">     200 </span>            : }</a>
+<span class="lineNum">     201 </span>            : 
+<span class="lineNum">     202 </span><span class="lineCov">         12 : double PathPlanningModule::getY() {</span>
+<span class="lineNum">     203 </span><span class="lineCov">         12 :   return currentY_;</span>
+<a name="204"><span class="lineNum">     204 </span>            : }</a>
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span><span class="lineCov">          3 : double PathPlanningModule::getNextX() {</span>
+<span class="lineNum">     207 </span><span class="lineCov">          3 :   return nextX_;</span>
+<a name="208"><span class="lineNum">     208 </span>            : }</a>
+<span class="lineNum">     209 </span>            : 
+<span class="lineNum">     210 </span><span class="lineCov">          3 : double PathPlanningModule::getNextY() {</span>
+<span class="lineNum">     211 </span><span class="lineCov">          3 :   return nextY_;</span>
+<a name="212"><span class="lineNum">     212 </span>            : }</a>
+<span class="lineNum">     213 </span>            : 
+<span class="lineNum">     214 </span><span class="lineCov">          6 : double PathPlanningModule::getCurrentAngle(int loopOnce) {</span>
+<span class="lineNum">     215 </span>            :   double yaw;
+<span class="lineNum">     216 </span><span class="lineCov">          6 :   while (ros::ok()) {</span>
+<span class="lineNum">     217 </span>            :     /// get the base_link to odom transform and print any exceptions
+<span class="lineNum">     218 </span>            :     try {
+<span class="lineNum">     219 </span><span class="lineCov">          9 :       listener.lookupTransform(&quot;/odom&quot;, &quot;/base_link&quot;, ros::Time(0), transform);</span>
+<span class="lineNum">     220 </span><span class="lineCov">          3 :       tf::Matrix3x3 rotationMatrix(transform.getRotation());</span>
+<span class="lineNum">     221 </span>            :       double roll;
+<span class="lineNum">     222 </span>            :       double pitch;
+<span class="lineNum">     223 </span>            :       double prevYaw;
+<span class="lineNum">     224 </span><span class="lineCov">          3 :       rotationMatrix.getRPY(roll, pitch, prevYaw);</span>
+<span class="lineNum">     225 </span><span class="lineCov">          3 :       yaw = ((prevYaw * 180.0 / 3.142));</span>
+<span class="lineNum">     226 </span><span class="lineCov">          6 :       return yaw;</span>
+<span class="lineNum">     227 </span><span class="lineCov">          6 :     } catch (tf::TransformException &amp;ex) {</span>
+<span class="lineNum">     228 </span><span class="lineCov">          3 :       angleExceptionHandled_ = true;</span>
+<span class="lineNum">     229 </span><span class="lineCov">          3 :       ros::Duration(0.001).sleep();</span>
+<span class="lineNum">     230 </span><span class="lineCov">          3 :       if (loopOnce == 1) {</span>
+<span class="lineNum">     231 </span><span class="lineCov">          3 :         break;</span>
+<span class="lineNum">     232 </span>            :       }
+<span class="lineNum">     233 </span>            :     }
+<a name="234"><span class="lineNum">     234 </span>            :   }</a>
+<span class="lineNum">     235 </span><span class="lineCov">          3 : }</span>
+<span class="lineNum">     236 </span><span class="lineCov">         27 : void PathPlanningModule::setGoal(double x, double y) {</span>
+<a name="237"><span class="lineNum">     237 </span><span class="lineCov">         27 :   nextX_ = x;</span></a>
+<span class="lineNum">     238 </span><span class="lineCov">         27 :   nextY_ = y;</span>
+<span class="lineNum">     239 </span><span class="lineCov">         45 : }</span>
+<span class="lineNum">     240 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

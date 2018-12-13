@@ -1,0 +1,495 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/tf/LinearMath/Scalar.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/tf/LinearMath</a> - Scalar.h<span style="font-size: 80%;"> (source / <a href="Scalar.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : Copyright (c) 2003-2009 Erwin Coumans  http://bullet.googlecode.com
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : This software is provided 'as-is', without any express or implied warranty.
+<span class="lineNum">       5 </span>            : In no event will the authors be held liable for any damages arising from the use of this software.
+<span class="lineNum">       6 </span>            : Permission is granted to anyone to use this software for any purpose, 
+<span class="lineNum">       7 </span>            : including commercial applications, and to alter it and redistribute it freely, 
+<span class="lineNum">       8 </span>            : subject to the following restrictions:
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+<span class="lineNum">      11 </span>            : 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+<span class="lineNum">      12 </span>            : 3. This notice may not be removed or altered from any source distribution.
+<span class="lineNum">      13 </span>            : */
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : #ifndef TF_SCALAR_H
+<span class="lineNum">      18 </span>            : #define TF_SCALAR_H
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            : #ifdef TF_MANAGED_CODE
+<span class="lineNum">      21 </span>            : //Aligned data types not supported in managed code
+<span class="lineNum">      22 </span>            : #pragma unmanaged
+<span class="lineNum">      23 </span>            : #endif
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : 
+<span class="lineNum">      26 </span>            : #include &lt;math.h&gt;
+<span class="lineNum">      27 </span>            : #include &lt;stdlib.h&gt;//size_t for MSVC 6.0
+<span class="lineNum">      28 </span>            : #include &lt;cstdlib&gt;
+<span class="lineNum">      29 </span>            : #include &lt;cfloat&gt;
+<span class="lineNum">      30 </span>            : #include &lt;float.h&gt;
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            : #if defined(DEBUG) || defined (_DEBUG)
+<span class="lineNum">      33 </span>            : #define TF_DEBUG
+<span class="lineNum">      34 </span>            : #endif
+<span class="lineNum">      35 </span>            : 
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : #ifdef _WIN32
+<span class="lineNum">      38 </span>            : 
+<span class="lineNum">      39 </span>            :                 #if defined(__MINGW32__) || defined(__CYGWIN__) || (defined (_MSC_VER) &amp;&amp; _MSC_VER &lt; 1300)
+<span class="lineNum">      40 </span>            : 
+<span class="lineNum">      41 </span>            :                         #define TFSIMD_FORCE_INLINE inline
+<span class="lineNum">      42 </span>            :                         #define ATTRIBUTE_ALIGNED16(a) a
+<span class="lineNum">      43 </span>            :                         #define ATTRIBUTE_ALIGNED64(a) a
+<span class="lineNum">      44 </span>            :                         #define ATTRIBUTE_ALIGNED128(a) a
+<span class="lineNum">      45 </span>            :                 #else
+<span class="lineNum">      46 </span>            :                         //#define TF_HAS_ALIGNED_ALLOCATOR
+<span class="lineNum">      47 </span>            :                         #pragma warning(disable : 4324) // disable padding warning
+<span class="lineNum">      48 </span>            : //                      #pragma warning(disable:4530) // Disable the exception disable but used in MSCV Stl warning.
+<span class="lineNum">      49 </span>            : //                      #pragma warning(disable:4996) //Turn off warnings about deprecated C routines
+<span class="lineNum">      50 </span>            : //                      #pragma warning(disable:4786) // Disable the &quot;debug name too long&quot; warning
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            :                         #define TFSIMD_FORCE_INLINE __forceinline
+<span class="lineNum">      53 </span>            :                         #define ATTRIBUTE_ALIGNED16(a) __declspec(align(16)) a
+<span class="lineNum">      54 </span>            :                         #define ATTRIBUTE_ALIGNED64(a) __declspec(align(64)) a
+<span class="lineNum">      55 </span>            :                         #define ATTRIBUTE_ALIGNED128(a) __declspec (align(128)) a
+<span class="lineNum">      56 </span>            :                 #ifdef _XBOX
+<span class="lineNum">      57 </span>            :                         #define TF_USE_VMX128
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            :                         #include &lt;ppcintrinsics.h&gt;
+<span class="lineNum">      60 </span>            :                         #define TF_HAVE_NATIVE_FSEL
+<span class="lineNum">      61 </span>            :                         #define tfFsel(a,b,c) __fsel((a),(b),(c))
+<span class="lineNum">      62 </span>            :                 #else
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span>            :                 #endif//_XBOX
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span>            :                 #endif //__MINGW32__
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span>            :                 #include &lt;assert.h&gt;
+<span class="lineNum">      70 </span>            : #ifdef TF_DEBUG
+<span class="lineNum">      71 </span>            :                 #define tfAssert assert
+<span class="lineNum">      72 </span>            : #else
+<span class="lineNum">      73 </span>            :                 #define tfAssert(x)
+<span class="lineNum">      74 </span>            : #endif
+<span class="lineNum">      75 </span>            :                 //tfFullAssert is optional, slows down a lot
+<span class="lineNum">      76 </span>            :                 #define tfFullAssert(x)
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span>            :                 #define tfLikely(_c)  _c
+<span class="lineNum">      79 </span>            :                 #define tfUnlikely(_c) _c
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span>            : #else
+<span class="lineNum">      82 </span>            :         
+<span class="lineNum">      83 </span>            : #if defined     (__CELLOS_LV2__)
+<span class="lineNum">      84 </span>            :                 #define TFSIMD_FORCE_INLINE inline
+<span class="lineNum">      85 </span>            :                 #define ATTRIBUTE_ALIGNED16(a) a __attribute__ ((aligned (16)))
+<span class="lineNum">      86 </span>            :                 #define ATTRIBUTE_ALIGNED64(a) a __attribute__ ((aligned (64)))
+<span class="lineNum">      87 </span>            :                 #define ATTRIBUTE_ALIGNED128(a) a __attribute__ ((aligned (128)))
+<span class="lineNum">      88 </span>            :                 #ifndef assert
+<span class="lineNum">      89 </span>            :                 #include &lt;assert.h&gt;
+<span class="lineNum">      90 </span>            :                 #endif
+<span class="lineNum">      91 </span>            : #ifdef TF_DEBUG
+<span class="lineNum">      92 </span>            :                 #define tfAssert assert
+<span class="lineNum">      93 </span>            : #else
+<span class="lineNum">      94 </span>            :                 #define tfAssert(x)
+<span class="lineNum">      95 </span>            : #endif
+<span class="lineNum">      96 </span>            :                 //tfFullAssert is optional, slows down a lot
+<span class="lineNum">      97 </span>            :                 #define tfFullAssert(x)
+<span class="lineNum">      98 </span>            : 
+<span class="lineNum">      99 </span>            :                 #define tfLikely(_c)  _c
+<span class="lineNum">     100 </span>            :                 #define tfUnlikely(_c) _c
+<span class="lineNum">     101 </span>            : 
+<span class="lineNum">     102 </span>            : #else
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            : #ifdef USE_LIBSPE2
+<span class="lineNum">     105 </span>            : 
+<span class="lineNum">     106 </span>            :                 #define TFSIMD_FORCE_INLINE __inline
+<span class="lineNum">     107 </span>            :                 #define ATTRIBUTE_ALIGNED16(a) a __attribute__ ((aligned (16)))
+<span class="lineNum">     108 </span>            :                 #define ATTRIBUTE_ALIGNED64(a) a __attribute__ ((aligned (64)))
+<span class="lineNum">     109 </span>            :                 #define ATTRIBUTE_ALIGNED128(a) a __attribute__ ((aligned (128)))
+<span class="lineNum">     110 </span>            :                 #ifndef assert
+<span class="lineNum">     111 </span>            :                 #include &lt;assert.h&gt;
+<span class="lineNum">     112 </span>            :                 #endif
+<span class="lineNum">     113 </span>            : #ifdef TF_DEBUG
+<span class="lineNum">     114 </span>            :                 #define tfAssert assert
+<span class="lineNum">     115 </span>            : #else
+<span class="lineNum">     116 </span>            :                 #define tfAssert(x)
+<span class="lineNum">     117 </span>            : #endif
+<span class="lineNum">     118 </span>            :                 //tfFullAssert is optional, slows down a lot
+<span class="lineNum">     119 </span>            :                 #define tfFullAssert(x)
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span>            : 
+<span class="lineNum">     122 </span>            :                 #define tfLikely(_c)   __builtin_expect((_c), 1)
+<span class="lineNum">     123 </span>            :                 #define tfUnlikely(_c) __builtin_expect((_c), 0)
+<span class="lineNum">     124 </span>            :                 
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            : #else
+<span class="lineNum">     127 </span>            :         //non-windows systems
+<span class="lineNum">     128 </span>            : 
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span>            :                 #define TFSIMD_FORCE_INLINE inline
+<span class="lineNum">     131 </span>            :                 ///@todo: check out alignment methods for other platforms/compilers
+<span class="lineNum">     132 </span>            :                 ///#define ATTRIBUTE_ALIGNED16(a) a __attribute__ ((aligned (16)))
+<span class="lineNum">     133 </span>            :                 ///#define ATTRIBUTE_ALIGNED64(a) a __attribute__ ((aligned (64)))
+<span class="lineNum">     134 </span>            :                 ///#define ATTRIBUTE_ALIGNED128(a) a __attribute__ ((aligned (128)))
+<span class="lineNum">     135 </span>            :                 #define ATTRIBUTE_ALIGNED16(a) a
+<span class="lineNum">     136 </span>            :                 #define ATTRIBUTE_ALIGNED64(a) a
+<span class="lineNum">     137 </span>            :                 #define ATTRIBUTE_ALIGNED128(a) a
+<span class="lineNum">     138 </span>            :                 #ifndef assert
+<span class="lineNum">     139 </span>            :                 #include &lt;assert.h&gt;
+<span class="lineNum">     140 </span>            :                 #endif
+<span class="lineNum">     141 </span>            : 
+<span class="lineNum">     142 </span>            : #if defined(DEBUG) || defined (_DEBUG)
+<span class="lineNum">     143 </span>            :                 #define tfAssert assert
+<span class="lineNum">     144 </span>            : #else
+<span class="lineNum">     145 </span>            :                 #define tfAssert(x)
+<span class="lineNum">     146 </span>            : #endif
+<span class="lineNum">     147 </span>            : 
+<span class="lineNum">     148 </span>            :                 //tfFullAssert is optional, slows down a lot
+<span class="lineNum">     149 </span>            :                 #define tfFullAssert(x)
+<span class="lineNum">     150 </span>            :                 #define tfLikely(_c)  _c
+<span class="lineNum">     151 </span>            :                 #define tfUnlikely(_c) _c
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span>            : #endif // LIBSPE2
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span>            : #endif  //__CELLOS_LV2__
+<span class="lineNum">     156 </span>            : #endif
+<span class="lineNum">     157 </span>            : 
+<span class="lineNum">     158 </span>            : 
+<span class="lineNum">     159 </span>            : ///The tfScalar type abstracts floating point numbers, to easily switch between double and single floating point precision.
+<span class="lineNum">     160 </span>            : typedef double tfScalar;
+<span class="lineNum">     161 </span>            : //this number could be bigger in double precision
+<span class="lineNum">     162 </span>            : #define TF_LARGE_FLOAT 1e30
+<span class="lineNum">     163 </span>            : 
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            : #define TF_DECLARE_ALIGNED_ALLOCATOR() \
+<span class="lineNum">     167 </span>            :    TFSIMD_FORCE_INLINE void* operator new(size_t sizeInBytes)   { return tfAlignedAlloc(sizeInBytes,16); }   \
+<span class="lineNum">     168 </span>            :    TFSIMD_FORCE_INLINE void  operator delete(void* ptr)         { tfAlignedFree(ptr); }   \
+<span class="lineNum">     169 </span>            :    TFSIMD_FORCE_INLINE void* operator new(size_t, void* ptr)   { return ptr; }   \
+<span class="lineNum">     170 </span>            :    TFSIMD_FORCE_INLINE void  operator delete(void*, void*)      { }   \
+<span class="lineNum">     171 </span>            :    TFSIMD_FORCE_INLINE void* operator new[](size_t sizeInBytes)   { return tfAlignedAlloc(sizeInBytes,16); }   \
+<span class="lineNum">     172 </span>            :    TFSIMD_FORCE_INLINE void  operator delete[](void* ptr)         { tfAlignedFree(ptr); }   \
+<span class="lineNum">     173 </span>            :    TFSIMD_FORCE_INLINE void* operator new[](size_t, void* ptr)   { return ptr; }   \
+<span class="lineNum">     174 </span>            :    TFSIMD_FORCE_INLINE void  operator delete[](void*, void*)      { }   \
+<span class="lineNum">     175 </span>            : 
+<span class="lineNum">     176 </span>            : 
+<a name="177"><span class="lineNum">     177 </span>            : </a>
+<a name="178"><span class="lineNum">     178 </span>            :                 </a>
+<a name="179"><span class="lineNum">     179 </span><span class="lineCov">   71072280 : TFSIMD_FORCE_INLINE tfScalar tfSqrt(tfScalar x) { return sqrt(x); }</span></a>
+<span class="lineNum">     180 </span><span class="lineCov">   71072280 : TFSIMD_FORCE_INLINE tfScalar tfFabs(tfScalar x) { return fabs(x); }</span>
+<span class="lineNum">     181 </span><span class="lineCov">  568578240 : TFSIMD_FORCE_INLINE tfScalar tfCos(tfScalar x) { return cos(x); }</span>
+<span class="lineNum">     182 </span>            : TFSIMD_FORCE_INLINE tfScalar tfSin(tfScalar x) { return sin(x); }
+<a name="183"><span class="lineNum">     183 </span>            : TFSIMD_FORCE_INLINE tfScalar tfTan(tfScalar x) { return tan(x); }</a>
+<span class="lineNum">     184 </span>            : TFSIMD_FORCE_INLINE tfScalar tfAcos(tfScalar x) { if (x&lt;tfScalar(-1))        x=tfScalar(-1); if (x&gt;tfScalar(1))   x=tfScalar(1); return acos(x); }
+<a name="185"><span class="lineNum">     185 </span><span class="lineCov">   71072280 : TFSIMD_FORCE_INLINE tfScalar tfAsin(tfScalar x) { if (x&lt;tfScalar(-1))        x=tfScalar(-1); if (x&gt;tfScalar(1))   x=tfScalar(1); return asin(x); }</span></a>
+<span class="lineNum">     186 </span>            : TFSIMD_FORCE_INLINE tfScalar tfAtan(tfScalar x) { return atan(x); }
+<span class="lineNum">     187 </span><span class="lineCov">  284289120 : TFSIMD_FORCE_INLINE tfScalar tfAtan2(tfScalar x, tfScalar y) { return atan2(x, y); }</span>
+<span class="lineNum">     188 </span>            : TFSIMD_FORCE_INLINE tfScalar tfExp(tfScalar x) { return exp(x); }
+<span class="lineNum">     189 </span>            : TFSIMD_FORCE_INLINE tfScalar tfLog(tfScalar x) { return log(x); }
+<span class="lineNum">     190 </span>            : TFSIMD_FORCE_INLINE tfScalar tfPow(tfScalar x,tfScalar y) { return pow(x,y); }
+<span class="lineNum">     191 </span>            : TFSIMD_FORCE_INLINE tfScalar tfFmod(tfScalar x,tfScalar y) { return fmod(x,y); }
+<span class="lineNum">     192 </span>            : 
+<span class="lineNum">     193 </span>            : 
+<span class="lineNum">     194 </span>            : #define TFSIMD_2_PI         tfScalar(6.283185307179586232)
+<span class="lineNum">     195 </span>            : #define TFSIMD_PI           (TFSIMD_2_PI * tfScalar(0.5))
+<span class="lineNum">     196 </span>            : #define TFSIMD_HALF_PI      (TFSIMD_2_PI * tfScalar(0.25))
+<span class="lineNum">     197 </span>            : #define TFSIMD_RADS_PER_DEG (TFSIMD_2_PI / tfScalar(360.0))
+<span class="lineNum">     198 </span>            : #define TFSIMD_DEGS_PER_RAD  (tfScalar(360.0) / TFSIMD_2_PI)
+<span class="lineNum">     199 </span>            : #define TFSIMDSQRT12 tfScalar(0.7071067811865475244008443621048490)
+<span class="lineNum">     200 </span>            : 
+<span class="lineNum">     201 </span>            : #define tfRecipSqrt(x) ((tfScalar)(tfScalar(1.0)/tfSqrt(tfScalar(x))))          /* reciprocal square root */
+<span class="lineNum">     202 </span>            : 
+<span class="lineNum">     203 </span>            : 
+<span class="lineNum">     204 </span>            : #define TFSIMD_EPSILON      DBL_EPSILON
+<span class="lineNum">     205 </span>            : #define TFSIMD_INFINITY     DBL_MAX
+<span class="lineNum">     206 </span>            : 
+<span class="lineNum">     207 </span>            : TFSIMD_FORCE_INLINE tfScalar tfAtan2Fast(tfScalar y, tfScalar x) 
+<span class="lineNum">     208 </span>            : {
+<span class="lineNum">     209 </span>            :         tfScalar coeff_1 = TFSIMD_PI / 4.0f;
+<span class="lineNum">     210 </span>            :         tfScalar coeff_2 = 3.0f * coeff_1;
+<span class="lineNum">     211 </span>            :         tfScalar abs_y = tfFabs(y);
+<span class="lineNum">     212 </span>            :         tfScalar angle;
+<span class="lineNum">     213 </span>            :         if (x &gt;= 0.0f) {
+<span class="lineNum">     214 </span>            :                 tfScalar r = (x - abs_y) / (x + abs_y);
+<span class="lineNum">     215 </span>            :                 angle = coeff_1 - coeff_1 * r;
+<span class="lineNum">     216 </span>            :         } else {
+<span class="lineNum">     217 </span>            :                 tfScalar r = (x + abs_y) / (abs_y - x);
+<span class="lineNum">     218 </span>            :                 angle = coeff_2 - coeff_1 * r;
+<span class="lineNum">     219 </span>            :         }
+<span class="lineNum">     220 </span>            :         return (y &lt; 0.0f) ? -angle : angle;
+<span class="lineNum">     221 </span>            : }
+<span class="lineNum">     222 </span>            : 
+<span class="lineNum">     223 </span>            : TFSIMD_FORCE_INLINE bool      tfFuzzyZero(tfScalar x) { return tfFabs(x) &lt; TFSIMD_EPSILON; }
+<span class="lineNum">     224 </span>            : 
+<span class="lineNum">     225 </span>            : TFSIMD_FORCE_INLINE bool        tfEqual(tfScalar a, tfScalar eps) {
+<span class="lineNum">     226 </span>            :         return (((a) &lt;= eps) &amp;&amp; !((a) &lt; -eps));
+<span class="lineNum">     227 </span>            : }
+<span class="lineNum">     228 </span>            : TFSIMD_FORCE_INLINE bool        tfGreaterEqual (tfScalar a, tfScalar eps) {
+<span class="lineNum">     229 </span>            :         return (!((a) &lt;= eps));
+<span class="lineNum">     230 </span>            : }
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span>            : 
+<span class="lineNum">     233 </span>            : TFSIMD_FORCE_INLINE int       tfIsNegative(tfScalar x) {
+<span class="lineNum">     234 </span>            :     return x &lt; tfScalar(0.0) ? 1 : 0;
+<span class="lineNum">     235 </span>            : }
+<span class="lineNum">     236 </span>            : 
+<span class="lineNum">     237 </span>            : TFSIMD_FORCE_INLINE tfScalar tfRadians(tfScalar x) { return x * TFSIMD_RADS_PER_DEG; }
+<span class="lineNum">     238 </span>            : TFSIMD_FORCE_INLINE tfScalar tfDegrees(tfScalar x) { return x * TFSIMD_DEGS_PER_RAD; }
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span>            : #define TF_DECLARE_HANDLE(name) typedef struct name##__ { int unused; } *name
+<span class="lineNum">     241 </span>            : 
+<span class="lineNum">     242 </span>            : #ifndef tfFsel
+<span class="lineNum">     243 </span>            : TFSIMD_FORCE_INLINE tfScalar tfFsel(tfScalar a, tfScalar b, tfScalar c)
+<span class="lineNum">     244 </span>            : {
+<span class="lineNum">     245 </span>            :         return a &gt;= 0 ? b : c;
+<span class="lineNum">     246 </span>            : }
+<span class="lineNum">     247 </span>            : #endif
+<span class="lineNum">     248 </span>            : #define tfFsels(a,b,c) (tfScalar)tfFsel(a,b,c)
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span>            : TFSIMD_FORCE_INLINE bool tfMachineIsLittleEndian()
+<span class="lineNum">     252 </span>            : {
+<span class="lineNum">     253 </span>            :    long int i = 1;
+<span class="lineNum">     254 </span>            :    const char *p = (const char *) &amp;i;
+<span class="lineNum">     255 </span>            :    if (p[0] == 1)  // Lowest address contains the least significant byte
+<span class="lineNum">     256 </span>            :            return true;
+<span class="lineNum">     257 </span>            :    else
+<span class="lineNum">     258 </span>            :            return false;
+<span class="lineNum">     259 </span>            : }
+<span class="lineNum">     260 </span>            : 
+<span class="lineNum">     261 </span>            : 
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span>            : ///tfSelect avoids branches, which makes performance much better for consoles like Playstation 3 and XBox 360
+<span class="lineNum">     264 </span>            : ///Thanks Phil Knight. See also http://www.cellperformance.com/articles/2006/04/more_techniques_for_eliminatin_1.html
+<span class="lineNum">     265 </span>            : TFSIMD_FORCE_INLINE unsigned tfSelect(unsigned condition, unsigned valueIfConditionNonZero, unsigned valueIfConditionZero) 
+<span class="lineNum">     266 </span>            : {
+<span class="lineNum">     267 </span>            :     // Set testNz to 0xFFFFFFFF if condition is nonzero, 0x00000000 if condition is zero
+<span class="lineNum">     268 </span>            :     // Rely on positive value or'ed with its negative having sign bit on
+<span class="lineNum">     269 </span>            :     // and zero value or'ed with its negative (which is still zero) having sign bit off 
+<span class="lineNum">     270 </span>            :     // Use arithmetic shift right, shifting the sign bit through all 32 bits
+<span class="lineNum">     271 </span>            :     unsigned testNz = (unsigned)(((int)condition | -(int)condition) &gt;&gt; 31);
+<span class="lineNum">     272 </span>            :     unsigned testEqz = ~testNz;
+<span class="lineNum">     273 </span>            :     return ((valueIfConditionNonZero &amp; testNz) | (valueIfConditionZero &amp; testEqz)); 
+<span class="lineNum">     274 </span>            : }
+<span class="lineNum">     275 </span>            : TFSIMD_FORCE_INLINE int tfSelect(unsigned condition, int valueIfConditionNonZero, int valueIfConditionZero)
+<span class="lineNum">     276 </span>            : {
+<span class="lineNum">     277 </span>            :     unsigned testNz = (unsigned)(((int)condition | -(int)condition) &gt;&gt; 31);
+<span class="lineNum">     278 </span>            :     unsigned testEqz = ~testNz; 
+<span class="lineNum">     279 </span>            :     return static_cast&lt;int&gt;((valueIfConditionNonZero &amp; testNz) | (valueIfConditionZero &amp; testEqz));
+<span class="lineNum">     280 </span>            : }
+<span class="lineNum">     281 </span>            : TFSIMD_FORCE_INLINE float tfSelect(unsigned condition, float valueIfConditionNonZero, float valueIfConditionZero)
+<span class="lineNum">     282 </span>            : {
+<span class="lineNum">     283 </span>            : #ifdef TF_HAVE_NATIVE_FSEL
+<span class="lineNum">     284 </span>            :     return (float)tfFsel((tfScalar)condition - tfScalar(1.0f), valueIfConditionNonZero, valueIfConditionZero);
+<span class="lineNum">     285 </span>            : #else
+<span class="lineNum">     286 </span>            :     return (condition != 0) ? valueIfConditionNonZero : valueIfConditionZero; 
+<span class="lineNum">     287 </span>            : #endif
+<span class="lineNum">     288 </span>            : }
+<span class="lineNum">     289 </span>            : 
+<span class="lineNum">     290 </span>            : template&lt;typename T&gt; TFSIMD_FORCE_INLINE void tfSwap(T&amp; a, T&amp; b)
+<span class="lineNum">     291 </span>            : {
+<span class="lineNum">     292 </span>            :         T tmp = a;
+<span class="lineNum">     293 </span>            :         a = b;
+<span class="lineNum">     294 </span>            :         b = tmp;
+<span class="lineNum">     295 </span>            : }
+<span class="lineNum">     296 </span>            : 
+<span class="lineNum">     297 </span>            : 
+<span class="lineNum">     298 </span>            : //PCK: endian swapping functions
+<span class="lineNum">     299 </span>            : TFSIMD_FORCE_INLINE unsigned tfSwapEndian(unsigned val)
+<span class="lineNum">     300 </span>            : {
+<span class="lineNum">     301 </span>            :         return (((val &amp; 0xff000000) &gt;&gt; 24) | ((val &amp; 0x00ff0000) &gt;&gt; 8) | ((val &amp; 0x0000ff00) &lt;&lt; 8)  | ((val &amp; 0x000000ff) &lt;&lt; 24));
+<span class="lineNum">     302 </span>            : }
+<span class="lineNum">     303 </span>            : 
+<span class="lineNum">     304 </span>            : TFSIMD_FORCE_INLINE unsigned short tfSwapEndian(unsigned short val)
+<span class="lineNum">     305 </span>            : {
+<span class="lineNum">     306 </span>            :         return static_cast&lt;unsigned short&gt;(((val &amp; 0xff00) &gt;&gt; 8) | ((val &amp; 0x00ff) &lt;&lt; 8));
+<span class="lineNum">     307 </span>            : }
+<span class="lineNum">     308 </span>            : 
+<span class="lineNum">     309 </span>            : TFSIMD_FORCE_INLINE unsigned tfSwapEndian(int val)
+<span class="lineNum">     310 </span>            : {
+<span class="lineNum">     311 </span>            :         return tfSwapEndian((unsigned)val);
+<span class="lineNum">     312 </span>            : }
+<span class="lineNum">     313 </span>            : 
+<span class="lineNum">     314 </span>            : TFSIMD_FORCE_INLINE unsigned short tfSwapEndian(short val)
+<span class="lineNum">     315 </span>            : {
+<span class="lineNum">     316 </span>            :         return tfSwapEndian((unsigned short) val);
+<span class="lineNum">     317 </span>            : }
+<span class="lineNum">     318 </span>            : 
+<span class="lineNum">     319 </span>            : ///tfSwapFloat uses using char pointers to swap the endianness
+<span class="lineNum">     320 </span>            : ////tfSwapFloat/tfSwapDouble will NOT return a float, because the machine might 'correct' invalid floating point values
+<span class="lineNum">     321 </span>            : ///Not all values of sign/exponent/mantissa are valid floating point numbers according to IEEE 754. 
+<span class="lineNum">     322 </span>            : ///When a floating point unit is faced with an invalid value, it may actually change the value, or worse, throw an exception. 
+<span class="lineNum">     323 </span>            : ///In most systems, running user mode code, you wouldn't get an exception, but instead the hardware/os/runtime will 'fix' the number for you. 
+<span class="lineNum">     324 </span>            : ///so instead of returning a float/double, we return integer/long long integer
+<span class="lineNum">     325 </span>            : TFSIMD_FORCE_INLINE unsigned int  tfSwapEndianFloat(float d)
+<span class="lineNum">     326 </span>            : {
+<span class="lineNum">     327 </span>            :     unsigned int a = 0;
+<span class="lineNum">     328 </span>            :     unsigned char *dst = (unsigned char *)&amp;a;
+<span class="lineNum">     329 </span>            :     unsigned char *src = (unsigned char *)&amp;d;
+<span class="lineNum">     330 </span>            : 
+<span class="lineNum">     331 </span>            :     dst[0] = src[3];
+<span class="lineNum">     332 </span>            :     dst[1] = src[2];
+<span class="lineNum">     333 </span>            :     dst[2] = src[1];
+<span class="lineNum">     334 </span>            :     dst[3] = src[0];
+<span class="lineNum">     335 </span>            :     return a;
+<span class="lineNum">     336 </span>            : }
+<span class="lineNum">     337 </span>            : 
+<span class="lineNum">     338 </span>            : // unswap using char pointers
+<span class="lineNum">     339 </span>            : TFSIMD_FORCE_INLINE float tfUnswapEndianFloat(unsigned int a) 
+<span class="lineNum">     340 </span>            : {
+<span class="lineNum">     341 </span>            :     float d = 0.0f;
+<span class="lineNum">     342 </span>            :     unsigned char *src = (unsigned char *)&amp;a;
+<span class="lineNum">     343 </span>            :     unsigned char *dst = (unsigned char *)&amp;d;
+<span class="lineNum">     344 </span>            : 
+<span class="lineNum">     345 </span>            :     dst[0] = src[3];
+<span class="lineNum">     346 </span>            :     dst[1] = src[2];
+<span class="lineNum">     347 </span>            :     dst[2] = src[1];
+<span class="lineNum">     348 </span>            :     dst[3] = src[0];
+<span class="lineNum">     349 </span>            : 
+<span class="lineNum">     350 </span>            :     return d;
+<span class="lineNum">     351 </span>            : }
+<span class="lineNum">     352 </span>            : 
+<span class="lineNum">     353 </span>            : 
+<span class="lineNum">     354 </span>            : // swap using char pointers
+<span class="lineNum">     355 </span>            : TFSIMD_FORCE_INLINE void  tfSwapEndianDouble(double d, unsigned char* dst)
+<span class="lineNum">     356 </span>            : {
+<span class="lineNum">     357 </span>            :     unsigned char *src = (unsigned char *)&amp;d;
+<span class="lineNum">     358 </span>            : 
+<span class="lineNum">     359 </span>            :     dst[0] = src[7];
+<span class="lineNum">     360 </span>            :     dst[1] = src[6];
+<span class="lineNum">     361 </span>            :     dst[2] = src[5];
+<span class="lineNum">     362 </span>            :     dst[3] = src[4];
+<span class="lineNum">     363 </span>            :     dst[4] = src[3];
+<span class="lineNum">     364 </span>            :     dst[5] = src[2];
+<span class="lineNum">     365 </span>            :     dst[6] = src[1];
+<span class="lineNum">     366 </span>            :     dst[7] = src[0];
+<span class="lineNum">     367 </span>            : 
+<span class="lineNum">     368 </span>            : }
+<span class="lineNum">     369 </span>            : 
+<span class="lineNum">     370 </span>            : // unswap using char pointers
+<span class="lineNum">     371 </span>            : TFSIMD_FORCE_INLINE double tfUnswapEndianDouble(const unsigned char *src) 
+<span class="lineNum">     372 </span>            : {
+<span class="lineNum">     373 </span>            :     double d = 0.0;
+<span class="lineNum">     374 </span>            :     unsigned char *dst = (unsigned char *)&amp;d;
+<span class="lineNum">     375 </span>            : 
+<span class="lineNum">     376 </span>            :     dst[0] = src[7];
+<span class="lineNum">     377 </span>            :     dst[1] = src[6];
+<span class="lineNum">     378 </span>            :     dst[2] = src[5];
+<span class="lineNum">     379 </span>            :     dst[3] = src[4];
+<span class="lineNum">     380 </span>            :     dst[4] = src[3];
+<span class="lineNum">     381 </span>            :     dst[5] = src[2];
+<span class="lineNum">     382 </span>            :     dst[6] = src[1];
+<span class="lineNum">     383 </span>            :     dst[7] = src[0];
+<span class="lineNum">     384 </span>            : 
+<span class="lineNum">     385 </span>            :         return d;
+<span class="lineNum">     386 </span>            : }
+<span class="lineNum">     387 </span>            : 
+<span class="lineNum">     388 </span>            : // returns normalized value in range [-TFSIMD_PI, TFSIMD_PI]
+<span class="lineNum">     389 </span>            : TFSIMD_FORCE_INLINE tfScalar tfNormalizeAngle(tfScalar angleInRadians) 
+<span class="lineNum">     390 </span>            : {
+<span class="lineNum">     391 </span>            :         angleInRadians = tfFmod(angleInRadians, TFSIMD_2_PI);
+<span class="lineNum">     392 </span>            :         if(angleInRadians &lt; -TFSIMD_PI)
+<span class="lineNum">     393 </span>            :         {
+<span class="lineNum">     394 </span>            :                 return angleInRadians + TFSIMD_2_PI;
+<span class="lineNum">     395 </span>            :         }
+<span class="lineNum">     396 </span>            :         else if(angleInRadians &gt; TFSIMD_PI)
+<span class="lineNum">     397 </span>            :         {
+<span class="lineNum">     398 </span>            :                 return angleInRadians - TFSIMD_2_PI;
+<span class="lineNum">     399 </span>            :         }
+<span class="lineNum">     400 </span>            :         else
+<span class="lineNum">     401 </span>            :         {
+<span class="lineNum">     402 </span>            :                 return angleInRadians;
+<span class="lineNum">     403 </span>            :         }
+<span class="lineNum">     404 </span>            : }
+<span class="lineNum">     405 </span>            : 
+<span class="lineNum">     406 </span>            : ///rudimentary class to provide type info
+<span class="lineNum">     407 </span>            : struct tfTypedObject
+<span class="lineNum">     408 </span>            : {
+<span class="lineNum">     409 </span>            :         tfTypedObject(int objectType)
+<span class="lineNum">     410 </span>            :                 :m_objectType(objectType)
+<span class="lineNum">     411 </span>            :         {
+<span class="lineNum">     412 </span>            :         }
+<span class="lineNum">     413 </span>            :         int     m_objectType;
+<span class="lineNum">     414 </span>            :         inline int getObjectType() const
+<span class="lineNum">     415 </span>            :         {
+<span class="lineNum">     416 </span>            :                 return m_objectType;
+<span class="lineNum">     417 </span>            :         }
+<span class="lineNum">     418 </span>            : };
+<span class="lineNum">     419 </span>            : #endif //TFSIMD___SCALAR_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

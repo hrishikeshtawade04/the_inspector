@@ -1,0 +1,551 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/tf/LinearMath/Quaternion.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/tf/LinearMath</a> - Quaternion.h<span style="font-size: 80%;"> (source / <a href="Quaternion.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : Copyright (c) 2003-2006 Gino van den Bergen / Erwin Coumans  http://continuousphysics.com/Bullet/
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : This software is provided 'as-is', without any express or implied warranty.
+<span class="lineNum">       5 </span>            : In no event will the authors be held liable for any damages arising from the use of this software.
+<span class="lineNum">       6 </span>            : Permission is granted to anyone to use this software for any purpose, 
+<span class="lineNum">       7 </span>            : including commercial applications, and to alter it and redistribute it freely, 
+<span class="lineNum">       8 </span>            : subject to the following restrictions:
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+<span class="lineNum">      11 </span>            : 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+<span class="lineNum">      12 </span>            : 3. This notice may not be removed or altered from any source distribution.
+<span class="lineNum">      13 </span>            : */
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : #ifndef TF_QUATERNION_H_
+<span class="lineNum">      18 </span>            : #define TF_QUATERNION_H_
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : #include &quot;Vector3.h&quot;
+<span class="lineNum">      22 </span>            : #include &quot;QuadWord.h&quot;
+<span class="lineNum">      23 </span>            : 
+<span class="lineNum">      24 </span>            : namespace tf
+<span class="lineNum">      25 </span>            : {
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : /**@brief The Quaternion implements quaternion to perform linear algebra rotations in combination with Matrix3x3, Vector3 and Transform. */
+<span class="lineNum">      28 </span>            : class Quaternion : public QuadWord {
+<a name="29"><span class="lineNum">      29 </span>            : public:</a>
+<span class="lineNum">      30 </span>            :   /**@brief No initialization constructor */
+<span class="lineNum">      31 </span><span class="lineCov">   71072280 :         Quaternion() {}</span>
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span>            :         //              template &lt;typename tfScalar&gt;
+<span class="lineNum">      35 </span>            :         //              explicit Quaternion(const tfScalar *v) : Tuple4&lt;tfScalar&gt;(v) {}
+<span class="lineNum">      36 </span>            :   /**@brief Constructor from scalars */
+<span class="lineNum">      37 </span>            :         Quaternion(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z, const tfScalar&amp; w) 
+<span class="lineNum">      38 </span>            :                 : QuadWord(x, y, z, w) 
+<span class="lineNum">      39 </span>            :         {}
+<span class="lineNum">      40 </span>            :   /**@brief Axis angle Constructor
+<span class="lineNum">      41 </span>            :    * @param axis The axis which the rotation is around
+<span class="lineNum">      42 </span>            :    * @param angle The magnitude of the rotation around the angle (Radians) */
+<span class="lineNum">      43 </span>            :         Quaternion(const Vector3&amp; axis, const tfScalar&amp; angle) 
+<span class="lineNum">      44 </span>            :         { 
+<span class="lineNum">      45 </span>            :                 setRotation(axis, angle); 
+<span class="lineNum">      46 </span>            :         }
+<span class="lineNum">      47 </span>            :   /**@brief Constructor from Euler angles
+<span class="lineNum">      48 </span>            :    * @param yaw Angle around Y unless TF_EULER_DEFAULT_ZYX defined then Z
+<span class="lineNum">      49 </span>            :    * @param pitch Angle around X unless TF_EULER_DEFAULT_ZYX defined then Y
+<span class="lineNum">      50 </span>            :    * @param roll Angle around Z unless TF_EULER_DEFAULT_ZYX defined then X */
+<span class="lineNum">      51 </span>            :   Quaternion(const tfScalar&amp; yaw, const tfScalar&amp; pitch, const tfScalar&amp; roll) __attribute__((deprecated))
+<span class="lineNum">      52 </span>            :         { 
+<span class="lineNum">      53 </span>            : #ifndef TF_EULER_DEFAULT_ZYX
+<span class="lineNum">      54 </span>            :                 setEuler(yaw, pitch, roll); 
+<span class="lineNum">      55 </span>            : #else
+<span class="lineNum">      56 </span>            :                 setRPY(roll, pitch, yaw);
+<span class="lineNum">      57 </span>            : #endif 
+<span class="lineNum">      58 </span>            :         }
+<span class="lineNum">      59 </span>            :   /**@brief Set the rotation using axis angle notation 
+<span class="lineNum">      60 </span>            :    * @param axis The axis around which to rotate
+<span class="lineNum">      61 </span>            :    * @param angle The magnitude of the rotation in Radians */
+<span class="lineNum">      62 </span>            :         void setRotation(const Vector3&amp; axis, const tfScalar&amp; angle)
+<span class="lineNum">      63 </span>            :         {
+<span class="lineNum">      64 </span>            :                 tfScalar d = axis.length();
+<span class="lineNum">      65 </span>            :                 tfAssert(d != tfScalar(0.0));
+<span class="lineNum">      66 </span>            :                 tfScalar s = tfSin(angle * tfScalar(0.5)) / d;
+<span class="lineNum">      67 </span>            :                 setValue(axis.x() * s, axis.y() * s, axis.z() * s, 
+<span class="lineNum">      68 </span>            :                         tfCos(angle * tfScalar(0.5)));
+<span class="lineNum">      69 </span>            :         }
+<span class="lineNum">      70 </span>            :   /**@brief Set the quaternion using Euler angles
+<span class="lineNum">      71 </span>            :    * @param yaw Angle around Y
+<span class="lineNum">      72 </span>            :    * @param pitch Angle around X
+<span class="lineNum">      73 </span>            :    * @param roll Angle around Z */
+<span class="lineNum">      74 </span>            :         void setEuler(const tfScalar&amp; yaw, const tfScalar&amp; pitch, const tfScalar&amp; roll)
+<span class="lineNum">      75 </span>            :         {
+<span class="lineNum">      76 </span>            :                 tfScalar halfYaw = tfScalar(yaw) * tfScalar(0.5);  
+<span class="lineNum">      77 </span>            :                 tfScalar halfPitch = tfScalar(pitch) * tfScalar(0.5);  
+<span class="lineNum">      78 </span>            :                 tfScalar halfRoll = tfScalar(roll) * tfScalar(0.5);  
+<span class="lineNum">      79 </span>            :                 tfScalar cosYaw = tfCos(halfYaw);
+<span class="lineNum">      80 </span>            :                 tfScalar sinYaw = tfSin(halfYaw);
+<span class="lineNum">      81 </span>            :                 tfScalar cosPitch = tfCos(halfPitch);
+<span class="lineNum">      82 </span>            :                 tfScalar sinPitch = tfSin(halfPitch);
+<span class="lineNum">      83 </span>            :                 tfScalar cosRoll = tfCos(halfRoll);
+<span class="lineNum">      84 </span>            :                 tfScalar sinRoll = tfSin(halfRoll);
+<span class="lineNum">      85 </span>            :                 setValue(cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw,
+<span class="lineNum">      86 </span>            :                         cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw,
+<span class="lineNum">      87 </span>            :                         sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw,
+<span class="lineNum">      88 </span>            :                         cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw);
+<span class="lineNum">      89 </span>            :         }
+<span class="lineNum">      90 </span>            :   /**@brief Set the quaternion using fixed axis RPY
+<span class="lineNum">      91 </span>            :    * @param roll Angle around X 
+<span class="lineNum">      92 </span>            :    * @param pitch Angle around Y
+<span class="lineNum">      93 </span>            :    * @param yaw Angle around Z*/
+<span class="lineNum">      94 </span>            :   void setRPY(const tfScalar&amp; roll, const tfScalar&amp; pitch, const tfScalar&amp; yaw)
+<span class="lineNum">      95 </span>            :         {
+<span class="lineNum">      96 </span>            :                 tfScalar halfYaw = tfScalar(yaw) * tfScalar(0.5);  
+<span class="lineNum">      97 </span>            :                 tfScalar halfPitch = tfScalar(pitch) * tfScalar(0.5);  
+<span class="lineNum">      98 </span>            :                 tfScalar halfRoll = tfScalar(roll) * tfScalar(0.5);  
+<span class="lineNum">      99 </span>            :                 tfScalar cosYaw = tfCos(halfYaw);
+<span class="lineNum">     100 </span>            :                 tfScalar sinYaw = tfSin(halfYaw);
+<span class="lineNum">     101 </span>            :                 tfScalar cosPitch = tfCos(halfPitch);
+<span class="lineNum">     102 </span>            :                 tfScalar sinPitch = tfSin(halfPitch);
+<span class="lineNum">     103 </span>            :                 tfScalar cosRoll = tfCos(halfRoll);
+<span class="lineNum">     104 </span>            :                 tfScalar sinRoll = tfSin(halfRoll);
+<span class="lineNum">     105 </span>            :                 setValue(sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw, //x
+<span class="lineNum">     106 </span>            :                          cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw, //y
+<span class="lineNum">     107 </span>            :                          cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw, //z
+<span class="lineNum">     108 </span>            :                          cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw); //formerly yzx
+<span class="lineNum">     109 </span>            :         }
+<span class="lineNum">     110 </span>            :   /**@brief Set the quaternion using euler angles 
+<span class="lineNum">     111 </span>            :    * @param yaw Angle around Z
+<span class="lineNum">     112 </span>            :    * @param pitch Angle around Y
+<span class="lineNum">     113 </span>            :    * @param roll Angle around X */
+<span class="lineNum">     114 </span>            :   void setEulerZYX(const tfScalar&amp; yaw, const tfScalar&amp; pitch, const tfScalar&amp; roll) __attribute__((deprecated))
+<span class="lineNum">     115 </span>            :         {
+<span class="lineNum">     116 </span>            :           setRPY(roll, pitch, yaw);
+<span class="lineNum">     117 </span>            :         }
+<span class="lineNum">     118 </span>            :   /**@brief Add two quaternions
+<span class="lineNum">     119 </span>            :    * @param q The quaternion to add to this one */
+<span class="lineNum">     120 </span>            :         TFSIMD_FORCE_INLINE     Quaternion&amp; operator+=(const Quaternion&amp; q)
+<span class="lineNum">     121 </span>            :         {
+<span class="lineNum">     122 </span>            :                 m_floats[0] += q.x(); m_floats[1] += q.y(); m_floats[2] += q.z(); m_floats[3] += q.m_floats[3];
+<span class="lineNum">     123 </span>            :                 return *this;
+<span class="lineNum">     124 </span>            :         }
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            :   /**@brief Sutfract out a quaternion
+<span class="lineNum">     127 </span>            :    * @param q The quaternion to sutfract from this one */
+<span class="lineNum">     128 </span>            :         Quaternion&amp; operator-=(const Quaternion&amp; q) 
+<span class="lineNum">     129 </span>            :         {
+<span class="lineNum">     130 </span>            :                 m_floats[0] -= q.x(); m_floats[1] -= q.y(); m_floats[2] -= q.z(); m_floats[3] -= q.m_floats[3];
+<span class="lineNum">     131 </span>            :                 return *this;
+<span class="lineNum">     132 </span>            :         }
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span>            :   /**@brief Scale this quaternion
+<span class="lineNum">     135 </span>            :    * @param s The scalar to scale by */
+<span class="lineNum">     136 </span>            :         Quaternion&amp; operator*=(const tfScalar&amp; s)
+<span class="lineNum">     137 </span>            :         {
+<span class="lineNum">     138 </span>            :                 m_floats[0] *= s; m_floats[1] *= s; m_floats[2] *= s; m_floats[3] *= s;
+<span class="lineNum">     139 </span>            :                 return *this;
+<span class="lineNum">     140 </span>            :         }
+<span class="lineNum">     141 </span>            : 
+<span class="lineNum">     142 </span>            :   /**@brief Multiply this quaternion by q on the right
+<span class="lineNum">     143 </span>            :    * @param q The other quaternion 
+<span class="lineNum">     144 </span>            :    * Equivilant to this = this * q */
+<span class="lineNum">     145 </span>            :         Quaternion&amp; operator*=(const Quaternion&amp; q)
+<span class="lineNum">     146 </span>            :         {
+<span class="lineNum">     147 </span>            :                 setValue(m_floats[3] * q.x() + m_floats[0] * q.m_floats[3] + m_floats[1] * q.z() - m_floats[2] * q.y(),
+<span class="lineNum">     148 </span>            :                         m_floats[3] * q.y() + m_floats[1] * q.m_floats[3] + m_floats[2] * q.x() - m_floats[0] * q.z(),
+<span class="lineNum">     149 </span>            :                         m_floats[3] * q.z() + m_floats[2] * q.m_floats[3] + m_floats[0] * q.y() - m_floats[1] * q.x(),
+<span class="lineNum">     150 </span>            :                         m_floats[3] * q.m_floats[3] - m_floats[0] * q.x() - m_floats[1] * q.y() - m_floats[2] * q.z());
+<span class="lineNum">     151 </span>            :                 return *this;
+<span class="lineNum">     152 </span>            :         }
+<a name="153"><span class="lineNum">     153 </span>            :   /**@brief Return the dot product between this quaternion and another</a>
+<span class="lineNum">     154 </span>            :    * @param q The other quaternion */
+<span class="lineNum">     155 </span><span class="lineCov">   71072280 :         tfScalar dot(const Quaternion&amp; q) const</span>
+<span class="lineNum">     156 </span>            :         {
+<span class="lineNum">     157 </span><span class="lineCov">   71072280 :                 return m_floats[0] * q.x() + m_floats[1] * q.y() + m_floats[2] * q.z() + m_floats[3] * q.m_floats[3];</span>
+<span class="lineNum">     158 </span>            :         }
+<a name="159"><span class="lineNum">     159 </span>            : </a>
+<span class="lineNum">     160 </span>            :   /**@brief Return the length squared of the quaternion */
+<span class="lineNum">     161 </span><span class="lineCov">   71072280 :         tfScalar length2() const</span>
+<span class="lineNum">     162 </span>            :         {
+<span class="lineNum">     163 </span><span class="lineCov">   71072280 :                 return dot(*this);</span>
+<span class="lineNum">     164 </span>            :         }
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            :   /**@brief Return the length of the quaternion */
+<span class="lineNum">     167 </span>            :         tfScalar length() const
+<span class="lineNum">     168 </span>            :         {
+<span class="lineNum">     169 </span>            :                 return tfSqrt(length2());
+<span class="lineNum">     170 </span>            :         }
+<span class="lineNum">     171 </span>            : 
+<span class="lineNum">     172 </span>            :   /**@brief Normalize the quaternion 
+<span class="lineNum">     173 </span>            :    * Such that x^2 + y^2 + z^2 +w^2 = 1 */
+<span class="lineNum">     174 </span>            :         Quaternion&amp; normalize() 
+<span class="lineNum">     175 </span>            :         {
+<span class="lineNum">     176 </span>            :                 return *this /= length();
+<span class="lineNum">     177 </span>            :         }
+<span class="lineNum">     178 </span>            : 
+<span class="lineNum">     179 </span>            :   /**@brief Return a scaled version of this quaternion
+<span class="lineNum">     180 </span>            :    * @param s The scale factor */
+<span class="lineNum">     181 </span>            :         TFSIMD_FORCE_INLINE Quaternion
+<span class="lineNum">     182 </span>            :         operator*(const tfScalar&amp; s) const
+<span class="lineNum">     183 </span>            :         {
+<span class="lineNum">     184 </span>            :                 return Quaternion(x() * s, y() * s, z() * s, m_floats[3] * s);
+<span class="lineNum">     185 </span>            :         }
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span>            : 
+<span class="lineNum">     188 </span>            :   /**@brief Return an inversely scaled versionof this quaternion
+<span class="lineNum">     189 </span>            :    * @param s The inverse scale factor */
+<span class="lineNum">     190 </span>            :         Quaternion operator/(const tfScalar&amp; s) const
+<span class="lineNum">     191 </span>            :         {
+<span class="lineNum">     192 </span>            :                 tfAssert(s != tfScalar(0.0));
+<span class="lineNum">     193 </span>            :                 return *this * (tfScalar(1.0) / s);
+<span class="lineNum">     194 </span>            :         }
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span>            :   /**@brief Inversely scale this quaternion
+<span class="lineNum">     197 </span>            :    * @param s The scale factor */
+<span class="lineNum">     198 </span>            :         Quaternion&amp; operator/=(const tfScalar&amp; s) 
+<span class="lineNum">     199 </span>            :         {
+<span class="lineNum">     200 </span>            :                 tfAssert(s != tfScalar(0.0));
+<span class="lineNum">     201 </span>            :                 return *this *= tfScalar(1.0) / s;
+<span class="lineNum">     202 </span>            :         }
+<span class="lineNum">     203 </span>            : 
+<span class="lineNum">     204 </span>            :   /**@brief Return a normalized version of this quaternion */
+<span class="lineNum">     205 </span>            :         Quaternion normalized() const 
+<span class="lineNum">     206 </span>            :         {
+<span class="lineNum">     207 </span>            :                 return *this / length();
+<span class="lineNum">     208 </span>            :         } 
+<span class="lineNum">     209 </span>            :   /**@brief Return the ***half*** angle between this quaternion and the other 
+<span class="lineNum">     210 </span>            :    * @param q The other quaternion */
+<span class="lineNum">     211 </span>            :         tfScalar angle(const Quaternion&amp; q) const 
+<span class="lineNum">     212 </span>            :         {
+<span class="lineNum">     213 </span>            :                 tfScalar s = tfSqrt(length2() * q.length2());
+<span class="lineNum">     214 </span>            :                 tfAssert(s != tfScalar(0.0));
+<span class="lineNum">     215 </span>            :                 return tfAcos(dot(q) / s);
+<span class="lineNum">     216 </span>            :         }
+<span class="lineNum">     217 </span>            :         /**@brief Return the angle between this quaternion and the other along the shortest path
+<span class="lineNum">     218 </span>            :         * @param q The other quaternion */
+<span class="lineNum">     219 </span>            :         tfScalar angleShortestPath(const Quaternion&amp; q) const 
+<span class="lineNum">     220 </span>            :         {
+<span class="lineNum">     221 </span>            :                 tfScalar s = tfSqrt(length2() * q.length2());
+<span class="lineNum">     222 </span>            :                 tfAssert(s != tfScalar(0.0));
+<span class="lineNum">     223 </span>            :                 if (dot(q) &lt; 0) // Take care of long angle case see http://en.wikipedia.org/wiki/Slerp
+<span class="lineNum">     224 </span>            :                         return tfAcos(dot(-q) / s) * tfScalar(2.0);
+<span class="lineNum">     225 </span>            :                 else 
+<span class="lineNum">     226 </span>            :                         return tfAcos(dot(q) / s) * tfScalar(2.0);
+<span class="lineNum">     227 </span>            :         }
+<span class="lineNum">     228 </span>            :         /**@brief Return the angle [0, 2Pi] of rotation represented by this quaternion */
+<span class="lineNum">     229 </span>            :         tfScalar getAngle() const 
+<span class="lineNum">     230 </span>            :         {
+<span class="lineNum">     231 </span>            :                 tfScalar s = tfScalar(2.) * tfAcos(m_floats[3]);
+<span class="lineNum">     232 </span>            :                 return s;
+<span class="lineNum">     233 </span>            :         }
+<span class="lineNum">     234 </span>            : 
+<span class="lineNum">     235 </span>            :         /**@brief Return the angle [0, Pi] of rotation represented by this quaternion along the shortest path*/
+<span class="lineNum">     236 </span>            :         tfScalar getAngleShortestPath() const 
+<span class="lineNum">     237 </span>            :         {
+<span class="lineNum">     238 </span>            :                 tfScalar s;
+<span class="lineNum">     239 </span>            :                 if (m_floats[3] &lt; 0)
+<span class="lineNum">     240 </span>            :                     s = tfScalar(2.) * tfAcos(-m_floats[3]);
+<span class="lineNum">     241 </span>            :                 else
+<span class="lineNum">     242 </span>            :                     s = tfScalar(2.) * tfAcos(m_floats[3]);
+<span class="lineNum">     243 </span>            :                 return s;
+<span class="lineNum">     244 </span>            :         }
+<span class="lineNum">     245 </span>            : 
+<span class="lineNum">     246 </span>            :         /**@brief Return the axis of the rotation represented by this quaternion */
+<span class="lineNum">     247 </span>            :         Vector3 getAxis() const
+<span class="lineNum">     248 </span>            :         {
+<span class="lineNum">     249 </span>            :                 tfScalar s_squared = tfScalar(1.) - tfPow(m_floats[3], tfScalar(2.));
+<span class="lineNum">     250 </span>            :                 if (s_squared &lt; tfScalar(10.) * TFSIMD_EPSILON) //Check for divide by zero
+<span class="lineNum">     251 </span>            :                         return Vector3(1.0, 0.0, 0.0);  // Arbitrary
+<span class="lineNum">     252 </span>            :                 tfScalar s = tfSqrt(s_squared);
+<span class="lineNum">     253 </span>            :                 return Vector3(m_floats[0] / s, m_floats[1] / s, m_floats[2] / s);
+<span class="lineNum">     254 </span>            :         }
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            :         /**@brief Return the inverse of this quaternion */
+<span class="lineNum">     257 </span>            :         Quaternion inverse() const
+<span class="lineNum">     258 </span>            :         {
+<span class="lineNum">     259 </span>            :                 return Quaternion(-m_floats[0], -m_floats[1], -m_floats[2], m_floats[3]);
+<span class="lineNum">     260 </span>            :         }
+<span class="lineNum">     261 </span>            : 
+<span class="lineNum">     262 </span>            :   /**@brief Return the sum of this quaternion and the other 
+<span class="lineNum">     263 </span>            :    * @param q2 The other quaternion */
+<span class="lineNum">     264 </span>            :         TFSIMD_FORCE_INLINE Quaternion
+<span class="lineNum">     265 </span>            :         operator+(const Quaternion&amp; q2) const
+<span class="lineNum">     266 </span>            :         {
+<span class="lineNum">     267 </span>            :                 const Quaternion&amp; q1 = *this;
+<span class="lineNum">     268 </span>            :                 return Quaternion(q1.x() + q2.x(), q1.y() + q2.y(), q1.z() + q2.z(), q1.m_floats[3] + q2.m_floats[3]);
+<span class="lineNum">     269 </span>            :         }
+<span class="lineNum">     270 </span>            : 
+<span class="lineNum">     271 </span>            :   /**@brief Return the difference between this quaternion and the other 
+<span class="lineNum">     272 </span>            :    * @param q2 The other quaternion */
+<span class="lineNum">     273 </span>            :         TFSIMD_FORCE_INLINE Quaternion
+<span class="lineNum">     274 </span>            :         operator-(const Quaternion&amp; q2) const
+<span class="lineNum">     275 </span>            :         {
+<span class="lineNum">     276 </span>            :                 const Quaternion&amp; q1 = *this;
+<span class="lineNum">     277 </span>            :                 return Quaternion(q1.x() - q2.x(), q1.y() - q2.y(), q1.z() - q2.z(), q1.m_floats[3] - q2.m_floats[3]);
+<span class="lineNum">     278 </span>            :         }
+<span class="lineNum">     279 </span>            : 
+<span class="lineNum">     280 </span>            :   /**@brief Return the negative of this quaternion 
+<span class="lineNum">     281 </span>            :    * This simply negates each element */
+<span class="lineNum">     282 </span>            :         TFSIMD_FORCE_INLINE Quaternion operator-() const
+<span class="lineNum">     283 </span>            :         {
+<span class="lineNum">     284 </span>            :                 const Quaternion&amp; q2 = *this;
+<span class="lineNum">     285 </span>            :                 return Quaternion( - q2.x(), - q2.y(),  - q2.z(),  - q2.m_floats[3]);
+<span class="lineNum">     286 </span>            :         }
+<span class="lineNum">     287 </span>            :   /**@todo document this and it's use */
+<span class="lineNum">     288 </span>            :         TFSIMD_FORCE_INLINE Quaternion farthest( const Quaternion&amp; qd) const 
+<span class="lineNum">     289 </span>            :         {
+<span class="lineNum">     290 </span>            :                 Quaternion diff,sum;
+<span class="lineNum">     291 </span>            :                 diff = *this - qd;
+<span class="lineNum">     292 </span>            :                 sum = *this + qd;
+<span class="lineNum">     293 </span>            :                 if( diff.dot(diff) &gt; sum.dot(sum) )
+<span class="lineNum">     294 </span>            :                         return qd;
+<span class="lineNum">     295 </span>            :                 return (-qd);
+<span class="lineNum">     296 </span>            :         }
+<span class="lineNum">     297 </span>            : 
+<span class="lineNum">     298 </span>            :         /**@todo document this and it's use */
+<span class="lineNum">     299 </span>            :         TFSIMD_FORCE_INLINE Quaternion nearest( const Quaternion&amp; qd) const 
+<span class="lineNum">     300 </span>            :         {
+<span class="lineNum">     301 </span>            :                 Quaternion diff,sum;
+<span class="lineNum">     302 </span>            :                 diff = *this - qd;
+<span class="lineNum">     303 </span>            :                 sum = *this + qd;
+<span class="lineNum">     304 </span>            :                 if( diff.dot(diff) &lt; sum.dot(sum) )
+<span class="lineNum">     305 </span>            :                         return qd;
+<span class="lineNum">     306 </span>            :                 return (-qd);
+<span class="lineNum">     307 </span>            :         }
+<span class="lineNum">     308 </span>            : 
+<span class="lineNum">     309 </span>            : 
+<span class="lineNum">     310 </span>            :   /**@brief Return the quaternion which is the result of Spherical Linear Interpolation between this and the other quaternion
+<span class="lineNum">     311 </span>            :    * @param q The other quaternion to interpolate with 
+<span class="lineNum">     312 </span>            :    * @param t The ratio between this and q to interpolate.  If t = 0 the result is this, if t=1 the result is q.
+<span class="lineNum">     313 </span>            :    * Slerp interpolates assuming constant velocity.  */
+<span class="lineNum">     314 </span>            :         Quaternion slerp(const Quaternion&amp; q, const tfScalar&amp; t) const
+<span class="lineNum">     315 </span>            :         {
+<span class="lineNum">     316 </span>            :           tfScalar theta = angleShortestPath(q) / tfScalar(2.0);
+<span class="lineNum">     317 </span>            :                 if (theta != tfScalar(0.0))
+<span class="lineNum">     318 </span>            :                 {
+<span class="lineNum">     319 </span>            :                         tfScalar d = tfScalar(1.0) / tfSin(theta);
+<span class="lineNum">     320 </span>            :                         tfScalar s0 = tfSin((tfScalar(1.0) - t) * theta);
+<span class="lineNum">     321 </span>            :                         tfScalar s1 = tfSin(t * theta);   
+<span class="lineNum">     322 </span>            :                         if (dot(q) &lt; 0) // Take care of long angle case see http://en.wikipedia.org/wiki/Slerp
+<span class="lineNum">     323 </span>            :                           return Quaternion((m_floats[0] * s0 + -q.x() * s1) * d,
+<span class="lineNum">     324 </span>            :                                               (m_floats[1] * s0 + -q.y() * s1) * d,
+<span class="lineNum">     325 </span>            :                                               (m_floats[2] * s0 + -q.z() * s1) * d,
+<span class="lineNum">     326 </span>            :                                               (m_floats[3] * s0 + -q.m_floats[3] * s1) * d);
+<span class="lineNum">     327 </span>            :                         else
+<span class="lineNum">     328 </span>            :                           return Quaternion((m_floats[0] * s0 + q.x() * s1) * d,
+<span class="lineNum">     329 </span>            :                                               (m_floats[1] * s0 + q.y() * s1) * d,
+<span class="lineNum">     330 </span>            :                                               (m_floats[2] * s0 + q.z() * s1) * d,
+<span class="lineNum">     331 </span>            :                                               (m_floats[3] * s0 + q.m_floats[3] * s1) * d);
+<span class="lineNum">     332 </span>            :                         
+<span class="lineNum">     333 </span>            :                 }
+<span class="lineNum">     334 </span>            :                 else
+<span class="lineNum">     335 </span>            :                 {
+<span class="lineNum">     336 </span>            :                         return *this;
+<span class="lineNum">     337 </span>            :                 }
+<span class="lineNum">     338 </span>            :         }
+<span class="lineNum">     339 </span>            : 
+<span class="lineNum">     340 </span>            :         static const Quaternion&amp;    getIdentity()
+<span class="lineNum">     341 </span>            :         {
+<span class="lineNum">     342 </span>            :                 static const Quaternion identityQuat(tfScalar(0.),tfScalar(0.),tfScalar(0.),tfScalar(1.));
+<span class="lineNum">     343 </span>            :                 return identityQuat;
+<span class="lineNum">     344 </span>            :         }
+<span class="lineNum">     345 </span>            : 
+<span class="lineNum">     346 </span>            :         TFSIMD_FORCE_INLINE const tfScalar&amp; getW() const { return m_floats[3]; }
+<span class="lineNum">     347 </span>            : 
+<span class="lineNum">     348 </span>            :         
+<span class="lineNum">     349 </span>            : };
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span>            : 
+<span class="lineNum">     352 </span>            : /**@brief Return the negative of a quaternion */
+<span class="lineNum">     353 </span>            : TFSIMD_FORCE_INLINE Quaternion
+<span class="lineNum">     354 </span>            : operator-(const Quaternion&amp; q)
+<span class="lineNum">     355 </span>            : {
+<span class="lineNum">     356 </span>            :         return Quaternion(-q.x(), -q.y(), -q.z(), -q.w());
+<span class="lineNum">     357 </span>            : }
+<span class="lineNum">     358 </span>            : 
+<span class="lineNum">     359 </span>            : 
+<span class="lineNum">     360 </span>            : 
+<span class="lineNum">     361 </span>            : /**@brief Return the product of two quaternions */
+<span class="lineNum">     362 </span>            : TFSIMD_FORCE_INLINE Quaternion
+<span class="lineNum">     363 </span>            : operator*(const Quaternion&amp; q1, const Quaternion&amp; q2) {
+<span class="lineNum">     364 </span>            :         return Quaternion(q1.w() * q2.x() + q1.x() * q2.w() + q1.y() * q2.z() - q1.z() * q2.y(),
+<span class="lineNum">     365 </span>            :                 q1.w() * q2.y() + q1.y() * q2.w() + q1.z() * q2.x() - q1.x() * q2.z(),
+<span class="lineNum">     366 </span>            :                 q1.w() * q2.z() + q1.z() * q2.w() + q1.x() * q2.y() - q1.y() * q2.x(),
+<span class="lineNum">     367 </span>            :                 q1.w() * q2.w() - q1.x() * q2.x() - q1.y() * q2.y() - q1.z() * q2.z()); 
+<span class="lineNum">     368 </span>            : }
+<span class="lineNum">     369 </span>            : 
+<span class="lineNum">     370 </span>            : TFSIMD_FORCE_INLINE Quaternion
+<span class="lineNum">     371 </span>            : operator*(const Quaternion&amp; q, const Vector3&amp; w)
+<span class="lineNum">     372 </span>            : {
+<span class="lineNum">     373 </span>            :         return Quaternion( q.w() * w.x() + q.y() * w.z() - q.z() * w.y(),
+<span class="lineNum">     374 </span>            :                 q.w() * w.y() + q.z() * w.x() - q.x() * w.z(),
+<span class="lineNum">     375 </span>            :                 q.w() * w.z() + q.x() * w.y() - q.y() * w.x(),
+<span class="lineNum">     376 </span>            :                 -q.x() * w.x() - q.y() * w.y() - q.z() * w.z()); 
+<span class="lineNum">     377 </span>            : }
+<span class="lineNum">     378 </span>            : 
+<span class="lineNum">     379 </span>            : TFSIMD_FORCE_INLINE Quaternion
+<span class="lineNum">     380 </span>            : operator*(const Vector3&amp; w, const Quaternion&amp; q)
+<span class="lineNum">     381 </span>            : {
+<span class="lineNum">     382 </span>            :         return Quaternion( w.x() * q.w() + w.y() * q.z() - w.z() * q.y(),
+<span class="lineNum">     383 </span>            :                 w.y() * q.w() + w.z() * q.x() - w.x() * q.z(),
+<span class="lineNum">     384 </span>            :                 w.z() * q.w() + w.x() * q.y() - w.y() * q.x(),
+<span class="lineNum">     385 </span>            :                 -w.x() * q.x() - w.y() * q.y() - w.z() * q.z()); 
+<span class="lineNum">     386 </span>            : }
+<span class="lineNum">     387 </span>            : 
+<span class="lineNum">     388 </span>            : /**@brief Calculate the dot product between two quaternions */
+<span class="lineNum">     389 </span>            : TFSIMD_FORCE_INLINE tfScalar 
+<span class="lineNum">     390 </span>            : dot(const Quaternion&amp; q1, const Quaternion&amp; q2) 
+<span class="lineNum">     391 </span>            : { 
+<span class="lineNum">     392 </span>            :         return q1.dot(q2); 
+<span class="lineNum">     393 </span>            : }
+<span class="lineNum">     394 </span>            : 
+<span class="lineNum">     395 </span>            : 
+<span class="lineNum">     396 </span>            : /**@brief Return the length of a quaternion */
+<span class="lineNum">     397 </span>            : TFSIMD_FORCE_INLINE tfScalar
+<span class="lineNum">     398 </span>            : length(const Quaternion&amp; q) 
+<span class="lineNum">     399 </span>            : { 
+<span class="lineNum">     400 </span>            :         return q.length(); 
+<span class="lineNum">     401 </span>            : }
+<span class="lineNum">     402 </span>            : 
+<span class="lineNum">     403 </span>            : /**@brief Return the ***half*** angle between two quaternions*/
+<span class="lineNum">     404 </span>            : TFSIMD_FORCE_INLINE tfScalar
+<span class="lineNum">     405 </span>            : angle(const Quaternion&amp; q1, const Quaternion&amp; q2) 
+<span class="lineNum">     406 </span>            : { 
+<span class="lineNum">     407 </span>            :         return q1.angle(q2); 
+<span class="lineNum">     408 </span>            : }
+<span class="lineNum">     409 </span>            : 
+<span class="lineNum">     410 </span>            : /**@brief Return the shortest angle between two quaternions*/
+<span class="lineNum">     411 </span>            : TFSIMD_FORCE_INLINE tfScalar
+<span class="lineNum">     412 </span>            : angleShortestPath(const Quaternion&amp; q1, const Quaternion&amp; q2) 
+<span class="lineNum">     413 </span>            : { 
+<span class="lineNum">     414 </span>            :         return q1.angleShortestPath(q2); 
+<span class="lineNum">     415 </span>            : }
+<span class="lineNum">     416 </span>            : 
+<span class="lineNum">     417 </span>            : /**@brief Return the inverse of a quaternion*/
+<span class="lineNum">     418 </span>            : TFSIMD_FORCE_INLINE Quaternion
+<span class="lineNum">     419 </span>            : inverse(const Quaternion&amp; q) 
+<span class="lineNum">     420 </span>            : {
+<span class="lineNum">     421 </span>            :         return q.inverse();
+<span class="lineNum">     422 </span>            : }
+<span class="lineNum">     423 </span>            : 
+<span class="lineNum">     424 </span>            : /**@brief Return the result of spherical linear interpolation betwen two quaternions 
+<span class="lineNum">     425 </span>            :  * @param q1 The first quaternion
+<span class="lineNum">     426 </span>            :  * @param q2 The second quaternion 
+<span class="lineNum">     427 </span>            :  * @param t The ration between q1 and q2.  t = 0 return q1, t=1 returns q2 
+<span class="lineNum">     428 </span>            :  * Slerp assumes constant velocity between positions. */
+<span class="lineNum">     429 </span>            : TFSIMD_FORCE_INLINE Quaternion
+<span class="lineNum">     430 </span>            : slerp(const Quaternion&amp; q1, const Quaternion&amp; q2, const tfScalar&amp; t) 
+<span class="lineNum">     431 </span>            : {
+<span class="lineNum">     432 </span>            :         return q1.slerp(q2, t);
+<span class="lineNum">     433 </span>            : }
+<span class="lineNum">     434 </span>            : 
+<span class="lineNum">     435 </span>            : TFSIMD_FORCE_INLINE Vector3 
+<span class="lineNum">     436 </span>            : quatRotate(const Quaternion&amp; rotation, const Vector3&amp; v) 
+<span class="lineNum">     437 </span>            : {
+<span class="lineNum">     438 </span>            :         Quaternion q = rotation * v;
+<span class="lineNum">     439 </span>            :         q *= rotation.inverse();
+<span class="lineNum">     440 </span>            :         return Vector3(q.getX(),q.getY(),q.getZ());
+<span class="lineNum">     441 </span>            : }
+<span class="lineNum">     442 </span>            : 
+<span class="lineNum">     443 </span>            : TFSIMD_FORCE_INLINE Quaternion 
+<span class="lineNum">     444 </span>            : shortestArcQuat(const Vector3&amp; v0, const Vector3&amp; v1) // Game Programming Gems 2.10. make sure v0,v1 are normalized
+<span class="lineNum">     445 </span>            : {
+<span class="lineNum">     446 </span>            :         Vector3 c = v0.cross(v1);
+<span class="lineNum">     447 </span>            :         tfScalar  d = v0.dot(v1);
+<span class="lineNum">     448 </span>            : 
+<span class="lineNum">     449 </span>            :         if (d &lt; -1.0 + TFSIMD_EPSILON)
+<span class="lineNum">     450 </span>            :         {
+<span class="lineNum">     451 </span>            :                 Vector3 n,unused;
+<span class="lineNum">     452 </span>            :                 tfPlaneSpace1(v0,n,unused);
+<span class="lineNum">     453 </span>            :                 return Quaternion(n.x(),n.y(),n.z(),0.0f); // just pick any vector that is orthogonal to v0
+<span class="lineNum">     454 </span>            :         }
+<span class="lineNum">     455 </span>            : 
+<span class="lineNum">     456 </span>            :         tfScalar  s = tfSqrt((1.0f + d) * 2.0f);
+<span class="lineNum">     457 </span>            :         tfScalar rs = 1.0f / s;
+<span class="lineNum">     458 </span>            : 
+<span class="lineNum">     459 </span>            :         return Quaternion(c.getX()*rs,c.getY()*rs,c.getZ()*rs,s * 0.5f);
+<span class="lineNum">     460 </span>            : }
+<span class="lineNum">     461 </span>            : 
+<span class="lineNum">     462 </span>            : TFSIMD_FORCE_INLINE Quaternion 
+<span class="lineNum">     463 </span>            : shortestArcQuatNormalize2(Vector3&amp; v0,Vector3&amp; v1)
+<span class="lineNum">     464 </span>            : {
+<span class="lineNum">     465 </span>            :         v0.normalize();
+<span class="lineNum">     466 </span>            :         v1.normalize();
+<span class="lineNum">     467 </span>            :         return shortestArcQuat(v0,v1);
+<span class="lineNum">     468 </span>            : }
+<span class="lineNum">     469 </span>            : 
+<span class="lineNum">     470 </span>            : }
+<span class="lineNum">     471 </span>            : #endif
+<span class="lineNum">     472 </span>            : 
+<span class="lineNum">     473 </span>            : 
+<span class="lineNum">     474 </span>            : 
+<span class="lineNum">     475 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

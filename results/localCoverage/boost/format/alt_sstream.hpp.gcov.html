@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - boost/format/alt_sstream.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">boost/format</a> - alt_sstream.hpp<span style="font-size: 80%;"> (source / <a href="alt_sstream.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // ----------------------------------------------------------------------------</a>
+<span class="lineNum">       2 </span>            : //  alt_sstream.hpp : alternative stringstream 
+<span class="lineNum">       3 </span>            : // ----------------------------------------------------------------------------
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : //  Copyright Samuel Krempp 2003. Use, modification, and distribution are
+<span class="lineNum">       6 </span>            : //  subject to the Boost Software License, Version 1.0. (See accompanying
+<span class="lineNum">       7 </span>            : //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : //  See http://www.boost.org/libs/format for library home page
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : // ----------------------------------------------------------------------------
+<span class="lineNum">      12 </span>            : 
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : #ifndef BOOST_SK_ALT_SSTREAM_HPP
+<span class="lineNum">      16 </span>            : #define BOOST_SK_ALT_SSTREAM_HPP
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : #include &lt;string&gt;
+<span class="lineNum">      19 </span>            : #include &lt;boost/format/detail/compat_workarounds.hpp&gt;
+<span class="lineNum">      20 </span>            : #include &lt;boost/utility/base_from_member.hpp&gt;
+<span class="lineNum">      21 </span>            : #include &lt;boost/shared_ptr.hpp&gt;
+<span class="lineNum">      22 </span>            : #include &lt;boost/assert.hpp&gt;
+<span class="lineNum">      23 </span>            : 
+<span class="lineNum">      24 </span>            : namespace boost {
+<span class="lineNum">      25 </span>            :     namespace io {
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            :         template&lt;class Ch, class Tr=::std::char_traits&lt;Ch&gt;, 
+<span class="lineNum">      28 </span>            :                  class Alloc=::std::allocator&lt;Ch&gt; &gt;
+<span class="lineNum">      29 </span>            :         class basic_altstringbuf;
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            :         template&lt;class Ch, class Tr =::std::char_traits&lt;Ch&gt;, 
+<span class="lineNum">      32 </span>            :                  class Alloc=::std::allocator&lt;Ch&gt; &gt;
+<span class="lineNum">      33 </span>            :         class basic_oaltstringstream;
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : 
+<span class="lineNum">      36 </span>            :         template&lt;class Ch, class Tr, class Alloc&gt;
+<span class="lineNum">      37 </span>            :         class basic_altstringbuf 
+<span class="lineNum">      38 </span>            :             : public ::std::basic_streambuf&lt;Ch, Tr&gt;
+<span class="lineNum">      39 </span>            :         {
+<span class="lineNum">      40 </span>            :             typedef ::std::basic_streambuf&lt;Ch, Tr&gt;  streambuf_t;
+<span class="lineNum">      41 </span>            :             typedef typename CompatAlloc&lt;Alloc&gt;::compatible_type compat_allocator_type;
+<span class="lineNum">      42 </span>            :             typedef typename CompatTraits&lt;Tr&gt;::compatible_type   compat_traits_type;
+<span class="lineNum">      43 </span>            :         public:
+<span class="lineNum">      44 </span>            :             typedef Ch     char_type;
+<span class="lineNum">      45 </span>            :             typedef Tr     traits_type;
+<span class="lineNum">      46 </span>            :             typedef typename compat_traits_type::int_type     int_type;
+<span class="lineNum">      47 </span>            :             typedef typename compat_traits_type::pos_type     pos_type;
+<span class="lineNum">      48 </span>            :             typedef typename compat_traits_type::off_type     off_type;
+<span class="lineNum">      49 </span>            :             typedef Alloc                     allocator_type;
+<span class="lineNum">      50 </span>            :             typedef ::std::basic_string&lt;Ch, Tr, Alloc&gt; string_type;
+<span class="lineNum">      51 </span>            :             typedef typename string_type::size_type    size_type;
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            :             typedef ::std::streamsize streamsize;
+<a name="54"><span class="lineNum">      54 </span>            : </a>
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span><span class="lineNoCov">          0 :             explicit basic_altstringbuf(std::ios_base::openmode mode</span>
+<span class="lineNum">      57 </span>            :                                         = std::ios_base::in | std::ios_base::out)
+<span class="lineNum">      58 </span><span class="lineNoCov">          0 :                 : putend_(NULL), is_allocated_(false), mode_(mode) </span>
+<span class="lineNum">      59 </span><span class="lineNoCov">          0 :                 {}</span>
+<span class="lineNum">      60 </span>            :             explicit basic_altstringbuf(const string_type&amp; s,
+<span class="lineNum">      61 </span>            :                                         ::std::ios_base::openmode mode
+<span class="lineNum">      62 </span>            :                                         = ::std::ios_base::in | ::std::ios_base::out)
+<a name="63"><span class="lineNum">      63 </span>            :                 : putend_(NULL), is_allocated_(false), mode_(mode) </a>
+<span class="lineNum">      64 </span>            :                 { dealloc(); str(s); }
+<span class="lineNum">      65 </span><span class="lineNoCov">          0 :             virtual ~basic_altstringbuf() </span>
+<span class="lineNum">      66 </span><span class="lineNoCov">          0 :                 { dealloc(); }</span>
+<span class="lineNum">      67 </span>            :             using streambuf_t::pbase;
+<span class="lineNum">      68 </span>            :             using streambuf_t::pptr;
+<span class="lineNum">      69 </span>            :             using streambuf_t::epptr;
+<span class="lineNum">      70 </span>            :             using streambuf_t::eback;
+<span class="lineNum">      71 </span>            :             using streambuf_t::gptr;
+<span class="lineNum">      72 </span>            :             using streambuf_t::egptr;
+<span class="lineNum">      73 </span>            :     
+<span class="lineNum">      74 </span>            :             void clear_buffer();
+<span class="lineNum">      75 </span>            :             void str(const string_type&amp; s);
+<span class="lineNum">      76 </span>            : 
+<span class="lineNum">      77 </span>            :             // 0-copy access :
+<span class="lineNum">      78 </span>            :             Ch * begin() const; 
+<span class="lineNum">      79 </span>            :             size_type size() const;
+<span class="lineNum">      80 </span>            :             size_type cur_size() const; // stop at current pointer
+<a name="81"><span class="lineNum">      81 </span>            :             Ch * pend() const // the highest position reached by pptr() since creation</a>
+<span class="lineNum">      82 </span>            :                 { return ((putend_ &lt; pptr()) ? pptr() : putend_); }
+<span class="lineNum">      83 </span><span class="lineNoCov">          0 :             size_type pcount() const </span>
+<span class="lineNum">      84 </span><span class="lineNoCov">          0 :                 { return static_cast&lt;size_type&gt;( pptr() - pbase()) ;}</span>
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            :             // copy buffer to string :
+<span class="lineNum">      87 </span>            :             string_type str() const 
+<span class="lineNum">      88 </span>            :                 { return string_type(begin(), size()); }
+<span class="lineNum">      89 </span>            :             string_type cur_str() const 
+<span class="lineNum">      90 </span>            :                 { return string_type(begin(), cur_size()); }
+<span class="lineNum">      91 </span>            :         protected:
+<span class="lineNum">      92 </span>            :             explicit basic_altstringbuf (basic_altstringbuf * s,
+<span class="lineNum">      93 </span>            :                                          ::std::ios_base::openmode mode 
+<span class="lineNum">      94 </span>            :                                          = ::std::ios_base::in | ::std::ios_base::out)
+<span class="lineNum">      95 </span>            :                 : putend_(NULL), is_allocated_(false), mode_(mode) 
+<span class="lineNum">      96 </span>            :                 { dealloc(); str(s); }
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span>            :             virtual pos_type seekoff(off_type off, ::std::ios_base::seekdir way, 
+<span class="lineNum">      99 </span>            :                                      ::std::ios_base::openmode which 
+<span class="lineNum">     100 </span>            :                                      = ::std::ios_base::in | ::std::ios_base::out);
+<span class="lineNum">     101 </span>            :             virtual pos_type seekpos (pos_type pos, 
+<span class="lineNum">     102 </span>            :                                       ::std::ios_base::openmode which 
+<span class="lineNum">     103 </span>            :                                       = ::std::ios_base::in | ::std::ios_base::out);
+<span class="lineNum">     104 </span>            :             virtual int_type underflow();
+<span class="lineNum">     105 </span>            :             virtual int_type pbackfail(int_type meta = compat_traits_type::eof());
+<span class="lineNum">     106 </span>            :             virtual int_type overflow(int_type meta = compat_traits_type::eof());
+<span class="lineNum">     107 </span>            :             void dealloc();
+<span class="lineNum">     108 </span>            :         private:
+<span class="lineNum">     109 </span>            :             enum { alloc_min = 256}; // minimum size of allocations
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span>            :             Ch *putend_;  // remembers (over seeks) the highest value of pptr()
+<span class="lineNum">     112 </span>            :             bool is_allocated_;
+<span class="lineNum">     113 </span>            :             ::std::ios_base::openmode mode_;
+<span class="lineNum">     114 </span>            :             compat_allocator_type alloc_;  // the allocator object
+<span class="lineNum">     115 </span>            :         };
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span>            : 
+<a name="118"><span class="lineNum">     118 </span>            : // ---   class basic_oaltstringstream ----------------------------------------</a>
+<span class="lineNum">     119 </span>            :         template &lt;class Ch, class Tr, class Alloc&gt;
+<span class="lineNum">     120 </span><span class="lineNoCov">          0 :         class basic_oaltstringstream </span>
+<span class="lineNum">     121 </span>            :             : private base_from_member&lt; shared_ptr&lt; basic_altstringbuf&lt; Ch, Tr, Alloc&gt; &gt; &gt;,
+<span class="lineNum">     122 </span>            :               public ::std::basic_ostream&lt;Ch, Tr&gt;
+<span class="lineNum">     123 </span>            :         {
+<span class="lineNum">     124 </span>            :             class No_Op { 
+<span class="lineNum">     125 </span>            :                 // used as no-op deleter for (not-owner) shared_pointers
+<a name="126"><span class="lineNum">     126 </span>            :             public: </a>
+<span class="lineNum">     127 </span>            :                 template&lt;class T&gt;
+<span class="lineNum">     128 </span><span class="lineNoCov">          0 :                 const T &amp; operator()(const T &amp; arg) { return arg; }</span>
+<span class="lineNum">     129 </span>            :             };
+<span class="lineNum">     130 </span>            :             typedef ::std::basic_ostream&lt;Ch, Tr&gt; stream_t;
+<span class="lineNum">     131 </span>            :             typedef boost::base_from_member&lt;boost::shared_ptr&lt;
+<span class="lineNum">     132 </span>            :                 basic_altstringbuf&lt;Ch,Tr, Alloc&gt; &gt; &gt; 
+<span class="lineNum">     133 </span>            :                 pbase_type;
+<span class="lineNum">     134 </span>            :             typedef ::std::basic_string&lt;Ch, Tr, Alloc&gt;  string_type;
+<span class="lineNum">     135 </span>            :             typedef typename string_type::size_type     size_type;
+<span class="lineNum">     136 </span>            :             typedef basic_altstringbuf&lt;Ch, Tr, Alloc&gt;   stringbuf_t;
+<span class="lineNum">     137 </span>            :         public:
+<span class="lineNum">     138 </span>            :             typedef Alloc  allocator_type;
+<span class="lineNum">     139 </span>            :             basic_oaltstringstream() 
+<span class="lineNum">     140 </span>            :                 : pbase_type(new stringbuf_t), stream_t(rdbuf()) 
+<span class="lineNum">     141 </span>            :                 { }
+<span class="lineNum">     142 </span>            :             basic_oaltstringstream(::boost::shared_ptr&lt;stringbuf_t&gt; buf) 
+<a name="143"><span class="lineNum">     143 </span>            :                 : pbase_type(buf), stream_t(rdbuf()) </a>
+<span class="lineNum">     144 </span>            :                 { }
+<span class="lineNum">     145 </span><span class="lineNoCov">          0 :             basic_oaltstringstream(stringbuf_t * buf) </span>
+<a name="146"><span class="lineNum">     146 </span><span class="lineNoCov">          0 :                 : pbase_type(buf, No_Op() ), stream_t(rdbuf()) </span></a>
+<span class="lineNum">     147 </span><span class="lineNoCov">          0 :                 { }</span>
+<span class="lineNum">     148 </span><span class="lineNoCov">          0 :             stringbuf_t * rdbuf() const </span>
+<span class="lineNum">     149 </span><span class="lineNoCov">          0 :                 { return pbase_type::member.get(); }</span>
+<span class="lineNum">     150 </span>            :             void clear_buffer() 
+<span class="lineNum">     151 </span>            :                 { rdbuf()-&gt;clear_buffer(); }
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span>            :             // 0-copy access :
+<span class="lineNum">     154 </span>            :             Ch * begin() const 
+<span class="lineNum">     155 </span>            :                 { return rdbuf()-&gt;begin(); }
+<span class="lineNum">     156 </span>            :             size_type size() const 
+<span class="lineNum">     157 </span>            :                 { return rdbuf()-&gt;size(); }
+<span class="lineNum">     158 </span>            :             size_type cur_size() const // stops at current position
+<span class="lineNum">     159 </span>            :                 { return rdbuf()-&gt;cur_size(); }
+<span class="lineNum">     160 </span>            : 
+<span class="lineNum">     161 </span>            :             // copy buffer to string :
+<span class="lineNum">     162 </span>            :             string_type str()     const   // [pbase, epptr[
+<span class="lineNum">     163 </span>            :                 { return rdbuf()-&gt;str(); } 
+<span class="lineNum">     164 </span>            :             string_type cur_str() const   // [pbase, pptr[
+<span class="lineNum">     165 </span>            :                 { return rdbuf()-&gt;cur_str(); }
+<span class="lineNum">     166 </span>            :             void str(const string_type&amp; s) 
+<span class="lineNum">     167 </span>            :                 { rdbuf()-&gt;str(s); }
+<span class="lineNum">     168 </span>            :         };
+<span class="lineNum">     169 </span>            : 
+<span class="lineNum">     170 </span>            :     } // N.S. io
+<span class="lineNum">     171 </span>            : } // N.S. boost
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span>            : #include &lt;boost/format/alt_sstream_impl.hpp&gt;
+<span class="lineNum">     174 </span>            : 
+<span class="lineNum">     175 </span>            : #endif // include guard
+<span class="lineNum">     176 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

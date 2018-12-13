@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/tf/LinearMath/QuadWord.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/tf/LinearMath</a> - QuadWord.h<span style="font-size: 80%;"> (source / <a href="QuadWord.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : Copyright (c) 2003-2006 Gino van den Bergen / Erwin Coumans  http://continuousphysics.com/Bullet/
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : This software is provided 'as-is', without any express or implied warranty.
+<span class="lineNum">       5 </span>            : In no event will the authors be held liable for any damages arising from the use of this software.
+<span class="lineNum">       6 </span>            : Permission is granted to anyone to use this software for any purpose, 
+<span class="lineNum">       7 </span>            : including commercial applications, and to alter it and redistribute it freely, 
+<span class="lineNum">       8 </span>            : subject to the following restrictions:
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+<span class="lineNum">      11 </span>            : 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+<span class="lineNum">      12 </span>            : 3. This notice may not be removed or altered from any source distribution.
+<span class="lineNum">      13 </span>            : */
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : #ifndef TF_QUADWORD_H
+<span class="lineNum">      17 </span>            : #define TF_QUADWORD_H
+<span class="lineNum">      18 </span>            : 
+<span class="lineNum">      19 </span>            : #include &quot;Scalar.h&quot;
+<span class="lineNum">      20 </span>            : #include &quot;MinMax.h&quot;
+<span class="lineNum">      21 </span>            : 
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span>            : #if defined (__CELLOS_LV2) &amp;&amp; defined (__SPU__)
+<span class="lineNum">      24 </span>            : #include &lt;altivec.h&gt;
+<span class="lineNum">      25 </span>            : #endif
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            : namespace tf
+<span class="lineNum">      29 </span>            : {
+<span class="lineNum">      30 </span>            : /**@brief The QuadWord class is base class for Vector3 and Quaternion. 
+<span class="lineNum">      31 </span>            :  * Some issues under PS3 Linux with IBM 2.1 SDK, gcc compiler prevent from using aligned quadword.
+<span class="lineNum">      32 </span>            :  */
+<span class="lineNum">      33 </span>            : #ifndef USE_LIBSPE2
+<span class="lineNum">      34 </span>            : ATTRIBUTE_ALIGNED16(class) QuadWord
+<span class="lineNum">      35 </span>            : #else
+<span class="lineNum">      36 </span>            : class QuadWord
+<span class="lineNum">      37 </span>            : #endif
+<span class="lineNum">      38 </span>            : {
+<span class="lineNum">      39 </span>            : protected:
+<span class="lineNum">      40 </span>            : 
+<span class="lineNum">      41 </span>            : #if defined (__SPU__) &amp;&amp; defined (__CELLOS_LV2__)
+<span class="lineNum">      42 </span>            :         union {
+<span class="lineNum">      43 </span>            :                 vec_float4 mVec128;
+<span class="lineNum">      44 </span>            :                 tfScalar        m_floats[4];
+<span class="lineNum">      45 </span>            :         };
+<span class="lineNum">      46 </span>            : public:
+<span class="lineNum">      47 </span>            :         vec_float4      get128() const
+<span class="lineNum">      48 </span>            :         {
+<span class="lineNum">      49 </span>            :                 return mVec128;
+<span class="lineNum">      50 </span>            :         }
+<span class="lineNum">      51 </span>            : protected:
+<span class="lineNum">      52 </span>            : #else //__CELLOS_LV2__ __SPU__
+<span class="lineNum">      53 </span>            :         tfScalar        m_floats[4];
+<span class="lineNum">      54 </span>            : #endif //__CELLOS_LV2__ __SPU__
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            :         public:
+<span class="lineNum">      57 </span>            :   
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            :   /**@brief Return the x value */
+<span class="lineNum">      60 </span>            :                 TFSIMD_FORCE_INLINE const tfScalar&amp; getX() const { return m_floats[0]; }
+<span class="lineNum">      61 </span>            :   /**@brief Return the y value */
+<span class="lineNum">      62 </span>            :                 TFSIMD_FORCE_INLINE const tfScalar&amp; getY() const { return m_floats[1]; }
+<span class="lineNum">      63 </span>            :   /**@brief Return the z value */
+<span class="lineNum">      64 </span>            :                 TFSIMD_FORCE_INLINE const tfScalar&amp; getZ() const { return m_floats[2]; }
+<span class="lineNum">      65 </span>            :   /**@brief Set the x value */
+<span class="lineNum">      66 </span>            :                 TFSIMD_FORCE_INLINE void        setX(tfScalar x) { m_floats[0] = x;};
+<span class="lineNum">      67 </span>            :   /**@brief Set the y value */
+<span class="lineNum">      68 </span>            :                 TFSIMD_FORCE_INLINE void        setY(tfScalar y) { m_floats[1] = y;};
+<span class="lineNum">      69 </span>            :   /**@brief Set the z value */
+<span class="lineNum">      70 </span>            :                 TFSIMD_FORCE_INLINE void        setZ(tfScalar z) { m_floats[2] = z;};
+<span class="lineNum">      71 </span>            :   /**@brief Set the w value */
+<a name="72"><span class="lineNum">      72 </span>            :                 TFSIMD_FORCE_INLINE void        setW(tfScalar w) { m_floats[3] = w;};</a>
+<span class="lineNum">      73 </span>            :   /**@brief Return the x value */
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">  355361400 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; x() const { return m_floats[0]; }</span></a>
+<span class="lineNum">      75 </span>            :   /**@brief Return the y value */
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">  284289120 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; y() const { return m_floats[1]; }</span></a>
+<span class="lineNum">      77 </span>            :   /**@brief Return the z value */
+<a name="78"><span class="lineNum">      78 </span><span class="lineCov">  213216840 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; z() const { return m_floats[2]; }</span></a>
+<span class="lineNum">      79 </span>            :   /**@brief Return the w value */
+<span class="lineNum">      80 </span><span class="lineCov">  213216840 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; w() const { return m_floats[3]; }</span>
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span>            :         //TFSIMD_FORCE_INLINE tfScalar&amp;       operator[](int i)       { return (&amp;m_floats[0])[i];       }      
+<span class="lineNum">      83 </span>            :         //TFSIMD_FORCE_INLINE const tfScalar&amp; operator[](int i) const { return (&amp;m_floats[0])[i]; }
+<span class="lineNum">      84 </span>            :         ///operator tfScalar*() replaces operator[], using implicit conversion. We added operator != and operator == to avoid pointer comparisons.
+<span class="lineNum">      85 </span>            :         TFSIMD_FORCE_INLINE     operator       tfScalar *()       { return &amp;m_floats[0]; }
+<span class="lineNum">      86 </span>            :         TFSIMD_FORCE_INLINE     operator const tfScalar *() const { return &amp;m_floats[0]; }
+<span class="lineNum">      87 </span>            : 
+<span class="lineNum">      88 </span>            :         TFSIMD_FORCE_INLINE     bool    operator==(const QuadWord&amp; other) const
+<span class="lineNum">      89 </span>            :         {
+<span class="lineNum">      90 </span>            :                 return ((m_floats[3]==other.m_floats[3]) &amp;&amp; (m_floats[2]==other.m_floats[2]) &amp;&amp; (m_floats[1]==other.m_floats[1]) &amp;&amp; (m_floats[0]==other.m_floats[0]));
+<span class="lineNum">      91 </span>            :         }
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span>            :         TFSIMD_FORCE_INLINE     bool    operator!=(const QuadWord&amp; other) const
+<span class="lineNum">      94 </span>            :         {
+<span class="lineNum">      95 </span>            :                 return !(*this == other);
+<span class="lineNum">      96 </span>            :         }
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span>            :   /**@brief Set x,y,z and zero w 
+<span class="lineNum">      99 </span>            :    * @param x Value of x
+<span class="lineNum">     100 </span>            :    * @param y Value of y
+<span class="lineNum">     101 </span>            :    * @param z Value of z
+<span class="lineNum">     102 </span>            :    */
+<span class="lineNum">     103 </span>            :                 TFSIMD_FORCE_INLINE void        setValue(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z)
+<span class="lineNum">     104 </span>            :                 {
+<span class="lineNum">     105 </span>            :                         m_floats[0]=x;
+<span class="lineNum">     106 </span>            :                         m_floats[1]=y;
+<span class="lineNum">     107 </span>            :                         m_floats[2]=z;
+<span class="lineNum">     108 </span>            :                         m_floats[3] = 0.f;
+<span class="lineNum">     109 </span>            :                 }
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span>            : /*              void getValue(tfScalar *m) const 
+<span class="lineNum">     112 </span>            :                 {
+<span class="lineNum">     113 </span>            :                         m[0] = m_floats[0];
+<span class="lineNum">     114 </span>            :                         m[1] = m_floats[1];
+<span class="lineNum">     115 </span>            :                         m[2] = m_floats[2];
+<span class="lineNum">     116 </span>            :                 }
+<span class="lineNum">     117 </span>            : */
+<span class="lineNum">     118 </span>            : /**@brief Set the values 
+<span class="lineNum">     119 </span>            :    * @param x Value of x
+<span class="lineNum">     120 </span>            :    * @param y Value of y
+<span class="lineNum">     121 </span>            :    * @param z Value of z
+<a name="122"><span class="lineNum">     122 </span>            :    * @param w Value of w</a>
+<span class="lineNum">     123 </span>            :    */
+<span class="lineNum">     124 </span><span class="lineCov">   71072280 :                 TFSIMD_FORCE_INLINE void        setValue(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z,const tfScalar&amp; w)</span>
+<span class="lineNum">     125 </span>            :                 {
+<span class="lineNum">     126 </span><span class="lineCov">   71072280 :                         m_floats[0]=x;</span>
+<span class="lineNum">     127 </span><span class="lineCov">   71072280 :                         m_floats[1]=y;</span>
+<span class="lineNum">     128 </span><span class="lineCov">   71072280 :                         m_floats[2]=z;</span>
+<span class="lineNum">     129 </span><span class="lineCov">   71072280 :                         m_floats[3]=w;</span>
+<a name="130"><span class="lineNum">     130 </span><span class="lineCov">   71072280 :                 }</span></a>
+<span class="lineNum">     131 </span>            :   /**@brief No initialization constructor */
+<span class="lineNum">     132 </span><span class="lineCov">   71072280 :                 TFSIMD_FORCE_INLINE QuadWord()</span>
+<span class="lineNum">     133 </span>            :                 //      :m_floats[0](tfScalar(0.)),m_floats[1](tfScalar(0.)),m_floats[2](tfScalar(0.)),m_floats[3](tfScalar(0.))
+<span class="lineNum">     134 </span>            :                 {
+<span class="lineNum">     135 </span><span class="lineCov">   71072280 :                 }</span>
+<span class="lineNum">     136 </span>            :  
+<span class="lineNum">     137 </span>            :   /**@brief Three argument constructor (zeros w)
+<span class="lineNum">     138 </span>            :    * @param x Value of x
+<span class="lineNum">     139 </span>            :    * @param y Value of y
+<span class="lineNum">     140 </span>            :    * @param z Value of z
+<span class="lineNum">     141 </span>            :    */
+<span class="lineNum">     142 </span>            :                 TFSIMD_FORCE_INLINE QuadWord(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z)               
+<span class="lineNum">     143 </span>            :                 {
+<span class="lineNum">     144 </span>            :                         m_floats[0] = x, m_floats[1] = y, m_floats[2] = z, m_floats[3] = 0.0f;
+<span class="lineNum">     145 </span>            :                 }
+<span class="lineNum">     146 </span>            : 
+<span class="lineNum">     147 </span>            : /**@brief Initializing constructor
+<span class="lineNum">     148 </span>            :    * @param x Value of x
+<span class="lineNum">     149 </span>            :    * @param y Value of y
+<span class="lineNum">     150 </span>            :    * @param z Value of z
+<span class="lineNum">     151 </span>            :    * @param w Value of w
+<span class="lineNum">     152 </span>            :    */
+<span class="lineNum">     153 </span>            :                 TFSIMD_FORCE_INLINE QuadWord(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z,const tfScalar&amp; w) 
+<span class="lineNum">     154 </span>            :                 {
+<span class="lineNum">     155 </span>            :                         m_floats[0] = x, m_floats[1] = y, m_floats[2] = z, m_floats[3] = w;
+<span class="lineNum">     156 </span>            :                 }
+<span class="lineNum">     157 </span>            : 
+<span class="lineNum">     158 </span>            :   /**@brief Set each element to the max of the current values and the values of another QuadWord
+<span class="lineNum">     159 </span>            :    * @param other The other QuadWord to compare with 
+<span class="lineNum">     160 </span>            :    */
+<span class="lineNum">     161 </span>            :                 TFSIMD_FORCE_INLINE void        setMax(const QuadWord&amp; other)
+<span class="lineNum">     162 </span>            :                 {
+<span class="lineNum">     163 </span>            :                         tfSetMax(m_floats[0], other.m_floats[0]);
+<span class="lineNum">     164 </span>            :                         tfSetMax(m_floats[1], other.m_floats[1]);
+<span class="lineNum">     165 </span>            :                         tfSetMax(m_floats[2], other.m_floats[2]);
+<span class="lineNum">     166 </span>            :                         tfSetMax(m_floats[3], other.m_floats[3]);
+<span class="lineNum">     167 </span>            :                 }
+<span class="lineNum">     168 </span>            :   /**@brief Set each element to the min of the current values and the values of another QuadWord
+<span class="lineNum">     169 </span>            :    * @param other The other QuadWord to compare with 
+<span class="lineNum">     170 </span>            :    */
+<span class="lineNum">     171 </span>            :                 TFSIMD_FORCE_INLINE void        setMin(const QuadWord&amp; other)
+<span class="lineNum">     172 </span>            :                 {
+<span class="lineNum">     173 </span>            :                         tfSetMin(m_floats[0], other.m_floats[0]);
+<span class="lineNum">     174 </span>            :                         tfSetMin(m_floats[1], other.m_floats[1]);
+<span class="lineNum">     175 </span>            :                         tfSetMin(m_floats[2], other.m_floats[2]);
+<span class="lineNum">     176 </span>            :                         tfSetMin(m_floats[3], other.m_floats[3]);
+<span class="lineNum">     177 </span>            :                 }
+<span class="lineNum">     178 </span>            : 
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span>            : 
+<span class="lineNum">     181 </span>            : };
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span>            : }
+<span class="lineNum">     184 </span>            : 
+<span class="lineNum">     185 </span>            : #endif //TFSIMD_QUADWORD_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

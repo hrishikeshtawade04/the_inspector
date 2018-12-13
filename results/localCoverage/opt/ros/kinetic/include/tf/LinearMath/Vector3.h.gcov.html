@@ -1,0 +1,809 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/tf/LinearMath/Vector3.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/tf/LinearMath</a> - Vector3.h<span style="font-size: 80%;"> (source / <a href="Vector3.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : Copyright (c) 2003-2006 Gino van den Bergen / Erwin Coumans  http://continuousphysics.com/Bullet/
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : This software is provided 'as-is', without any express or implied warranty.
+<span class="lineNum">       5 </span>            : In no event will the authors be held liable for any damages arising from the use of this software.
+<span class="lineNum">       6 </span>            : Permission is granted to anyone to use this software for any purpose, 
+<span class="lineNum">       7 </span>            : including commercial applications, and to alter it and redistribute it freely, 
+<span class="lineNum">       8 </span>            : subject to the following restrictions:
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+<span class="lineNum">      11 </span>            : 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+<span class="lineNum">      12 </span>            : 3. This notice may not be removed or altered from any source distribution.
+<span class="lineNum">      13 </span>            : */
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : #ifndef TF_VECTOR3_H
+<span class="lineNum">      18 </span>            : #define TF_VECTOR3_H
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : #include &quot;Scalar.h&quot;
+<span class="lineNum">      22 </span>            : #include &quot;MinMax.h&quot;
+<span class="lineNum">      23 </span>            : 
+<span class="lineNum">      24 </span>            : namespace tf{
+<span class="lineNum">      25 </span>            : 
+<span class="lineNum">      26 </span>            : #define Vector3Data Vector3DoubleData
+<span class="lineNum">      27 </span>            : #define Vector3DataName &quot;Vector3DoubleData&quot;
+<span class="lineNum">      28 </span>            : 
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            : /**
+<span class="lineNum">      33 </span>            :  * @class Vector3
+<span class="lineNum">      34 </span>            :  * @brief Vector3 can be used to represent 3D points and vectors.
+<span class="lineNum">      35 </span>            :  * It has an un-used w component to suit 16-byte alignment when Vector3 is stored in containers. This extra component can be used by derived classes (Quaternion?) or by user
+<span class="lineNum">      36 </span>            :  * Ideally, this class should be replaced by a platform optimized SIMD version that keeps the data in registers
+<span class="lineNum">      37 </span>            :  */
+<span class="lineNum">      38 </span>            : class Vector3
+<span class="lineNum">      39 </span>            : {
+<span class="lineNum">      40 </span>            : public:
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            : #if defined (__SPU__) &amp;&amp; defined (__CELLOS_LV2__)
+<span class="lineNum">      43 </span>            :                 tfScalar        m_floats[4];
+<span class="lineNum">      44 </span>            : public:
+<span class="lineNum">      45 </span>            :         TFSIMD_FORCE_INLINE const vec_float4&amp;       get128() const
+<span class="lineNum">      46 </span>            :         {
+<span class="lineNum">      47 </span>            :                 return *((const vec_float4*)&amp;m_floats[0]);
+<span class="lineNum">      48 </span>            :         }
+<span class="lineNum">      49 </span>            : public:
+<span class="lineNum">      50 </span>            : #else //__CELLOS_LV2__ __SPU__
+<span class="lineNum">      51 </span>            : #ifdef TF_USE_SSE // _WIN32
+<span class="lineNum">      52 </span>            :         union {
+<span class="lineNum">      53 </span>            :                 __m128 mVec128;
+<span class="lineNum">      54 </span>            :                 tfScalar        m_floats[4];
+<span class="lineNum">      55 </span>            :         };
+<span class="lineNum">      56 </span>            :         TFSIMD_FORCE_INLINE     __m128  get128() const
+<span class="lineNum">      57 </span>            :         {
+<span class="lineNum">      58 </span>            :                 return mVec128;
+<span class="lineNum">      59 </span>            :         }
+<span class="lineNum">      60 </span>            :         TFSIMD_FORCE_INLINE     void    set128(__m128 v128)
+<span class="lineNum">      61 </span>            :         {
+<span class="lineNum">      62 </span>            :                 mVec128 = v128;
+<span class="lineNum">      63 </span>            :         }
+<span class="lineNum">      64 </span>            : #else
+<span class="lineNum">      65 </span>            :         tfScalar        m_floats[4];
+<span class="lineNum">      66 </span>            : #endif
+<span class="lineNum">      67 </span>            : #endif //__CELLOS_LV2__ __SPU__
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span>            :         public:
+<a name="70"><span class="lineNum">      70 </span>            : </a>
+<span class="lineNum">      71 </span>            :   /**@brief No initialization constructor */
+<span class="lineNum">      72 </span><span class="lineCov">  213216972 :         TFSIMD_FORCE_INLINE Vector3() {}</span>
+<span class="lineNum">      73 </span>            : 
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span>            :   /**@brief Constructor from scalars 
+<span class="lineNum">      76 </span>            :    * @param x X value
+<span class="lineNum">      77 </span>            :    * @param y Y value 
+<span class="lineNum">      78 </span>            :    * @param z Z value 
+<span class="lineNum">      79 </span>            :    */
+<span class="lineNum">      80 </span>            :         TFSIMD_FORCE_INLINE Vector3(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z)
+<span class="lineNum">      81 </span>            :         {
+<span class="lineNum">      82 </span>            :                 m_floats[0] = x;
+<span class="lineNum">      83 </span>            :                 m_floats[1] = y;
+<span class="lineNum">      84 </span>            :                 m_floats[2] = z;
+<span class="lineNum">      85 </span>            :                 m_floats[3] = tfScalar(0.);
+<span class="lineNum">      86 </span>            :         }
+<span class="lineNum">      87 </span>            : 
+<span class="lineNum">      88 </span>            : /**@brief Add a vector to this one 
+<span class="lineNum">      89 </span>            :  * @param The vector to add to this one */
+<span class="lineNum">      90 </span>            :         TFSIMD_FORCE_INLINE Vector3&amp; operator+=(const Vector3&amp; v)
+<span class="lineNum">      91 </span>            :         {
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span>            :                 m_floats[0] += v.m_floats[0]; m_floats[1] += v.m_floats[1];m_floats[2] += v.m_floats[2];
+<span class="lineNum">      94 </span>            :                 return *this;
+<span class="lineNum">      95 </span>            :         }
+<span class="lineNum">      96 </span>            : 
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span>            :   /**@brief Sutfract a vector from this one
+<span class="lineNum">      99 </span>            :    * @param The vector to sutfract */
+<span class="lineNum">     100 </span>            :         TFSIMD_FORCE_INLINE Vector3&amp; operator-=(const Vector3&amp; v) 
+<span class="lineNum">     101 </span>            :         {
+<span class="lineNum">     102 </span>            :                 m_floats[0] -= v.m_floats[0]; m_floats[1] -= v.m_floats[1];m_floats[2] -= v.m_floats[2];
+<span class="lineNum">     103 </span>            :                 return *this;
+<span class="lineNum">     104 </span>            :         }
+<span class="lineNum">     105 </span>            :   /**@brief Scale the vector
+<span class="lineNum">     106 </span>            :    * @param s Scale factor */
+<span class="lineNum">     107 </span>            :         TFSIMD_FORCE_INLINE Vector3&amp; operator*=(const tfScalar&amp; s)
+<span class="lineNum">     108 </span>            :         {
+<span class="lineNum">     109 </span>            :                 m_floats[0] *= s; m_floats[1] *= s;m_floats[2] *= s;
+<span class="lineNum">     110 </span>            :                 return *this;
+<span class="lineNum">     111 </span>            :         }
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span>            :   /**@brief Inversely scale the vector 
+<span class="lineNum">     114 </span>            :    * @param s Scale factor to divide by */
+<span class="lineNum">     115 </span>            :         TFSIMD_FORCE_INLINE Vector3&amp; operator/=(const tfScalar&amp; s) 
+<span class="lineNum">     116 </span>            :         {
+<span class="lineNum">     117 </span>            :                 tfFullAssert(s != tfScalar(0.0));
+<span class="lineNum">     118 </span>            :                 return *this *= tfScalar(1.0) / s;
+<span class="lineNum">     119 </span>            :         }
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span>            :   /**@brief Return the dot product
+<span class="lineNum">     122 </span>            :    * @param v The other vector in the dot product */
+<span class="lineNum">     123 </span>            :         TFSIMD_FORCE_INLINE tfScalar dot(const Vector3&amp; v) const
+<span class="lineNum">     124 </span>            :         {
+<span class="lineNum">     125 </span>            :                 return m_floats[0] * v.m_floats[0] + m_floats[1] * v.m_floats[1] +m_floats[2] * v.m_floats[2];
+<span class="lineNum">     126 </span>            :         }
+<span class="lineNum">     127 </span>            : 
+<span class="lineNum">     128 </span>            :   /**@brief Return the length of the vector squared */
+<span class="lineNum">     129 </span>            :         TFSIMD_FORCE_INLINE tfScalar length2() const
+<span class="lineNum">     130 </span>            :         {
+<span class="lineNum">     131 </span>            :                 return dot(*this);
+<span class="lineNum">     132 </span>            :         }
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span>            :   /**@brief Return the length of the vector */
+<span class="lineNum">     135 </span>            :         TFSIMD_FORCE_INLINE tfScalar length() const
+<span class="lineNum">     136 </span>            :         {
+<span class="lineNum">     137 </span>            :                 return tfSqrt(length2());
+<span class="lineNum">     138 </span>            :         }
+<span class="lineNum">     139 </span>            : 
+<span class="lineNum">     140 </span>            :   /**@brief Return the distance squared between the ends of this and another vector
+<span class="lineNum">     141 </span>            :    * This is symantically treating the vector like a point */
+<span class="lineNum">     142 </span>            :         TFSIMD_FORCE_INLINE tfScalar distance2(const Vector3&amp; v) const;
+<span class="lineNum">     143 </span>            : 
+<span class="lineNum">     144 </span>            :   /**@brief Return the distance between the ends of this and another vector
+<span class="lineNum">     145 </span>            :    * This is symantically treating the vector like a point */
+<span class="lineNum">     146 </span>            :         TFSIMD_FORCE_INLINE tfScalar distance(const Vector3&amp; v) const;
+<span class="lineNum">     147 </span>            : 
+<span class="lineNum">     148 </span>            :   /**@brief Normalize this vector 
+<span class="lineNum">     149 </span>            :    * x^2 + y^2 + z^2 = 1 */
+<span class="lineNum">     150 </span>            :         TFSIMD_FORCE_INLINE Vector3&amp; normalize() 
+<span class="lineNum">     151 </span>            :         {
+<span class="lineNum">     152 </span>            :                 return *this /= length();
+<span class="lineNum">     153 </span>            :         }
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span>            :   /**@brief Return a normalized version of this vector */
+<span class="lineNum">     156 </span>            :         TFSIMD_FORCE_INLINE Vector3 normalized() const;
+<span class="lineNum">     157 </span>            : 
+<span class="lineNum">     158 </span>            :   /**@brief Rotate this vector 
+<span class="lineNum">     159 </span>            :    * @param wAxis The axis to rotate about 
+<span class="lineNum">     160 </span>            :    * @param angle The angle to rotate by */
+<span class="lineNum">     161 </span>            :         TFSIMD_FORCE_INLINE Vector3 rotate( const Vector3&amp; wAxis, const tfScalar angle ) const;
+<span class="lineNum">     162 </span>            : 
+<span class="lineNum">     163 </span>            :   /**@brief Return the angle between this and another vector
+<span class="lineNum">     164 </span>            :    * @param v The other vector */
+<span class="lineNum">     165 </span>            :         TFSIMD_FORCE_INLINE tfScalar angle(const Vector3&amp; v) const 
+<span class="lineNum">     166 </span>            :         {
+<span class="lineNum">     167 </span>            :                 tfScalar s = tfSqrt(length2() * v.length2());
+<span class="lineNum">     168 </span>            :                 tfFullAssert(s != tfScalar(0.0));
+<span class="lineNum">     169 </span>            :                 return tfAcos(dot(v) / s);
+<span class="lineNum">     170 </span>            :         }
+<span class="lineNum">     171 </span>            :   /**@brief Return a vector will the absolute values of each element */
+<span class="lineNum">     172 </span>            :         TFSIMD_FORCE_INLINE Vector3 absolute() const 
+<span class="lineNum">     173 </span>            :         {
+<span class="lineNum">     174 </span>            :                 return Vector3(
+<span class="lineNum">     175 </span>            :                         tfFabs(m_floats[0]), 
+<span class="lineNum">     176 </span>            :                         tfFabs(m_floats[1]), 
+<span class="lineNum">     177 </span>            :                         tfFabs(m_floats[2]));
+<span class="lineNum">     178 </span>            :         }
+<span class="lineNum">     179 </span>            :   /**@brief Return the cross product between this and another vector 
+<span class="lineNum">     180 </span>            :    * @param v The other vector */
+<span class="lineNum">     181 </span>            :         TFSIMD_FORCE_INLINE Vector3 cross(const Vector3&amp; v) const
+<span class="lineNum">     182 </span>            :         {
+<span class="lineNum">     183 </span>            :                 return Vector3(
+<span class="lineNum">     184 </span>            :                         m_floats[1] * v.m_floats[2] -m_floats[2] * v.m_floats[1],
+<span class="lineNum">     185 </span>            :                         m_floats[2] * v.m_floats[0] - m_floats[0] * v.m_floats[2],
+<span class="lineNum">     186 </span>            :                         m_floats[0] * v.m_floats[1] - m_floats[1] * v.m_floats[0]);
+<span class="lineNum">     187 </span>            :         }
+<span class="lineNum">     188 </span>            : 
+<span class="lineNum">     189 </span>            :         TFSIMD_FORCE_INLINE tfScalar triple(const Vector3&amp; v1, const Vector3&amp; v2) const
+<span class="lineNum">     190 </span>            :         {
+<span class="lineNum">     191 </span>            :                 return m_floats[0] * (v1.m_floats[1] * v2.m_floats[2] - v1.m_floats[2] * v2.m_floats[1]) + 
+<span class="lineNum">     192 </span>            :                         m_floats[1] * (v1.m_floats[2] * v2.m_floats[0] - v1.m_floats[0] * v2.m_floats[2]) + 
+<span class="lineNum">     193 </span>            :                         m_floats[2] * (v1.m_floats[0] * v2.m_floats[1] - v1.m_floats[1] * v2.m_floats[0]);
+<span class="lineNum">     194 </span>            :         }
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span>            :   /**@brief Return the axis with the smallest value 
+<span class="lineNum">     197 </span>            :    * Note return values are 0,1,2 for x, y, or z */
+<span class="lineNum">     198 </span>            :         TFSIMD_FORCE_INLINE int minAxis() const
+<span class="lineNum">     199 </span>            :         {
+<span class="lineNum">     200 </span>            :                 return m_floats[0] &lt; m_floats[1] ? (m_floats[0] &lt;m_floats[2] ? 0 : 2) : (m_floats[1] &lt;m_floats[2] ? 1 : 2);
+<span class="lineNum">     201 </span>            :         }
+<span class="lineNum">     202 </span>            : 
+<span class="lineNum">     203 </span>            :   /**@brief Return the axis with the largest value 
+<span class="lineNum">     204 </span>            :    * Note return values are 0,1,2 for x, y, or z */
+<span class="lineNum">     205 </span>            :         TFSIMD_FORCE_INLINE int maxAxis() const 
+<span class="lineNum">     206 </span>            :         {
+<span class="lineNum">     207 </span>            :                 return m_floats[0] &lt; m_floats[1] ? (m_floats[1] &lt;m_floats[2] ? 2 : 1) : (m_floats[0] &lt;m_floats[2] ? 2 : 0);
+<span class="lineNum">     208 </span>            :         }
+<span class="lineNum">     209 </span>            : 
+<span class="lineNum">     210 </span>            :         TFSIMD_FORCE_INLINE int furthestAxis() const
+<span class="lineNum">     211 </span>            :         {
+<span class="lineNum">     212 </span>            :                 return absolute().minAxis();
+<span class="lineNum">     213 </span>            :         }
+<span class="lineNum">     214 </span>            : 
+<span class="lineNum">     215 </span>            :         TFSIMD_FORCE_INLINE int closestAxis() const 
+<span class="lineNum">     216 </span>            :         {
+<span class="lineNum">     217 </span>            :                 return absolute().maxAxis();
+<span class="lineNum">     218 </span>            :         }
+<span class="lineNum">     219 </span>            : 
+<span class="lineNum">     220 </span>            :         TFSIMD_FORCE_INLINE void setInterpolate3(const Vector3&amp; v0, const Vector3&amp; v1, tfScalar rt)
+<span class="lineNum">     221 </span>            :         {
+<span class="lineNum">     222 </span>            :                 tfScalar s = tfScalar(1.0) - rt;
+<span class="lineNum">     223 </span>            :                 m_floats[0] = s * v0.m_floats[0] + rt * v1.m_floats[0];
+<span class="lineNum">     224 </span>            :                 m_floats[1] = s * v0.m_floats[1] + rt * v1.m_floats[1];
+<span class="lineNum">     225 </span>            :                 m_floats[2] = s * v0.m_floats[2] + rt * v1.m_floats[2];
+<span class="lineNum">     226 </span>            :                 //don't do the unused w component
+<span class="lineNum">     227 </span>            :                 //              m_co[3] = s * v0[3] + rt * v1[3];
+<span class="lineNum">     228 </span>            :         }
+<span class="lineNum">     229 </span>            : 
+<span class="lineNum">     230 </span>            :   /**@brief Return the linear interpolation between this and another vector 
+<span class="lineNum">     231 </span>            :    * @param v The other vector 
+<span class="lineNum">     232 </span>            :    * @param t The ration of this to v (t = 0 =&gt; return this, t=1 =&gt; return other) */
+<span class="lineNum">     233 </span>            :         TFSIMD_FORCE_INLINE Vector3 lerp(const Vector3&amp; v, const tfScalar&amp; t) const 
+<span class="lineNum">     234 </span>            :         {
+<span class="lineNum">     235 </span>            :                 return Vector3(m_floats[0] + (v.m_floats[0] - m_floats[0]) * t,
+<span class="lineNum">     236 </span>            :                         m_floats[1] + (v.m_floats[1] - m_floats[1]) * t,
+<span class="lineNum">     237 </span>            :                         m_floats[2] + (v.m_floats[2] -m_floats[2]) * t);
+<span class="lineNum">     238 </span>            :         }
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span>            :   /**@brief Elementwise multiply this vector by the other 
+<span class="lineNum">     241 </span>            :    * @param v The other vector */
+<span class="lineNum">     242 </span>            :         TFSIMD_FORCE_INLINE Vector3&amp; operator*=(const Vector3&amp; v)
+<span class="lineNum">     243 </span>            :         {
+<span class="lineNum">     244 </span>            :                 m_floats[0] *= v.m_floats[0]; m_floats[1] *= v.m_floats[1];m_floats[2] *= v.m_floats[2];
+<span class="lineNum">     245 </span>            :                 return *this;
+<span class="lineNum">     246 </span>            :         }
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span>            :          /**@brief Return the x value */
+<span class="lineNum">     249 </span>            :                 TFSIMD_FORCE_INLINE const tfScalar&amp; getX() const { return m_floats[0]; }
+<span class="lineNum">     250 </span>            :   /**@brief Return the y value */
+<span class="lineNum">     251 </span>            :                 TFSIMD_FORCE_INLINE const tfScalar&amp; getY() const { return m_floats[1]; }
+<span class="lineNum">     252 </span>            :   /**@brief Return the z value */
+<span class="lineNum">     253 </span>            :                 TFSIMD_FORCE_INLINE const tfScalar&amp; getZ() const { return m_floats[2]; }
+<span class="lineNum">     254 </span>            :   /**@brief Set the x value */
+<span class="lineNum">     255 </span>            :                 TFSIMD_FORCE_INLINE void        setX(tfScalar x) { m_floats[0] = x;};
+<span class="lineNum">     256 </span>            :   /**@brief Set the y value */
+<span class="lineNum">     257 </span>            :                 TFSIMD_FORCE_INLINE void        setY(tfScalar y) { m_floats[1] = y;};
+<span class="lineNum">     258 </span>            :   /**@brief Set the z value */
+<span class="lineNum">     259 </span>            :                 TFSIMD_FORCE_INLINE void        setZ(tfScalar z) {m_floats[2] = z;};
+<span class="lineNum">     260 </span>            :   /**@brief Set the w value */
+<a name="261"><span class="lineNum">     261 </span>            :                 TFSIMD_FORCE_INLINE void        setW(tfScalar w) { m_floats[3] = w;};</a>
+<span class="lineNum">     262 </span>            :   /**@brief Return the x value */
+<a name="263"><span class="lineNum">     263 </span><span class="lineCov">  677673925 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; x() const { return m_floats[0]; }</span></a>
+<span class="lineNum">     264 </span>            :   /**@brief Return the y value */
+<a name="265"><span class="lineNum">     265 </span><span class="lineCov">  380546678 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; y() const { return m_floats[1]; }</span></a>
+<span class="lineNum">     266 </span>            :   /**@brief Return the z value */
+<span class="lineNum">     267 </span><span class="lineCov">  342523273 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; z() const { return m_floats[2]; }</span>
+<span class="lineNum">     268 </span>            :   /**@brief Return the w value */
+<span class="lineNum">     269 </span>            :                 TFSIMD_FORCE_INLINE const tfScalar&amp; w() const { return m_floats[3]; }
+<span class="lineNum">     270 </span>            : 
+<span class="lineNum">     271 </span>            :         //TFSIMD_FORCE_INLINE tfScalar&amp;       operator[](int i)       { return (&amp;m_floats[0])[i];       }      
+<span class="lineNum">     272 </span>            :         //TFSIMD_FORCE_INLINE const tfScalar&amp; operator[](int i) const { return (&amp;m_floats[0])[i]; }
+<a name="273"><span class="lineNum">     273 </span>            :         ///operator tfScalar*() replaces operator[], using implicit conversion. We added operator != and operator == to avoid pointer comparisons.</a>
+<span class="lineNum">     274 </span>            :         TFSIMD_FORCE_INLINE     operator       tfScalar *()       { return &amp;m_floats[0]; }
+<span class="lineNum">     275 </span><span class="lineCov">  115543143 :         TFSIMD_FORCE_INLINE     operator const tfScalar *() const { return &amp;m_floats[0]; }</span>
+<span class="lineNum">     276 </span>            : 
+<span class="lineNum">     277 </span>            :         TFSIMD_FORCE_INLINE     bool    operator==(const Vector3&amp; other) const
+<span class="lineNum">     278 </span>            :         {
+<span class="lineNum">     279 </span>            :                 return ((m_floats[3]==other.m_floats[3]) &amp;&amp; (m_floats[2]==other.m_floats[2]) &amp;&amp; (m_floats[1]==other.m_floats[1]) &amp;&amp; (m_floats[0]==other.m_floats[0]));
+<span class="lineNum">     280 </span>            :         }
+<span class="lineNum">     281 </span>            : 
+<span class="lineNum">     282 </span>            :         TFSIMD_FORCE_INLINE     bool    operator!=(const Vector3&amp; other) const
+<span class="lineNum">     283 </span>            :         {
+<span class="lineNum">     284 </span>            :                 return !(*this == other);
+<span class="lineNum">     285 </span>            :         }
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span>            :          /**@brief Set each element to the max of the current values and the values of another Vector3
+<span class="lineNum">     288 </span>            :    * @param other The other Vector3 to compare with 
+<span class="lineNum">     289 </span>            :    */
+<span class="lineNum">     290 </span>            :                 TFSIMD_FORCE_INLINE void        setMax(const Vector3&amp; other)
+<span class="lineNum">     291 </span>            :                 {
+<span class="lineNum">     292 </span>            :                         tfSetMax(m_floats[0], other.m_floats[0]);
+<span class="lineNum">     293 </span>            :                         tfSetMax(m_floats[1], other.m_floats[1]);
+<span class="lineNum">     294 </span>            :                         tfSetMax(m_floats[2], other.m_floats[2]);
+<span class="lineNum">     295 </span>            :                         tfSetMax(m_floats[3], other.w());
+<span class="lineNum">     296 </span>            :                 }
+<span class="lineNum">     297 </span>            :   /**@brief Set each element to the min of the current values and the values of another Vector3
+<span class="lineNum">     298 </span>            :    * @param other The other Vector3 to compare with 
+<span class="lineNum">     299 </span>            :    */
+<span class="lineNum">     300 </span>            :                 TFSIMD_FORCE_INLINE void        setMin(const Vector3&amp; other)
+<span class="lineNum">     301 </span>            :                 {
+<span class="lineNum">     302 </span>            :                         tfSetMin(m_floats[0], other.m_floats[0]);
+<span class="lineNum">     303 </span>            :                         tfSetMin(m_floats[1], other.m_floats[1]);
+<span class="lineNum">     304 </span>            :                         tfSetMin(m_floats[2], other.m_floats[2]);
+<span class="lineNum">     305 </span>            :                         tfSetMin(m_floats[3], other.w());
+<a name="306"><span class="lineNum">     306 </span>            :                 }</a>
+<span class="lineNum">     307 </span>            : 
+<span class="lineNum">     308 </span><span class="lineCov">  213216840 :                 TFSIMD_FORCE_INLINE void        setValue(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z)</span>
+<span class="lineNum">     309 </span>            :                 {
+<span class="lineNum">     310 </span><span class="lineCov">  213216840 :                         m_floats[0]=x;</span>
+<span class="lineNum">     311 </span><span class="lineCov">  213216840 :                         m_floats[1]=y;</span>
+<span class="lineNum">     312 </span><span class="lineCov">  213216840 :                         m_floats[2]=z;</span>
+<span class="lineNum">     313 </span><span class="lineCov">  213216840 :                         m_floats[3] = tfScalar(0.);</span>
+<span class="lineNum">     314 </span><span class="lineCov">  213216840 :                 }</span>
+<span class="lineNum">     315 </span>            : 
+<span class="lineNum">     316 </span>            :                 void    getSkewSymmetricMatrix(Vector3* v0,Vector3* v1,Vector3* v2) const
+<span class="lineNum">     317 </span>            :                 {
+<span class="lineNum">     318 </span>            :                         v0-&gt;setValue(0.              ,-z()           ,y());
+<span class="lineNum">     319 </span>            :                         v1-&gt;setValue(z()     ,0.                     ,-x());
+<span class="lineNum">     320 </span>            :                         v2-&gt;setValue(-y()    ,x()    ,0.);
+<span class="lineNum">     321 </span>            :                 }
+<span class="lineNum">     322 </span>            : 
+<span class="lineNum">     323 </span>            :                 void    setZero()
+<span class="lineNum">     324 </span>            :                 {
+<span class="lineNum">     325 </span>            :                         setValue(tfScalar(0.),tfScalar(0.),tfScalar(0.));
+<span class="lineNum">     326 </span>            :                 }
+<span class="lineNum">     327 </span>            : 
+<span class="lineNum">     328 </span>            :                 TFSIMD_FORCE_INLINE bool isZero() const 
+<span class="lineNum">     329 </span>            :                 {
+<span class="lineNum">     330 </span>            :                         return m_floats[0] == tfScalar(0) &amp;&amp; m_floats[1] == tfScalar(0) &amp;&amp; m_floats[2] == tfScalar(0);
+<span class="lineNum">     331 </span>            :                 }
+<span class="lineNum">     332 </span>            : 
+<span class="lineNum">     333 </span>            :                 TFSIMD_FORCE_INLINE bool fuzzyZero() const 
+<span class="lineNum">     334 </span>            :                 {
+<span class="lineNum">     335 </span>            :                         return length2() &lt; TFSIMD_EPSILON;
+<span class="lineNum">     336 </span>            :                 }
+<span class="lineNum">     337 </span>            : 
+<span class="lineNum">     338 </span>            :                 TFSIMD_FORCE_INLINE     void    serialize(struct        Vector3Data&amp; dataOut) const;
+<span class="lineNum">     339 </span>            : 
+<span class="lineNum">     340 </span>            :                 TFSIMD_FORCE_INLINE     void    deSerialize(const struct        Vector3Data&amp; dataIn);
+<span class="lineNum">     341 </span>            : 
+<span class="lineNum">     342 </span>            :                 TFSIMD_FORCE_INLINE     void    serializeFloat(struct   Vector3FloatData&amp; dataOut) const;
+<span class="lineNum">     343 </span>            : 
+<span class="lineNum">     344 </span>            :                 TFSIMD_FORCE_INLINE     void    deSerializeFloat(const struct   Vector3FloatData&amp; dataIn);
+<span class="lineNum">     345 </span>            : 
+<span class="lineNum">     346 </span>            :                 TFSIMD_FORCE_INLINE     void    serializeDouble(struct  Vector3DoubleData&amp; dataOut) const;
+<span class="lineNum">     347 </span>            : 
+<span class="lineNum">     348 </span>            :                 TFSIMD_FORCE_INLINE     void    deSerializeDouble(const struct  Vector3DoubleData&amp; dataIn);
+<span class="lineNum">     349 </span>            : 
+<span class="lineNum">     350 </span>            : } __attribute__ ((aligned(16)));
+<span class="lineNum">     351 </span>            : 
+<span class="lineNum">     352 </span>            : /**@brief Return the sum of two vectors (Point symantics)*/
+<span class="lineNum">     353 </span>            : TFSIMD_FORCE_INLINE Vector3 
+<span class="lineNum">     354 </span>            : operator+(const Vector3&amp; v1, const Vector3&amp; v2) 
+<span class="lineNum">     355 </span>            : {
+<span class="lineNum">     356 </span>            :         return Vector3(v1.m_floats[0] + v2.m_floats[0], v1.m_floats[1] + v2.m_floats[1], v1.m_floats[2] + v2.m_floats[2]);
+<span class="lineNum">     357 </span>            : }
+<span class="lineNum">     358 </span>            : 
+<span class="lineNum">     359 </span>            : /**@brief Return the elementwise product of two vectors */
+<span class="lineNum">     360 </span>            : TFSIMD_FORCE_INLINE Vector3 
+<span class="lineNum">     361 </span>            : operator*(const Vector3&amp; v1, const Vector3&amp; v2) 
+<span class="lineNum">     362 </span>            : {
+<span class="lineNum">     363 </span>            :         return Vector3(v1.m_floats[0] * v2.m_floats[0], v1.m_floats[1] * v2.m_floats[1], v1.m_floats[2] * v2.m_floats[2]);
+<span class="lineNum">     364 </span>            : }
+<span class="lineNum">     365 </span>            : 
+<span class="lineNum">     366 </span>            : /**@brief Return the difference between two vectors */
+<span class="lineNum">     367 </span>            : TFSIMD_FORCE_INLINE Vector3 
+<span class="lineNum">     368 </span>            : operator-(const Vector3&amp; v1, const Vector3&amp; v2)
+<span class="lineNum">     369 </span>            : {
+<span class="lineNum">     370 </span>            :         return Vector3(v1.m_floats[0] - v2.m_floats[0], v1.m_floats[1] - v2.m_floats[1], v1.m_floats[2] - v2.m_floats[2]);
+<span class="lineNum">     371 </span>            : }
+<span class="lineNum">     372 </span>            : /**@brief Return the negative of the vector */
+<span class="lineNum">     373 </span>            : TFSIMD_FORCE_INLINE Vector3 
+<span class="lineNum">     374 </span>            : operator-(const Vector3&amp; v)
+<span class="lineNum">     375 </span>            : {
+<span class="lineNum">     376 </span>            :         return Vector3(-v.m_floats[0], -v.m_floats[1], -v.m_floats[2]);
+<span class="lineNum">     377 </span>            : }
+<span class="lineNum">     378 </span>            : 
+<span class="lineNum">     379 </span>            : /**@brief Return the vector scaled by s */
+<span class="lineNum">     380 </span>            : TFSIMD_FORCE_INLINE Vector3 
+<span class="lineNum">     381 </span>            : operator*(const Vector3&amp; v, const tfScalar&amp; s)
+<span class="lineNum">     382 </span>            : {
+<span class="lineNum">     383 </span>            :         return Vector3(v.m_floats[0] * s, v.m_floats[1] * s, v.m_floats[2] * s);
+<span class="lineNum">     384 </span>            : }
+<span class="lineNum">     385 </span>            : 
+<span class="lineNum">     386 </span>            : /**@brief Return the vector scaled by s */
+<span class="lineNum">     387 </span>            : TFSIMD_FORCE_INLINE Vector3 
+<span class="lineNum">     388 </span>            : operator*(const tfScalar&amp; s, const Vector3&amp; v)
+<span class="lineNum">     389 </span>            : { 
+<span class="lineNum">     390 </span>            :         return v * s; 
+<span class="lineNum">     391 </span>            : }
+<span class="lineNum">     392 </span>            : 
+<span class="lineNum">     393 </span>            : /**@brief Return the vector inversely scaled by s */
+<span class="lineNum">     394 </span>            : TFSIMD_FORCE_INLINE Vector3
+<span class="lineNum">     395 </span>            : operator/(const Vector3&amp; v, const tfScalar&amp; s)
+<span class="lineNum">     396 </span>            : {
+<span class="lineNum">     397 </span>            :         tfFullAssert(s != tfScalar(0.0));
+<span class="lineNum">     398 </span>            :         return v * (tfScalar(1.0) / s);
+<span class="lineNum">     399 </span>            : }
+<span class="lineNum">     400 </span>            : 
+<span class="lineNum">     401 </span>            : /**@brief Return the vector inversely scaled by s */
+<span class="lineNum">     402 </span>            : TFSIMD_FORCE_INLINE Vector3
+<span class="lineNum">     403 </span>            : operator/(const Vector3&amp; v1, const Vector3&amp; v2)
+<span class="lineNum">     404 </span>            : {
+<span class="lineNum">     405 </span>            :         return Vector3(v1.m_floats[0] / v2.m_floats[0],v1.m_floats[1] / v2.m_floats[1],v1.m_floats[2] / v2.m_floats[2]);
+<span class="lineNum">     406 </span>            : }
+<span class="lineNum">     407 </span>            : 
+<span class="lineNum">     408 </span>            : /**@brief Return the dot product between two vectors */
+<span class="lineNum">     409 </span>            : TFSIMD_FORCE_INLINE tfScalar 
+<span class="lineNum">     410 </span>            : tfDot(const Vector3&amp; v1, const Vector3&amp; v2) 
+<span class="lineNum">     411 </span>            : { 
+<span class="lineNum">     412 </span>            :         return v1.dot(v2); 
+<span class="lineNum">     413 </span>            : }
+<span class="lineNum">     414 </span>            : 
+<span class="lineNum">     415 </span>            : 
+<span class="lineNum">     416 </span>            : /**@brief Return the distance squared between two vectors */
+<span class="lineNum">     417 </span>            : TFSIMD_FORCE_INLINE tfScalar
+<span class="lineNum">     418 </span>            : tfDistance2(const Vector3&amp; v1, const Vector3&amp; v2) 
+<span class="lineNum">     419 </span>            : { 
+<span class="lineNum">     420 </span>            :         return v1.distance2(v2); 
+<span class="lineNum">     421 </span>            : }
+<span class="lineNum">     422 </span>            : 
+<span class="lineNum">     423 </span>            : 
+<span class="lineNum">     424 </span>            : /**@brief Return the distance between two vectors */
+<span class="lineNum">     425 </span>            : TFSIMD_FORCE_INLINE tfScalar
+<span class="lineNum">     426 </span>            : tfDistance(const Vector3&amp; v1, const Vector3&amp; v2) 
+<span class="lineNum">     427 </span>            : { 
+<span class="lineNum">     428 </span>            :         return v1.distance(v2); 
+<span class="lineNum">     429 </span>            : }
+<span class="lineNum">     430 </span>            : 
+<span class="lineNum">     431 </span>            : /**@brief Return the angle between two vectors */
+<span class="lineNum">     432 </span>            : TFSIMD_FORCE_INLINE tfScalar
+<span class="lineNum">     433 </span>            : tfAngle(const Vector3&amp; v1, const Vector3&amp; v2) 
+<span class="lineNum">     434 </span>            : { 
+<span class="lineNum">     435 </span>            :         return v1.angle(v2); 
+<span class="lineNum">     436 </span>            : }
+<span class="lineNum">     437 </span>            : 
+<span class="lineNum">     438 </span>            : /**@brief Return the cross product of two vectors */
+<span class="lineNum">     439 </span>            : TFSIMD_FORCE_INLINE Vector3 
+<span class="lineNum">     440 </span>            : tfCross(const Vector3&amp; v1, const Vector3&amp; v2) 
+<span class="lineNum">     441 </span>            : { 
+<span class="lineNum">     442 </span>            :         return v1.cross(v2); 
+<span class="lineNum">     443 </span>            : }
+<span class="lineNum">     444 </span>            : 
+<span class="lineNum">     445 </span>            : TFSIMD_FORCE_INLINE tfScalar
+<span class="lineNum">     446 </span>            : tfTriple(const Vector3&amp; v1, const Vector3&amp; v2, const Vector3&amp; v3)
+<span class="lineNum">     447 </span>            : {
+<span class="lineNum">     448 </span>            :         return v1.triple(v2, v3);
+<span class="lineNum">     449 </span>            : }
+<span class="lineNum">     450 </span>            : 
+<span class="lineNum">     451 </span>            : /**@brief Return the linear interpolation between two vectors
+<span class="lineNum">     452 </span>            :  * @param v1 One vector 
+<span class="lineNum">     453 </span>            :  * @param v2 The other vector 
+<span class="lineNum">     454 </span>            :  * @param t The ration of this to v (t = 0 =&gt; return v1, t=1 =&gt; return v2) */
+<span class="lineNum">     455 </span>            : TFSIMD_FORCE_INLINE Vector3 
+<span class="lineNum">     456 </span>            : lerp(const Vector3&amp; v1, const Vector3&amp; v2, const tfScalar&amp; t)
+<span class="lineNum">     457 </span>            : {
+<span class="lineNum">     458 </span>            :         return v1.lerp(v2, t);
+<span class="lineNum">     459 </span>            : }
+<span class="lineNum">     460 </span>            : 
+<span class="lineNum">     461 </span>            : 
+<span class="lineNum">     462 </span>            : 
+<span class="lineNum">     463 </span>            : TFSIMD_FORCE_INLINE tfScalar Vector3::distance2(const Vector3&amp; v) const
+<span class="lineNum">     464 </span>            : {
+<span class="lineNum">     465 </span>            :         return (v - *this).length2();
+<span class="lineNum">     466 </span>            : }
+<span class="lineNum">     467 </span>            : 
+<span class="lineNum">     468 </span>            : TFSIMD_FORCE_INLINE tfScalar Vector3::distance(const Vector3&amp; v) const
+<span class="lineNum">     469 </span>            : {
+<span class="lineNum">     470 </span>            :         return (v - *this).length();
+<span class="lineNum">     471 </span>            : }
+<span class="lineNum">     472 </span>            : 
+<span class="lineNum">     473 </span>            : TFSIMD_FORCE_INLINE Vector3 Vector3::normalized() const
+<span class="lineNum">     474 </span>            : {
+<span class="lineNum">     475 </span>            :         return *this / length();
+<span class="lineNum">     476 </span>            : } 
+<span class="lineNum">     477 </span>            : 
+<span class="lineNum">     478 </span>            : TFSIMD_FORCE_INLINE Vector3 Vector3::rotate( const Vector3&amp; wAxis, const tfScalar angle ) const
+<span class="lineNum">     479 </span>            : {
+<span class="lineNum">     480 </span>            :         // wAxis must be a unit lenght vector
+<span class="lineNum">     481 </span>            : 
+<span class="lineNum">     482 </span>            :         Vector3 o = wAxis * wAxis.dot( *this );
+<span class="lineNum">     483 </span>            :         Vector3 x = *this - o;
+<span class="lineNum">     484 </span>            :         Vector3 y;
+<span class="lineNum">     485 </span>            : 
+<span class="lineNum">     486 </span>            :         y = wAxis.cross( *this );
+<span class="lineNum">     487 </span>            : 
+<span class="lineNum">     488 </span>            :         return ( o + x * tfCos( angle ) + y * tfSin( angle ) );
+<span class="lineNum">     489 </span>            : }
+<span class="lineNum">     490 </span>            : 
+<span class="lineNum">     491 </span>            : class tfVector4 : public Vector3
+<span class="lineNum">     492 </span>            : {
+<span class="lineNum">     493 </span>            : public:
+<span class="lineNum">     494 </span>            : 
+<span class="lineNum">     495 </span>            :         TFSIMD_FORCE_INLINE tfVector4() {}
+<span class="lineNum">     496 </span>            : 
+<span class="lineNum">     497 </span>            : 
+<span class="lineNum">     498 </span>            :         TFSIMD_FORCE_INLINE tfVector4(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z,const tfScalar&amp; w) 
+<span class="lineNum">     499 </span>            :                 : Vector3(x,y,z)
+<span class="lineNum">     500 </span>            :         {
+<span class="lineNum">     501 </span>            :                 m_floats[3] = w;
+<span class="lineNum">     502 </span>            :         }
+<span class="lineNum">     503 </span>            : 
+<span class="lineNum">     504 </span>            : 
+<span class="lineNum">     505 </span>            :         TFSIMD_FORCE_INLINE tfVector4 absolute4() const 
+<span class="lineNum">     506 </span>            :         {
+<span class="lineNum">     507 </span>            :                 return tfVector4(
+<span class="lineNum">     508 </span>            :                         tfFabs(m_floats[0]), 
+<span class="lineNum">     509 </span>            :                         tfFabs(m_floats[1]), 
+<span class="lineNum">     510 </span>            :                         tfFabs(m_floats[2]),
+<span class="lineNum">     511 </span>            :                         tfFabs(m_floats[3]));
+<span class="lineNum">     512 </span>            :         }
+<span class="lineNum">     513 </span>            : 
+<span class="lineNum">     514 </span>            : 
+<span class="lineNum">     515 </span>            : 
+<span class="lineNum">     516 </span>            :         tfScalar        getW() const { return m_floats[3];}
+<span class="lineNum">     517 </span>            : 
+<span class="lineNum">     518 </span>            : 
+<span class="lineNum">     519 </span>            :                 TFSIMD_FORCE_INLINE int maxAxis4() const
+<span class="lineNum">     520 </span>            :         {
+<span class="lineNum">     521 </span>            :                 int maxIndex = -1;
+<span class="lineNum">     522 </span>            :                 tfScalar maxVal = tfScalar(-TF_LARGE_FLOAT);
+<span class="lineNum">     523 </span>            :                 if (m_floats[0] &gt; maxVal)
+<span class="lineNum">     524 </span>            :                 {
+<span class="lineNum">     525 </span>            :                         maxIndex = 0;
+<span class="lineNum">     526 </span>            :                         maxVal = m_floats[0];
+<span class="lineNum">     527 </span>            :                 }
+<span class="lineNum">     528 </span>            :                 if (m_floats[1] &gt; maxVal)
+<span class="lineNum">     529 </span>            :                 {
+<span class="lineNum">     530 </span>            :                         maxIndex = 1;
+<span class="lineNum">     531 </span>            :                         maxVal = m_floats[1];
+<span class="lineNum">     532 </span>            :                 }
+<span class="lineNum">     533 </span>            :                 if (m_floats[2] &gt; maxVal)
+<span class="lineNum">     534 </span>            :                 {
+<span class="lineNum">     535 </span>            :                         maxIndex = 2;
+<span class="lineNum">     536 </span>            :                         maxVal =m_floats[2];
+<span class="lineNum">     537 </span>            :                 }
+<span class="lineNum">     538 </span>            :                 if (m_floats[3] &gt; maxVal)
+<span class="lineNum">     539 </span>            :                 {
+<span class="lineNum">     540 </span>            :                         maxIndex = 3;
+<span class="lineNum">     541 </span>            :                         maxVal = m_floats[3];
+<span class="lineNum">     542 </span>            :                 }
+<span class="lineNum">     543 </span>            :                 
+<span class="lineNum">     544 </span>            :                 
+<span class="lineNum">     545 </span>            :                 
+<span class="lineNum">     546 </span>            : 
+<span class="lineNum">     547 </span>            :                 return maxIndex;
+<span class="lineNum">     548 </span>            : 
+<span class="lineNum">     549 </span>            :         }
+<span class="lineNum">     550 </span>            : 
+<span class="lineNum">     551 </span>            : 
+<span class="lineNum">     552 </span>            :         TFSIMD_FORCE_INLINE int minAxis4() const
+<span class="lineNum">     553 </span>            :         {
+<span class="lineNum">     554 </span>            :                 int minIndex = -1;
+<span class="lineNum">     555 </span>            :                 tfScalar minVal = tfScalar(TF_LARGE_FLOAT);
+<span class="lineNum">     556 </span>            :                 if (m_floats[0] &lt; minVal)
+<span class="lineNum">     557 </span>            :                 {
+<span class="lineNum">     558 </span>            :                         minIndex = 0;
+<span class="lineNum">     559 </span>            :                         minVal = m_floats[0];
+<span class="lineNum">     560 </span>            :                 }
+<span class="lineNum">     561 </span>            :                 if (m_floats[1] &lt; minVal)
+<span class="lineNum">     562 </span>            :                 {
+<span class="lineNum">     563 </span>            :                         minIndex = 1;
+<span class="lineNum">     564 </span>            :                         minVal = m_floats[1];
+<span class="lineNum">     565 </span>            :                 }
+<span class="lineNum">     566 </span>            :                 if (m_floats[2] &lt; minVal)
+<span class="lineNum">     567 </span>            :                 {
+<span class="lineNum">     568 </span>            :                         minIndex = 2;
+<span class="lineNum">     569 </span>            :                         minVal =m_floats[2];
+<span class="lineNum">     570 </span>            :                 }
+<span class="lineNum">     571 </span>            :                 if (m_floats[3] &lt; minVal)
+<span class="lineNum">     572 </span>            :                 {
+<span class="lineNum">     573 </span>            :                         minIndex = 3;
+<span class="lineNum">     574 </span>            :                         minVal = m_floats[3];
+<span class="lineNum">     575 </span>            :                 }
+<span class="lineNum">     576 </span>            :                 
+<span class="lineNum">     577 </span>            :                 return minIndex;
+<span class="lineNum">     578 </span>            : 
+<span class="lineNum">     579 </span>            :         }
+<span class="lineNum">     580 </span>            : 
+<span class="lineNum">     581 </span>            : 
+<span class="lineNum">     582 </span>            :         TFSIMD_FORCE_INLINE int closestAxis4() const 
+<span class="lineNum">     583 </span>            :         {
+<span class="lineNum">     584 </span>            :                 return absolute4().maxAxis4();
+<span class="lineNum">     585 </span>            :         }
+<span class="lineNum">     586 </span>            : 
+<span class="lineNum">     587 </span>            :         
+<span class="lineNum">     588 </span>            :  
+<span class="lineNum">     589 </span>            : 
+<span class="lineNum">     590 </span>            :   /**@brief Set x,y,z and zero w 
+<span class="lineNum">     591 </span>            :    * @param x Value of x
+<span class="lineNum">     592 </span>            :    * @param y Value of y
+<span class="lineNum">     593 </span>            :    * @param z Value of z
+<span class="lineNum">     594 </span>            :    */
+<span class="lineNum">     595 </span>            :                 
+<span class="lineNum">     596 </span>            : 
+<span class="lineNum">     597 </span>            : /*              void getValue(tfScalar *m) const 
+<span class="lineNum">     598 </span>            :                 {
+<span class="lineNum">     599 </span>            :                         m[0] = m_floats[0];
+<span class="lineNum">     600 </span>            :                         m[1] = m_floats[1];
+<span class="lineNum">     601 </span>            :                         m[2] =m_floats[2];
+<span class="lineNum">     602 </span>            :                 }
+<span class="lineNum">     603 </span>            : */
+<span class="lineNum">     604 </span>            : /**@brief Set the values 
+<span class="lineNum">     605 </span>            :    * @param x Value of x
+<span class="lineNum">     606 </span>            :    * @param y Value of y
+<span class="lineNum">     607 </span>            :    * @param z Value of z
+<span class="lineNum">     608 </span>            :    * @param w Value of w
+<span class="lineNum">     609 </span>            :    */
+<span class="lineNum">     610 </span>            :                 TFSIMD_FORCE_INLINE void        setValue(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z,const tfScalar&amp; w)
+<span class="lineNum">     611 </span>            :                 {
+<span class="lineNum">     612 </span>            :                         m_floats[0]=x;
+<span class="lineNum">     613 </span>            :                         m_floats[1]=y;
+<span class="lineNum">     614 </span>            :                         m_floats[2]=z;
+<span class="lineNum">     615 </span>            :                         m_floats[3]=w;
+<span class="lineNum">     616 </span>            :                 }
+<span class="lineNum">     617 </span>            : 
+<span class="lineNum">     618 </span>            : 
+<span class="lineNum">     619 </span>            : };
+<span class="lineNum">     620 </span>            : 
+<span class="lineNum">     621 </span>            : 
+<span class="lineNum">     622 </span>            : ///tfSwapVector3Endian swaps vector endianness, useful for network and cross-platform serialization
+<span class="lineNum">     623 </span>            : TFSIMD_FORCE_INLINE void        tfSwapScalarEndian(const tfScalar&amp; sourceVal, tfScalar&amp; destVal)
+<span class="lineNum">     624 </span>            : {
+<span class="lineNum">     625 </span>            :         unsigned char* dest = (unsigned char*) &amp;destVal;
+<span class="lineNum">     626 </span>            :         unsigned char* src  = (unsigned char*) &amp;sourceVal;
+<span class="lineNum">     627 </span>            :         dest[0] = src[7];
+<span class="lineNum">     628 </span>            :     dest[1] = src[6];
+<span class="lineNum">     629 </span>            :     dest[2] = src[5];
+<span class="lineNum">     630 </span>            :     dest[3] = src[4];
+<span class="lineNum">     631 </span>            :     dest[4] = src[3];
+<span class="lineNum">     632 </span>            :     dest[5] = src[2];
+<span class="lineNum">     633 </span>            :     dest[6] = src[1];
+<span class="lineNum">     634 </span>            :     dest[7] = src[0];
+<span class="lineNum">     635 </span>            : }
+<span class="lineNum">     636 </span>            : ///tfSwapVector3Endian swaps vector endianness, useful for network and cross-platform serialization
+<span class="lineNum">     637 </span>            : TFSIMD_FORCE_INLINE void        tfSwapVector3Endian(const Vector3&amp; sourceVec, Vector3&amp; destVec)
+<span class="lineNum">     638 </span>            : {
+<span class="lineNum">     639 </span>            :         for (int i=0;i&lt;4;i++)
+<span class="lineNum">     640 </span>            :         {
+<span class="lineNum">     641 </span>            :                 tfSwapScalarEndian(sourceVec[i],destVec[i]);
+<span class="lineNum">     642 </span>            :         }
+<span class="lineNum">     643 </span>            : 
+<span class="lineNum">     644 </span>            : }
+<span class="lineNum">     645 </span>            : 
+<span class="lineNum">     646 </span>            : ///tfUnSwapVector3Endian swaps vector endianness, useful for network and cross-platform serialization
+<span class="lineNum">     647 </span>            : TFSIMD_FORCE_INLINE void        tfUnSwapVector3Endian(Vector3&amp; vector)
+<span class="lineNum">     648 </span>            : {
+<span class="lineNum">     649 </span>            : 
+<span class="lineNum">     650 </span>            :         Vector3 swappedVec;
+<span class="lineNum">     651 </span>            :         for (int i=0;i&lt;4;i++)
+<span class="lineNum">     652 </span>            :         {
+<span class="lineNum">     653 </span>            :                 tfSwapScalarEndian(vector[i],swappedVec[i]);
+<span class="lineNum">     654 </span>            :         }
+<span class="lineNum">     655 </span>            :         vector = swappedVec;
+<span class="lineNum">     656 </span>            : }
+<span class="lineNum">     657 </span>            : 
+<span class="lineNum">     658 </span>            : TFSIMD_FORCE_INLINE void tfPlaneSpace1 (const Vector3&amp; n, Vector3&amp; p, Vector3&amp; q)
+<span class="lineNum">     659 </span>            : {
+<span class="lineNum">     660 </span>            :   if (tfFabs(n.z()) &gt; TFSIMDSQRT12) {
+<span class="lineNum">     661 </span>            :     // choose p in y-z plane
+<span class="lineNum">     662 </span>            :     tfScalar a = n[1]*n[1] + n[2]*n[2];
+<span class="lineNum">     663 </span>            :     tfScalar k = tfRecipSqrt (a);
+<span class="lineNum">     664 </span>            :     p.setValue(0,-n[2]*k,n[1]*k);
+<span class="lineNum">     665 </span>            :     // set q = n x p
+<span class="lineNum">     666 </span>            :     q.setValue(a*k,-n[0]*p[2],n[0]*p[1]);
+<span class="lineNum">     667 </span>            :   }
+<span class="lineNum">     668 </span>            :   else {
+<span class="lineNum">     669 </span>            :     // choose p in x-y plane
+<span class="lineNum">     670 </span>            :     tfScalar a = n.x()*n.x() + n.y()*n.y();
+<span class="lineNum">     671 </span>            :     tfScalar k = tfRecipSqrt (a);
+<span class="lineNum">     672 </span>            :     p.setValue(-n.y()*k,n.x()*k,0);
+<span class="lineNum">     673 </span>            :     // set q = n x p
+<span class="lineNum">     674 </span>            :     q.setValue(-n.z()*p.y(),n.z()*p.x(),a*k);
+<span class="lineNum">     675 </span>            :   }
+<span class="lineNum">     676 </span>            : }
+<span class="lineNum">     677 </span>            : 
+<span class="lineNum">     678 </span>            : 
+<span class="lineNum">     679 </span>            : struct  Vector3FloatData
+<span class="lineNum">     680 </span>            : {
+<span class="lineNum">     681 </span>            :         float   m_floats[4];
+<span class="lineNum">     682 </span>            : };
+<span class="lineNum">     683 </span>            : 
+<span class="lineNum">     684 </span>            : struct  Vector3DoubleData
+<span class="lineNum">     685 </span>            : {
+<span class="lineNum">     686 </span>            :         double  m_floats[4];
+<span class="lineNum">     687 </span>            : 
+<span class="lineNum">     688 </span>            : };
+<span class="lineNum">     689 </span>            : 
+<span class="lineNum">     690 </span>            : TFSIMD_FORCE_INLINE     void    Vector3::serializeFloat(struct  Vector3FloatData&amp; dataOut) const
+<span class="lineNum">     691 </span>            : {
+<span class="lineNum">     692 </span>            :         ///could also do a memcpy, check if it is worth it
+<span class="lineNum">     693 </span>            :         for (int i=0;i&lt;4;i++)
+<span class="lineNum">     694 </span>            :                 dataOut.m_floats[i] = float(m_floats[i]);
+<span class="lineNum">     695 </span>            : }
+<span class="lineNum">     696 </span>            : 
+<span class="lineNum">     697 </span>            : TFSIMD_FORCE_INLINE void        Vector3::deSerializeFloat(const struct  Vector3FloatData&amp; dataIn)
+<span class="lineNum">     698 </span>            : {
+<span class="lineNum">     699 </span>            :         for (int i=0;i&lt;4;i++)
+<span class="lineNum">     700 </span>            :                 m_floats[i] = tfScalar(dataIn.m_floats[i]);
+<span class="lineNum">     701 </span>            : }
+<span class="lineNum">     702 </span>            : 
+<span class="lineNum">     703 </span>            : 
+<span class="lineNum">     704 </span>            : TFSIMD_FORCE_INLINE     void    Vector3::serializeDouble(struct Vector3DoubleData&amp; dataOut) const
+<span class="lineNum">     705 </span>            : {
+<span class="lineNum">     706 </span>            :         ///could also do a memcpy, check if it is worth it
+<span class="lineNum">     707 </span>            :         for (int i=0;i&lt;4;i++)
+<span class="lineNum">     708 </span>            :                 dataOut.m_floats[i] = double(m_floats[i]);
+<span class="lineNum">     709 </span>            : }
+<span class="lineNum">     710 </span>            : 
+<span class="lineNum">     711 </span>            : TFSIMD_FORCE_INLINE void        Vector3::deSerializeDouble(const struct Vector3DoubleData&amp; dataIn)
+<span class="lineNum">     712 </span>            : {
+<span class="lineNum">     713 </span>            :         for (int i=0;i&lt;4;i++)
+<span class="lineNum">     714 </span>            :                 m_floats[i] = tfScalar(dataIn.m_floats[i]);
+<span class="lineNum">     715 </span>            : }
+<span class="lineNum">     716 </span>            : 
+<span class="lineNum">     717 </span>            : 
+<span class="lineNum">     718 </span>            : TFSIMD_FORCE_INLINE     void    Vector3::serialize(struct       Vector3Data&amp; dataOut) const
+<span class="lineNum">     719 </span>            : {
+<span class="lineNum">     720 </span>            :         ///could also do a memcpy, check if it is worth it
+<span class="lineNum">     721 </span>            :         for (int i=0;i&lt;4;i++)
+<span class="lineNum">     722 </span>            :                 dataOut.m_floats[i] = m_floats[i];
+<span class="lineNum">     723 </span>            : }
+<span class="lineNum">     724 </span>            : 
+<span class="lineNum">     725 </span>            : TFSIMD_FORCE_INLINE void        Vector3::deSerialize(const struct       Vector3Data&amp; dataIn)
+<span class="lineNum">     726 </span>            : {
+<span class="lineNum">     727 </span>            :         for (int i=0;i&lt;4;i++)
+<span class="lineNum">     728 </span>            :                 m_floats[i] = dataIn.m_floats[i];
+<span class="lineNum">     729 </span>            : }
+<span class="lineNum">     730 </span>            : 
+<span class="lineNum">     731 </span>            : }
+<span class="lineNum">     732 </span>            : 
+<span class="lineNum">     733 </span>            : #endif //TFSIMD__VECTOR3_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

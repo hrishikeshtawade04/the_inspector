@@ -1,0 +1,499 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - boost/bind/bind_mf_cc.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">boost/bind</a> - bind_mf_cc.hpp<span style="font-size: 80%;"> (source / <a href="bind_mf_cc.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //</a>
+<span class="lineNum">       2 </span>            : //  bind/bind_mf_cc.hpp - support for different calling conventions
+<span class="lineNum">       3 </span>            : //
+<span class="lineNum">       4 </span>            : //  Do not include this header directly.
+<span class="lineNum">       5 </span>            : //
+<span class="lineNum">       6 </span>            : //  Copyright (c) 2001 Peter Dimov and Multi Media Ltd.
+<span class="lineNum">       7 </span>            : //
+<span class="lineNum">       8 </span>            : // Distributed under the Boost Software License, Version 1.0. (See
+<span class="lineNum">       9 </span>            : // accompanying file LICENSE_1_0.txt or copy at
+<span class="lineNum">      10 </span>            : // http://www.boost.org/LICENSE_1_0.txt)
+<span class="lineNum">      11 </span>            : //
+<span class="lineNum">      12 </span>            : //  See http://www.boost.org/libs/bind/bind.html for documentation.
+<span class="lineNum">      13 </span>            : //
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : // 0
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : template&lt;class R, class T,
+<span class="lineNum">      18 </span>            :     class A1&gt;
+<span class="lineNum">      19 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(mf0)&lt;R, T&gt;, typename _bi::list_av_1&lt;A1&gt;::type&gt;
+<span class="lineNum">      20 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (), A1 a1)
+<span class="lineNum">      21 </span>            : {
+<span class="lineNum">      22 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf0)&lt;R, T&gt; F;
+<span class="lineNum">      23 </span>            :     typedef typename _bi::list_av_1&lt;A1&gt;::type list_type;
+<span class="lineNum">      24 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1));
+<span class="lineNum">      25 </span>            : }
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : template&lt;class R, class T,
+<span class="lineNum">      28 </span>            :     class A1&gt;
+<span class="lineNum">      29 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(cmf0)&lt;R, T&gt;, typename _bi::list_av_1&lt;A1&gt;::type&gt;
+<span class="lineNum">      30 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) () const, A1 a1)
+<span class="lineNum">      31 </span>            : {
+<span class="lineNum">      32 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf0)&lt;R, T&gt; F;
+<span class="lineNum">      33 </span>            :     typedef typename _bi::list_av_1&lt;A1&gt;::type list_type;
+<span class="lineNum">      34 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1));
+<span class="lineNum">      35 </span>            : }
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">      38 </span>            :     class A1&gt;
+<span class="lineNum">      39 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(mf0)&lt;R, T&gt;, typename _bi::list_av_1&lt;A1&gt;::type&gt;
+<span class="lineNum">      40 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (), A1 a1)
+<span class="lineNum">      41 </span>            : {
+<span class="lineNum">      42 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf0)&lt;R, T&gt; F;
+<span class="lineNum">      43 </span>            :     typedef typename _bi::list_av_1&lt;A1&gt;::type list_type;
+<span class="lineNum">      44 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1));
+<span class="lineNum">      45 </span>            : }
+<span class="lineNum">      46 </span>            : 
+<span class="lineNum">      47 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">      48 </span>            :     class A1&gt;
+<span class="lineNum">      49 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(cmf0)&lt;R, T&gt;, typename _bi::list_av_1&lt;A1&gt;::type&gt;
+<span class="lineNum">      50 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) () const, A1 a1)
+<span class="lineNum">      51 </span>            : {
+<span class="lineNum">      52 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf0)&lt;R, T&gt; F;
+<span class="lineNum">      53 </span>            :     typedef typename _bi::list_av_1&lt;A1&gt;::type list_type;
+<span class="lineNum">      54 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1));
+<span class="lineNum">      55 </span>            : }
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : // 1
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            : template&lt;class R, class T,
+<span class="lineNum">      60 </span>            :     class B1,
+<a name="61"><span class="lineNum">      61 </span>            :     class A1, class A2&gt;</a>
+<span class="lineNum">      62 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(mf1)&lt;R, T, B1&gt;, typename _bi::list_av_2&lt;A1, A2&gt;::type&gt;
+<span class="lineNum">      63 </span><span class="lineCov">         15 :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1), A1 a1, A2 a2)</span>
+<span class="lineNum">      64 </span>            : {
+<span class="lineNum">      65 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf1)&lt;R, T, B1&gt; F;
+<span class="lineNum">      66 </span>            :     typedef typename _bi::list_av_2&lt;A1, A2&gt;::type list_type;
+<span class="lineNum">      67 </span><span class="lineCov">         15 :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2));</span>
+<span class="lineNum">      68 </span>            : }
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            : template&lt;class R, class T,
+<span class="lineNum">      71 </span>            :     class B1,
+<span class="lineNum">      72 </span>            :     class A1, class A2&gt;
+<span class="lineNum">      73 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(cmf1)&lt;R, T, B1&gt;, typename _bi::list_av_2&lt;A1, A2&gt;::type&gt;
+<span class="lineNum">      74 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1) const, A1 a1, A2 a2)
+<span class="lineNum">      75 </span>            : {
+<span class="lineNum">      76 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf1)&lt;R, T, B1&gt; F;
+<span class="lineNum">      77 </span>            :     typedef typename _bi::list_av_2&lt;A1, A2&gt;::type list_type;
+<span class="lineNum">      78 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2));
+<span class="lineNum">      79 </span>            : }
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">      82 </span>            :     class B1,
+<span class="lineNum">      83 </span>            :     class A1, class A2&gt;
+<span class="lineNum">      84 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(mf1)&lt;R, T, B1&gt;, typename _bi::list_av_2&lt;A1, A2&gt;::type&gt;
+<span class="lineNum">      85 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1), A1 a1, A2 a2)
+<span class="lineNum">      86 </span>            : {
+<span class="lineNum">      87 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf1)&lt;R, T, B1&gt; F;
+<span class="lineNum">      88 </span>            :     typedef typename _bi::list_av_2&lt;A1, A2&gt;::type list_type;
+<span class="lineNum">      89 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2));
+<span class="lineNum">      90 </span>            : }
+<span class="lineNum">      91 </span>            : 
+<span class="lineNum">      92 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">      93 </span>            :     class B1,
+<span class="lineNum">      94 </span>            :     class A1, class A2&gt;
+<span class="lineNum">      95 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(cmf1)&lt;R, T, B1&gt;, typename _bi::list_av_2&lt;A1, A2&gt;::type&gt;
+<span class="lineNum">      96 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1) const, A1 a1, A2 a2)
+<span class="lineNum">      97 </span>            : {
+<span class="lineNum">      98 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf1)&lt;R, T, B1&gt; F;
+<span class="lineNum">      99 </span>            :     typedef typename _bi::list_av_2&lt;A1, A2&gt;::type list_type;
+<span class="lineNum">     100 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2));
+<span class="lineNum">     101 </span>            : }
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            : // 2
+<span class="lineNum">     104 </span>            : 
+<span class="lineNum">     105 </span>            : template&lt;class R, class T,
+<span class="lineNum">     106 </span>            :     class B1, class B2,
+<span class="lineNum">     107 </span>            :     class A1, class A2, class A3&gt;
+<span class="lineNum">     108 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(mf2)&lt;R, T, B1, B2&gt;, typename _bi::list_av_3&lt;A1, A2, A3&gt;::type&gt;
+<span class="lineNum">     109 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2), A1 a1, A2 a2, A3 a3)
+<span class="lineNum">     110 </span>            : {
+<span class="lineNum">     111 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf2)&lt;R, T, B1, B2&gt; F;
+<span class="lineNum">     112 </span>            :     typedef typename _bi::list_av_3&lt;A1, A2, A3&gt;::type list_type;
+<span class="lineNum">     113 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3));
+<span class="lineNum">     114 </span>            : }
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span>            : template&lt;class R, class T,
+<span class="lineNum">     117 </span>            :     class B1, class B2,
+<span class="lineNum">     118 </span>            :     class A1, class A2, class A3&gt;
+<span class="lineNum">     119 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(cmf2)&lt;R, T, B1, B2&gt;, typename _bi::list_av_3&lt;A1, A2, A3&gt;::type&gt;
+<span class="lineNum">     120 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2) const, A1 a1, A2 a2, A3 a3)
+<span class="lineNum">     121 </span>            : {
+<span class="lineNum">     122 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf2)&lt;R, T, B1, B2&gt; F;
+<span class="lineNum">     123 </span>            :     typedef typename _bi::list_av_3&lt;A1, A2, A3&gt;::type list_type;
+<span class="lineNum">     124 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3));
+<span class="lineNum">     125 </span>            : }
+<span class="lineNum">     126 </span>            : 
+<span class="lineNum">     127 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     128 </span>            :     class B1, class B2,
+<span class="lineNum">     129 </span>            :     class A1, class A2, class A3&gt;
+<span class="lineNum">     130 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(mf2)&lt;R, T, B1, B2&gt;, typename _bi::list_av_3&lt;A1, A2, A3&gt;::type&gt;
+<span class="lineNum">     131 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2), A1 a1, A2 a2, A3 a3)
+<span class="lineNum">     132 </span>            : {
+<span class="lineNum">     133 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf2)&lt;R, T, B1, B2&gt; F;
+<span class="lineNum">     134 </span>            :     typedef typename _bi::list_av_3&lt;A1, A2, A3&gt;::type list_type;
+<span class="lineNum">     135 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3));
+<span class="lineNum">     136 </span>            : }
+<span class="lineNum">     137 </span>            : 
+<span class="lineNum">     138 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     139 </span>            :     class B1, class B2,
+<span class="lineNum">     140 </span>            :     class A1, class A2, class A3&gt;
+<span class="lineNum">     141 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(cmf2)&lt;R, T, B1, B2&gt;, typename _bi::list_av_3&lt;A1, A2, A3&gt;::type&gt;
+<span class="lineNum">     142 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2) const, A1 a1, A2 a2, A3 a3)
+<span class="lineNum">     143 </span>            : {
+<span class="lineNum">     144 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf2)&lt;R, T, B1, B2&gt; F;
+<span class="lineNum">     145 </span>            :     typedef typename _bi::list_av_3&lt;A1, A2, A3&gt;::type list_type;
+<span class="lineNum">     146 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3));
+<span class="lineNum">     147 </span>            : }
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span>            : // 3
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            : template&lt;class R, class T,
+<span class="lineNum">     152 </span>            :     class B1, class B2, class B3,
+<span class="lineNum">     153 </span>            :     class A1, class A2, class A3, class A4&gt;
+<span class="lineNum">     154 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(mf3)&lt;R, T, B1, B2, B3&gt;, typename _bi::list_av_4&lt;A1, A2, A3, A4&gt;::type&gt;
+<span class="lineNum">     155 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3), A1 a1, A2 a2, A3 a3, A4 a4)
+<span class="lineNum">     156 </span>            : {
+<span class="lineNum">     157 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf3)&lt;R, T, B1, B2, B3&gt; F;
+<span class="lineNum">     158 </span>            :     typedef typename _bi::list_av_4&lt;A1, A2, A3, A4&gt;::type list_type;
+<span class="lineNum">     159 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4));
+<span class="lineNum">     160 </span>            : }
+<span class="lineNum">     161 </span>            : 
+<span class="lineNum">     162 </span>            : template&lt;class R, class T,
+<span class="lineNum">     163 </span>            :     class B1, class B2, class B3,
+<span class="lineNum">     164 </span>            :     class A1, class A2, class A3, class A4&gt;
+<span class="lineNum">     165 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(cmf3)&lt;R, T, B1, B2, B3&gt;, typename _bi::list_av_4&lt;A1, A2, A3, A4&gt;::type&gt;
+<span class="lineNum">     166 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3) const, A1 a1, A2 a2, A3 a3, A4 a4)
+<span class="lineNum">     167 </span>            : {
+<span class="lineNum">     168 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf3)&lt;R, T, B1, B2, B3&gt; F;
+<span class="lineNum">     169 </span>            :     typedef typename _bi::list_av_4&lt;A1, A2, A3, A4&gt;::type list_type;
+<span class="lineNum">     170 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4));
+<span class="lineNum">     171 </span>            : }
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     174 </span>            :     class B1, class B2, class B3,
+<span class="lineNum">     175 </span>            :     class A1, class A2, class A3, class A4&gt;
+<span class="lineNum">     176 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(mf3)&lt;R, T, B1, B2, B3&gt;, typename _bi::list_av_4&lt;A1, A2, A3, A4&gt;::type&gt;
+<span class="lineNum">     177 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3), A1 a1, A2 a2, A3 a3, A4 a4)
+<span class="lineNum">     178 </span>            : {
+<span class="lineNum">     179 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf3)&lt;R, T, B1, B2, B3&gt; F;
+<span class="lineNum">     180 </span>            :     typedef typename _bi::list_av_4&lt;A1, A2, A3, A4&gt;::type list_type;
+<span class="lineNum">     181 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4));
+<span class="lineNum">     182 </span>            : }
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     185 </span>            :     class B1, class B2, class B3,
+<span class="lineNum">     186 </span>            :     class A1, class A2, class A3, class A4&gt;
+<span class="lineNum">     187 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(cmf3)&lt;R, T, B1, B2, B3&gt;, typename _bi::list_av_4&lt;A1, A2, A3, A4&gt;::type&gt;
+<span class="lineNum">     188 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3) const, A1 a1, A2 a2, A3 a3, A4 a4)
+<span class="lineNum">     189 </span>            : {
+<span class="lineNum">     190 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf3)&lt;R, T, B1, B2, B3&gt; F;
+<span class="lineNum">     191 </span>            :     typedef typename _bi::list_av_4&lt;A1, A2, A3, A4&gt;::type list_type;
+<span class="lineNum">     192 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4));
+<span class="lineNum">     193 </span>            : }
+<span class="lineNum">     194 </span>            : 
+<span class="lineNum">     195 </span>            : // 4
+<span class="lineNum">     196 </span>            : 
+<span class="lineNum">     197 </span>            : template&lt;class R, class T,
+<span class="lineNum">     198 </span>            :     class B1, class B2, class B3, class B4,
+<span class="lineNum">     199 </span>            :     class A1, class A2, class A3, class A4, class A5&gt;
+<span class="lineNum">     200 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(mf4)&lt;R, T, B1, B2, B3, B4&gt;, typename _bi::list_av_5&lt;A1, A2, A3, A4, A5&gt;::type&gt;
+<span class="lineNum">     201 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4), A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
+<span class="lineNum">     202 </span>            : {
+<span class="lineNum">     203 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf4)&lt;R, T, B1, B2, B3, B4&gt; F;
+<span class="lineNum">     204 </span>            :     typedef typename _bi::list_av_5&lt;A1, A2, A3, A4, A5&gt;::type list_type;
+<span class="lineNum">     205 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5));
+<span class="lineNum">     206 </span>            : }
+<span class="lineNum">     207 </span>            : 
+<span class="lineNum">     208 </span>            : template&lt;class R, class T,
+<span class="lineNum">     209 </span>            :     class B1, class B2, class B3, class B4,
+<span class="lineNum">     210 </span>            :     class A1, class A2, class A3, class A4, class A5&gt;
+<span class="lineNum">     211 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(cmf4)&lt;R, T, B1, B2, B3, B4&gt;, typename _bi::list_av_5&lt;A1, A2, A3, A4, A5&gt;::type&gt;
+<span class="lineNum">     212 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4) const, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
+<span class="lineNum">     213 </span>            : {
+<span class="lineNum">     214 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf4)&lt;R, T, B1, B2, B3, B4&gt; F;
+<span class="lineNum">     215 </span>            :     typedef typename _bi::list_av_5&lt;A1, A2, A3, A4, A5&gt;::type list_type;
+<span class="lineNum">     216 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5));
+<span class="lineNum">     217 </span>            : }
+<span class="lineNum">     218 </span>            : 
+<span class="lineNum">     219 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     220 </span>            :     class B1, class B2, class B3, class B4,
+<span class="lineNum">     221 </span>            :     class A1, class A2, class A3, class A4, class A5&gt;
+<span class="lineNum">     222 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(mf4)&lt;R, T, B1, B2, B3, B4&gt;, typename _bi::list_av_5&lt;A1, A2, A3, A4, A5&gt;::type&gt;
+<span class="lineNum">     223 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4), A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
+<span class="lineNum">     224 </span>            : {
+<span class="lineNum">     225 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf4)&lt;R, T, B1, B2, B3, B4&gt; F;
+<span class="lineNum">     226 </span>            :     typedef typename _bi::list_av_5&lt;A1, A2, A3, A4, A5&gt;::type list_type;
+<span class="lineNum">     227 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5));
+<span class="lineNum">     228 </span>            : }
+<span class="lineNum">     229 </span>            : 
+<span class="lineNum">     230 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     231 </span>            :     class B1, class B2, class B3, class B4,
+<span class="lineNum">     232 </span>            :     class A1, class A2, class A3, class A4, class A5&gt;
+<span class="lineNum">     233 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(cmf4)&lt;R, T, B1, B2, B3, B4&gt;, typename _bi::list_av_5&lt;A1, A2, A3, A4, A5&gt;::type&gt;
+<span class="lineNum">     234 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4) const, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
+<span class="lineNum">     235 </span>            : {
+<span class="lineNum">     236 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf4)&lt;R, T, B1, B2, B3, B4&gt; F;
+<span class="lineNum">     237 </span>            :     typedef typename _bi::list_av_5&lt;A1, A2, A3, A4, A5&gt;::type list_type;
+<span class="lineNum">     238 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5));
+<span class="lineNum">     239 </span>            : }
+<span class="lineNum">     240 </span>            : 
+<span class="lineNum">     241 </span>            : // 5
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            : template&lt;class R, class T,
+<span class="lineNum">     244 </span>            :     class B1, class B2, class B3, class B4, class B5,
+<span class="lineNum">     245 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6&gt;
+<span class="lineNum">     246 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(mf5)&lt;R, T, B1, B2, B3, B4, B5&gt;, typename _bi::list_av_6&lt;A1, A2, A3, A4, A5, A6&gt;::type&gt;
+<span class="lineNum">     247 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5), A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
+<span class="lineNum">     248 </span>            : {
+<span class="lineNum">     249 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf5)&lt;R, T, B1, B2, B3, B4, B5&gt; F;
+<span class="lineNum">     250 </span>            :     typedef typename _bi::list_av_6&lt;A1, A2, A3, A4, A5, A6&gt;::type list_type;
+<span class="lineNum">     251 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6));
+<span class="lineNum">     252 </span>            : }
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span>            : template&lt;class R, class T,
+<span class="lineNum">     255 </span>            :     class B1, class B2, class B3, class B4, class B5,
+<span class="lineNum">     256 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6&gt;
+<span class="lineNum">     257 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(cmf5)&lt;R, T, B1, B2, B3, B4, B5&gt;, typename _bi::list_av_6&lt;A1, A2, A3, A4, A5, A6&gt;::type&gt;
+<span class="lineNum">     258 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5) const, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
+<span class="lineNum">     259 </span>            : {
+<span class="lineNum">     260 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf5)&lt;R, T, B1, B2, B3, B4, B5&gt; F;
+<span class="lineNum">     261 </span>            :     typedef typename _bi::list_av_6&lt;A1, A2, A3, A4, A5, A6&gt;::type list_type;
+<span class="lineNum">     262 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6));
+<span class="lineNum">     263 </span>            : }
+<span class="lineNum">     264 </span>            : 
+<span class="lineNum">     265 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     266 </span>            :     class B1, class B2, class B3, class B4, class B5,
+<span class="lineNum">     267 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6&gt;
+<span class="lineNum">     268 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(mf5)&lt;R, T, B1, B2, B3, B4, B5&gt;, typename _bi::list_av_6&lt;A1, A2, A3, A4, A5, A6&gt;::type&gt;
+<span class="lineNum">     269 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5), A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
+<span class="lineNum">     270 </span>            : {
+<span class="lineNum">     271 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf5)&lt;R, T, B1, B2, B3, B4, B5&gt; F;
+<span class="lineNum">     272 </span>            :     typedef typename _bi::list_av_6&lt;A1, A2, A3, A4, A5, A6&gt;::type list_type;
+<span class="lineNum">     273 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6));
+<span class="lineNum">     274 </span>            : }
+<span class="lineNum">     275 </span>            : 
+<span class="lineNum">     276 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     277 </span>            :     class B1, class B2, class B3, class B4, class B5,
+<span class="lineNum">     278 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6&gt;
+<span class="lineNum">     279 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(cmf5)&lt;R, T, B1, B2, B3, B4, B5&gt;, typename _bi::list_av_6&lt;A1, A2, A3, A4, A5, A6&gt;::type&gt;
+<span class="lineNum">     280 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5) const, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
+<span class="lineNum">     281 </span>            : {
+<span class="lineNum">     282 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf5)&lt;R, T, B1, B2, B3, B4, B5&gt; F;
+<span class="lineNum">     283 </span>            :     typedef typename _bi::list_av_6&lt;A1, A2, A3, A4, A5, A6&gt;::type list_type;
+<span class="lineNum">     284 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6));
+<span class="lineNum">     285 </span>            : }
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span>            : // 6
+<span class="lineNum">     288 </span>            : 
+<span class="lineNum">     289 </span>            : template&lt;class R, class T,
+<span class="lineNum">     290 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6,
+<span class="lineNum">     291 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7&gt;
+<span class="lineNum">     292 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(mf6)&lt;R, T, B1, B2, B3, B4, B5, B6&gt;, typename _bi::list_av_7&lt;A1, A2, A3, A4, A5, A6, A7&gt;::type&gt;
+<span class="lineNum">     293 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6), A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
+<span class="lineNum">     294 </span>            : {
+<span class="lineNum">     295 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf6)&lt;R, T, B1, B2, B3, B4, B5, B6&gt; F;
+<span class="lineNum">     296 </span>            :     typedef typename _bi::list_av_7&lt;A1, A2, A3, A4, A5, A6, A7&gt;::type list_type;
+<span class="lineNum">     297 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7));
+<span class="lineNum">     298 </span>            : }
+<span class="lineNum">     299 </span>            : 
+<span class="lineNum">     300 </span>            : template&lt;class R, class T,
+<span class="lineNum">     301 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6,
+<span class="lineNum">     302 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7&gt;
+<span class="lineNum">     303 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(cmf6)&lt;R, T, B1, B2, B3, B4, B5, B6&gt;, typename _bi::list_av_7&lt;A1, A2, A3, A4, A5, A6, A7&gt;::type&gt;
+<span class="lineNum">     304 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6) const, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
+<span class="lineNum">     305 </span>            : {
+<span class="lineNum">     306 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf6)&lt;R, T, B1, B2, B3, B4, B5, B6&gt; F;
+<span class="lineNum">     307 </span>            :     typedef typename _bi::list_av_7&lt;A1, A2, A3, A4, A5, A6, A7&gt;::type list_type;
+<span class="lineNum">     308 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7));
+<span class="lineNum">     309 </span>            : }
+<span class="lineNum">     310 </span>            : 
+<span class="lineNum">     311 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     312 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6,
+<span class="lineNum">     313 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7&gt;
+<span class="lineNum">     314 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(mf6)&lt;R, T, B1, B2, B3, B4, B5, B6&gt;, typename _bi::list_av_7&lt;A1, A2, A3, A4, A5, A6, A7&gt;::type&gt;
+<span class="lineNum">     315 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6), A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
+<span class="lineNum">     316 </span>            : {
+<span class="lineNum">     317 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf6)&lt;R, T, B1, B2, B3, B4, B5, B6&gt; F;
+<span class="lineNum">     318 </span>            :     typedef typename _bi::list_av_7&lt;A1, A2, A3, A4, A5, A6, A7&gt;::type list_type;
+<span class="lineNum">     319 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7));
+<span class="lineNum">     320 </span>            : }
+<span class="lineNum">     321 </span>            : 
+<span class="lineNum">     322 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     323 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6,
+<span class="lineNum">     324 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7&gt;
+<span class="lineNum">     325 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(cmf6)&lt;R, T, B1, B2, B3, B4, B5, B6&gt;, typename _bi::list_av_7&lt;A1, A2, A3, A4, A5, A6, A7&gt;::type&gt;
+<span class="lineNum">     326 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6) const, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
+<span class="lineNum">     327 </span>            : {
+<span class="lineNum">     328 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf6)&lt;R, T, B1, B2, B3, B4, B5, B6&gt; F;
+<span class="lineNum">     329 </span>            :     typedef typename _bi::list_av_7&lt;A1, A2, A3, A4, A5, A6, A7&gt;::type list_type;
+<span class="lineNum">     330 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7));
+<span class="lineNum">     331 </span>            : }
+<span class="lineNum">     332 </span>            : 
+<span class="lineNum">     333 </span>            : // 7
+<span class="lineNum">     334 </span>            : 
+<span class="lineNum">     335 </span>            : template&lt;class R, class T,
+<span class="lineNum">     336 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6, class B7,
+<span class="lineNum">     337 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8&gt;
+<span class="lineNum">     338 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(mf7)&lt;R, T, B1, B2, B3, B4, B5, B6, B7&gt;, typename _bi::list_av_8&lt;A1, A2, A3, A4, A5, A6, A7, A8&gt;::type&gt;
+<span class="lineNum">     339 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6, B7), A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
+<span class="lineNum">     340 </span>            : {
+<span class="lineNum">     341 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf7)&lt;R, T, B1, B2, B3, B4, B5, B6, B7&gt; F;
+<span class="lineNum">     342 </span>            :     typedef typename _bi::list_av_8&lt;A1, A2, A3, A4, A5, A6, A7, A8&gt;::type list_type;
+<span class="lineNum">     343 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7, a8));
+<span class="lineNum">     344 </span>            : }
+<span class="lineNum">     345 </span>            : 
+<span class="lineNum">     346 </span>            : template&lt;class R, class T,
+<span class="lineNum">     347 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6, class B7,
+<span class="lineNum">     348 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8&gt;
+<span class="lineNum">     349 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(cmf7)&lt;R, T, B1, B2, B3, B4, B5, B6, B7&gt;, typename _bi::list_av_8&lt;A1, A2, A3, A4, A5, A6, A7, A8&gt;::type&gt;
+<span class="lineNum">     350 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6, B7) const, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
+<span class="lineNum">     351 </span>            : {
+<span class="lineNum">     352 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf7)&lt;R, T, B1, B2, B3, B4, B5, B6, B7&gt; F;
+<span class="lineNum">     353 </span>            :     typedef typename _bi::list_av_8&lt;A1, A2, A3, A4, A5, A6, A7, A8&gt;::type list_type;
+<span class="lineNum">     354 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7, a8));
+<span class="lineNum">     355 </span>            : }
+<span class="lineNum">     356 </span>            : 
+<span class="lineNum">     357 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     358 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6, class B7,
+<span class="lineNum">     359 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8&gt;
+<span class="lineNum">     360 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(mf7)&lt;R, T, B1, B2, B3, B4, B5, B6, B7&gt;, typename _bi::list_av_8&lt;A1, A2, A3, A4, A5, A6, A7, A8&gt;::type&gt;
+<span class="lineNum">     361 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6, B7), A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
+<span class="lineNum">     362 </span>            : {
+<span class="lineNum">     363 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf7)&lt;R, T, B1, B2, B3, B4, B5, B6, B7&gt; F;
+<span class="lineNum">     364 </span>            :     typedef typename _bi::list_av_8&lt;A1, A2, A3, A4, A5, A6, A7, A8&gt;::type list_type;
+<span class="lineNum">     365 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7, a8));
+<span class="lineNum">     366 </span>            : }
+<span class="lineNum">     367 </span>            : 
+<span class="lineNum">     368 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     369 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6, class B7,
+<span class="lineNum">     370 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8&gt;
+<span class="lineNum">     371 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(cmf7)&lt;R, T, B1, B2, B3, B4, B5, B6, B7&gt;, typename _bi::list_av_8&lt;A1, A2, A3, A4, A5, A6, A7, A8&gt;::type&gt;
+<span class="lineNum">     372 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6, B7) const, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
+<span class="lineNum">     373 </span>            : {
+<span class="lineNum">     374 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf7)&lt;R, T, B1, B2, B3, B4, B5, B6, B7&gt; F;
+<span class="lineNum">     375 </span>            :     typedef typename _bi::list_av_8&lt;A1, A2, A3, A4, A5, A6, A7, A8&gt;::type list_type;
+<span class="lineNum">     376 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7, a8));
+<span class="lineNum">     377 </span>            : }
+<span class="lineNum">     378 </span>            : 
+<span class="lineNum">     379 </span>            : // 8
+<span class="lineNum">     380 </span>            : 
+<span class="lineNum">     381 </span>            : template&lt;class R, class T,
+<span class="lineNum">     382 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6, class B7, class B8,
+<span class="lineNum">     383 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9&gt;
+<span class="lineNum">     384 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(mf8)&lt;R, T, B1, B2, B3, B4, B5, B6, B7, B8&gt;, typename _bi::list_av_9&lt;A1, A2, A3, A4, A5, A6, A7, A8, A9&gt;::type&gt;
+<span class="lineNum">     385 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6, B7, B8), A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9)
+<span class="lineNum">     386 </span>            : {
+<span class="lineNum">     387 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf8)&lt;R, T, B1, B2, B3, B4, B5, B6, B7, B8&gt; F;
+<span class="lineNum">     388 </span>            :     typedef typename _bi::list_av_9&lt;A1, A2, A3, A4, A5, A6, A7, A8, A9&gt;::type list_type;
+<span class="lineNum">     389 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7, a8, a9));
+<span class="lineNum">     390 </span>            : }
+<span class="lineNum">     391 </span>            : 
+<span class="lineNum">     392 </span>            : template&lt;class R, class T,
+<span class="lineNum">     393 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6, class B7, class B8,
+<span class="lineNum">     394 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9&gt;
+<span class="lineNum">     395 </span>            :     _bi::bind_t&lt;R, _mfi::BOOST_BIND_MF_NAME(cmf8)&lt;R, T, B1, B2, B3, B4, B5, B6, B7, B8&gt;, typename _bi::list_av_9&lt;A1, A2, A3, A4, A5, A6, A7, A8, A9&gt;::type&gt;
+<span class="lineNum">     396 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6, B7, B8) const, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9)
+<span class="lineNum">     397 </span>            : {
+<span class="lineNum">     398 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf8)&lt;R, T, B1, B2, B3, B4, B5, B6, B7, B8&gt; F;
+<span class="lineNum">     399 </span>            :     typedef typename _bi::list_av_9&lt;A1, A2, A3, A4, A5, A6, A7, A8, A9&gt;::type list_type;
+<span class="lineNum">     400 </span>            :     return _bi::bind_t&lt;R, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7, a8, a9));
+<span class="lineNum">     401 </span>            : }
+<span class="lineNum">     402 </span>            : 
+<span class="lineNum">     403 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     404 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6, class B7, class B8,
+<span class="lineNum">     405 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9&gt;
+<span class="lineNum">     406 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(mf8)&lt;R, T, B1, B2, B3, B4, B5, B6, B7, B8&gt;, typename _bi::list_av_9&lt;A1, A2, A3, A4, A5, A6, A7, A8, A9&gt;::type&gt;
+<span class="lineNum">     407 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6, B7, B8), A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9)
+<span class="lineNum">     408 </span>            : {
+<span class="lineNum">     409 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(mf8)&lt;R, T, B1, B2, B3, B4, B5, B6, B7, B8&gt; F;
+<span class="lineNum">     410 </span>            :     typedef typename _bi::list_av_9&lt;A1, A2, A3, A4, A5, A6, A7, A8, A9&gt;::type list_type;
+<span class="lineNum">     411 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7, a8, a9));
+<span class="lineNum">     412 </span>            : }
+<span class="lineNum">     413 </span>            : 
+<span class="lineNum">     414 </span>            : template&lt;class Rt2, class R, class T,
+<span class="lineNum">     415 </span>            :     class B1, class B2, class B3, class B4, class B5, class B6, class B7, class B8,
+<span class="lineNum">     416 </span>            :     class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9&gt;
+<span class="lineNum">     417 </span>            :     _bi::bind_t&lt;Rt2, _mfi::BOOST_BIND_MF_NAME(cmf8)&lt;R, T, B1, B2, B3, B4, B5, B6, B7, B8&gt;, typename _bi::list_av_9&lt;A1, A2, A3, A4, A5, A6, A7, A8, A9&gt;::type&gt;
+<span class="lineNum">     418 </span>            :     BOOST_BIND(R (BOOST_BIND_MF_CC T::*f) (B1, B2, B3, B4, B5, B6, B7, B8) const, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9)
+<span class="lineNum">     419 </span>            : {
+<span class="lineNum">     420 </span>            :     typedef _mfi::BOOST_BIND_MF_NAME(cmf8)&lt;R, T, B1, B2, B3, B4, B5, B6, B7, B8&gt; F;
+<span class="lineNum">     421 </span>            :     typedef typename _bi::list_av_9&lt;A1, A2, A3, A4, A5, A6, A7, A8, A9&gt;::type list_type;
+<span class="lineNum">     422 </span>            :     return _bi::bind_t&lt;Rt2, F, list_type&gt;(F(f), list_type(a1, a2, a3, a4, a5, a6, a7, a8, a9));
+<span class="lineNum">     423 </span>            : }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

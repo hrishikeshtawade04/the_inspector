@@ -1,0 +1,246 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/ros/subscribe_options.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/ros</a> - subscribe_options.h<span style="font-size: 80%;"> (source / <a href="subscribe_options.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            :  * Copyright (C) 2009, Willow Garage, Inc.
+<span class="lineNum">       3 </span>            :  *
+<span class="lineNum">       4 </span>            :  * Redistribution and use in source and binary forms, with or without
+<span class="lineNum">       5 </span>            :  * modification, are permitted provided that the following conditions are met:
+<span class="lineNum">       6 </span>            :  *   * Redistributions of source code must retain the above copyright notice,
+<span class="lineNum">       7 </span>            :  *     this list of conditions and the following disclaimer.
+<span class="lineNum">       8 </span>            :  *   * Redistributions in binary form must reproduce the above copyright
+<span class="lineNum">       9 </span>            :  *     notice, this list of conditions and the following disclaimer in the
+<span class="lineNum">      10 </span>            :  *     documentation and/or other materials provided with the distribution.
+<span class="lineNum">      11 </span>            :  *   * Neither the names of Stanford University or Willow Garage, Inc. nor the names of its
+<span class="lineNum">      12 </span>            :  *     contributors may be used to endorse or promote products derived from
+<span class="lineNum">      13 </span>            :  *     this software without specific prior written permission.
+<span class="lineNum">      14 </span>            :  *
+<span class="lineNum">      15 </span>            :  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;
+<span class="lineNum">      16 </span>            :  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+<span class="lineNum">      17 </span>            :  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+<span class="lineNum">      18 </span>            :  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+<span class="lineNum">      19 </span>            :  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+<span class="lineNum">      20 </span>            :  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+<span class="lineNum">      21 </span>            :  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+<span class="lineNum">      22 </span>            :  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+<span class="lineNum">      23 </span>            :  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+<span class="lineNum">      24 </span>            :  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+<span class="lineNum">      25 </span>            :  * POSSIBILITY OF SUCH DAMAGE.
+<span class="lineNum">      26 </span>            :  */
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            : #ifndef ROSCPP_SUBSCRIBE_OPTIONS_H
+<span class="lineNum">      29 </span>            : #define ROSCPP_SUBSCRIBE_OPTIONS_H
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            : #include &quot;ros/forwards.h&quot;
+<span class="lineNum">      32 </span>            : #include &quot;common.h&quot;
+<span class="lineNum">      33 </span>            : #include &quot;ros/transport_hints.h&quot;
+<span class="lineNum">      34 </span>            : #include &quot;ros/message_traits.h&quot;
+<span class="lineNum">      35 </span>            : #include &quot;subscription_callback_helper.h&quot;
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : namespace ros
+<span class="lineNum">      38 </span>            : {
+<span class="lineNum">      39 </span>            : 
+<span class="lineNum">      40 </span>            : /**
+<a name="41"><span class="lineNum">      41 </span>            :  * \brief Encapsulates all options available for creating a Subscriber</a>
+<span class="lineNum">      42 </span>            :  */
+<span class="lineNum">      43 </span><span class="lineCov">        111 : struct ROSCPP_DECL SubscribeOptions</span>
+<span class="lineNum">      44 </span>            : {
+<span class="lineNum">      45 </span>            :   /**
+<a name="46"><span class="lineNum">      46 </span>            :    *</a>
+<span class="lineNum">      47 </span>            :    */
+<span class="lineNum">      48 </span><span class="lineCov">         15 :   SubscribeOptions()</span>
+<span class="lineNum">      49 </span>            :   : queue_size(1)
+<span class="lineNum">      50 </span>            :   , callback_queue(0)
+<span class="lineNum">      51 </span><span class="lineCov">         15 :   , allow_concurrent_callbacks(false)</span>
+<span class="lineNum">      52 </span>            :   {
+<span class="lineNum">      53 </span><span class="lineCov">         15 :   }</span>
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span>            :   /**
+<span class="lineNum">      56 </span>            :    * \brief Constructor
+<span class="lineNum">      57 </span>            :    * \param _topic Topic to subscribe on
+<span class="lineNum">      58 </span>            :    * \param _queue_size Number of incoming messages to queue up for
+<span class="lineNum">      59 </span>            :    *        processing (messages in excess of this queue capacity will be
+<span class="lineNum">      60 </span>            :    *        discarded).
+<span class="lineNum">      61 </span>            :    * \param _md5sum
+<span class="lineNum">      62 </span>            :    * \param _datatype
+<span class="lineNum">      63 </span>            :    */
+<span class="lineNum">      64 </span>            :   SubscribeOptions(const std::string&amp; _topic, uint32_t _queue_size, const std::string&amp; _md5sum, const std::string&amp; _datatype)
+<span class="lineNum">      65 </span>            :   : topic(_topic)
+<span class="lineNum">      66 </span>            :   , queue_size(_queue_size)
+<span class="lineNum">      67 </span>            :   , md5sum(_md5sum)
+<span class="lineNum">      68 </span>            :   , datatype(_datatype)
+<span class="lineNum">      69 </span>            :   , callback_queue(0)
+<span class="lineNum">      70 </span>            :   , allow_concurrent_callbacks(false)
+<span class="lineNum">      71 </span>            :   {}
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            :   /**
+<span class="lineNum">      74 </span>            :    * \brief Templated initialization, templated on callback parameter type.  Supports any callback parameters supported by the SubscriptionCallbackAdapter
+<span class="lineNum">      75 </span>            :    * \param _topic Topic to subscribe on
+<span class="lineNum">      76 </span>            :    * \param _queue_size Number of incoming messages to queue up for
+<span class="lineNum">      77 </span>            :    *        processing (messages in excess of this queue capacity will be
+<span class="lineNum">      78 </span>            :    *        discarded).
+<span class="lineNum">      79 </span>            :    * \param _callback Callback to call when a message arrives on this topic
+<span class="lineNum">      80 </span>            :    */
+<span class="lineNum">      81 </span>            :   template&lt;class P&gt;
+<span class="lineNum">      82 </span>            :   void initByFullCallbackType(const std::string&amp; _topic, uint32_t _queue_size,
+<span class="lineNum">      83 </span>            :        const boost::function&lt;void (P)&gt;&amp; _callback,
+<span class="lineNum">      84 </span>            :        const boost::function&lt;boost::shared_ptr&lt;typename ParameterAdapter&lt;P&gt;::Message&gt;(void)&gt;&amp; factory_fn = DefaultMessageCreator&lt;typename ParameterAdapter&lt;P&gt;::Message&gt;())
+<span class="lineNum">      85 </span>            :   {
+<span class="lineNum">      86 </span>            :     typedef typename ParameterAdapter&lt;P&gt;::Message MessageType;
+<span class="lineNum">      87 </span>            :     topic = _topic;
+<span class="lineNum">      88 </span>            :     queue_size = _queue_size;
+<span class="lineNum">      89 </span>            :     md5sum = message_traits::md5sum&lt;MessageType&gt;();
+<span class="lineNum">      90 </span>            :     datatype = message_traits::datatype&lt;MessageType&gt;();
+<span class="lineNum">      91 </span>            :     helper = boost::make_shared&lt;SubscriptionCallbackHelperT&lt;P&gt; &gt;(_callback, factory_fn);
+<span class="lineNum">      92 </span>            :   }
+<span class="lineNum">      93 </span>            : 
+<span class="lineNum">      94 </span>            :   /**
+<span class="lineNum">      95 </span>            :    * \brief Templated initialization, templated on message type.  Only supports &quot;const boost::shared_ptr&lt;M const&gt;&amp;&quot; callback types
+<span class="lineNum">      96 </span>            :    * \param _topic Topic to subscribe on
+<span class="lineNum">      97 </span>            :    * \param _queue_size Number of incoming messages to queue up for
+<span class="lineNum">      98 </span>            :    *        processing (messages in excess of this queue capacity will be
+<span class="lineNum">      99 </span>            :    *        discarded).
+<span class="lineNum">     100 </span>            :    * \param _callback Callback to call when a message arrives on this topic
+<a name="101"><span class="lineNum">     101 </span>            :    */</a>
+<span class="lineNum">     102 </span>            :   template&lt;class M&gt;
+<span class="lineNum">     103 </span><span class="lineCov">         15 :   void init(const std::string&amp; _topic, uint32_t _queue_size,</span>
+<span class="lineNum">     104 </span>            :        const boost::function&lt;void (const boost::shared_ptr&lt;M const&gt;&amp;)&gt;&amp; _callback,
+<span class="lineNum">     105 </span>            :        const boost::function&lt;boost::shared_ptr&lt;M&gt;(void)&gt;&amp; factory_fn = DefaultMessageCreator&lt;M&gt;())
+<span class="lineNum">     106 </span>            :   {
+<span class="lineNum">     107 </span>            :     typedef typename ParameterAdapter&lt;M&gt;::Message MessageType;
+<span class="lineNum">     108 </span><span class="lineCov">         15 :     topic = _topic;</span>
+<span class="lineNum">     109 </span><span class="lineCov">         15 :     queue_size = _queue_size;</span>
+<span class="lineNum">     110 </span><span class="lineCov">         15 :     md5sum = message_traits::md5sum&lt;MessageType&gt;();</span>
+<span class="lineNum">     111 </span><span class="lineCov">         15 :     datatype = message_traits::datatype&lt;MessageType&gt;();</span>
+<span class="lineNum">     112 </span><span class="lineCov">         15 :     helper = boost::make_shared&lt;SubscriptionCallbackHelperT&lt;const boost::shared_ptr&lt;MessageType const&gt;&amp;&gt; &gt;(_callback, factory_fn);</span>
+<span class="lineNum">     113 </span><span class="lineCov">         15 :   }</span>
+<span class="lineNum">     114 </span>            : 
+<span class="lineNum">     115 </span>            :   std::string topic;                                                ///&lt; Topic to subscribe to
+<span class="lineNum">     116 </span>            :   uint32_t queue_size;                                              ///&lt; Number of incoming messages to queue up for processing (messages in excess of this queue capacity will be discarded).
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            :   std::string md5sum;                                               ///&lt; MD5 of the message datatype
+<span class="lineNum">     119 </span>            :   std::string datatype;                                             ///&lt; Datatype of the message we'd like to subscribe as
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span>            :   SubscriptionCallbackHelperPtr helper;                              ///&lt; Helper object used to get create messages and call callbacks
+<span class="lineNum">     122 </span>            : 
+<span class="lineNum">     123 </span>            :   CallbackQueueInterface* callback_queue;                           ///&lt; Queue to add callbacks to.  If NULL, the global callback queue will be used
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span>            :   /// By default subscription callbacks are guaranteed to arrive in-order, with only one callback happening for this subscription at any given
+<span class="lineNum">     126 </span>            :   /// time.  Setting this to true allows you to receive multiple messages on the same topic from multiple threads at the same time
+<span class="lineNum">     127 </span>            :   bool allow_concurrent_callbacks;
+<span class="lineNum">     128 </span>            : 
+<span class="lineNum">     129 </span>            :   /**
+<span class="lineNum">     130 </span>            :    * \brief An object whose destruction will prevent the callback associated with this subscription
+<span class="lineNum">     131 </span>            :    *
+<span class="lineNum">     132 </span>            :    * A shared pointer to an object to track for these callbacks.  If set, the a weak_ptr will be created to this object,
+<span class="lineNum">     133 </span>            :    * and if the reference count goes to 0 the subscriber callbacks will not get called.
+<span class="lineNum">     134 </span>            :    *
+<span class="lineNum">     135 </span>            :    * \note Note that setting this will cause a new reference to be added to the object before the
+<span class="lineNum">     136 </span>            :    * callback, and for it to go out of scope (and potentially be deleted) in the code path (and therefore
+<span class="lineNum">     137 </span>            :    * thread) that the callback is invoked from.
+<span class="lineNum">     138 </span>            :    */
+<span class="lineNum">     139 </span>            :   VoidConstPtr tracked_object;
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            :   TransportHints transport_hints;                                   ///&lt; Hints for transport type and options
+<span class="lineNum">     142 </span>            : 
+<span class="lineNum">     143 </span>            :   /**
+<span class="lineNum">     144 </span>            :    * \brief Templated helper function for creating an AdvertiseServiceOptions with most of its options
+<span class="lineNum">     145 </span>            :    * \param topic Topic name to subscribe to
+<span class="lineNum">     146 </span>            :    * \param queue_size Number of incoming messages to queue up for
+<span class="lineNum">     147 </span>            :    *        processing (messages in excess of this queue capacity will be
+<span class="lineNum">     148 </span>            :    *        discarded).
+<span class="lineNum">     149 </span>            :    * \param callback The callback to invoke when a message is received on this topic
+<span class="lineNum">     150 </span>            :    * \param tracked_object The tracked object to use (see SubscribeOptions::tracked_object)
+<span class="lineNum">     151 </span>            :    * \param queue The callback queue to use (see SubscribeOptions::callback_queue)
+<span class="lineNum">     152 </span>            :    */
+<span class="lineNum">     153 </span>            :   template&lt;class M&gt;
+<span class="lineNum">     154 </span>            :   static SubscribeOptions create(const std::string&amp; topic, uint32_t queue_size,
+<span class="lineNum">     155 </span>            :                                  const boost::function&lt;void (const boost::shared_ptr&lt;M const&gt;&amp;)&gt;&amp; callback,
+<span class="lineNum">     156 </span>            :                                  const VoidConstPtr&amp; tracked_object, CallbackQueueInterface* queue)
+<span class="lineNum">     157 </span>            :   {
+<span class="lineNum">     158 </span>            :     SubscribeOptions ops;
+<span class="lineNum">     159 </span>            :     ops.init&lt;M&gt;(topic, queue_size, callback);
+<span class="lineNum">     160 </span>            :     ops.tracked_object = tracked_object;
+<span class="lineNum">     161 </span>            :     ops.callback_queue = queue;
+<span class="lineNum">     162 </span>            :     return ops;
+<span class="lineNum">     163 </span>            :   }
+<span class="lineNum">     164 </span>            : };
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            : }
+<span class="lineNum">     167 </span>            : 
+<span class="lineNum">     168 </span>            : #endif
+<span class="lineNum">     169 </span>            : 
+<span class="lineNum">     170 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

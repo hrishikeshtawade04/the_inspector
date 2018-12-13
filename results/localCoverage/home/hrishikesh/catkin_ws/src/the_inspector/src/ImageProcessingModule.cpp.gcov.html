@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /home/hrishikesh/catkin_ws/src/the_inspector/src/ImageProcessingModule.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../index.html">top level</a> - <a href="index.html">home/hrishikesh/catkin_ws/src/the_inspector/src</a> - ImageProcessingModule.cpp<span style="font-size: 80%;"> (source / <a href="ImageProcessingModule.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">78</td>
+            <td class="headerCovTableEntry">78</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            :  * BSD 3-Clause License
+<span class="lineNum">       3 </span>            :  *
+<span class="lineNum">       4 </span>            :  * Copyright (c) 2018, KapilRawal, Hrishikesh Tawade.
+<span class="lineNum">       5 </span>            :  * All rights reserved.
+<span class="lineNum">       6 </span>            :  * Redistribution and use in source and binary forms, with or without
+<span class="lineNum">       7 </span>            :  * modification, are permitted provided that the following conditions are met:
+<span class="lineNum">       8 </span>            :  *
+<span class="lineNum">       9 </span>            :  * Redistributions of source code must retain the above copyright notice, this
+<span class="lineNum">      10 </span>            :  * list of conditions and the following disclaimer.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            :  * Redistributions in binary form must reproduce the above copyright notice,
+<span class="lineNum">      13 </span>            :  * this list of conditions and the following disclaimer in the documentation
+<span class="lineNum">      14 </span>            :  * and/or other materials provided with the distribution.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            :  * Neither the name of the copyright holder nor the names of its
+<span class="lineNum">      17 </span>            :  * contributors may be used to endorse or promote products derived from
+<span class="lineNum">      18 </span>            :  * this software without specific prior written permission.
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            :  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;
+<span class="lineNum">      21 </span>            :  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+<span class="lineNum">      22 </span>            :  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+<span class="lineNum">      23 </span>            :  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+<span class="lineNum">      24 </span>            :  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+<span class="lineNum">      25 </span>            :  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+<span class="lineNum">      26 </span>            :  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+<span class="lineNum">      27 </span>            :  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+<span class="lineNum">      28 </span>            :  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+<span class="lineNum">      29 </span>            :  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            :  *  @copyright (c) BSD
+<span class="lineNum">      32 </span>            :  *
+<span class="lineNum">      33 </span>            :  *  @file   ImageProcessingModule.cpp
+<span class="lineNum">      34 </span>            :  *
+<span class="lineNum">      35 </span>            :  *  @author   Kapil Rawal (krawal@terpmail.umd.edu)
+<span class="lineNum">      36 </span>            :  *  @author   Hrishikesh Tawde (htawade@terpmail.umd.edu)
+<span class="lineNum">      37 </span>            :  *
+<span class="lineNum">      38 </span>            :  *  @copyright   BSD License
+<span class="lineNum">      39 </span>            :  *
+<span class="lineNum">      40 </span>            :  *  @brief    ImageProcessingModule Class Implementation
+<span class="lineNum">      41 </span>            :  *
+<span class="lineNum">      42 </span>            :  *  @section   DESCRIPTION
+<span class="lineNum">      43 </span>            :  *
+<span class="lineNum">      44 </span>            :  *  This file contains the implementations for class ImageProcessingModule
+<span class="lineNum">      45 </span>            :  *
+<span class="lineNum">      46 </span>            :  */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : #include &quot;../include/ImageProcessingModule.h&quot;
+<span class="lineNum">      49 </span>            : #include &lt;image_transport/image_transport.h&gt;
+<span class="lineNum">      50 </span>            : #include &lt;cv_bridge/cv_bridge.h&gt;
+<span class="lineNum">      51 </span>            : #include &lt;sensor_msgs/image_encodings.h&gt;
+<span class="lineNum">      52 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">      53 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      54 </span>            : #include &lt;string&gt;
+<span class="lineNum">      55 </span>            : #include &lt;opencv2/opencv.hpp&gt;
+<span class="lineNum">      56 </span>            : #include &lt;opencv2/highgui.hpp&gt;
+<span class="lineNum">      57 </span>            : #include &quot;ros/ros.h&quot;
+<a name="58"><span class="lineNum">      58 </span>            : </a>
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span><span class="lineCov">         15 : ImageProcessingModule::ImageProcessingModule() {</span>
+<span class="lineNum">      61 </span>            :   /// passing node handle to image transport
+<span class="lineNum">      62 </span><span class="lineCov">         30 :   image_transport::ImageTransport it(n);</span>
+<span class="lineNum">      63 </span>            :   /// cv_bridge subscribing to camera topic
+<span class="lineNum">      64 </span><span class="lineCov">         15 :   pub_image = it.advertise(&quot;camera/image&quot;, 10);</span>
+<span class="lineNum">      65 </span>            :   /// subscribing to raw image topic of turtle bot
+<span class="lineNum">      66 </span><span class="lineCov">         15 :   subImage = n.subscribe &lt; sensor_msgs::Image</span>
+<span class="lineNum">      67 </span><span class="lineCov">         30 :           &gt; (&quot;/camera/rgb/image_raw&quot;, 10,</span>
+<span class="lineNum">      68 </span><span class="lineCov">         15 :               &amp;ImageProcessingModule::convertImage, this);</span>
+<span class="lineNum">      69 </span><span class="lineCov">         15 :   ROS_INFO(&quot;Configuration setting done&quot;);</span>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">         15 : }</span></a>
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span><span class="lineCov">         15 : ImageProcessingModule::~ImageProcessingModule() {</span>
+<a name="73"><span class="lineNum">      73 </span><span class="lineCov">         15 : }</span></a>
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span><span class="lineCov">       2517 : void ImageProcessingModule::convertImage(</span>
+<span class="lineNum">      76 </span>            :     const sensor_msgs::Image::ConstPtr&amp; msg) {
+<span class="lineNum">      77 </span><span class="lineCov">       2517 :   cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);</span>
+<span class="lineNum">      78 </span>            :   /// storing the leakage image
+<span class="lineNum">      79 </span><span class="lineCov">       2517 :   imageLeakage = cv_ptr-&gt;image;</span>
+<a name="80"><span class="lineNum">      80 </span><span class="lineCov">       2517 : }</span></a>
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span><span class="lineCov">          3 : cv::Mat ImageProcessingModule::getImage() {</span>
+<span class="lineNum">      83 </span><span class="lineCov">          3 :   return imageLeakage;</span>
+<a name="84"><span class="lineNum">      84 </span>            : }</a>
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span><span class="lineCov">          6 : std::vector&lt;double&gt; ImageProcessingModule::detectContour(</span>
+<span class="lineNum">      87 </span>            :     std::string wallNumber,
+<span class="lineNum">      88 </span>            :                                                          int storeImage) {
+<span class="lineNum">      89 </span><span class="lineCov">          6 :   std::vector&lt;double&gt; countourLocations;</span>
+<span class="lineNum">      90 </span><span class="lineCov">          6 :   int complete = 0;</span>
+<span class="lineNum">      91 </span>            :   /// runs till all contours are found.
+<span class="lineNum">      92 </span><span class="lineCov">   10561404 :   while (ros::ok() &amp;&amp; complete == 0) {</span>
+<span class="lineNum">      93 </span>            :     /// run only if image is available
+<span class="lineNum">      94 </span><span class="lineCov">    5280699 :     if (!imageLeakage.empty()) {</span>
+<span class="lineNum">      95 </span>            :       typedef cv::Point2i Point;
+<span class="lineNum">      96 </span><span class="lineCov">          6 :       cv::Scalar lowerGreen = cv::Scalar(40, 100, 50);</span>
+<span class="lineNum">      97 </span><span class="lineCov">          6 :       cv::Scalar higherGreen = cv::Scalar(67, 255, 255);</span>
+<span class="lineNum">      98 </span><span class="lineCov">         12 :       std::vector &lt; std::vector &lt; Point &gt;&gt; contours;</span>
+<span class="lineNum">      99 </span><span class="lineCov">         12 :       std::vector &lt; cv::Vec4i &gt; hierarchy;</span>
+<span class="lineNum">     100 </span>            :       int bboxbrX, bboxbrY, bboxtlX, bboxtlY;
+<span class="lineNum">     101 </span>            :       /// Detect Wall
+<span class="lineNum">     102 </span><span class="lineCov">         12 :       cv::Mat imageHSVY;</span>
+<span class="lineNum">     103 </span><span class="lineCov">         12 :       cv::Mat maskY;</span>
+<span class="lineNum">     104 </span><span class="lineCov">         12 :       cv::Mat res_grayY;</span>
+<span class="lineNum">     105 </span><span class="lineCov">         12 :       cv::Mat threshY;</span>
+<span class="lineNum">     106 </span><span class="lineCov">         12 :       cv::Mat resY;</span>
+<span class="lineNum">     107 </span><span class="lineCov">          6 :       cv::cvtColor(imageLeakage, res_grayY, CV_BGR2GRAY);</span>
+<span class="lineNum">     108 </span><span class="lineCov">          6 :       cv::threshold(res_grayY, threshY, 125, 255, cv::THRESH_BINARY_INV);</span>
+<span class="lineNum">     109 </span><span class="lineCov">         12 :       cv::findContours(threshY, contours, hierarchy, CV_RETR_TREE,</span>
+<span class="lineNum">     110 </span><span class="lineCov">          6 :                        CV_CHAIN_APPROX_SIMPLE, Point(0, 0));</span>
+<span class="lineNum">     111 </span><span class="lineCov">         12 :       for (int i = 0; i &lt; contours.size(); i++) {</span>
+<span class="lineNum">     112 </span><span class="lineCov">          6 :         if (cv::contourArea(contours[i]) &gt; 155000) {   //&amp;&amp; cv::contourArea(contours[i]) &lt; 185000</span>
+<span class="lineNum">     113 </span><span class="lineCov">          6 :           cv::Scalar color = cv::Scalar(255, 255, 0);</span>
+<span class="lineNum">     114 </span><span class="lineCov">         12 :           cv::drawContours(imageLeakage, contours, i, color, 2, 8, hierarchy, 0,</span>
+<span class="lineNum">     115 </span><span class="lineCov">          6 :                            Point());</span>
+<span class="lineNum">     116 </span><span class="lineCov">          6 :           bboxtlY = cv::boundingRect(contours[i]).tl().y;</span>
+<span class="lineNum">     117 </span><span class="lineCov">          6 :           bboxbrY = cv::boundingRect(contours[i]).br().y;</span>
+<span class="lineNum">     118 </span><span class="lineCov">          6 :           bboxtlX = cv::boundingRect(contours[i]).tl().x;</span>
+<span class="lineNum">     119 </span><span class="lineCov">          6 :           bboxbrX = cv::boundingRect(contours[i]).br().x;</span>
+<span class="lineNum">     120 </span>            :         }
+<span class="lineNum">     121 </span>            :       }
+<span class="lineNum">     122 </span><span class="lineCov">         12 :       cv::Mat imageHSV;</span>
+<span class="lineNum">     123 </span><span class="lineCov">         12 :       cv::Mat mask;</span>
+<span class="lineNum">     124 </span><span class="lineCov">         12 :       cv::Mat res;</span>
+<span class="lineNum">     125 </span><span class="lineCov">         12 :       cv::Mat res_gray;</span>
+<span class="lineNum">     126 </span><span class="lineCov">         12 :       cv::Mat thresh;</span>
+<span class="lineNum">     127 </span><span class="lineCov">          6 :       cv::cvtColor(imageLeakage, imageHSV, cv::COLOR_BGR2HSV);</span>
+<span class="lineNum">     128 </span><span class="lineCov">          6 :       cv::inRange(imageHSV, lowerGreen, higherGreen, mask);</span>
+<span class="lineNum">     129 </span><span class="lineCov">          6 :       cv::bitwise_and(imageHSV, imageHSV, res, mask);</span>
+<span class="lineNum">     130 </span><span class="lineCov">          6 :       cv::cvtColor(res, res_gray, CV_BGR2GRAY);</span>
+<span class="lineNum">     131 </span><span class="lineCov">          6 :       cv::threshold(res_gray, thresh, 40, 255, cv::THRESH_BINARY);</span>
+<span class="lineNum">     132 </span><span class="lineCov">         12 :       cv::findContours(thresh, contours, hierarchy, CV_RETR_TREE,</span>
+<span class="lineNum">     133 </span><span class="lineCov">          6 :                        CV_CHAIN_APPROX_SIMPLE, Point(0, 0));</span>
+<span class="lineNum">     134 </span><span class="lineCov">         21 :       for (int i = 0; i &lt; contours.size(); i++) {</span>
+<span class="lineNum">     135 </span><span class="lineCov">         30 :         if (//cv::contourArea(contours[i]) &lt; 10000 &amp;&amp;</span>
+<span class="lineNum">     136 </span><span class="lineCov">         30 :              cv::contourArea(contours[i]) &gt; 500) {</span>
+<span class="lineNum">     137 </span><span class="lineCov">         15 :           cv::Scalar color = cv::Scalar(255, 0, 255);</span>
+<span class="lineNum">     138 </span><span class="lineCov">         30 :           cv::drawContours(imageLeakage, contours, i, color, 2, 8, hierarchy, 0,</span>
+<span class="lineNum">     139 </span><span class="lineCov">         15 :                            Point());</span>
+<span class="lineNum">     140 </span>            :           /// Height of leakage on wall
+<span class="lineNum">     141 </span><span class="lineCov">         15 :           auto sboxhY = cv::boundingRect(contours[i]).y;</span>
+<span class="lineNum">     142 </span><span class="lineCov">         15 :           auto positionY = ((3 * 1.0) * (sboxhY - bboxtlY))</span>
+<span class="lineNum">     143 </span><span class="lineCov">         15 :               / (bboxbrY - bboxtlY);</span>
+<span class="lineNum">     144 </span>            :           /// Width of leakage on wall
+<span class="lineNum">     145 </span><span class="lineCov">         15 :           auto sboxhX = cv::boundingRect(contours[i]).x;</span>
+<span class="lineNum">     146 </span><span class="lineCov">         15 :           auto positionX = ((8 * 1.0) * (sboxhX - bboxtlX))</span>
+<span class="lineNum">     147 </span><span class="lineCov">         15 :               / (bboxbrX - bboxtlX);</span>
+<span class="lineNum">     148 </span><span class="lineCov">         15 :           countourLocations.emplace_back(positionX);</span>
+<span class="lineNum">     149 </span><span class="lineCov">         15 :           countourLocations.emplace_back(positionY);</span>
+<span class="lineNum">     150 </span>            :         }
+<span class="lineNum">     151 </span>            :       }
+<span class="lineNum">     152 </span>            :       /// Storing Image in data folder
+<span class="lineNum">     153 </span><span class="lineCov">          6 :       if (storeImage == 1) {</span>
+<span class="lineNum">     154 </span><span class="lineCov">         12 :         std::stringstream sstream;</span>
+<span class="lineNum">     155 </span>            :         sstream
+<span class="lineNum">     156 </span><span class="lineCov">          6 :             &lt;&lt; &quot;FinalOutput&quot;</span>
+<span class="lineNum">     157 </span><span class="lineCov">          6 :             &lt;&lt; wallNumber &lt;&lt; &quot;.png&quot;;</span>
+<span class="lineNum">     158 </span><span class="lineCov">          6 :         ROS_ASSERT(cv::imwrite(sstream.str(), imageLeakage));</span>
+<span class="lineNum">     159 </span>            :       }
+<span class="lineNum">     160 </span><span class="lineCov">          6 :       complete = 1;</span>
+<span class="lineNum">     161 </span>            :     }
+<span class="lineNum">     162 </span><span class="lineCov">    5280699 :     ros::spinOnce();</span>
+<a name="163"><span class="lineNum">     163 </span>            :   }</a>
+<span class="lineNum">     164 </span><span class="lineCov">          6 :   return countourLocations;</span>
+<span class="lineNum">     165 </span><span class="lineCov">          9 : }</span>
+<span class="lineNum">     166 </span>            : 
+<span class="lineNum">     167 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

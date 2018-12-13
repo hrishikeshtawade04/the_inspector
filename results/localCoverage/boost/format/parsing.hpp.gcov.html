@@ -1,0 +1,577 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - boost/format/parsing.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">boost/format</a> - parsing.hpp<span style="font-size: 80%;"> (source / <a href="parsing.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">239</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // ----------------------------------------------------------------------------</a>
+<span class="lineNum">       2 </span>            : // parsing.hpp :  implementation of the parsing member functions
+<span class="lineNum">       3 </span>            : //                      ( parse, parse_printf_directive)
+<span class="lineNum">       4 </span>            : // ----------------------------------------------------------------------------
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span>            : //  Copyright Samuel Krempp 2003. Use, modification, and distribution are
+<span class="lineNum">       7 </span>            : //  subject to the Boost Software License, Version 1.0. (See accompanying
+<span class="lineNum">       8 </span>            : //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : // see http://www.boost.org/libs/format for library home page
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : // ----------------------------------------------------------------------------
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : #ifndef BOOST_FORMAT_PARSING_HPP
+<span class="lineNum">      15 </span>            : #define BOOST_FORMAT_PARSING_HPP
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : #include &lt;boost/format/format_class.hpp&gt;
+<span class="lineNum">      19 </span>            : #include &lt;boost/format/exceptions.hpp&gt;
+<span class="lineNum">      20 </span>            : #include &lt;boost/throw_exception.hpp&gt;
+<span class="lineNum">      21 </span>            : #include &lt;boost/assert.hpp&gt;
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span>            : 
+<span class="lineNum">      24 </span>            : namespace boost {
+<span class="lineNum">      25 </span>            : namespace io {
+<span class="lineNum">      26 </span>            : namespace detail {
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            : #if defined(BOOST_NO_STD_LOCALE)
+<span class="lineNum">      29 </span>            :     // streams will be used for narrow / widen. but these methods are not const
+<span class="lineNum">      30 </span>            :     template&lt;class T&gt;
+<span class="lineNum">      31 </span>            :     T&amp; const_or_not(const T&amp; x) { 
+<span class="lineNum">      32 </span>            :         return const_cast&lt;T&amp;&gt; (x);
+<span class="lineNum">      33 </span>            :     }
+<a name="34"><span class="lineNum">      34 </span>            : #else</a>
+<span class="lineNum">      35 </span>            :     template&lt;class T&gt;
+<span class="lineNum">      36 </span><span class="lineNoCov">          0 :     const T&amp; const_or_not(const T&amp; x) { </span>
+<span class="lineNum">      37 </span><span class="lineNoCov">          0 :         return x;</span>
+<span class="lineNum">      38 </span>            :     }
+<span class="lineNum">      39 </span>            : #endif
+<a name="40"><span class="lineNum">      40 </span>            : </a>
+<span class="lineNum">      41 </span>            :     template&lt;class Ch, class Facet&gt; inline
+<span class="lineNum">      42 </span><span class="lineNoCov">          0 :     char wrap_narrow(const Facet&amp; fac, Ch c, char deflt) {</span>
+<span class="lineNum">      43 </span><span class="lineNoCov">          0 :         return const_or_not(fac).narrow(c, deflt);</span>
+<span class="lineNum">      44 </span>            :     }
+<a name="45"><span class="lineNum">      45 </span>            : </a>
+<span class="lineNum">      46 </span>            :     template&lt;class Ch, class Facet&gt; inline
+<span class="lineNum">      47 </span><span class="lineNoCov">          0 :     bool wrap_isdigit(const Facet&amp; fac, Ch c) {</span>
+<span class="lineNum">      48 </span>            : #if ! defined( BOOST_NO_LOCALE_ISDIGIT )
+<span class="lineNum">      49 </span><span class="lineNoCov">          0 :         return fac.is(std::ctype&lt;Ch&gt;::digit, c);</span>
+<span class="lineNum">      50 </span>            : # else
+<span class="lineNum">      51 </span>            :         (void) fac;     // remove &quot;unused parameter&quot; warning
+<span class="lineNum">      52 </span>            :         using namespace std;
+<span class="lineNum">      53 </span>            :         return isdigit(c); 
+<span class="lineNum">      54 </span>            : #endif 
+<span class="lineNum">      55 </span>            :     }
+<a name="56"><span class="lineNum">      56 </span>            :  </a>
+<span class="lineNum">      57 </span>            :     template&lt;class Iter, class Facet&gt; 
+<span class="lineNum">      58 </span><span class="lineNoCov">          0 :     Iter wrap_scan_notdigit(const Facet &amp; fac, Iter beg, Iter end) {</span>
+<span class="lineNum">      59 </span>            :         using namespace std;
+<span class="lineNum">      60 </span><span class="lineNoCov">          0 :         for( ; beg!=end &amp;&amp; wrap_isdigit(fac, *beg); ++beg) ;</span>
+<span class="lineNum">      61 </span><span class="lineNoCov">          0 :         return beg;</span>
+<span class="lineNum">      62 </span>            :     }
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span>            :     // Input : [start, last) iterators range and a
+<span class="lineNum">      66 </span>            :     //          a Facet to use its widen/narrow member function
+<span class="lineNum">      67 </span>            :     // Effects : read sequence and convert digits into integral n, of type Res
+<a name="68"><span class="lineNum">      68 </span>            :     // Returns : n</a>
+<span class="lineNum">      69 </span>            :     template&lt;class Res, class Iter, class Facet&gt;
+<span class="lineNum">      70 </span><span class="lineNoCov">          0 :     Iter str2int (const Iter &amp; start, const Iter &amp; last, Res &amp; res, </span>
+<span class="lineNum">      71 </span>            :                  const Facet&amp; fac) 
+<span class="lineNum">      72 </span>            :     {
+<span class="lineNum">      73 </span>            :         using namespace std;
+<span class="lineNum">      74 </span><span class="lineNoCov">          0 :         Iter it;</span>
+<span class="lineNum">      75 </span><span class="lineNoCov">          0 :         res=0;</span>
+<span class="lineNum">      76 </span><span class="lineNoCov">          0 :         for(it=start; it != last &amp;&amp; wrap_isdigit(fac, *it); ++it ) {</span>
+<span class="lineNum">      77 </span><span class="lineNoCov">          0 :             char cur_ch = wrap_narrow(fac, *it, 0); // cant fail.</span>
+<span class="lineNum">      78 </span><span class="lineNoCov">          0 :             res *= 10;</span>
+<span class="lineNum">      79 </span><span class="lineNoCov">          0 :             res += cur_ch - '0'; // 22.2.1.1.2.13 of the C++ standard</span>
+<span class="lineNum">      80 </span>            :         }
+<span class="lineNum">      81 </span><span class="lineNoCov">          0 :         return it;</span>
+<span class="lineNum">      82 </span>            :     }
+<span class="lineNum">      83 </span>            : 
+<span class="lineNum">      84 </span>            :     // skip printf's &quot;asterisk-fields&quot; directives in the format-string buf
+<span class="lineNum">      85 </span>            :     // Input : char string, with starting index *pos_p
+<span class="lineNum">      86 </span>            :     //         a Facet merely to use its widen/narrow member function
+<span class="lineNum">      87 </span>            :     // Effects : advance *pos_p by skipping printf's asterisk fields.
+<a name="88"><span class="lineNum">      88 </span>            :     // Returns : nothing</a>
+<span class="lineNum">      89 </span>            :     template&lt;class Iter, class Facet&gt;
+<span class="lineNum">      90 </span><span class="lineNoCov">          0 :     Iter skip_asterisk(Iter start, Iter last, const Facet&amp; fac) </span>
+<span class="lineNum">      91 </span>            :     {
+<span class="lineNum">      92 </span>            :         using namespace std;
+<span class="lineNum">      93 </span><span class="lineNoCov">          0 :         ++ start;</span>
+<span class="lineNum">      94 </span><span class="lineNoCov">          0 :         start = wrap_scan_notdigit(fac, start, last);</span>
+<span class="lineNum">      95 </span><span class="lineNoCov">          0 :         if(start!=last &amp;&amp; *start== const_or_not(fac).widen( '$') )</span>
+<span class="lineNum">      96 </span><span class="lineNoCov">          0 :             ++start;</span>
+<span class="lineNum">      97 </span><span class="lineNoCov">          0 :         return start;</span>
+<span class="lineNum">      98 </span>            :     }
+<span class="lineNum">      99 </span>            : 
+<span class="lineNum">     100 </span>            : 
+<span class="lineNum">     101 </span>            :     // auxiliary func called by parse_printf_directive
+<a name="102"><span class="lineNum">     102 </span>            :     // for centralising error handling</a>
+<span class="lineNum">     103 </span>            :     // it either throws if user sets the corresponding flag, or does nothing.
+<span class="lineNum">     104 </span><span class="lineNoCov">          0 :     inline void maybe_throw_exception(unsigned char exceptions, </span>
+<span class="lineNum">     105 </span>            :                                       std::size_t pos, std::size_t size)
+<span class="lineNum">     106 </span>            :     {
+<span class="lineNum">     107 </span><span class="lineNoCov">          0 :         if(exceptions &amp; io::bad_format_string_bit)</span>
+<span class="lineNum">     108 </span><span class="lineNoCov">          0 :             boost::throw_exception(io::bad_format_string(pos, size) );</span>
+<span class="lineNum">     109 </span><span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">     110 </span>            :     
+<span class="lineNum">     111 </span>            : 
+<span class="lineNum">     112 </span>            :     // Input: the position of a printf-directive in the format-string
+<span class="lineNum">     113 </span>            :     //    a basic_ios&amp; merely to use its widen/narrow member function
+<span class="lineNum">     114 </span>            :     //    a bitset'exceptions' telling whether to throw exceptions on errors.
+<span class="lineNum">     115 </span>            :     // Returns:
+<span class="lineNum">     116 </span>            :     //  true if parse succeeded (ignore some errors if exceptions disabled)
+<span class="lineNum">     117 </span>            :     //  false if it failed so bad that the directive should be printed verbatim
+<span class="lineNum">     118 </span>            :     // Effects:
+<span class="lineNum">     119 </span>            :     //  start is incremented so that *start is the first char after
+<span class="lineNum">     120 </span>            :     //     this directive
+<a name="121"><span class="lineNum">     121 </span>            :     //  *fpar is set with the parameters read in the directive</a>
+<span class="lineNum">     122 </span>            :     template&lt;class Ch, class Tr, class Alloc, class Iter, class Facet&gt;
+<span class="lineNum">     123 </span><span class="lineNoCov">          0 :     bool parse_printf_directive(Iter &amp; start, const Iter&amp; last, </span>
+<span class="lineNum">     124 </span>            :                                 detail::format_item&lt;Ch, Tr, Alloc&gt; * fpar,
+<span class="lineNum">     125 </span>            :                                 const Facet&amp; fac,
+<span class="lineNum">     126 </span>            :                                 std::size_t offset, unsigned char exceptions)
+<span class="lineNum">     127 </span>            :     {
+<span class="lineNum">     128 </span>            :         typedef typename basic_format&lt;Ch, Tr, Alloc&gt;::format_item_t format_item_t;
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span><span class="lineNoCov">          0 :         fpar-&gt;argN_ = format_item_t::argN_no_posit;  // if no positional-directive</span>
+<span class="lineNum">     131 </span><span class="lineNoCov">          0 :         bool precision_set = false;</span>
+<span class="lineNum">     132 </span><span class="lineNoCov">          0 :         bool in_brackets=false;</span>
+<span class="lineNum">     133 </span><span class="lineNoCov">          0 :         Iter start0 = start;</span>
+<span class="lineNum">     134 </span><span class="lineNoCov">          0 :         std::size_t fstring_size = last-start0+offset;</span>
+<span class="lineNum">     135 </span>            : 
+<span class="lineNum">     136 </span><span class="lineNoCov">          0 :         if(start&gt;= last) { // empty directive : this is a trailing %</span>
+<span class="lineNum">     137 </span><span class="lineNoCov">          0 :                 maybe_throw_exception(exceptions, start-start0 + offset, fstring_size);</span>
+<span class="lineNum">     138 </span><span class="lineNoCov">          0 :                 return false;</span>
+<span class="lineNum">     139 </span>            :         }          
+<span class="lineNum">     140 </span>            :           
+<span class="lineNum">     141 </span><span class="lineNoCov">          0 :         if(*start== const_or_not(fac).widen( '|')) {</span>
+<span class="lineNum">     142 </span><span class="lineNoCov">          0 :             in_brackets=true;</span>
+<span class="lineNum">     143 </span><span class="lineNoCov">          0 :             if( ++start &gt;= last ) {</span>
+<span class="lineNum">     144 </span><span class="lineNoCov">          0 :                 maybe_throw_exception(exceptions, start-start0 + offset, fstring_size);</span>
+<span class="lineNum">     145 </span><span class="lineNoCov">          0 :                 return false;</span>
+<span class="lineNum">     146 </span>            :             }
+<span class="lineNum">     147 </span>            :         }
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span>            :         // the flag '0' would be picked as a digit for argument order, but here it's a flag :
+<span class="lineNum">     150 </span><span class="lineNoCov">          0 :         if(*start== const_or_not(fac).widen( '0')) </span>
+<span class="lineNum">     151 </span><span class="lineNoCov">          0 :             goto parse_flags;</span>
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span>            :         // handle argument order (%2$d)  or possibly width specification: %2d
+<span class="lineNum">     154 </span><span class="lineNoCov">          0 :         if(wrap_isdigit(fac, *start)) {</span>
+<span class="lineNum">     155 </span>            :             int n;
+<span class="lineNum">     156 </span><span class="lineNoCov">          0 :             start = str2int(start, last, n, fac);</span>
+<span class="lineNum">     157 </span><span class="lineNoCov">          0 :             if( start &gt;= last ) {</span>
+<span class="lineNum">     158 </span><span class="lineNoCov">          0 :                 maybe_throw_exception(exceptions, start-start0+offset, fstring_size);</span>
+<span class="lineNum">     159 </span><span class="lineNoCov">          0 :                 return false;</span>
+<span class="lineNum">     160 </span>            :             }
+<span class="lineNum">     161 </span>            :             
+<span class="lineNum">     162 </span>            :             // %N% case : this is already the end of the directive
+<span class="lineNum">     163 </span><span class="lineNoCov">          0 :             if( *start ==  const_or_not(fac).widen( '%') ) {</span>
+<span class="lineNum">     164 </span><span class="lineNoCov">          0 :                 fpar-&gt;argN_ = n-1;</span>
+<span class="lineNum">     165 </span><span class="lineNoCov">          0 :                 ++start;</span>
+<span class="lineNum">     166 </span><span class="lineNoCov">          0 :                 if( in_brackets) </span>
+<span class="lineNum">     167 </span><span class="lineNoCov">          0 :                     maybe_throw_exception(exceptions, start-start0+offset, fstring_size); </span>
+<span class="lineNum">     168 </span>            :                 // but don't return.  maybe &quot;%&quot; was used in lieu of '$', so we go on.
+<span class="lineNum">     169 </span>            :                 else
+<span class="lineNum">     170 </span><span class="lineNoCov">          0 :                     return true;</span>
+<span class="lineNum">     171 </span>            :             }
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span><span class="lineNoCov">          0 :             if ( *start== const_or_not(fac).widen( '$') ) {</span>
+<span class="lineNum">     174 </span><span class="lineNoCov">          0 :                 fpar-&gt;argN_ = n-1;</span>
+<span class="lineNum">     175 </span><span class="lineNoCov">          0 :                 ++start;</span>
+<span class="lineNum">     176 </span>            :             } 
+<span class="lineNum">     177 </span>            :             else {
+<span class="lineNum">     178 </span>            :                 // non-positionnal directive
+<span class="lineNum">     179 </span><span class="lineNoCov">          0 :                 fpar-&gt;fmtstate_.width_ = n;</span>
+<span class="lineNum">     180 </span><span class="lineNoCov">          0 :                 fpar-&gt;argN_  = format_item_t::argN_no_posit;</span>
+<span class="lineNum">     181 </span><span class="lineNoCov">          0 :                 goto parse_precision;</span>
+<span class="lineNum">     182 </span>            :             }
+<span class="lineNum">     183 </span>            :         }
+<span class="lineNum">     184 </span>            :     
+<span class="lineNum">     185 </span>            :       parse_flags: 
+<span class="lineNum">     186 </span>            :         // handle flags
+<span class="lineNum">     187 </span><span class="lineNoCov">          0 :         while ( start != last) { // as long as char is one of + - = _ # 0 l h   or ' '</span>
+<span class="lineNum">     188 </span>            :             // misc switches
+<span class="lineNum">     189 </span><span class="lineNoCov">          0 :             switch ( wrap_narrow(fac, *start, 0)) {</span>
+<span class="lineNum">     190 </span><span class="lineNoCov">          0 :             case '\'' : break; // no effect yet. (painful to implement)</span>
+<span class="lineNum">     191 </span>            :             case 'l':
+<span class="lineNum">     192 </span>            :             case 'h':  // short/long modifier : for printf-comaptibility (no action needed)
+<span class="lineNum">     193 </span><span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     194 </span>            :             case '-':
+<span class="lineNum">     195 </span><span class="lineNoCov">          0 :                 fpar-&gt;fmtstate_.flags_ |= std::ios_base::left;</span>
+<span class="lineNum">     196 </span><span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     197 </span>            :             case '=':
+<span class="lineNum">     198 </span><span class="lineNoCov">          0 :                 fpar-&gt;pad_scheme_ |= format_item_t::centered;</span>
+<span class="lineNum">     199 </span><span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     200 </span>            :             case '_':
+<span class="lineNum">     201 </span><span class="lineNoCov">          0 :                 fpar-&gt;fmtstate_.flags_ |= std::ios_base::internal;</span>
+<span class="lineNum">     202 </span><span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     203 </span>            :             case ' ':
+<span class="lineNum">     204 </span><span class="lineNoCov">          0 :                 fpar-&gt;pad_scheme_ |= format_item_t::spacepad;</span>
+<span class="lineNum">     205 </span><span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     206 </span>            :             case '+':
+<span class="lineNum">     207 </span><span class="lineNoCov">          0 :                 fpar-&gt;fmtstate_.flags_ |= std::ios_base::showpos;</span>
+<span class="lineNum">     208 </span><span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     209 </span>            :             case '0':
+<span class="lineNum">     210 </span><span class="lineNoCov">          0 :                 fpar-&gt;pad_scheme_ |= format_item_t::zeropad;</span>
+<span class="lineNum">     211 </span>            :                 // need to know alignment before really setting flags,
+<span class="lineNum">     212 </span>            :                 // so just add 'zeropad' flag for now, it will be processed later.
+<span class="lineNum">     213 </span><span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     214 </span>            :             case '#':
+<span class="lineNum">     215 </span><span class="lineNoCov">          0 :                 fpar-&gt;fmtstate_.flags_ |= std::ios_base::showpoint | std::ios_base::showbase;</span>
+<span class="lineNum">     216 </span><span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     217 </span>            :             default:
+<span class="lineNum">     218 </span><span class="lineNoCov">          0 :                 goto parse_width;</span>
+<span class="lineNum">     219 </span>            :             }
+<span class="lineNum">     220 </span><span class="lineNoCov">          0 :             ++start;</span>
+<span class="lineNum">     221 </span>            :         } // loop on flag.
+<span class="lineNum">     222 </span>            : 
+<span class="lineNum">     223 </span><span class="lineNoCov">          0 :         if( start&gt;=last) {</span>
+<span class="lineNum">     224 </span><span class="lineNoCov">          0 :             maybe_throw_exception(exceptions, start-start0+offset, fstring_size);</span>
+<span class="lineNum">     225 </span><span class="lineNoCov">          0 :             return true; </span>
+<span class="lineNum">     226 </span>            :         }
+<span class="lineNum">     227 </span>            :       parse_width:
+<span class="lineNum">     228 </span>            :         // handle width spec
+<span class="lineNum">     229 </span>            :         // first skip 'asterisk fields' :  *, or *N$
+<span class="lineNum">     230 </span><span class="lineNoCov">          0 :         if(*start == const_or_not(fac).widen( '*') )</span>
+<span class="lineNum">     231 </span><span class="lineNoCov">          0 :             start = skip_asterisk(start, last, fac); </span>
+<span class="lineNum">     232 </span><span class="lineNoCov">          0 :         if(start!=last &amp;&amp; wrap_isdigit(fac, *start))</span>
+<span class="lineNum">     233 </span><span class="lineNoCov">          0 :             start = str2int(start, last, fpar-&gt;fmtstate_.width_, fac);</span>
+<span class="lineNum">     234 </span>            : 
+<span class="lineNum">     235 </span>            :       parse_precision:
+<span class="lineNum">     236 </span><span class="lineNoCov">          0 :         if( start&gt;= last) { </span>
+<span class="lineNum">     237 </span><span class="lineNoCov">          0 :             maybe_throw_exception(exceptions, start-start0+offset, fstring_size);</span>
+<span class="lineNum">     238 </span><span class="lineNoCov">          0 :             return true;</span>
+<span class="lineNum">     239 </span>            :         }
+<span class="lineNum">     240 </span>            :         // handle precision spec
+<span class="lineNum">     241 </span><span class="lineNoCov">          0 :         if (*start== const_or_not(fac).widen( '.')) {</span>
+<span class="lineNum">     242 </span><span class="lineNoCov">          0 :             ++start;</span>
+<span class="lineNum">     243 </span><span class="lineNoCov">          0 :             if(start != last &amp;&amp; *start == const_or_not(fac).widen( '*') )</span>
+<span class="lineNum">     244 </span><span class="lineNoCov">          0 :                 start = skip_asterisk(start, last, fac); </span>
+<span class="lineNum">     245 </span><span class="lineNoCov">          0 :             if(start != last &amp;&amp; wrap_isdigit(fac, *start)) {</span>
+<span class="lineNum">     246 </span><span class="lineNoCov">          0 :                 start = str2int(start, last, fpar-&gt;fmtstate_.precision_, fac);</span>
+<span class="lineNum">     247 </span><span class="lineNoCov">          0 :                 precision_set = true;</span>
+<span class="lineNum">     248 </span>            :             }
+<span class="lineNum">     249 </span>            :             else
+<span class="lineNum">     250 </span><span class="lineNoCov">          0 :                 fpar-&gt;fmtstate_.precision_ =0;</span>
+<span class="lineNum">     251 </span>            :         }
+<span class="lineNum">     252 </span>            :     
+<span class="lineNum">     253 </span>            :         // handle  formatting-type flags :
+<span class="lineNum">     254 </span><span class="lineNoCov">          0 :         while( start != last &amp;&amp; ( *start== const_or_not(fac).widen( 'l') </span>
+<span class="lineNum">     255 </span><span class="lineNoCov">          0 :                                   || *start== const_or_not(fac).widen( 'L') </span>
+<span class="lineNum">     256 </span><span class="lineNoCov">          0 :                                   || *start== const_or_not(fac).widen( 'h')) )</span>
+<span class="lineNum">     257 </span><span class="lineNoCov">          0 :             ++start;</span>
+<span class="lineNum">     258 </span><span class="lineNoCov">          0 :         if( start&gt;=last) {</span>
+<span class="lineNum">     259 </span><span class="lineNoCov">          0 :             maybe_throw_exception(exceptions, start-start0+offset, fstring_size);</span>
+<span class="lineNum">     260 </span><span class="lineNoCov">          0 :             return true;</span>
+<span class="lineNum">     261 </span>            :         }
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span><span class="lineNoCov">          0 :         if( in_brackets &amp;&amp; *start== const_or_not(fac).widen( '|') ) {</span>
+<span class="lineNum">     264 </span><span class="lineNoCov">          0 :             ++start;</span>
+<span class="lineNum">     265 </span><span class="lineNoCov">          0 :             return true;</span>
+<span class="lineNum">     266 </span>            :         }
+<span class="lineNum">     267 </span><span class="lineNoCov">          0 :         switch ( wrap_narrow(fac, *start, 0) ) {</span>
+<span class="lineNum">     268 </span>            :         case 'X':
+<span class="lineNum">     269 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ |= std::ios_base::uppercase;</span>
+<span class="lineNum">     270 </span>            :         case 'p': // pointer =&gt; set hex.
+<span class="lineNum">     271 </span>            :         case 'x':
+<span class="lineNum">     272 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ &amp;= ~std::ios_base::basefield;</span>
+<span class="lineNum">     273 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ |= std::ios_base::hex;</span>
+<span class="lineNum">     274 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     275 </span>            : 
+<span class="lineNum">     276 </span>            :         case 'o':
+<span class="lineNum">     277 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ &amp;= ~std::ios_base::basefield;</span>
+<span class="lineNum">     278 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ |=  std::ios_base::oct;</span>
+<span class="lineNum">     279 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     280 </span>            : 
+<span class="lineNum">     281 </span>            :         case 'E':
+<span class="lineNum">     282 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ |=  std::ios_base::uppercase;</span>
+<span class="lineNum">     283 </span>            :         case 'e':
+<span class="lineNum">     284 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ &amp;= ~std::ios_base::floatfield;</span>
+<span class="lineNum">     285 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ |=  std::ios_base::scientific;</span>
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ &amp;= ~std::ios_base::basefield;</span>
+<span class="lineNum">     288 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ |=  std::ios_base::dec;</span>
+<span class="lineNum">     289 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     290 </span>            :       
+<span class="lineNum">     291 </span>            :         case 'f':
+<span class="lineNum">     292 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ &amp;= ~std::ios_base::floatfield;</span>
+<span class="lineNum">     293 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ |=  std::ios_base::fixed;</span>
+<span class="lineNum">     294 </span>            :         case 'u':
+<span class="lineNum">     295 </span>            :         case 'd':
+<span class="lineNum">     296 </span>            :         case 'i':
+<span class="lineNum">     297 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ &amp;= ~std::ios_base::basefield;</span>
+<span class="lineNum">     298 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ |=  std::ios_base::dec;</span>
+<span class="lineNum">     299 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     300 </span>            : 
+<span class="lineNum">     301 </span>            :         case 'T':
+<span class="lineNum">     302 </span><span class="lineNoCov">          0 :             ++start;</span>
+<span class="lineNum">     303 </span><span class="lineNoCov">          0 :             if( start &gt;= last)</span>
+<span class="lineNum">     304 </span><span class="lineNoCov">          0 :                 maybe_throw_exception(exceptions, start-start0+offset, fstring_size);</span>
+<span class="lineNum">     305 </span>            :             else
+<span class="lineNum">     306 </span><span class="lineNoCov">          0 :                 fpar-&gt;fmtstate_.fill_ = *start;</span>
+<span class="lineNum">     307 </span><span class="lineNoCov">          0 :             fpar-&gt;pad_scheme_ |= format_item_t::tabulation;</span>
+<span class="lineNum">     308 </span><span class="lineNoCov">          0 :             fpar-&gt;argN_ = format_item_t::argN_tabulation; </span>
+<span class="lineNum">     309 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     310 </span>            :         case 't': 
+<span class="lineNum">     311 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.fill_ = const_or_not(fac).widen( ' ');</span>
+<span class="lineNum">     312 </span><span class="lineNoCov">          0 :             fpar-&gt;pad_scheme_ |= format_item_t::tabulation;</span>
+<span class="lineNum">     313 </span><span class="lineNoCov">          0 :             fpar-&gt;argN_ = format_item_t::argN_tabulation; </span>
+<span class="lineNum">     314 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     315 </span>            : 
+<span class="lineNum">     316 </span>            :         case 'G':
+<span class="lineNum">     317 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ |= std::ios_base::uppercase;</span>
+<span class="lineNum">     318 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     319 </span>            :         case 'g': // 'g' conversion is default for floats.
+<span class="lineNum">     320 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ &amp;= ~std::ios_base::basefield;</span>
+<span class="lineNum">     321 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ |=  std::ios_base::dec;</span>
+<span class="lineNum">     322 </span>            : 
+<span class="lineNum">     323 </span>            :             // CLEAR all floatield flags, so stream will CHOOSE
+<span class="lineNum">     324 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.flags_ &amp;= ~std::ios_base::floatfield; </span>
+<span class="lineNum">     325 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     326 </span>            : 
+<span class="lineNum">     327 </span>            :         case 'C':
+<span class="lineNum">     328 </span>            :         case 'c': 
+<span class="lineNum">     329 </span><span class="lineNoCov">          0 :             fpar-&gt;truncate_ = 1;</span>
+<span class="lineNum">     330 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     331 </span>            :         case 'S':
+<span class="lineNum">     332 </span>            :         case 's': 
+<span class="lineNum">     333 </span><span class="lineNoCov">          0 :             if(precision_set) // handle truncation manually, with own parameter.</span>
+<span class="lineNum">     334 </span><span class="lineNoCov">          0 :                 fpar-&gt;truncate_ = fpar-&gt;fmtstate_.precision_;</span>
+<span class="lineNum">     335 </span><span class="lineNoCov">          0 :             fpar-&gt;fmtstate_.precision_ = 6; // default stream precision.</span>
+<span class="lineNum">     336 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     337 </span>            :         case 'n' :  
+<span class="lineNum">     338 </span><span class="lineNoCov">          0 :             fpar-&gt;argN_ = format_item_t::argN_ignored;</span>
+<span class="lineNum">     339 </span><span class="lineNoCov">          0 :             break;</span>
+<span class="lineNum">     340 </span>            :         default: 
+<span class="lineNum">     341 </span><span class="lineNoCov">          0 :             maybe_throw_exception(exceptions, start-start0+offset, fstring_size);</span>
+<span class="lineNum">     342 </span>            :         }
+<span class="lineNum">     343 </span><span class="lineNoCov">          0 :         ++start;</span>
+<span class="lineNum">     344 </span>            : 
+<span class="lineNum">     345 </span><span class="lineNoCov">          0 :         if( in_brackets ) {</span>
+<span class="lineNum">     346 </span><span class="lineNoCov">          0 :             if( start != last &amp;&amp; *start== const_or_not(fac).widen( '|') ) {</span>
+<span class="lineNum">     347 </span><span class="lineNoCov">          0 :                 ++start;</span>
+<span class="lineNum">     348 </span><span class="lineNoCov">          0 :                 return true;</span>
+<span class="lineNum">     349 </span>            :             }
+<span class="lineNum">     350 </span><span class="lineNoCov">          0 :             else  maybe_throw_exception(exceptions, start-start0+offset, fstring_size);</span>
+<span class="lineNum">     351 </span>            :         }
+<span class="lineNum">     352 </span><span class="lineNoCov">          0 :         return true;</span>
+<span class="lineNum">     353 </span>            :     }
+<span class="lineNum">     354 </span>            :     // -end parse_printf_directive()
+<a name="355"><span class="lineNum">     355 </span>            : </a>
+<span class="lineNum">     356 </span>            :     template&lt;class String, class Facet&gt;
+<span class="lineNum">     357 </span><span class="lineNoCov">          0 :     int upper_bound_from_fstring(const String&amp; buf, </span>
+<span class="lineNum">     358 </span>            :                                  const typename String::value_type arg_mark,
+<span class="lineNum">     359 </span>            :                                  const Facet&amp; fac, 
+<span class="lineNum">     360 </span>            :                                  unsigned char exceptions) 
+<span class="lineNum">     361 </span>            :     {
+<span class="lineNum">     362 </span>            :         // quick-parsing of the format-string to count arguments mark (arg_mark, '%')
+<span class="lineNum">     363 </span>            :         // returns : upper bound on the number of format items in the format strings
+<span class="lineNum">     364 </span>            :         using namespace boost::io;
+<span class="lineNum">     365 </span><span class="lineNoCov">          0 :         typename String::size_type i1=0;</span>
+<span class="lineNum">     366 </span><span class="lineNoCov">          0 :         int num_items=0;</span>
+<span class="lineNum">     367 </span><span class="lineNoCov">          0 :         while( (i1=buf.find(arg_mark,i1)) != String::npos ) {</span>
+<span class="lineNum">     368 </span><span class="lineNoCov">          0 :             if( i1+1 &gt;= buf.size() ) {</span>
+<span class="lineNum">     369 </span><span class="lineNoCov">          0 :                 if(exceptions &amp; bad_format_string_bit)</span>
+<span class="lineNum">     370 </span><span class="lineNoCov">          0 :                     boost::throw_exception(bad_format_string(i1, buf.size() )); // must not end in &quot;.. %&quot;</span>
+<span class="lineNum">     371 </span>            :                 else {
+<span class="lineNum">     372 </span><span class="lineNoCov">          0 :                   ++num_items;</span>
+<span class="lineNum">     373 </span><span class="lineNoCov">          0 :                   break;</span>
+<span class="lineNum">     374 </span>            :                 }
+<span class="lineNum">     375 </span>            :             }
+<span class="lineNum">     376 </span><span class="lineNoCov">          0 :             if(buf[i1+1] == buf[i1] ) {// escaped &quot;%%&quot;</span>
+<span class="lineNum">     377 </span><span class="lineNoCov">          0 :                 i1+=2; continue; </span>
+<span class="lineNum">     378 </span>            :             }
+<span class="lineNum">     379 </span>            : 
+<span class="lineNum">     380 </span><span class="lineNoCov">          0 :             ++i1;</span>
+<span class="lineNum">     381 </span>            :             // in case of %N% directives, dont count it double (wastes allocations..) :
+<span class="lineNum">     382 </span><span class="lineNoCov">          0 :             i1 = detail::wrap_scan_notdigit(fac, buf.begin()+i1, buf.end()) - buf.begin();</span>
+<span class="lineNum">     383 </span><span class="lineNoCov">          0 :             if( i1 &lt; buf.size() &amp;&amp; buf[i1] == arg_mark )</span>
+<span class="lineNum">     384 </span><span class="lineNoCov">          0 :                 ++i1;</span>
+<span class="lineNum">     385 </span><span class="lineNoCov">          0 :             ++num_items;</span>
+<span class="lineNum">     386 </span>            :         }
+<span class="lineNum">     387 </span><span class="lineNoCov">          0 :         return num_items;</span>
+<a name="388"><span class="lineNum">     388 </span>            :     }</a>
+<span class="lineNum">     389 </span>            :     template&lt;class String&gt; inline
+<span class="lineNum">     390 </span><span class="lineNoCov">          0 :     void append_string(String&amp; dst, const String&amp; src, </span>
+<span class="lineNum">     391 </span>            :                        const typename String::size_type beg, 
+<span class="lineNum">     392 </span>            :                        const typename String::size_type end) {
+<span class="lineNum">     393 </span><span class="lineNoCov">          0 :         dst.append(src.begin()+beg, src.begin()+end);</span>
+<span class="lineNum">     394 </span><span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">     395 </span>            : 
+<span class="lineNum">     396 </span>            : } // detail namespace
+<span class="lineNum">     397 </span>            : } // io namespace
+<span class="lineNum">     398 </span>            : 
+<span class="lineNum">     399 </span>            : 
+<span class="lineNum">     400 </span>            : 
+<span class="lineNum">     401 </span>            : // -----------------------------------------------
+<span class="lineNum">     402 </span>            : //  format :: parse(..)
+<a name="403"><span class="lineNum">     403 </span>            : </a>
+<span class="lineNum">     404 </span>            :     template&lt;class Ch, class Tr, class Alloc&gt;
+<span class="lineNum">     405 </span><span class="lineNoCov">          0 :     basic_format&lt;Ch, Tr, Alloc&gt;&amp; basic_format&lt;Ch, Tr, Alloc&gt;:: </span>
+<span class="lineNum">     406 </span>            :     parse (const string_type&amp; buf) {
+<span class="lineNum">     407 </span>            :         // parse the format-string 
+<span class="lineNum">     408 </span>            :         using namespace std;
+<span class="lineNum">     409 </span>            : #if !defined(BOOST_NO_STD_LOCALE)
+<span class="lineNum">     410 </span><span class="lineNoCov">          0 :         const std::ctype&lt;Ch&gt; &amp; fac = BOOST_USE_FACET( std::ctype&lt;Ch&gt;, getloc());</span>
+<span class="lineNum">     411 </span>            : #else
+<span class="lineNum">     412 </span>            :         io::basic_oaltstringstream&lt;Ch, Tr, Alloc&gt; fac; 
+<span class="lineNum">     413 </span>            :         //has widen and narrow even on compilers without locale
+<span class="lineNum">     414 </span>            : #endif
+<span class="lineNum">     415 </span>            : 
+<span class="lineNum">     416 </span><span class="lineNoCov">          0 :         const Ch arg_mark = io::detail::const_or_not(fac).widen( '%');</span>
+<span class="lineNum">     417 </span><span class="lineNoCov">          0 :         bool ordered_args=true; </span>
+<span class="lineNum">     418 </span><span class="lineNoCov">          0 :         int max_argN=-1;</span>
+<span class="lineNum">     419 </span>            : 
+<span class="lineNum">     420 </span>            :         // A: find upper_bound on num_items and allocates arrays
+<span class="lineNum">     421 </span><span class="lineNoCov">          0 :         int num_items = io::detail::upper_bound_from_fstring(buf, arg_mark, fac, exceptions());</span>
+<span class="lineNum">     422 </span><span class="lineNoCov">          0 :         make_or_reuse_data(num_items);</span>
+<span class="lineNum">     423 </span>            : 
+<span class="lineNum">     424 </span>            :         // B: Now the real parsing of the format string :
+<span class="lineNum">     425 </span><span class="lineNoCov">          0 :         num_items=0;</span>
+<span class="lineNum">     426 </span><span class="lineNoCov">          0 :         typename string_type::size_type i0=0, i1=0;</span>
+<span class="lineNum">     427 </span><span class="lineNoCov">          0 :         typename string_type::const_iterator it;</span>
+<span class="lineNum">     428 </span><span class="lineNoCov">          0 :         bool special_things=false;</span>
+<span class="lineNum">     429 </span><span class="lineNoCov">          0 :         int cur_item=0;</span>
+<span class="lineNum">     430 </span><span class="lineNoCov">          0 :         while( (i1=buf.find(arg_mark,i1)) != string_type::npos ) {</span>
+<span class="lineNum">     431 </span><span class="lineNoCov">          0 :             string_type &amp; piece = (cur_item==0) ? prefix_ : items_[cur_item-1].appendix_;</span>
+<span class="lineNum">     432 </span><span class="lineNoCov">          0 :             if( buf[i1+1] == buf[i1] ) { // escaped mark, '%%' </span>
+<span class="lineNum">     433 </span><span class="lineNoCov">          0 :                 io::detail::append_string(piece, buf, i0, i1+1);</span>
+<span class="lineNum">     434 </span><span class="lineNoCov">          0 :                 i1+=2; i0=i1;</span>
+<span class="lineNum">     435 </span><span class="lineNoCov">          0 :                 continue; </span>
+<span class="lineNum">     436 </span>            :             }
+<span class="lineNum">     437 </span><span class="lineNoCov">          0 :             BOOST_ASSERT(  static_cast&lt;unsigned int&gt;(cur_item) &lt; items_.size() || cur_item==0);</span>
+<span class="lineNum">     438 </span>            : 
+<span class="lineNum">     439 </span><span class="lineNoCov">          0 :             if(i1!=i0) {</span>
+<span class="lineNum">     440 </span><span class="lineNoCov">          0 :                 io::detail::append_string(piece, buf, i0, i1);</span>
+<span class="lineNum">     441 </span><span class="lineNoCov">          0 :                 i0=i1;</span>
+<span class="lineNum">     442 </span>            :             }
+<span class="lineNum">     443 </span><span class="lineNoCov">          0 :             ++i1;</span>
+<span class="lineNum">     444 </span><span class="lineNoCov">          0 :             it = buf.begin()+i1;</span>
+<span class="lineNum">     445 </span><span class="lineNoCov">          0 :             bool parse_ok = io::detail::parse_printf_directive(</span>
+<span class="lineNum">     446 </span><span class="lineNoCov">          0 :                 it, buf.end(), &amp;items_[cur_item], fac, i1, exceptions());</span>
+<span class="lineNum">     447 </span><span class="lineNoCov">          0 :             i1 = it - buf.begin();</span>
+<span class="lineNum">     448 </span><span class="lineNoCov">          0 :             if( ! parse_ok ) // the directive will be printed verbatim</span>
+<span class="lineNum">     449 </span><span class="lineNoCov">          0 :                 continue; </span>
+<span class="lineNum">     450 </span><span class="lineNoCov">          0 :             i0=i1;</span>
+<span class="lineNum">     451 </span><span class="lineNoCov">          0 :             items_[cur_item].compute_states(); // process complex options, like zeropad, into params</span>
+<span class="lineNum">     452 </span>            : 
+<span class="lineNum">     453 </span><span class="lineNoCov">          0 :             int argN=items_[cur_item].argN_;</span>
+<span class="lineNum">     454 </span><span class="lineNoCov">          0 :             if(argN == format_item_t::argN_ignored)</span>
+<span class="lineNum">     455 </span><span class="lineNoCov">          0 :                 continue;</span>
+<span class="lineNum">     456 </span><span class="lineNoCov">          0 :             if(argN ==format_item_t::argN_no_posit)</span>
+<span class="lineNum">     457 </span><span class="lineNoCov">          0 :                 ordered_args=false;</span>
+<span class="lineNum">     458 </span><span class="lineNoCov">          0 :             else if(argN == format_item_t::argN_tabulation) special_things=true;</span>
+<span class="lineNum">     459 </span><span class="lineNoCov">          0 :             else if(argN &gt; max_argN) max_argN = argN;</span>
+<span class="lineNum">     460 </span><span class="lineNoCov">          0 :             ++num_items;</span>
+<span class="lineNum">     461 </span><span class="lineNoCov">          0 :             ++cur_item;</span>
+<span class="lineNum">     462 </span>            :         } // loop on %'s
+<span class="lineNum">     463 </span><span class="lineNoCov">          0 :         BOOST_ASSERT(cur_item == num_items);</span>
+<span class="lineNum">     464 </span>            :     
+<span class="lineNum">     465 </span>            :         // store the final piece of string
+<span class="lineNum">     466 </span>            :         {
+<span class="lineNum">     467 </span><span class="lineNoCov">          0 :             string_type &amp; piece = (cur_item==0) ? prefix_ : items_[cur_item-1].appendix_;</span>
+<span class="lineNum">     468 </span><span class="lineNoCov">          0 :             io::detail::append_string(piece, buf, i0, buf.size());</span>
+<span class="lineNum">     469 </span>            :         }
+<span class="lineNum">     470 </span>            :     
+<span class="lineNum">     471 </span><span class="lineNoCov">          0 :         if( !ordered_args) {</span>
+<span class="lineNum">     472 </span><span class="lineNoCov">          0 :             if(max_argN &gt;= 0 ) {  // dont mix positional with non-positionnal directives</span>
+<span class="lineNum">     473 </span><span class="lineNoCov">          0 :                 if(exceptions() &amp; io::bad_format_string_bit)</span>
+<span class="lineNum">     474 </span><span class="lineNoCov">          0 :                     boost::throw_exception(</span>
+<span class="lineNum">     475 </span>            :                         io::bad_format_string(static_cast&lt;std::size_t&gt;(max_argN), 0));
+<span class="lineNum">     476 </span>            :                 // else do nothing. =&gt; positionnal arguments are processed as non-positionnal
+<span class="lineNum">     477 </span>            :             }
+<span class="lineNum">     478 </span>            :             // set things like it would have been with positional directives :
+<span class="lineNum">     479 </span><span class="lineNoCov">          0 :             int non_ordered_items = 0;</span>
+<span class="lineNum">     480 </span><span class="lineNoCov">          0 :             for(int i=0; i&lt; num_items; ++i)</span>
+<span class="lineNum">     481 </span><span class="lineNoCov">          0 :                 if(items_[i].argN_ == format_item_t::argN_no_posit) {</span>
+<span class="lineNum">     482 </span><span class="lineNoCov">          0 :                     items_[i].argN_ = non_ordered_items;</span>
+<span class="lineNum">     483 </span><span class="lineNoCov">          0 :                     ++non_ordered_items;</span>
+<span class="lineNum">     484 </span>            :                 }
+<span class="lineNum">     485 </span><span class="lineNoCov">          0 :             max_argN = non_ordered_items-1;</span>
+<span class="lineNum">     486 </span>            :         }
+<span class="lineNum">     487 </span>            :     
+<span class="lineNum">     488 </span>            :         // C: set some member data :
+<span class="lineNum">     489 </span><span class="lineNoCov">          0 :         items_.resize(num_items, format_item_t(io::detail::const_or_not(fac).widen( ' ')) );</span>
+<span class="lineNum">     490 </span>            : 
+<span class="lineNum">     491 </span><span class="lineNoCov">          0 :         if(special_things) style_ |= special_needs;</span>
+<span class="lineNum">     492 </span><span class="lineNoCov">          0 :         num_args_ = max_argN + 1;</span>
+<span class="lineNum">     493 </span><span class="lineNoCov">          0 :         if(ordered_args) style_ |=  ordered;</span>
+<span class="lineNum">     494 </span><span class="lineNoCov">          0 :         else style_ &amp;= ~ordered;</span>
+<span class="lineNum">     495 </span><span class="lineNoCov">          0 :         return *this;</span>
+<span class="lineNum">     496 </span>            :     }
+<span class="lineNum">     497 </span>            : 
+<span class="lineNum">     498 </span>            : } // namespace boost
+<span class="lineNum">     499 </span>            : 
+<span class="lineNum">     500 </span>            : 
+<span class="lineNum">     501 </span>            : #endif //  BOOST_FORMAT_PARSING_HPP
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

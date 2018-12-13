@@ -1,0 +1,379 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/ros/time.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/ros</a> - time.h<span style="font-size: 80%;"> (source / <a href="time.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryHi">92.9 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*********************************************************************</a>
+<span class="lineNum">       2 </span>            :  * Software License Agreement (BSD License)
+<span class="lineNum">       3 </span>            :  *
+<span class="lineNum">       4 </span>            :  *  Copyright (c) 2010, Willow Garage, Inc.
+<span class="lineNum">       5 </span>            :  *  All rights reserved.
+<span class="lineNum">       6 </span>            :  *
+<span class="lineNum">       7 </span>            :  *  Redistribution and use in source and binary forms, with or without
+<span class="lineNum">       8 </span>            :  *  modification, are permitted provided that the following conditions
+<span class="lineNum">       9 </span>            :  *  are met:
+<span class="lineNum">      10 </span>            :  *
+<span class="lineNum">      11 </span>            :  *   * Redistributions of source code must retain the above copyright
+<span class="lineNum">      12 </span>            :  *     notice, this list of conditions and the following disclaimer.
+<span class="lineNum">      13 </span>            :  *   * Redistributions in binary form must reproduce the above
+<span class="lineNum">      14 </span>            :  *     copyright notice, this list of conditions and the following
+<span class="lineNum">      15 </span>            :  *     disclaimer in the documentation and/or other materials provided
+<span class="lineNum">      16 </span>            :  *     with the distribution.
+<span class="lineNum">      17 </span>            :  *   * Neither the name of Willow Garage, Inc. nor the names of its
+<span class="lineNum">      18 </span>            :  *     contributors may be used to endorse or promote products derived
+<span class="lineNum">      19 </span>            :  *     from this software without specific prior written permission.
+<span class="lineNum">      20 </span>            :  *
+<span class="lineNum">      21 </span>            :  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+<span class="lineNum">      22 </span>            :  *  &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+<span class="lineNum">      23 </span>            :  *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+<span class="lineNum">      24 </span>            :  *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+<span class="lineNum">      25 </span>            :  *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+<span class="lineNum">      26 </span>            :  *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+<span class="lineNum">      27 </span>            :  *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+<span class="lineNum">      28 </span>            :  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+<span class="lineNum">      29 </span>            :  *  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+<span class="lineNum">      30 </span>            :  *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+<span class="lineNum">      31 </span>            :  *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+<span class="lineNum">      32 </span>            :  *  POSSIBILITY OF SUCH DAMAGE.
+<span class="lineNum">      33 </span>            :  *********************************************************************/
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : #ifndef ROS_TIME_H_INCLUDED
+<span class="lineNum">      36 </span>            : #define ROS_TIME_H_INCLUDED
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span>            : /*********************************************************************
+<span class="lineNum">      39 </span>            :  ** Pragmas
+<span class="lineNum">      40 </span>            :  *********************************************************************/
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            : #ifdef _MSC_VER
+<span class="lineNum">      43 </span>            :   // Rostime has some magic interface that doesn't directly include
+<span class="lineNum">      44 </span>            :   // its implementation, this just disables those warnings.
+<span class="lineNum">      45 </span>            :   #pragma warning(disable: 4244)
+<span class="lineNum">      46 </span>            :   #pragma warning(disable: 4661)
+<span class="lineNum">      47 </span>            : #endif
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            : /*********************************************************************
+<span class="lineNum">      50 </span>            :  ** Headers
+<span class="lineNum">      51 </span>            :  *********************************************************************/
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #include &lt;ros/platform.h&gt;
+<span class="lineNum">      54 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">      55 </span>            : #include &lt;cmath&gt;
+<span class="lineNum">      56 </span>            : #include &lt;ros/exception.h&gt;
+<span class="lineNum">      57 </span>            : #include &quot;duration.h&quot;
+<span class="lineNum">      58 </span>            : #include &lt;boost/math/special_functions/round.hpp&gt;
+<span class="lineNum">      59 </span>            : #include &quot;rostime_decl.h&quot;
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : /*********************************************************************
+<span class="lineNum">      62 </span>            :  ** Cross Platform Headers
+<span class="lineNum">      63 </span>            :  *********************************************************************/
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span>            : #ifdef WIN32
+<span class="lineNum">      66 </span>            :   #include &lt;sys/timeb.h&gt;
+<span class="lineNum">      67 </span>            : #else
+<span class="lineNum">      68 </span>            :   #include &lt;sys/time.h&gt;
+<span class="lineNum">      69 </span>            : #endif
+<span class="lineNum">      70 </span>            : 
+<span class="lineNum">      71 </span>            : namespace boost {
+<span class="lineNum">      72 </span>            :   namespace posix_time {
+<span class="lineNum">      73 </span>            :     class ptime;
+<span class="lineNum">      74 </span>            :     class time_duration;
+<span class="lineNum">      75 </span>            :   }
+<span class="lineNum">      76 </span>            : }
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span>            : namespace ros
+<span class="lineNum">      79 </span>            : {
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span>            :   /*********************************************************************
+<span class="lineNum">      82 </span>            :    ** Exceptions
+<span class="lineNum">      83 </span>            :    *********************************************************************/
+<span class="lineNum">      84 </span>            : 
+<span class="lineNum">      85 </span>            :   /**
+<span class="lineNum">      86 </span>            :    * @brief Thrown if the ros subsystem hasn't been initialised before use.
+<span class="lineNum">      87 </span>            :    */
+<span class="lineNum">      88 </span>            :   class ROSTIME_DECL TimeNotInitializedException : public Exception
+<span class="lineNum">      89 </span>            :   {
+<span class="lineNum">      90 </span>            :   public:
+<span class="lineNum">      91 </span>            :     TimeNotInitializedException()
+<span class="lineNum">      92 </span>            :       : Exception(&quot;Cannot use ros::Time::now() before the first NodeHandle has been created or ros::start() has been called.  &quot;
+<span class="lineNum">      93 </span>            :                   &quot;If this is a standalone app or test that just uses ros::Time and does not communicate over ROS, you may also call ros::Time::init()&quot;)
+<span class="lineNum">      94 </span>            :     {}
+<span class="lineNum">      95 </span>            :   };
+<span class="lineNum">      96 </span>            : 
+<span class="lineNum">      97 </span>            :   /**
+<span class="lineNum">      98 </span>            :    * @brief Thrown if windoze high perf. timestamping is unavailable.
+<span class="lineNum">      99 </span>            :    *
+<span class="lineNum">     100 </span>            :    * @sa getWallTime
+<span class="lineNum">     101 </span>            :    */
+<span class="lineNum">     102 </span>            :   class ROSTIME_DECL NoHighPerformanceTimersException : public Exception
+<span class="lineNum">     103 </span>            :   {
+<span class="lineNum">     104 </span>            :   public:
+<span class="lineNum">     105 </span>            :     NoHighPerformanceTimersException()
+<span class="lineNum">     106 </span>            :       : Exception(&quot;This windows platform does not &quot;
+<span class="lineNum">     107 </span>            :                   &quot;support the high-performance timing api.&quot;)
+<span class="lineNum">     108 </span>            :     {}
+<span class="lineNum">     109 </span>            :   };
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span>            :   /*********************************************************************
+<span class="lineNum">     112 </span>            :    ** Functions
+<span class="lineNum">     113 </span>            :    *********************************************************************/
+<span class="lineNum">     114 </span>            : 
+<span class="lineNum">     115 </span>            :   ROSTIME_DECL void normalizeSecNSec(uint64_t&amp; sec, uint64_t&amp; nsec);
+<span class="lineNum">     116 </span>            :   ROSTIME_DECL void normalizeSecNSec(uint32_t&amp; sec, uint32_t&amp; nsec);
+<span class="lineNum">     117 </span>            :   ROSTIME_DECL void normalizeSecNSecUnsigned(int64_t&amp; sec, int64_t&amp; nsec);
+<span class="lineNum">     118 </span>            :   ROSTIME_DECL void ros_walltime(uint32_t&amp; sec, uint32_t&amp; nsec);
+<span class="lineNum">     119 </span>            :   ROSTIME_DECL void ros_steadytime(uint32_t&amp; sec, uint32_t&amp; nsec);
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span>            :   /*********************************************************************
+<span class="lineNum">     122 </span>            :    ** Time Classes
+<span class="lineNum">     123 </span>            :    *********************************************************************/
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span>            :   /**
+<span class="lineNum">     126 </span>            :    * \brief Base class for Time implementations.  Provides storage, common functions and operator overloads.
+<span class="lineNum">     127 </span>            :    * This should not need to be used directly.
+<span class="lineNum">     128 </span>            :    */
+<span class="lineNum">     129 </span>            :   template&lt;class T, class D&gt;
+<span class="lineNum">     130 </span>            :   class TimeBase
+<span class="lineNum">     131 </span>            :   {
+<span class="lineNum">     132 </span>            :   public:
+<a name="133"><span class="lineNum">     133 </span>            :     uint32_t sec, nsec;</a>
+<span class="lineNum">     134 </span>            : 
+<span class="lineNum">     135 </span><span class="lineCov">   51811887 :     TimeBase() : sec(0), nsec(0) { }</span>
+<span class="lineNum">     136 </span>            :     TimeBase(uint32_t _sec, uint32_t _nsec) : sec(_sec), nsec(_nsec)
+<span class="lineNum">     137 </span>            :     {
+<span class="lineNum">     138 </span>            :       normalizeSecNSec(sec, nsec);
+<span class="lineNum">     139 </span>            :     }
+<span class="lineNum">     140 </span>            :     explicit TimeBase(double t) { fromSec(t); }
+<span class="lineNum">     141 </span>            :     D operator-(const T &amp;rhs) const;
+<span class="lineNum">     142 </span>            :     T operator+(const D &amp;rhs) const;
+<span class="lineNum">     143 </span>            :     T operator-(const D &amp;rhs) const;
+<span class="lineNum">     144 </span>            :     T&amp; operator+=(const D &amp;rhs);
+<span class="lineNum">     145 </span>            :     T&amp; operator-=(const D &amp;rhs);
+<span class="lineNum">     146 </span>            :     bool operator==(const T &amp;rhs) const;
+<span class="lineNum">     147 </span>            :     inline bool operator!=(const T &amp;rhs) const { return !(*static_cast&lt;const T*&gt;(this) == rhs); }
+<span class="lineNum">     148 </span>            :     bool operator&gt;(const T &amp;rhs) const;
+<span class="lineNum">     149 </span>            :     bool operator&lt;(const T &amp;rhs) const;
+<span class="lineNum">     150 </span>            :     bool operator&gt;=(const T &amp;rhs) const;
+<span class="lineNum">     151 </span>            :     bool operator&lt;=(const T &amp;rhs) const;
+<a name="152"><span class="lineNum">     152 </span>            : </a>
+<span class="lineNum">     153 </span>            :     double toSec()  const { return (double)sec + 1e-9*(double)nsec; };
+<span class="lineNum">     154 </span><span class="lineCov">  109095710 :     T&amp; fromSec(double t) {</span>
+<span class="lineNum">     155 </span><span class="lineCov">  109095710 :       int64_t sec64 = (int64_t)floor(t);</span>
+<span class="lineNum">     156 </span><span class="lineCov">  109095710 :       if (sec64 &lt; 0 || sec64 &gt; UINT_MAX)</span>
+<span class="lineNum">     157 </span><span class="lineNoCov">          0 :         throw std::runtime_error(&quot;Time is out of dual 32-bit range&quot;);</span>
+<span class="lineNum">     158 </span><span class="lineCov">  109095710 :       sec = (uint32_t)sec64;</span>
+<span class="lineNum">     159 </span><span class="lineCov">  109095710 :       nsec = (uint32_t)boost::math::round((t-sec) * 1e9);</span>
+<span class="lineNum">     160 </span>            :       // avoid rounding errors
+<span class="lineNum">     161 </span><span class="lineCov">  109095710 :       sec += (nsec / 1000000000ul);</span>
+<span class="lineNum">     162 </span><span class="lineCov">  109095710 :       nsec %= 1000000000ul;</span>
+<span class="lineNum">     163 </span><span class="lineCov">  109095710 :       return *static_cast&lt;T*&gt;(this);</span>
+<span class="lineNum">     164 </span>            :     }
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            :     uint64_t toNSec() const {return (uint64_t)sec*1000000000ull + (uint64_t)nsec;  }
+<span class="lineNum">     167 </span>            :     T&amp; fromNSec(uint64_t t);
+<span class="lineNum">     168 </span>            : 
+<span class="lineNum">     169 </span>            :     inline bool isZero() const { return sec == 0 &amp;&amp; nsec == 0; }
+<span class="lineNum">     170 </span>            :     inline bool is_zero() const { return isZero(); }
+<span class="lineNum">     171 </span>            :     boost::posix_time::ptime toBoost() const;
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span>            :   };
+<span class="lineNum">     174 </span>            : 
+<span class="lineNum">     175 </span>            :   /**
+<span class="lineNum">     176 </span>            :    * \brief Time representation.  May either represent wall clock time or ROS clock time.
+<span class="lineNum">     177 </span>            :    *
+<span class="lineNum">     178 </span>            :    * ros::TimeBase provides most of its functionality.
+<span class="lineNum">     179 </span>            :    */
+<span class="lineNum">     180 </span>            :   class ROSTIME_DECL Time : public TimeBase&lt;Time, Duration&gt;
+<a name="181"><span class="lineNum">     181 </span>            :   {</a>
+<span class="lineNum">     182 </span>            :   public:
+<span class="lineNum">     183 </span><span class="lineCov">       5064 :     Time()</span>
+<span class="lineNum">     184 </span><span class="lineCov">       5064 :       : TimeBase&lt;Time, Duration&gt;()</span>
+<span class="lineNum">     185 </span><span class="lineCov">       5064 :     {}</span>
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span>            :     Time(uint32_t _sec, uint32_t _nsec)
+<span class="lineNum">     188 </span>            :       : TimeBase&lt;Time, Duration&gt;(_sec, _nsec)
+<a name="189"><span class="lineNum">     189 </span>            :     {}</a>
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span><span class="lineCov">  109095710 :     explicit Time(double t) { fromSec(t); }</span>
+<span class="lineNum">     192 </span>            : 
+<span class="lineNum">     193 </span>            :     /**
+<span class="lineNum">     194 </span>            :      * \brief Retrieve the current time.  If ROS clock time is in use, this returns the time according to the
+<span class="lineNum">     195 </span>            :      * ROS clock.  Otherwise returns the current wall clock time.
+<span class="lineNum">     196 </span>            :      */
+<span class="lineNum">     197 </span>            :     static Time now();
+<span class="lineNum">     198 </span>            :     /**
+<span class="lineNum">     199 </span>            :      * \brief Sleep until a specific time has been reached.
+<span class="lineNum">     200 </span>            :      * @return True if the desired sleep time was met, false otherwise.
+<span class="lineNum">     201 </span>            :      */
+<span class="lineNum">     202 </span>            :     static bool sleepUntil(const Time&amp; end);
+<span class="lineNum">     203 </span>            : 
+<span class="lineNum">     204 </span>            :     static void init();
+<span class="lineNum">     205 </span>            :     static void shutdown();
+<span class="lineNum">     206 </span>            :     static void setNow(const Time&amp; new_now);
+<span class="lineNum">     207 </span>            :     static bool useSystemTime();
+<span class="lineNum">     208 </span>            :     static bool isSimTime();
+<span class="lineNum">     209 </span>            :     static bool isSystemTime();
+<span class="lineNum">     210 </span>            : 
+<span class="lineNum">     211 </span>            :     /**
+<span class="lineNum">     212 </span>            :      * \brief Returns whether or not the current time is valid.  Time is valid if it is non-zero.
+<span class="lineNum">     213 </span>            :      */
+<span class="lineNum">     214 </span>            :     static bool isValid();
+<span class="lineNum">     215 </span>            :     /**
+<span class="lineNum">     216 </span>            :      * \brief Wait for time to become valid
+<span class="lineNum">     217 </span>            :      */
+<span class="lineNum">     218 </span>            :     static bool waitForValid();
+<span class="lineNum">     219 </span>            :     /**
+<span class="lineNum">     220 </span>            :      * \brief Wait for time to become valid, with timeout
+<span class="lineNum">     221 </span>            :      */
+<span class="lineNum">     222 </span>            :     static bool waitForValid(const ros::WallDuration&amp; timeout);
+<span class="lineNum">     223 </span>            : 
+<span class="lineNum">     224 </span>            :     static Time fromBoost(const boost::posix_time::ptime&amp; t);
+<span class="lineNum">     225 </span>            :     static Time fromBoost(const boost::posix_time::time_duration&amp; d);
+<span class="lineNum">     226 </span>            :   };
+<span class="lineNum">     227 </span>            : 
+<span class="lineNum">     228 </span>            :   extern ROSTIME_DECL const Time TIME_MAX;
+<span class="lineNum">     229 </span>            :   extern ROSTIME_DECL const Time TIME_MIN;
+<span class="lineNum">     230 </span>            : 
+<span class="lineNum">     231 </span>            :   /**
+<span class="lineNum">     232 </span>            :    * \brief Time representation.  Always wall-clock time.
+<span class="lineNum">     233 </span>            :    *
+<span class="lineNum">     234 </span>            :    * ros::TimeBase provides most of its functionality.
+<span class="lineNum">     235 </span>            :    */
+<span class="lineNum">     236 </span>            :   class ROSTIME_DECL WallTime : public TimeBase&lt;WallTime, WallDuration&gt;
+<span class="lineNum">     237 </span>            :   {
+<span class="lineNum">     238 </span>            :   public:
+<span class="lineNum">     239 </span>            :     WallTime()
+<span class="lineNum">     240 </span>            :       : TimeBase&lt;WallTime, WallDuration&gt;()
+<span class="lineNum">     241 </span>            :     {}
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            :     WallTime(uint32_t _sec, uint32_t _nsec)
+<span class="lineNum">     244 </span>            :       : TimeBase&lt;WallTime, WallDuration&gt;(_sec, _nsec)
+<span class="lineNum">     245 </span>            :     {}
+<span class="lineNum">     246 </span>            : 
+<span class="lineNum">     247 </span>            :     explicit WallTime(double t) { fromSec(t); }
+<span class="lineNum">     248 </span>            : 
+<span class="lineNum">     249 </span>            :     /**
+<span class="lineNum">     250 </span>            :      * \brief Returns the current wall clock time.
+<span class="lineNum">     251 </span>            :      */
+<span class="lineNum">     252 </span>            :     static WallTime now();
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span>            :     /**
+<span class="lineNum">     255 </span>            :      * \brief Sleep until a specific time has been reached.
+<span class="lineNum">     256 </span>            :      * @return True if the desired sleep time was met, false otherwise.
+<span class="lineNum">     257 </span>            :      */
+<span class="lineNum">     258 </span>            :     static bool sleepUntil(const WallTime&amp; end);
+<span class="lineNum">     259 </span>            : 
+<span class="lineNum">     260 </span>            :     static bool isSystemTime() { return true; }
+<span class="lineNum">     261 </span>            :   };
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span>            :   /**
+<span class="lineNum">     264 </span>            :    * \brief Time representation.  Always steady-clock time.
+<span class="lineNum">     265 </span>            :    *
+<span class="lineNum">     266 </span>            :    * Not affected by ROS time.
+<span class="lineNum">     267 </span>            :    *
+<span class="lineNum">     268 </span>            :    * ros::TimeBase provides most of its functionality.
+<span class="lineNum">     269 </span>            :    */
+<span class="lineNum">     270 </span>            :   class ROSTIME_DECL SteadyTime : public TimeBase&lt;SteadyTime, WallDuration&gt;
+<span class="lineNum">     271 </span>            :   {
+<span class="lineNum">     272 </span>            :     public:
+<span class="lineNum">     273 </span>            :       SteadyTime()
+<span class="lineNum">     274 </span>            :         : TimeBase&lt;SteadyTime, WallDuration&gt;()
+<span class="lineNum">     275 </span>            :       {}
+<span class="lineNum">     276 </span>            : 
+<span class="lineNum">     277 </span>            :       SteadyTime(uint32_t _sec, uint32_t _nsec)
+<span class="lineNum">     278 </span>            :         : TimeBase&lt;SteadyTime, WallDuration&gt;(_sec, _nsec)
+<span class="lineNum">     279 </span>            :       {}
+<span class="lineNum">     280 </span>            : 
+<span class="lineNum">     281 </span>            :       explicit SteadyTime(double t) { fromSec(t); }
+<span class="lineNum">     282 </span>            : 
+<span class="lineNum">     283 </span>            :       /**
+<span class="lineNum">     284 </span>            :        * \brief Returns the current steady (monotonic) clock time.
+<span class="lineNum">     285 </span>            :        */
+<span class="lineNum">     286 </span>            :       static SteadyTime now();
+<span class="lineNum">     287 </span>            : 
+<span class="lineNum">     288 </span>            :       /**
+<span class="lineNum">     289 </span>            :        * \brief Sleep until a specific time has been reached.
+<span class="lineNum">     290 </span>            :        * @return True if the desired sleep time was met, false otherwise.
+<span class="lineNum">     291 </span>            :        */
+<span class="lineNum">     292 </span>            :       static bool sleepUntil(const SteadyTime&amp; end);
+<span class="lineNum">     293 </span>            : 
+<span class="lineNum">     294 </span>            :       static bool isSystemTime() { return true; }
+<span class="lineNum">     295 </span>            :   };
+<span class="lineNum">     296 </span>            : 
+<span class="lineNum">     297 </span>            :   ROSTIME_DECL std::ostream &amp;operator &lt;&lt;(std::ostream &amp;os, const Time &amp;rhs);
+<span class="lineNum">     298 </span>            :   ROSTIME_DECL std::ostream &amp;operator &lt;&lt;(std::ostream &amp;os, const WallTime &amp;rhs);
+<span class="lineNum">     299 </span>            :   ROSTIME_DECL std::ostream &amp;operator &lt;&lt;(std::ostream &amp;os, const SteadyTime &amp;rhs);
+<span class="lineNum">     300 </span>            : }
+<span class="lineNum">     301 </span>            : 
+<span class="lineNum">     302 </span>            : #endif // ROS_TIME_H
+<span class="lineNum">     303 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

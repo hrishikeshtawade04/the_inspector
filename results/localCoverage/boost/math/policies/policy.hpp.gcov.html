@@ -1,0 +1,1072 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - boost/math/policies/policy.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">boost/math/policies</a> - policy.hpp<span style="font-size: 80%;"> (source / <a href="policy.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //  Copyright John Maddock 2007.</a>
+<span class="lineNum">       2 </span>            : //  Use, modification and distribution are subject to the
+<span class="lineNum">       3 </span>            : //  Boost Software License, Version 1.0. (See accompanying file
+<span class="lineNum">       4 </span>            : //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span>            : #ifndef BOOST_MATH_POLICY_HPP
+<span class="lineNum">       7 </span>            : #define BOOST_MATH_POLICY_HPP
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : #include &lt;boost/mpl/list.hpp&gt;
+<span class="lineNum">      10 </span>            : #include &lt;boost/mpl/contains.hpp&gt;
+<span class="lineNum">      11 </span>            : #include &lt;boost/mpl/if.hpp&gt;
+<span class="lineNum">      12 </span>            : #include &lt;boost/mpl/find_if.hpp&gt;
+<span class="lineNum">      13 </span>            : #include &lt;boost/mpl/remove_if.hpp&gt;
+<span class="lineNum">      14 </span>            : #include &lt;boost/mpl/vector.hpp&gt;
+<span class="lineNum">      15 </span>            : #include &lt;boost/mpl/push_back.hpp&gt;
+<span class="lineNum">      16 </span>            : #include &lt;boost/mpl/at.hpp&gt;
+<span class="lineNum">      17 </span>            : #include &lt;boost/mpl/size.hpp&gt;
+<span class="lineNum">      18 </span>            : #include &lt;boost/mpl/comparison.hpp&gt;
+<span class="lineNum">      19 </span>            : #include &lt;boost/type_traits/is_same.hpp&gt;
+<span class="lineNum">      20 </span>            : #include &lt;boost/static_assert.hpp&gt;
+<span class="lineNum">      21 </span>            : #include &lt;boost/assert.hpp&gt;
+<span class="lineNum">      22 </span>            : #include &lt;boost/math/tools/config.hpp&gt;
+<span class="lineNum">      23 </span>            : #include &lt;limits&gt;
+<span class="lineNum">      24 </span>            : // Sadly we do need the .h versions of these to be sure of getting
+<span class="lineNum">      25 </span>            : // FLT_MANT_DIG etc.
+<span class="lineNum">      26 </span>            : #include &lt;limits.h&gt;
+<span class="lineNum">      27 </span>            : #include &lt;stdlib.h&gt;
+<span class="lineNum">      28 </span>            : #include &lt;stddef.h&gt;
+<span class="lineNum">      29 </span>            : #include &lt;math.h&gt;
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            : namespace boost{ namespace math{ 
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span>            : namespace tools{
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : template &lt;class T&gt;
+<span class="lineNum">      36 </span>            : int digits(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE(T));
+<span class="lineNum">      37 </span>            : template &lt;class T&gt;
+<span class="lineNum">      38 </span>            : T epsilon(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE(T));
+<span class="lineNum">      39 </span>            : 
+<span class="lineNum">      40 </span>            : }
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            : namespace policies{
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : //
+<span class="lineNum">      45 </span>            : // Define macros for our default policies, if they're not defined already:
+<span class="lineNum">      46 </span>            : //
+<span class="lineNum">      47 </span>            : #ifndef BOOST_MATH_DOMAIN_ERROR_POLICY
+<span class="lineNum">      48 </span>            : #define BOOST_MATH_DOMAIN_ERROR_POLICY throw_on_error
+<span class="lineNum">      49 </span>            : #endif
+<span class="lineNum">      50 </span>            : #ifndef BOOST_MATH_POLE_ERROR_POLICY
+<span class="lineNum">      51 </span>            : #define BOOST_MATH_POLE_ERROR_POLICY throw_on_error
+<span class="lineNum">      52 </span>            : #endif
+<span class="lineNum">      53 </span>            : #ifndef BOOST_MATH_OVERFLOW_ERROR_POLICY
+<span class="lineNum">      54 </span>            : #define BOOST_MATH_OVERFLOW_ERROR_POLICY throw_on_error
+<span class="lineNum">      55 </span>            : #endif
+<span class="lineNum">      56 </span>            : #ifndef BOOST_MATH_EVALUATION_ERROR_POLICY
+<span class="lineNum">      57 </span>            : #define BOOST_MATH_EVALUATION_ERROR_POLICY throw_on_error
+<span class="lineNum">      58 </span>            : #endif
+<span class="lineNum">      59 </span>            : #ifndef BOOST_MATH_ROUNDING_ERROR_POLICY
+<span class="lineNum">      60 </span>            : #define BOOST_MATH_ROUNDING_ERROR_POLICY throw_on_error
+<span class="lineNum">      61 </span>            : #endif
+<span class="lineNum">      62 </span>            : #ifndef BOOST_MATH_UNDERFLOW_ERROR_POLICY
+<span class="lineNum">      63 </span>            : #define BOOST_MATH_UNDERFLOW_ERROR_POLICY ignore_error
+<span class="lineNum">      64 </span>            : #endif
+<span class="lineNum">      65 </span>            : #ifndef BOOST_MATH_DENORM_ERROR_POLICY
+<span class="lineNum">      66 </span>            : #define BOOST_MATH_DENORM_ERROR_POLICY ignore_error
+<span class="lineNum">      67 </span>            : #endif
+<span class="lineNum">      68 </span>            : #ifndef BOOST_MATH_INDETERMINATE_RESULT_ERROR_POLICY
+<span class="lineNum">      69 </span>            : #define BOOST_MATH_INDETERMINATE_RESULT_ERROR_POLICY ignore_error
+<span class="lineNum">      70 </span>            : #endif
+<span class="lineNum">      71 </span>            : #ifndef BOOST_MATH_DIGITS10_POLICY
+<span class="lineNum">      72 </span>            : #define BOOST_MATH_DIGITS10_POLICY 0
+<span class="lineNum">      73 </span>            : #endif
+<span class="lineNum">      74 </span>            : #ifndef BOOST_MATH_PROMOTE_FLOAT_POLICY
+<span class="lineNum">      75 </span>            : #define BOOST_MATH_PROMOTE_FLOAT_POLICY true
+<span class="lineNum">      76 </span>            : #endif
+<span class="lineNum">      77 </span>            : #ifndef BOOST_MATH_PROMOTE_DOUBLE_POLICY
+<span class="lineNum">      78 </span>            : #ifdef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
+<span class="lineNum">      79 </span>            : #define BOOST_MATH_PROMOTE_DOUBLE_POLICY false
+<span class="lineNum">      80 </span>            : #else
+<span class="lineNum">      81 </span>            : #define BOOST_MATH_PROMOTE_DOUBLE_POLICY true
+<span class="lineNum">      82 </span>            : #endif
+<span class="lineNum">      83 </span>            : #endif
+<span class="lineNum">      84 </span>            : #ifndef BOOST_MATH_DISCRETE_QUANTILE_POLICY
+<span class="lineNum">      85 </span>            : #define BOOST_MATH_DISCRETE_QUANTILE_POLICY integer_round_outwards
+<span class="lineNum">      86 </span>            : #endif
+<span class="lineNum">      87 </span>            : #ifndef BOOST_MATH_ASSERT_UNDEFINED_POLICY
+<span class="lineNum">      88 </span>            : #define BOOST_MATH_ASSERT_UNDEFINED_POLICY true
+<span class="lineNum">      89 </span>            : #endif
+<span class="lineNum">      90 </span>            : #ifndef BOOST_MATH_MAX_SERIES_ITERATION_POLICY
+<span class="lineNum">      91 </span>            : #define BOOST_MATH_MAX_SERIES_ITERATION_POLICY 1000000
+<span class="lineNum">      92 </span>            : #endif
+<span class="lineNum">      93 </span>            : #ifndef BOOST_MATH_MAX_ROOT_ITERATION_POLICY
+<span class="lineNum">      94 </span>            : #define BOOST_MATH_MAX_ROOT_ITERATION_POLICY 200
+<span class="lineNum">      95 </span>            : #endif
+<span class="lineNum">      96 </span>            : 
+<span class="lineNum">      97 </span>            : #if !defined(__BORLANDC__)
+<span class="lineNum">      98 </span>            : #define BOOST_MATH_META_INT(type, name, Default)\
+<span class="lineNum">      99 </span>            :    template &lt;type N = Default&gt; struct name : public boost::mpl::int_&lt;N&gt;{};\
+<span class="lineNum">     100 </span>            :    namespace detail{\
+<span class="lineNum">     101 </span>            :    template &lt;type N&gt;\
+<span class="lineNum">     102 </span>            :    char test_is_valid_arg(const name&lt;N&gt;*);\
+<span class="lineNum">     103 </span>            :    char test_is_default_arg(const name&lt;Default&gt;*);\
+<span class="lineNum">     104 </span>            :    template &lt;class T&gt; struct is_##name##_imp\
+<span class="lineNum">     105 </span>            :    {\
+<span class="lineNum">     106 </span>            :       template &lt;type N&gt; static char test(const name&lt;N&gt;*);\
+<span class="lineNum">     107 </span>            :       static double test(...);\
+<span class="lineNum">     108 </span>            :       BOOST_STATIC_CONSTANT(bool, value = sizeof(test(static_cast&lt;T*&gt;(0))) == 1);\
+<span class="lineNum">     109 </span>            :    };\
+<span class="lineNum">     110 </span>            :    }\
+<span class="lineNum">     111 </span>            :    template &lt;class T&gt; struct is_##name : public boost::mpl::bool_&lt; ::boost::math::policies::detail::is_##name##_imp&lt;T&gt;::value&gt;{};
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span>            : #define BOOST_MATH_META_BOOL(name, Default)\
+<span class="lineNum">     114 </span>            :    template &lt;bool N = Default&gt; struct name : public boost::mpl::bool_&lt;N&gt;{};\
+<span class="lineNum">     115 </span>            :    namespace detail{\
+<span class="lineNum">     116 </span>            :    template &lt;bool N&gt;\
+<span class="lineNum">     117 </span>            :    char test_is_valid_arg(const name&lt;N&gt;*);\
+<span class="lineNum">     118 </span>            :    char test_is_default_arg(const name&lt;Default&gt;*);\
+<span class="lineNum">     119 </span>            :    template &lt;class T&gt; struct is_##name##_imp\
+<span class="lineNum">     120 </span>            :    {\
+<span class="lineNum">     121 </span>            :       template &lt;bool N&gt; static char test(const name&lt;N&gt;*);\
+<span class="lineNum">     122 </span>            :       static double test(...);\
+<span class="lineNum">     123 </span>            :       BOOST_STATIC_CONSTANT(bool, value = sizeof(test(static_cast&lt;T*&gt;(0))) == 1);\
+<span class="lineNum">     124 </span>            :    };\
+<span class="lineNum">     125 </span>            :    }\
+<span class="lineNum">     126 </span>            :    template &lt;class T&gt; struct is_##name : public boost::mpl::bool_&lt; ::boost::math::policies::detail::is_##name##_imp&lt;T&gt;::value&gt;{};
+<span class="lineNum">     127 </span>            : #else
+<span class="lineNum">     128 </span>            : #define BOOST_MATH_META_INT(Type, name, Default)\
+<span class="lineNum">     129 </span>            :    template &lt;Type N = Default&gt; struct name : public boost::mpl::int_&lt;N&gt;{};\
+<span class="lineNum">     130 </span>            :    namespace detail{\
+<span class="lineNum">     131 </span>            :    template &lt;Type N&gt;\
+<span class="lineNum">     132 </span>            :    char test_is_valid_arg(const name&lt;N&gt;*);\
+<span class="lineNum">     133 </span>            :    char test_is_default_arg(const name&lt;Default&gt;*);\
+<span class="lineNum">     134 </span>            :    template &lt;class T&gt; struct is_##name##_tester\
+<span class="lineNum">     135 </span>            :    {\
+<span class="lineNum">     136 </span>            :       template &lt;Type N&gt; static char test(const name&lt;N&gt;&amp;);\
+<span class="lineNum">     137 </span>            :       static double test(...);\
+<span class="lineNum">     138 </span>            :    };\
+<span class="lineNum">     139 </span>            :    template &lt;class T&gt; struct is_##name##_imp\
+<span class="lineNum">     140 </span>            :    {\
+<span class="lineNum">     141 </span>            :       static T inst;\
+<span class="lineNum">     142 </span>            :       BOOST_STATIC_CONSTANT(bool, value = sizeof( ::boost::math::policies::detail::is_##name##_tester&lt;T&gt;::test(inst)) == 1);\
+<span class="lineNum">     143 </span>            :    };\
+<span class="lineNum">     144 </span>            :    }\
+<span class="lineNum">     145 </span>            :    template &lt;class T&gt; struct is_##name : public boost::mpl::bool_&lt; ::boost::math::policies::detail::is_##name##_imp&lt;T&gt;::value&gt;\
+<span class="lineNum">     146 </span>            :    {\
+<span class="lineNum">     147 </span>            :       template &lt;class U&gt; struct apply{ typedef is_##name&lt;U&gt; type; };\
+<span class="lineNum">     148 </span>            :    };
+<span class="lineNum">     149 </span>            : 
+<span class="lineNum">     150 </span>            : #define BOOST_MATH_META_BOOL(name, Default)\
+<span class="lineNum">     151 </span>            :    template &lt;bool N = Default&gt; struct name : public boost::mpl::bool_&lt;N&gt;{};\
+<span class="lineNum">     152 </span>            :    namespace detail{\
+<span class="lineNum">     153 </span>            :    template &lt;bool N&gt;\
+<span class="lineNum">     154 </span>            :    char test_is_valid_arg(const name&lt;N&gt;*);\
+<span class="lineNum">     155 </span>            :    char test_is_default_arg(const name&lt;Default&gt;*);\
+<span class="lineNum">     156 </span>            :    template &lt;class T&gt; struct is_##name##_tester\
+<span class="lineNum">     157 </span>            :    {\
+<span class="lineNum">     158 </span>            :       template &lt;bool N&gt; static char test(const name&lt;N&gt;&amp;);\
+<span class="lineNum">     159 </span>            :       static double test(...);\
+<span class="lineNum">     160 </span>            :    };\
+<span class="lineNum">     161 </span>            :    template &lt;class T&gt; struct is_##name##_imp\
+<span class="lineNum">     162 </span>            :    {\
+<span class="lineNum">     163 </span>            :       static T inst;\
+<span class="lineNum">     164 </span>            :       BOOST_STATIC_CONSTANT(bool, value = sizeof( ::boost::math::policies::detail::is_##name##_tester&lt;T&gt;::test(inst)) == 1);\
+<span class="lineNum">     165 </span>            :    };\
+<span class="lineNum">     166 </span>            :    }\
+<span class="lineNum">     167 </span>            :    template &lt;class T&gt; struct is_##name : public boost::mpl::bool_&lt; ::boost::math::policies::detail::is_##name##_imp&lt;T&gt;::value&gt;\
+<span class="lineNum">     168 </span>            :    {\
+<span class="lineNum">     169 </span>            :       template &lt;class U&gt; struct apply{ typedef is_##name&lt;U&gt; type;  };\
+<span class="lineNum">     170 </span>            :    };
+<span class="lineNum">     171 </span>            : #endif
+<span class="lineNum">     172 </span>            : //
+<span class="lineNum">     173 </span>            : // Begin by defining policy types for error handling:
+<span class="lineNum">     174 </span>            : //
+<span class="lineNum">     175 </span>            : enum error_policy_type
+<span class="lineNum">     176 </span>            : {
+<span class="lineNum">     177 </span>            :    throw_on_error = 0,
+<span class="lineNum">     178 </span>            :    errno_on_error = 1,
+<span class="lineNum">     179 </span>            :    ignore_error = 2,
+<span class="lineNum">     180 </span>            :    user_error = 3
+<span class="lineNum">     181 </span>            : };
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span>            : BOOST_MATH_META_INT(error_policy_type, domain_error, BOOST_MATH_DOMAIN_ERROR_POLICY)
+<span class="lineNum">     184 </span>            : BOOST_MATH_META_INT(error_policy_type, pole_error, BOOST_MATH_POLE_ERROR_POLICY)
+<span class="lineNum">     185 </span>            : BOOST_MATH_META_INT(error_policy_type, overflow_error, BOOST_MATH_OVERFLOW_ERROR_POLICY)
+<span class="lineNum">     186 </span>            : BOOST_MATH_META_INT(error_policy_type, underflow_error, BOOST_MATH_UNDERFLOW_ERROR_POLICY)
+<span class="lineNum">     187 </span>            : BOOST_MATH_META_INT(error_policy_type, denorm_error, BOOST_MATH_DENORM_ERROR_POLICY)
+<span class="lineNum">     188 </span>            : BOOST_MATH_META_INT(error_policy_type, evaluation_error, BOOST_MATH_EVALUATION_ERROR_POLICY)
+<span class="lineNum">     189 </span>            : BOOST_MATH_META_INT(error_policy_type, rounding_error, BOOST_MATH_ROUNDING_ERROR_POLICY)
+<span class="lineNum">     190 </span>            : BOOST_MATH_META_INT(error_policy_type, indeterminate_result_error, BOOST_MATH_INDETERMINATE_RESULT_ERROR_POLICY)
+<span class="lineNum">     191 </span>            : 
+<span class="lineNum">     192 </span>            : //
+<span class="lineNum">     193 </span>            : // Policy types for internal promotion:
+<span class="lineNum">     194 </span>            : //
+<span class="lineNum">     195 </span>            : BOOST_MATH_META_BOOL(promote_float, BOOST_MATH_PROMOTE_FLOAT_POLICY)
+<span class="lineNum">     196 </span>            : BOOST_MATH_META_BOOL(promote_double, BOOST_MATH_PROMOTE_DOUBLE_POLICY)
+<span class="lineNum">     197 </span>            : BOOST_MATH_META_BOOL(assert_undefined, BOOST_MATH_ASSERT_UNDEFINED_POLICY)
+<span class="lineNum">     198 </span>            : //
+<span class="lineNum">     199 </span>            : // Policy types for discrete quantiles:
+<span class="lineNum">     200 </span>            : //
+<span class="lineNum">     201 </span>            : enum discrete_quantile_policy_type
+<span class="lineNum">     202 </span>            : {
+<span class="lineNum">     203 </span>            :    real,
+<span class="lineNum">     204 </span>            :    integer_round_outwards,
+<span class="lineNum">     205 </span>            :    integer_round_inwards,
+<span class="lineNum">     206 </span>            :    integer_round_down,
+<span class="lineNum">     207 </span>            :    integer_round_up,
+<span class="lineNum">     208 </span>            :    integer_round_nearest
+<span class="lineNum">     209 </span>            : };
+<span class="lineNum">     210 </span>            : 
+<span class="lineNum">     211 </span>            : BOOST_MATH_META_INT(discrete_quantile_policy_type, discrete_quantile, BOOST_MATH_DISCRETE_QUANTILE_POLICY)
+<span class="lineNum">     212 </span>            : //
+<span class="lineNum">     213 </span>            : // Precision:
+<span class="lineNum">     214 </span>            : //
+<span class="lineNum">     215 </span>            : BOOST_MATH_META_INT(int, digits10, BOOST_MATH_DIGITS10_POLICY)
+<span class="lineNum">     216 </span>            : BOOST_MATH_META_INT(int, digits2, 0)
+<span class="lineNum">     217 </span>            : //
+<span class="lineNum">     218 </span>            : // Iterations:
+<span class="lineNum">     219 </span>            : //
+<span class="lineNum">     220 </span>            : BOOST_MATH_META_INT(unsigned long, max_series_iterations, BOOST_MATH_MAX_SERIES_ITERATION_POLICY)
+<span class="lineNum">     221 </span>            : BOOST_MATH_META_INT(unsigned long, max_root_iterations, BOOST_MATH_MAX_ROOT_ITERATION_POLICY)
+<span class="lineNum">     222 </span>            : //
+<span class="lineNum">     223 </span>            : // Define the names for each possible policy:
+<span class="lineNum">     224 </span>            : //
+<span class="lineNum">     225 </span>            : #define BOOST_MATH_PARAMETER(name)\
+<span class="lineNum">     226 </span>            :    BOOST_PARAMETER_TEMPLATE_KEYWORD(name##_name)\
+<span class="lineNum">     227 </span>            :    BOOST_PARAMETER_NAME(name##_name)
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span>            : struct default_policy{};
+<span class="lineNum">     230 </span>            : 
+<span class="lineNum">     231 </span>            : namespace detail{
+<span class="lineNum">     232 </span>            : //
+<span class="lineNum">     233 </span>            : // Trait to work out bits precision from digits10 and digits2:
+<span class="lineNum">     234 </span>            : //
+<span class="lineNum">     235 </span>            : template &lt;class Digits10, class Digits2&gt;
+<span class="lineNum">     236 </span>            : struct precision
+<span class="lineNum">     237 </span>            : {
+<span class="lineNum">     238 </span>            :    //
+<span class="lineNum">     239 </span>            :    // Now work out the precision:
+<span class="lineNum">     240 </span>            :    //
+<span class="lineNum">     241 </span>            :    typedef typename mpl::if_c&lt;
+<span class="lineNum">     242 </span>            :       (Digits10::value == 0),
+<span class="lineNum">     243 </span>            :       digits2&lt;0&gt;,
+<span class="lineNum">     244 </span>            :       digits2&lt;((Digits10::value + 1) * 1000L) / 301L&gt;
+<span class="lineNum">     245 </span>            :    &gt;::type digits2_type;
+<span class="lineNum">     246 </span>            : public:
+<span class="lineNum">     247 </span>            : #ifdef __BORLANDC__
+<span class="lineNum">     248 </span>            :    typedef typename mpl::if_c&lt;
+<span class="lineNum">     249 </span>            :       (Digits2::value &gt; ::boost::math::policies::detail::precision&lt;Digits10,Digits2&gt;::digits2_type::value),
+<span class="lineNum">     250 </span>            :       Digits2, digits2_type&gt;::type type;
+<span class="lineNum">     251 </span>            : #else
+<span class="lineNum">     252 </span>            :    typedef typename mpl::if_c&lt;
+<span class="lineNum">     253 </span>            :       (Digits2::value &gt; digits2_type::value),
+<span class="lineNum">     254 </span>            :       Digits2, digits2_type&gt;::type type;
+<span class="lineNum">     255 </span>            : #endif
+<span class="lineNum">     256 </span>            : };
+<span class="lineNum">     257 </span>            : 
+<span class="lineNum">     258 </span>            : template &lt;class A, class B, bool b&gt;
+<span class="lineNum">     259 </span>            : struct select_result
+<span class="lineNum">     260 </span>            : {
+<span class="lineNum">     261 </span>            :    typedef A type;
+<span class="lineNum">     262 </span>            : };
+<span class="lineNum">     263 </span>            : template &lt;class A, class B&gt;
+<span class="lineNum">     264 </span>            : struct select_result&lt;A, B, false&gt;
+<span class="lineNum">     265 </span>            : {
+<span class="lineNum">     266 </span>            :    typedef typename mpl::deref&lt;B&gt;::type type;
+<span class="lineNum">     267 </span>            : };
+<span class="lineNum">     268 </span>            : 
+<span class="lineNum">     269 </span>            : template &lt;class Seq, class Pred, class DefaultType&gt;
+<span class="lineNum">     270 </span>            : struct find_arg
+<span class="lineNum">     271 </span>            : {
+<span class="lineNum">     272 </span>            : private:
+<span class="lineNum">     273 </span>            :    typedef typename mpl::find_if&lt;Seq, Pred&gt;::type iter;
+<span class="lineNum">     274 </span>            :    typedef typename mpl::end&lt;Seq&gt;::type end_type;
+<span class="lineNum">     275 </span>            : public:
+<span class="lineNum">     276 </span>            :    typedef typename select_result&lt;
+<span class="lineNum">     277 </span>            :       DefaultType, iter,
+<span class="lineNum">     278 </span>            :       ::boost::is_same&lt;iter, end_type&gt;::value&gt;::type type;
+<span class="lineNum">     279 </span>            : };
+<span class="lineNum">     280 </span>            : 
+<span class="lineNum">     281 </span>            : double test_is_valid_arg(...);
+<span class="lineNum">     282 </span>            : double test_is_default_arg(...);
+<span class="lineNum">     283 </span>            : char test_is_valid_arg(const default_policy*);
+<span class="lineNum">     284 </span>            : char test_is_default_arg(const default_policy*);
+<span class="lineNum">     285 </span>            : 
+<span class="lineNum">     286 </span>            : template &lt;class T&gt;
+<span class="lineNum">     287 </span>            : struct is_valid_policy_imp 
+<span class="lineNum">     288 </span>            : {
+<span class="lineNum">     289 </span>            :    BOOST_STATIC_CONSTANT(bool, value = sizeof(::boost::math::policies::detail::test_is_valid_arg(static_cast&lt;T*&gt;(0))) == 1);
+<span class="lineNum">     290 </span>            : };
+<span class="lineNum">     291 </span>            : 
+<span class="lineNum">     292 </span>            : template &lt;class T&gt;
+<span class="lineNum">     293 </span>            : struct is_default_policy_imp
+<span class="lineNum">     294 </span>            : {
+<span class="lineNum">     295 </span>            :    BOOST_STATIC_CONSTANT(bool, value = sizeof(::boost::math::policies::detail::test_is_default_arg(static_cast&lt;T*&gt;(0))) == 1);
+<span class="lineNum">     296 </span>            : };
+<span class="lineNum">     297 </span>            : 
+<span class="lineNum">     298 </span>            : template &lt;class T&gt; struct is_valid_policy 
+<span class="lineNum">     299 </span>            : : public mpl::bool_&lt; 
+<span class="lineNum">     300 </span>            :    ::boost::math::policies::detail::is_valid_policy_imp&lt;T&gt;::value&gt;
+<span class="lineNum">     301 </span>            : {};
+<span class="lineNum">     302 </span>            : 
+<span class="lineNum">     303 </span>            : template &lt;class T&gt; struct is_default_policy 
+<span class="lineNum">     304 </span>            : : public mpl::bool_&lt; 
+<span class="lineNum">     305 </span>            :    ::boost::math::policies::detail::is_default_policy_imp&lt;T&gt;::value&gt;
+<span class="lineNum">     306 </span>            : {
+<span class="lineNum">     307 </span>            :    template &lt;class U&gt;
+<span class="lineNum">     308 </span>            :    struct apply
+<span class="lineNum">     309 </span>            :    {
+<span class="lineNum">     310 </span>            :       typedef is_default_policy&lt;U&gt; type;
+<span class="lineNum">     311 </span>            :    };
+<span class="lineNum">     312 </span>            : };
+<span class="lineNum">     313 </span>            : 
+<span class="lineNum">     314 </span>            : template &lt;class Seq, class T, int N&gt;
+<span class="lineNum">     315 </span>            : struct append_N
+<span class="lineNum">     316 </span>            : {
+<span class="lineNum">     317 </span>            :    typedef typename mpl::push_back&lt;Seq, T&gt;::type new_seq;
+<span class="lineNum">     318 </span>            :    typedef typename append_N&lt;new_seq, T, N-1&gt;::type type;
+<span class="lineNum">     319 </span>            : };
+<span class="lineNum">     320 </span>            : 
+<span class="lineNum">     321 </span>            : template &lt;class Seq, class T&gt;
+<span class="lineNum">     322 </span>            : struct append_N&lt;Seq, T, 0&gt;
+<span class="lineNum">     323 </span>            : {
+<span class="lineNum">     324 </span>            :    typedef Seq type;
+<span class="lineNum">     325 </span>            : };
+<span class="lineNum">     326 </span>            : 
+<span class="lineNum">     327 </span>            : //
+<span class="lineNum">     328 </span>            : // Traits class to work out what template parameters our default
+<span class="lineNum">     329 </span>            : // policy&lt;&gt; class will have when modified for forwarding:
+<span class="lineNum">     330 </span>            : //
+<span class="lineNum">     331 </span>            : template &lt;bool f, bool d&gt;
+<span class="lineNum">     332 </span>            : struct default_args
+<span class="lineNum">     333 </span>            : {
+<span class="lineNum">     334 </span>            :    typedef promote_float&lt;false&gt; arg1;
+<span class="lineNum">     335 </span>            :    typedef promote_double&lt;false&gt; arg2;
+<span class="lineNum">     336 </span>            : };
+<span class="lineNum">     337 </span>            : 
+<span class="lineNum">     338 </span>            : template &lt;&gt;
+<span class="lineNum">     339 </span>            : struct default_args&lt;false, false&gt;
+<span class="lineNum">     340 </span>            : {
+<span class="lineNum">     341 </span>            :    typedef default_policy arg1;
+<span class="lineNum">     342 </span>            :    typedef default_policy arg2;
+<span class="lineNum">     343 </span>            : };
+<span class="lineNum">     344 </span>            : 
+<span class="lineNum">     345 </span>            : template &lt;&gt;
+<span class="lineNum">     346 </span>            : struct default_args&lt;true, false&gt;
+<span class="lineNum">     347 </span>            : {
+<span class="lineNum">     348 </span>            :    typedef promote_float&lt;false&gt; arg1;
+<span class="lineNum">     349 </span>            :    typedef default_policy arg2;
+<span class="lineNum">     350 </span>            : };
+<span class="lineNum">     351 </span>            : 
+<span class="lineNum">     352 </span>            : template &lt;&gt;
+<span class="lineNum">     353 </span>            : struct default_args&lt;false, true&gt;
+<span class="lineNum">     354 </span>            : {
+<span class="lineNum">     355 </span>            :    typedef promote_double&lt;false&gt; arg1;
+<span class="lineNum">     356 </span>            :    typedef default_policy arg2;
+<span class="lineNum">     357 </span>            : };
+<span class="lineNum">     358 </span>            : 
+<span class="lineNum">     359 </span>            : typedef default_args&lt;BOOST_MATH_PROMOTE_FLOAT_POLICY, BOOST_MATH_PROMOTE_DOUBLE_POLICY&gt;::arg1 forwarding_arg1;
+<span class="lineNum">     360 </span>            : typedef default_args&lt;BOOST_MATH_PROMOTE_FLOAT_POLICY, BOOST_MATH_PROMOTE_DOUBLE_POLICY&gt;::arg2 forwarding_arg2;
+<span class="lineNum">     361 </span>            : 
+<span class="lineNum">     362 </span>            : } // detail
+<span class="lineNum">     363 </span>            : //
+<span class="lineNum">     364 </span>            : // Now define the policy type with enough arguments to handle all
+<span class="lineNum">     365 </span>            : // the policies:
+<span class="lineNum">     366 </span>            : //
+<span class="lineNum">     367 </span>            : template &lt;class A1 = default_policy, 
+<span class="lineNum">     368 </span>            :           class A2 = default_policy, 
+<span class="lineNum">     369 </span>            :           class A3 = default_policy,
+<span class="lineNum">     370 </span>            :           class A4 = default_policy,
+<span class="lineNum">     371 </span>            :           class A5 = default_policy,
+<span class="lineNum">     372 </span>            :           class A6 = default_policy,
+<span class="lineNum">     373 </span>            :           class A7 = default_policy,
+<span class="lineNum">     374 </span>            :           class A8 = default_policy,
+<span class="lineNum">     375 </span>            :           class A9 = default_policy,
+<span class="lineNum">     376 </span>            :           class A10 = default_policy,
+<span class="lineNum">     377 </span>            :           class A11 = default_policy,
+<span class="lineNum">     378 </span>            :           class A12 = default_policy,
+<span class="lineNum">     379 </span>            :           class A13 = default_policy&gt;
+<span class="lineNum">     380 </span>            : struct policy
+<span class="lineNum">     381 </span>            : {
+<span class="lineNum">     382 </span>            : private:
+<span class="lineNum">     383 </span>            :    //
+<span class="lineNum">     384 </span>            :    // Validate all our arguments:
+<span class="lineNum">     385 </span>            :    //
+<span class="lineNum">     386 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A1&gt;::value);
+<span class="lineNum">     387 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A2&gt;::value);
+<span class="lineNum">     388 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A3&gt;::value);
+<span class="lineNum">     389 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A4&gt;::value);
+<span class="lineNum">     390 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A5&gt;::value);
+<span class="lineNum">     391 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A6&gt;::value);
+<span class="lineNum">     392 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A7&gt;::value);
+<span class="lineNum">     393 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A8&gt;::value);
+<span class="lineNum">     394 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A9&gt;::value);
+<span class="lineNum">     395 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A10&gt;::value);
+<span class="lineNum">     396 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A11&gt;::value);
+<span class="lineNum">     397 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A12&gt;::value);
+<span class="lineNum">     398 </span>            :    BOOST_STATIC_ASSERT(::boost::math::policies::detail::is_valid_policy&lt;A13&gt;::value);
+<span class="lineNum">     399 </span>            :    //
+<span class="lineNum">     400 </span>            :    // Typelist of the arguments:
+<span class="lineNum">     401 </span>            :    //
+<span class="lineNum">     402 </span>            :    typedef mpl::list&lt;A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13&gt; arg_list;
+<span class="lineNum">     403 </span>            : 
+<span class="lineNum">     404 </span>            : public:
+<span class="lineNum">     405 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_domain_error&lt;mpl::_1&gt;, domain_error&lt;&gt; &gt;::type domain_error_type;
+<span class="lineNum">     406 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_pole_error&lt;mpl::_1&gt;, pole_error&lt;&gt; &gt;::type pole_error_type;
+<span class="lineNum">     407 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_overflow_error&lt;mpl::_1&gt;, overflow_error&lt;&gt; &gt;::type overflow_error_type;
+<span class="lineNum">     408 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_underflow_error&lt;mpl::_1&gt;, underflow_error&lt;&gt; &gt;::type underflow_error_type;
+<span class="lineNum">     409 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_denorm_error&lt;mpl::_1&gt;, denorm_error&lt;&gt; &gt;::type denorm_error_type;
+<span class="lineNum">     410 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_evaluation_error&lt;mpl::_1&gt;, evaluation_error&lt;&gt; &gt;::type evaluation_error_type;
+<span class="lineNum">     411 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_rounding_error&lt;mpl::_1&gt;, rounding_error&lt;&gt; &gt;::type rounding_error_type;
+<span class="lineNum">     412 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_indeterminate_result_error&lt;mpl::_1&gt;, indeterminate_result_error&lt;&gt; &gt;::type indeterminate_result_error_type;
+<span class="lineNum">     413 </span>            : private:
+<span class="lineNum">     414 </span>            :    //
+<span class="lineNum">     415 </span>            :    // Now work out the precision:
+<span class="lineNum">     416 </span>            :    //
+<span class="lineNum">     417 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_digits10&lt;mpl::_1&gt;, digits10&lt;&gt; &gt;::type digits10_type;
+<span class="lineNum">     418 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_digits2&lt;mpl::_1&gt;, digits2&lt;&gt; &gt;::type bits_precision_type;
+<span class="lineNum">     419 </span>            : public:
+<span class="lineNum">     420 </span>            :    typedef typename detail::precision&lt;digits10_type, bits_precision_type&gt;::type precision_type;
+<span class="lineNum">     421 </span>            :    //
+<span class="lineNum">     422 </span>            :    // Internal promotion:
+<span class="lineNum">     423 </span>            :    //
+<span class="lineNum">     424 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_promote_float&lt;mpl::_1&gt;, promote_float&lt;&gt; &gt;::type promote_float_type;
+<span class="lineNum">     425 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_promote_double&lt;mpl::_1&gt;, promote_double&lt;&gt; &gt;::type promote_double_type;
+<span class="lineNum">     426 </span>            :    //
+<span class="lineNum">     427 </span>            :    // Discrete quantiles:
+<span class="lineNum">     428 </span>            :    //
+<span class="lineNum">     429 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_discrete_quantile&lt;mpl::_1&gt;, discrete_quantile&lt;&gt; &gt;::type discrete_quantile_type;
+<span class="lineNum">     430 </span>            :    //
+<span class="lineNum">     431 </span>            :    // Mathematically undefined properties:
+<span class="lineNum">     432 </span>            :    //
+<span class="lineNum">     433 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_assert_undefined&lt;mpl::_1&gt;, assert_undefined&lt;&gt; &gt;::type assert_undefined_type;
+<span class="lineNum">     434 </span>            :    //
+<span class="lineNum">     435 </span>            :    // Max iterations:
+<span class="lineNum">     436 </span>            :    //
+<span class="lineNum">     437 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_max_series_iterations&lt;mpl::_1&gt;, max_series_iterations&lt;&gt; &gt;::type max_series_iterations_type;
+<span class="lineNum">     438 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_max_root_iterations&lt;mpl::_1&gt;, max_root_iterations&lt;&gt; &gt;::type max_root_iterations_type;
+<span class="lineNum">     439 </span>            : };
+<span class="lineNum">     440 </span>            : //
+<span class="lineNum">     441 </span>            : // These full specializations are defined to reduce the amount of
+<span class="lineNum">     442 </span>            : // template instantiations that have to take place when using the default
+<span class="lineNum">     443 </span>            : // policies, they have quite a large impact on compile times:
+<span class="lineNum">     444 </span>            : //
+<span class="lineNum">     445 </span>            : template &lt;&gt;
+<span class="lineNum">     446 </span>            : struct policy&lt;default_policy, default_policy, default_policy, default_policy, default_policy, default_policy, default_policy, default_policy, default_policy, default_policy, default_policy&gt;
+<span class="lineNum">     447 </span>            : {
+<span class="lineNum">     448 </span>            : public:
+<span class="lineNum">     449 </span>            :    typedef domain_error&lt;&gt; domain_error_type;
+<span class="lineNum">     450 </span>            :    typedef pole_error&lt;&gt; pole_error_type;
+<span class="lineNum">     451 </span>            :    typedef overflow_error&lt;&gt; overflow_error_type;
+<span class="lineNum">     452 </span>            :    typedef underflow_error&lt;&gt; underflow_error_type;
+<span class="lineNum">     453 </span>            :    typedef denorm_error&lt;&gt; denorm_error_type;
+<span class="lineNum">     454 </span>            :    typedef evaluation_error&lt;&gt; evaluation_error_type;
+<span class="lineNum">     455 </span>            :    typedef rounding_error&lt;&gt; rounding_error_type;
+<span class="lineNum">     456 </span>            :    typedef indeterminate_result_error&lt;&gt; indeterminate_result_error_type;
+<span class="lineNum">     457 </span>            : #if BOOST_MATH_DIGITS10_POLICY == 0
+<span class="lineNum">     458 </span>            :    typedef digits2&lt;&gt; precision_type;
+<span class="lineNum">     459 </span>            : #else
+<span class="lineNum">     460 </span>            :    typedef detail::precision&lt;digits10&lt;&gt;, digits2&lt;&gt; &gt;::type precision_type;
+<span class="lineNum">     461 </span>            : #endif
+<span class="lineNum">     462 </span>            :    typedef promote_float&lt;&gt; promote_float_type;
+<span class="lineNum">     463 </span>            :    typedef promote_double&lt;&gt; promote_double_type;
+<span class="lineNum">     464 </span>            :    typedef discrete_quantile&lt;&gt; discrete_quantile_type;
+<span class="lineNum">     465 </span>            :    typedef assert_undefined&lt;&gt; assert_undefined_type;
+<span class="lineNum">     466 </span>            :    typedef max_series_iterations&lt;&gt; max_series_iterations_type;
+<span class="lineNum">     467 </span>            :    typedef max_root_iterations&lt;&gt; max_root_iterations_type;
+<span class="lineNum">     468 </span>            : };
+<span class="lineNum">     469 </span>            : 
+<span class="lineNum">     470 </span>            : template &lt;&gt;
+<span class="lineNum">     471 </span>            : struct policy&lt;detail::forwarding_arg1, detail::forwarding_arg2, default_policy, default_policy, default_policy, default_policy, default_policy, default_policy, default_policy, default_policy, default_policy&gt;
+<span class="lineNum">     472 </span>            : {
+<span class="lineNum">     473 </span>            : public:
+<span class="lineNum">     474 </span>            :    typedef domain_error&lt;&gt; domain_error_type;
+<span class="lineNum">     475 </span>            :    typedef pole_error&lt;&gt; pole_error_type;
+<span class="lineNum">     476 </span>            :    typedef overflow_error&lt;&gt; overflow_error_type;
+<span class="lineNum">     477 </span>            :    typedef underflow_error&lt;&gt; underflow_error_type;
+<span class="lineNum">     478 </span>            :    typedef denorm_error&lt;&gt; denorm_error_type;
+<span class="lineNum">     479 </span>            :    typedef evaluation_error&lt;&gt; evaluation_error_type;
+<span class="lineNum">     480 </span>            :    typedef rounding_error&lt;&gt; rounding_error_type;
+<span class="lineNum">     481 </span>            :    typedef indeterminate_result_error&lt;&gt; indeterminate_result_error_type;
+<span class="lineNum">     482 </span>            : #if BOOST_MATH_DIGITS10_POLICY == 0
+<span class="lineNum">     483 </span>            :    typedef digits2&lt;&gt; precision_type;
+<span class="lineNum">     484 </span>            : #else
+<span class="lineNum">     485 </span>            :    typedef detail::precision&lt;digits10&lt;&gt;, digits2&lt;&gt; &gt;::type precision_type;
+<span class="lineNum">     486 </span>            : #endif
+<span class="lineNum">     487 </span>            :    typedef promote_float&lt;false&gt; promote_float_type;
+<span class="lineNum">     488 </span>            :    typedef promote_double&lt;false&gt; promote_double_type;
+<span class="lineNum">     489 </span>            :    typedef discrete_quantile&lt;&gt; discrete_quantile_type;
+<span class="lineNum">     490 </span>            :    typedef assert_undefined&lt;&gt; assert_undefined_type;
+<span class="lineNum">     491 </span>            :    typedef max_series_iterations&lt;&gt; max_series_iterations_type;
+<span class="lineNum">     492 </span>            :    typedef max_root_iterations&lt;&gt; max_root_iterations_type;
+<span class="lineNum">     493 </span>            : };
+<span class="lineNum">     494 </span>            : 
+<span class="lineNum">     495 </span>            : template &lt;class Policy, 
+<span class="lineNum">     496 </span>            :           class A1 = default_policy, 
+<span class="lineNum">     497 </span>            :           class A2 = default_policy, 
+<span class="lineNum">     498 </span>            :           class A3 = default_policy,
+<span class="lineNum">     499 </span>            :           class A4 = default_policy,
+<span class="lineNum">     500 </span>            :           class A5 = default_policy,
+<span class="lineNum">     501 </span>            :           class A6 = default_policy,
+<span class="lineNum">     502 </span>            :           class A7 = default_policy,
+<span class="lineNum">     503 </span>            :           class A8 = default_policy,
+<span class="lineNum">     504 </span>            :           class A9 = default_policy,
+<span class="lineNum">     505 </span>            :           class A10 = default_policy,
+<span class="lineNum">     506 </span>            :           class A11 = default_policy,
+<span class="lineNum">     507 </span>            :           class A12 = default_policy,
+<span class="lineNum">     508 </span>            :           class A13 = default_policy&gt;
+<span class="lineNum">     509 </span>            : struct normalise
+<span class="lineNum">     510 </span>            : {
+<span class="lineNum">     511 </span>            : private:
+<span class="lineNum">     512 </span>            :    typedef mpl::list&lt;A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13&gt; arg_list;
+<span class="lineNum">     513 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_domain_error&lt;mpl::_1&gt;, typename Policy::domain_error_type &gt;::type domain_error_type;
+<span class="lineNum">     514 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_pole_error&lt;mpl::_1&gt;, typename Policy::pole_error_type &gt;::type pole_error_type;
+<span class="lineNum">     515 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_overflow_error&lt;mpl::_1&gt;, typename Policy::overflow_error_type &gt;::type overflow_error_type;
+<span class="lineNum">     516 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_underflow_error&lt;mpl::_1&gt;, typename Policy::underflow_error_type &gt;::type underflow_error_type;
+<span class="lineNum">     517 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_denorm_error&lt;mpl::_1&gt;, typename Policy::denorm_error_type &gt;::type denorm_error_type;
+<span class="lineNum">     518 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_evaluation_error&lt;mpl::_1&gt;, typename Policy::evaluation_error_type &gt;::type evaluation_error_type;
+<span class="lineNum">     519 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_rounding_error&lt;mpl::_1&gt;, typename Policy::rounding_error_type &gt;::type rounding_error_type;
+<span class="lineNum">     520 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_indeterminate_result_error&lt;mpl::_1&gt;, typename Policy::indeterminate_result_error_type &gt;::type indeterminate_result_error_type;
+<span class="lineNum">     521 </span>            :    //
+<span class="lineNum">     522 </span>            :    // Now work out the precision:
+<span class="lineNum">     523 </span>            :    //
+<span class="lineNum">     524 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_digits10&lt;mpl::_1&gt;, digits10&lt;&gt; &gt;::type digits10_type;
+<span class="lineNum">     525 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_digits2&lt;mpl::_1&gt;, typename Policy::precision_type &gt;::type bits_precision_type;
+<span class="lineNum">     526 </span>            :    typedef typename detail::precision&lt;digits10_type, bits_precision_type&gt;::type precision_type;
+<span class="lineNum">     527 </span>            :    //
+<span class="lineNum">     528 </span>            :    // Internal promotion:
+<span class="lineNum">     529 </span>            :    //
+<span class="lineNum">     530 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_promote_float&lt;mpl::_1&gt;, typename Policy::promote_float_type &gt;::type promote_float_type;
+<span class="lineNum">     531 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_promote_double&lt;mpl::_1&gt;, typename Policy::promote_double_type &gt;::type promote_double_type;
+<span class="lineNum">     532 </span>            :    //
+<span class="lineNum">     533 </span>            :    // Discrete quantiles:
+<span class="lineNum">     534 </span>            :    //
+<span class="lineNum">     535 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_discrete_quantile&lt;mpl::_1&gt;, typename Policy::discrete_quantile_type &gt;::type discrete_quantile_type;
+<span class="lineNum">     536 </span>            :    //
+<span class="lineNum">     537 </span>            :    // Mathematically undefined properties:
+<span class="lineNum">     538 </span>            :    //
+<span class="lineNum">     539 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_assert_undefined&lt;mpl::_1&gt;, typename Policy::assert_undefined_type &gt;::type assert_undefined_type;
+<span class="lineNum">     540 </span>            :    //
+<span class="lineNum">     541 </span>            :    // Max iterations:
+<span class="lineNum">     542 </span>            :    //
+<span class="lineNum">     543 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_max_series_iterations&lt;mpl::_1&gt;, typename Policy::max_series_iterations_type&gt;::type max_series_iterations_type;
+<span class="lineNum">     544 </span>            :    typedef typename detail::find_arg&lt;arg_list, is_max_root_iterations&lt;mpl::_1&gt;, typename Policy::max_root_iterations_type&gt;::type max_root_iterations_type;
+<span class="lineNum">     545 </span>            :    //
+<span class="lineNum">     546 </span>            :    // Define a typelist of the policies:
+<span class="lineNum">     547 </span>            :    //
+<span class="lineNum">     548 </span>            :    typedef mpl::vector&lt;
+<span class="lineNum">     549 </span>            :       domain_error_type,
+<span class="lineNum">     550 </span>            :       pole_error_type,
+<span class="lineNum">     551 </span>            :       overflow_error_type,
+<span class="lineNum">     552 </span>            :       underflow_error_type,
+<span class="lineNum">     553 </span>            :       denorm_error_type,
+<span class="lineNum">     554 </span>            :       evaluation_error_type,
+<span class="lineNum">     555 </span>            :       rounding_error_type,
+<span class="lineNum">     556 </span>            :       indeterminate_result_error_type,
+<span class="lineNum">     557 </span>            :       precision_type,
+<span class="lineNum">     558 </span>            :       promote_float_type,
+<span class="lineNum">     559 </span>            :       promote_double_type,
+<span class="lineNum">     560 </span>            :       discrete_quantile_type,
+<span class="lineNum">     561 </span>            :       assert_undefined_type,
+<span class="lineNum">     562 </span>            :       max_series_iterations_type,
+<span class="lineNum">     563 </span>            :       max_root_iterations_type&gt; result_list;
+<span class="lineNum">     564 </span>            :    //
+<span class="lineNum">     565 </span>            :    // Remove all the policies that are the same as the default:
+<span class="lineNum">     566 </span>            :    //
+<span class="lineNum">     567 </span>            :    typedef typename mpl::remove_if&lt;result_list, detail::is_default_policy&lt;mpl::_&gt; &gt;::type reduced_list;
+<span class="lineNum">     568 </span>            :    //
+<span class="lineNum">     569 </span>            :    // Pad out the list with defaults:
+<span class="lineNum">     570 </span>            :    //
+<span class="lineNum">     571 </span>            :    typedef typename detail::append_N&lt;reduced_list, default_policy, (14 - ::boost::mpl::size&lt;reduced_list&gt;::value)&gt;::type result_type;
+<span class="lineNum">     572 </span>            : public:
+<span class="lineNum">     573 </span>            :    typedef policy&lt;
+<span class="lineNum">     574 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;0&gt; &gt;::type,
+<span class="lineNum">     575 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;1&gt; &gt;::type,
+<span class="lineNum">     576 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;2&gt; &gt;::type,
+<span class="lineNum">     577 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;3&gt; &gt;::type,
+<span class="lineNum">     578 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;4&gt; &gt;::type,
+<span class="lineNum">     579 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;5&gt; &gt;::type,
+<span class="lineNum">     580 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;6&gt; &gt;::type,
+<span class="lineNum">     581 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;7&gt; &gt;::type,
+<span class="lineNum">     582 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;8&gt; &gt;::type,
+<span class="lineNum">     583 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;9&gt; &gt;::type,
+<span class="lineNum">     584 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;10&gt; &gt;::type,
+<span class="lineNum">     585 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;11&gt; &gt;::type,
+<span class="lineNum">     586 </span>            :       typename mpl::at&lt;result_type, mpl::int_&lt;12&gt; &gt;::type &gt; type;
+<span class="lineNum">     587 </span>            : };
+<span class="lineNum">     588 </span>            : //
+<span class="lineNum">     589 </span>            : // Full specialisation to speed up compilation of the common case:
+<span class="lineNum">     590 </span>            : //
+<span class="lineNum">     591 </span>            : template &lt;&gt;
+<span class="lineNum">     592 </span>            : struct normalise&lt;policy&lt;&gt;, 
+<span class="lineNum">     593 </span>            :           promote_float&lt;false&gt;, 
+<span class="lineNum">     594 </span>            :           promote_double&lt;false&gt;, 
+<span class="lineNum">     595 </span>            :           discrete_quantile&lt;&gt;,
+<span class="lineNum">     596 </span>            :           assert_undefined&lt;&gt;,
+<span class="lineNum">     597 </span>            :           default_policy,
+<span class="lineNum">     598 </span>            :           default_policy,
+<span class="lineNum">     599 </span>            :           default_policy,
+<span class="lineNum">     600 </span>            :           default_policy,
+<span class="lineNum">     601 </span>            :           default_policy,
+<span class="lineNum">     602 </span>            :           default_policy,
+<span class="lineNum">     603 </span>            :           default_policy&gt;
+<span class="lineNum">     604 </span>            : {
+<span class="lineNum">     605 </span>            :    typedef policy&lt;detail::forwarding_arg1, detail::forwarding_arg2&gt; type;
+<span class="lineNum">     606 </span>            : };
+<span class="lineNum">     607 </span>            : 
+<span class="lineNum">     608 </span>            : template &lt;&gt;
+<span class="lineNum">     609 </span>            : struct normalise&lt;policy&lt;detail::forwarding_arg1, detail::forwarding_arg2&gt;,
+<span class="lineNum">     610 </span>            :           promote_float&lt;false&gt;,
+<span class="lineNum">     611 </span>            :           promote_double&lt;false&gt;,
+<span class="lineNum">     612 </span>            :           discrete_quantile&lt;&gt;,
+<span class="lineNum">     613 </span>            :           assert_undefined&lt;&gt;,
+<span class="lineNum">     614 </span>            :           default_policy,
+<span class="lineNum">     615 </span>            :           default_policy,
+<span class="lineNum">     616 </span>            :           default_policy,
+<span class="lineNum">     617 </span>            :           default_policy,
+<span class="lineNum">     618 </span>            :           default_policy,
+<span class="lineNum">     619 </span>            :           default_policy,
+<span class="lineNum">     620 </span>            :           default_policy&gt;
+<span class="lineNum">     621 </span>            : {
+<span class="lineNum">     622 </span>            :    typedef policy&lt;detail::forwarding_arg1, detail::forwarding_arg2&gt; type;
+<span class="lineNum">     623 </span>            : };
+<span class="lineNum">     624 </span>            : 
+<span class="lineNum">     625 </span>            : inline policy&lt;&gt; make_policy()
+<span class="lineNum">     626 </span>            : { return policy&lt;&gt;(); }
+<span class="lineNum">     627 </span>            : 
+<span class="lineNum">     628 </span>            : template &lt;class A1&gt;
+<span class="lineNum">     629 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1&gt;::type make_policy(const A1&amp;)
+<span class="lineNum">     630 </span>            : { 
+<span class="lineNum">     631 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1&gt;::type result_type;
+<span class="lineNum">     632 </span>            :    return result_type(); 
+<span class="lineNum">     633 </span>            : }
+<span class="lineNum">     634 </span>            : 
+<span class="lineNum">     635 </span>            : template &lt;class A1, class A2&gt;
+<span class="lineNum">     636 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1, A2&gt;::type make_policy(const A1&amp;, const A2&amp;)
+<span class="lineNum">     637 </span>            : { 
+<span class="lineNum">     638 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1, A2&gt;::type result_type;
+<span class="lineNum">     639 </span>            :    return result_type(); 
+<span class="lineNum">     640 </span>            : }
+<span class="lineNum">     641 </span>            : 
+<span class="lineNum">     642 </span>            : template &lt;class A1, class A2, class A3&gt;
+<span class="lineNum">     643 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1, A2, A3&gt;::type make_policy(const A1&amp;, const A2&amp;, const A3&amp;)
+<span class="lineNum">     644 </span>            : { 
+<span class="lineNum">     645 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1, A2, A3&gt;::type result_type;
+<span class="lineNum">     646 </span>            :    return result_type(); 
+<span class="lineNum">     647 </span>            : }
+<span class="lineNum">     648 </span>            : 
+<span class="lineNum">     649 </span>            : template &lt;class A1, class A2, class A3, class A4&gt;
+<span class="lineNum">     650 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4&gt;::type make_policy(const A1&amp;, const A2&amp;, const A3&amp;, const A4&amp;)
+<span class="lineNum">     651 </span>            : { 
+<span class="lineNum">     652 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4&gt;::type result_type;
+<span class="lineNum">     653 </span>            :    return result_type(); 
+<span class="lineNum">     654 </span>            : }
+<span class="lineNum">     655 </span>            : 
+<span class="lineNum">     656 </span>            : template &lt;class A1, class A2, class A3, class A4, class A5&gt;
+<span class="lineNum">     657 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5&gt;::type make_policy(const A1&amp;, const A2&amp;, const A3&amp;, const A4&amp;, const A5&amp;)
+<span class="lineNum">     658 </span>            : { 
+<span class="lineNum">     659 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5&gt;::type result_type;
+<span class="lineNum">     660 </span>            :    return result_type(); 
+<span class="lineNum">     661 </span>            : }
+<span class="lineNum">     662 </span>            : 
+<span class="lineNum">     663 </span>            : template &lt;class A1, class A2, class A3, class A4, class A5, class A6&gt;
+<span class="lineNum">     664 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6&gt;::type make_policy(const A1&amp;, const A2&amp;, const A3&amp;, const A4&amp;, const A5&amp;, const A6&amp;)
+<span class="lineNum">     665 </span>            : { 
+<span class="lineNum">     666 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6&gt;::type result_type;
+<span class="lineNum">     667 </span>            :    return result_type(); 
+<span class="lineNum">     668 </span>            : }
+<span class="lineNum">     669 </span>            : 
+<span class="lineNum">     670 </span>            : template &lt;class A1, class A2, class A3, class A4, class A5, class A6, class A7&gt;
+<span class="lineNum">     671 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6, A7&gt;::type make_policy(const A1&amp;, const A2&amp;, const A3&amp;, const A4&amp;, const A5&amp;, const A6&amp;, const A7&amp;)
+<span class="lineNum">     672 </span>            : { 
+<span class="lineNum">     673 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6, A7&gt;::type result_type;
+<span class="lineNum">     674 </span>            :    return result_type(); 
+<span class="lineNum">     675 </span>            : }
+<span class="lineNum">     676 </span>            : 
+<span class="lineNum">     677 </span>            : template &lt;class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8&gt;
+<span class="lineNum">     678 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6, A7, A8&gt;::type make_policy(const A1&amp;, const A2&amp;, const A3&amp;, const A4&amp;, const A5&amp;, const A6&amp;, const A7&amp;, const A8&amp;)
+<span class="lineNum">     679 </span>            : { 
+<span class="lineNum">     680 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6, A7, A8&gt;::type result_type;
+<span class="lineNum">     681 </span>            :    return result_type(); 
+<span class="lineNum">     682 </span>            : }
+<span class="lineNum">     683 </span>            : 
+<span class="lineNum">     684 </span>            : template &lt;class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9&gt;
+<span class="lineNum">     685 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6, A7, A8, A9&gt;::type make_policy(const A1&amp;, const A2&amp;, const A3&amp;, const A4&amp;, const A5&amp;, const A6&amp;, const A7&amp;, const A8&amp;, const A9&amp;)
+<span class="lineNum">     686 </span>            : { 
+<span class="lineNum">     687 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6, A7, A8, A9&gt;::type result_type;
+<span class="lineNum">     688 </span>            :    return result_type(); 
+<span class="lineNum">     689 </span>            : }
+<span class="lineNum">     690 </span>            : 
+<span class="lineNum">     691 </span>            : template &lt;class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10&gt;
+<span class="lineNum">     692 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10&gt;::type make_policy(const A1&amp;, const A2&amp;, const A3&amp;, const A4&amp;, const A5&amp;, const A6&amp;, const A7&amp;, const A8&amp;, const A9&amp;, const A10&amp;)
+<span class="lineNum">     693 </span>            : { 
+<span class="lineNum">     694 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10&gt;::type result_type;
+<span class="lineNum">     695 </span>            :    return result_type(); 
+<span class="lineNum">     696 </span>            : }
+<span class="lineNum">     697 </span>            : 
+<span class="lineNum">     698 </span>            : template &lt;class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11&gt;
+<span class="lineNum">     699 </span>            : inline typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11&gt;::type make_policy(const A1&amp;, const A2&amp;, const A3&amp;, const A4&amp;, const A5&amp;, const A6&amp;, const A7&amp;, const A8&amp;, const A9&amp;, const A10&amp;, const A11&amp;)
+<span class="lineNum">     700 </span>            : {
+<span class="lineNum">     701 </span>            :    typedef typename normalise&lt;policy&lt;&gt;, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11&gt;::type result_type;
+<span class="lineNum">     702 </span>            :    return result_type();
+<span class="lineNum">     703 </span>            : }
+<span class="lineNum">     704 </span>            : 
+<span class="lineNum">     705 </span>            : //
+<span class="lineNum">     706 </span>            : // Traits class to handle internal promotion:
+<span class="lineNum">     707 </span>            : //
+<span class="lineNum">     708 </span>            : template &lt;class Real, class Policy&gt;
+<span class="lineNum">     709 </span>            : struct evaluation
+<span class="lineNum">     710 </span>            : {
+<span class="lineNum">     711 </span>            :    typedef Real type;
+<span class="lineNum">     712 </span>            : };
+<span class="lineNum">     713 </span>            : 
+<span class="lineNum">     714 </span>            : template &lt;class Policy&gt;
+<span class="lineNum">     715 </span>            : struct evaluation&lt;float, Policy&gt;
+<span class="lineNum">     716 </span>            : {
+<span class="lineNum">     717 </span>            :    typedef typename mpl::if_&lt;typename Policy::promote_float_type, double, float&gt;::type type;
+<span class="lineNum">     718 </span>            : };
+<span class="lineNum">     719 </span>            : 
+<span class="lineNum">     720 </span>            : template &lt;class Policy&gt;
+<span class="lineNum">     721 </span>            : struct evaluation&lt;double, Policy&gt;
+<span class="lineNum">     722 </span>            : {
+<span class="lineNum">     723 </span>            :    typedef typename mpl::if_&lt;typename Policy::promote_double_type, long double, double&gt;::type type;
+<span class="lineNum">     724 </span>            : };
+<span class="lineNum">     725 </span>            : 
+<span class="lineNum">     726 </span>            : #ifdef BOOST_NO_LIMITS_COMPILE_TIME_CONSTANTS
+<span class="lineNum">     727 </span>            : 
+<span class="lineNum">     728 </span>            : template &lt;class Real&gt;
+<span class="lineNum">     729 </span>            : struct basic_digits : public mpl::int_&lt;0&gt;{ };
+<span class="lineNum">     730 </span>            : template &lt;&gt;
+<span class="lineNum">     731 </span>            : struct basic_digits&lt;float&gt; : public mpl::int_&lt;FLT_MANT_DIG&gt;{ };
+<span class="lineNum">     732 </span>            : template &lt;&gt;
+<span class="lineNum">     733 </span>            : struct basic_digits&lt;double&gt; : public mpl::int_&lt;DBL_MANT_DIG&gt;{ };
+<span class="lineNum">     734 </span>            : template &lt;&gt;
+<span class="lineNum">     735 </span>            : struct basic_digits&lt;long double&gt; : public mpl::int_&lt;LDBL_MANT_DIG&gt;{ };
+<span class="lineNum">     736 </span>            : 
+<span class="lineNum">     737 </span>            : template &lt;class Real, class Policy&gt;
+<span class="lineNum">     738 </span>            : struct precision
+<span class="lineNum">     739 </span>            : {
+<span class="lineNum">     740 </span>            :    BOOST_STATIC_ASSERT( ::std::numeric_limits&lt;Real&gt;::radix == 2);
+<span class="lineNum">     741 </span>            :    typedef typename Policy::precision_type precision_type;
+<span class="lineNum">     742 </span>            :    typedef basic_digits&lt;Real&gt; digits_t;
+<span class="lineNum">     743 </span>            :    typedef typename mpl::if_&lt;
+<span class="lineNum">     744 </span>            :       mpl::equal_to&lt;digits_t, mpl::int_&lt;0&gt; &gt;,
+<span class="lineNum">     745 </span>            :       // Possibly unknown precision:
+<span class="lineNum">     746 </span>            :       precision_type,
+<span class="lineNum">     747 </span>            :       typename mpl::if_&lt;
+<span class="lineNum">     748 </span>            :          mpl::or_&lt;mpl::less_equal&lt;digits_t, precision_type&gt;, mpl::less_equal&lt;precision_type, mpl::int_&lt;0&gt; &gt; &gt;,
+<span class="lineNum">     749 </span>            :          // Default case, full precision for RealType:
+<span class="lineNum">     750 </span>            :          digits2&lt; ::std::numeric_limits&lt;Real&gt;::digits&gt;,
+<span class="lineNum">     751 </span>            :          // User customised precision:
+<span class="lineNum">     752 </span>            :          precision_type
+<span class="lineNum">     753 </span>            :       &gt;::type
+<span class="lineNum">     754 </span>            :    &gt;::type type;
+<span class="lineNum">     755 </span>            : };
+<span class="lineNum">     756 </span>            : 
+<span class="lineNum">     757 </span>            : template &lt;class Policy&gt;
+<span class="lineNum">     758 </span>            : struct precision&lt;float, Policy&gt;
+<span class="lineNum">     759 </span>            : {
+<span class="lineNum">     760 </span>            :    typedef digits2&lt;FLT_MANT_DIG&gt; type;
+<span class="lineNum">     761 </span>            : };
+<span class="lineNum">     762 </span>            : template &lt;class Policy&gt;
+<span class="lineNum">     763 </span>            : struct precision&lt;double, Policy&gt;
+<span class="lineNum">     764 </span>            : {
+<span class="lineNum">     765 </span>            :    typedef digits2&lt;DBL_MANT_DIG&gt; type;
+<span class="lineNum">     766 </span>            : };
+<span class="lineNum">     767 </span>            : template &lt;class Policy&gt;
+<span class="lineNum">     768 </span>            : struct precision&lt;long double, Policy&gt;
+<span class="lineNum">     769 </span>            : {
+<span class="lineNum">     770 </span>            :    typedef digits2&lt;LDBL_MANT_DIG&gt; type;
+<span class="lineNum">     771 </span>            : };
+<span class="lineNum">     772 </span>            : 
+<span class="lineNum">     773 </span>            : #else
+<span class="lineNum">     774 </span>            : 
+<span class="lineNum">     775 </span>            : template &lt;class Real, class Policy&gt;
+<span class="lineNum">     776 </span>            : struct precision
+<span class="lineNum">     777 </span>            : {
+<span class="lineNum">     778 </span>            :    BOOST_STATIC_ASSERT((::std::numeric_limits&lt;Real&gt;::radix == 2) || ((::std::numeric_limits&lt;Real&gt;::is_specialized == 0) || (::std::numeric_limits&lt;Real&gt;::digits == 0)));
+<span class="lineNum">     779 </span>            : #ifndef __BORLANDC__
+<span class="lineNum">     780 </span>            :    typedef typename Policy::precision_type precision_type;
+<span class="lineNum">     781 </span>            :    typedef typename mpl::if_c&lt;
+<span class="lineNum">     782 </span>            :       ((::std::numeric_limits&lt;Real&gt;::is_specialized == 0) || (::std::numeric_limits&lt;Real&gt;::digits == 0)),
+<span class="lineNum">     783 </span>            :       // Possibly unknown precision:
+<span class="lineNum">     784 </span>            :       precision_type,
+<span class="lineNum">     785 </span>            :       typename mpl::if_c&lt;
+<span class="lineNum">     786 </span>            :          ((::std::numeric_limits&lt;Real&gt;::digits &lt;= precision_type::value) 
+<span class="lineNum">     787 </span>            :          || (Policy::precision_type::value &lt;= 0)),
+<span class="lineNum">     788 </span>            :          // Default case, full precision for RealType:
+<span class="lineNum">     789 </span>            :          digits2&lt; ::std::numeric_limits&lt;Real&gt;::digits&gt;,
+<span class="lineNum">     790 </span>            :          // User customised precision:
+<span class="lineNum">     791 </span>            :          precision_type
+<span class="lineNum">     792 </span>            :       &gt;::type
+<span class="lineNum">     793 </span>            :    &gt;::type type;
+<span class="lineNum">     794 </span>            : #else
+<span class="lineNum">     795 </span>            :    typedef typename Policy::precision_type precision_type;
+<span class="lineNum">     796 </span>            :    typedef mpl::int_&lt; ::std::numeric_limits&lt;Real&gt;::digits&gt; digits_t;
+<span class="lineNum">     797 </span>            :    typedef mpl::bool_&lt; ::std::numeric_limits&lt;Real&gt;::is_specialized&gt; spec_t;
+<span class="lineNum">     798 </span>            :    typedef typename mpl::if_&lt;
+<span class="lineNum">     799 </span>            :       mpl::or_&lt;mpl::equal_to&lt;spec_t, mpl::false_&gt;, mpl::equal_to&lt;digits_t, mpl::int_&lt;0&gt; &gt; &gt;,
+<span class="lineNum">     800 </span>            :       // Possibly unknown precision:
+<span class="lineNum">     801 </span>            :       precision_type,
+<span class="lineNum">     802 </span>            :       typename mpl::if_&lt;
+<span class="lineNum">     803 </span>            :          mpl::or_&lt;mpl::less_equal&lt;digits_t, precision_type&gt;, mpl::less_equal&lt;precision_type, mpl::int_&lt;0&gt; &gt; &gt;,
+<span class="lineNum">     804 </span>            :          // Default case, full precision for RealType:
+<span class="lineNum">     805 </span>            :          digits2&lt; ::std::numeric_limits&lt;Real&gt;::digits&gt;,
+<span class="lineNum">     806 </span>            :          // User customised precision:
+<span class="lineNum">     807 </span>            :          precision_type
+<span class="lineNum">     808 </span>            :       &gt;::type
+<span class="lineNum">     809 </span>            :    &gt;::type type;
+<span class="lineNum">     810 </span>            : #endif
+<span class="lineNum">     811 </span>            : };
+<span class="lineNum">     812 </span>            : 
+<span class="lineNum">     813 </span>            : #endif
+<span class="lineNum">     814 </span>            : 
+<span class="lineNum">     815 </span>            : #ifdef BOOST_MATH_USE_FLOAT128
+<span class="lineNum">     816 </span>            : 
+<span class="lineNum">     817 </span>            : template &lt;class Policy&gt;
+<span class="lineNum">     818 </span>            : struct precision&lt;BOOST_MATH_FLOAT128_TYPE, Policy&gt;
+<span class="lineNum">     819 </span>            : {
+<span class="lineNum">     820 </span>            :    typedef mpl::int_&lt;113&gt; type;
+<span class="lineNum">     821 </span>            : };
+<span class="lineNum">     822 </span>            : 
+<span class="lineNum">     823 </span>            : #endif
+<span class="lineNum">     824 </span>            : 
+<span class="lineNum">     825 </span>            : namespace detail{
+<a name="826"><span class="lineNum">     826 </span>            : </a>
+<span class="lineNum">     827 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">     828 </span><span class="lineNoCov">          0 : inline int digits_imp(mpl::true_ const&amp;)</span>
+<span class="lineNum">     829 </span>            : {
+<span class="lineNum">     830 </span>            : #ifndef BOOST_NO_LIMITS_COMPILE_TIME_CONSTANTS
+<span class="lineNum">     831 </span>            :    BOOST_STATIC_ASSERT( ::std::numeric_limits&lt;T&gt;::is_specialized);
+<span class="lineNum">     832 </span>            : #else
+<span class="lineNum">     833 </span>            :    BOOST_ASSERT(::std::numeric_limits&lt;T&gt;::is_specialized);
+<span class="lineNum">     834 </span>            : #endif
+<span class="lineNum">     835 </span>            :    typedef typename boost::math::policies::precision&lt;T, Policy&gt;::type p_t;
+<span class="lineNum">     836 </span><span class="lineNoCov">          0 :    return p_t::value;</span>
+<span class="lineNum">     837 </span>            : }
+<span class="lineNum">     838 </span>            : 
+<span class="lineNum">     839 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">     840 </span>            : inline int digits_imp(mpl::false_ const&amp;)
+<span class="lineNum">     841 </span>            : {
+<span class="lineNum">     842 </span>            :    return tools::digits&lt;T&gt;();
+<span class="lineNum">     843 </span>            : }
+<span class="lineNum">     844 </span>            : 
+<span class="lineNum">     845 </span>            : } // namespace detail
+<a name="846"><span class="lineNum">     846 </span>            : </a>
+<span class="lineNum">     847 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">     848 </span><span class="lineNoCov">          0 : inline int digits(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE(T))</span>
+<span class="lineNum">     849 </span>            : {
+<span class="lineNum">     850 </span>            :    typedef mpl::bool_&lt; std::numeric_limits&lt;T&gt;::is_specialized &gt; tag_type;
+<span class="lineNum">     851 </span><span class="lineNoCov">          0 :    return detail::digits_imp&lt;T, Policy&gt;(tag_type());</span>
+<span class="lineNum">     852 </span>            : }
+<span class="lineNum">     853 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">     854 </span>            : inline int digits_base10(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE(T))
+<span class="lineNum">     855 </span>            : {
+<span class="lineNum">     856 </span>            :    return boost::math::policies::digits&lt;T, Policy&gt;() * 301 / 1000L;
+<span class="lineNum">     857 </span>            : }
+<span class="lineNum">     858 </span>            : 
+<span class="lineNum">     859 </span>            : template &lt;class Policy&gt;
+<span class="lineNum">     860 </span>            : inline unsigned long get_max_series_iterations()
+<span class="lineNum">     861 </span>            : {
+<span class="lineNum">     862 </span>            :    typedef typename Policy::max_series_iterations_type iter_type;
+<span class="lineNum">     863 </span>            :    return iter_type::value;
+<span class="lineNum">     864 </span>            : }
+<span class="lineNum">     865 </span>            : 
+<span class="lineNum">     866 </span>            : template &lt;class Policy&gt;
+<span class="lineNum">     867 </span>            : inline unsigned long get_max_root_iterations()
+<span class="lineNum">     868 </span>            : {
+<span class="lineNum">     869 </span>            :    typedef typename Policy::max_root_iterations_type iter_type;
+<span class="lineNum">     870 </span>            :    return iter_type::value;
+<span class="lineNum">     871 </span>            : }
+<span class="lineNum">     872 </span>            : 
+<span class="lineNum">     873 </span>            : namespace detail{
+<span class="lineNum">     874 </span>            : 
+<span class="lineNum">     875 </span>            : template &lt;class T, class Digits, class Small, class Default&gt;
+<span class="lineNum">     876 </span>            : struct series_factor_calc
+<span class="lineNum">     877 </span>            : {
+<span class="lineNum">     878 </span>            :    static T get()
+<span class="lineNum">     879 </span>            :    {
+<span class="lineNum">     880 </span>            :       return ldexp(T(1.0), 1 - Digits::value);
+<span class="lineNum">     881 </span>            :    }
+<span class="lineNum">     882 </span>            : };
+<span class="lineNum">     883 </span>            : 
+<span class="lineNum">     884 </span>            : template &lt;class T, class Digits&gt;
+<span class="lineNum">     885 </span>            : struct series_factor_calc&lt;T, Digits, mpl::true_, mpl::true_&gt;
+<span class="lineNum">     886 </span>            : {
+<span class="lineNum">     887 </span>            :    static T get()
+<span class="lineNum">     888 </span>            :    {
+<span class="lineNum">     889 </span>            :       return boost::math::tools::epsilon&lt;T&gt;();
+<span class="lineNum">     890 </span>            :    }
+<span class="lineNum">     891 </span>            : };
+<span class="lineNum">     892 </span>            : template &lt;class T, class Digits&gt;
+<span class="lineNum">     893 </span>            : struct series_factor_calc&lt;T, Digits, mpl::true_, mpl::false_&gt;
+<span class="lineNum">     894 </span>            : {
+<span class="lineNum">     895 </span>            :    static T get()
+<span class="lineNum">     896 </span>            :    {
+<span class="lineNum">     897 </span>            :       static const boost::uintmax_t v = static_cast&lt;boost::uintmax_t&gt;(1u) &lt;&lt; (Digits::value - 1);
+<span class="lineNum">     898 </span>            :       return 1 / static_cast&lt;T&gt;(v);
+<span class="lineNum">     899 </span>            :    }
+<span class="lineNum">     900 </span>            : };
+<span class="lineNum">     901 </span>            : template &lt;class T, class Digits&gt;
+<span class="lineNum">     902 </span>            : struct series_factor_calc&lt;T, Digits, mpl::false_, mpl::true_&gt;
+<span class="lineNum">     903 </span>            : {
+<span class="lineNum">     904 </span>            :    static T get()
+<span class="lineNum">     905 </span>            :    {
+<span class="lineNum">     906 </span>            :       return boost::math::tools::epsilon&lt;T&gt;();
+<span class="lineNum">     907 </span>            :    }
+<span class="lineNum">     908 </span>            : };
+<span class="lineNum">     909 </span>            : 
+<span class="lineNum">     910 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">     911 </span>            : inline T get_epsilon_imp(mpl::true_ const&amp;)
+<span class="lineNum">     912 </span>            : {
+<span class="lineNum">     913 </span>            : #ifndef BOOST_NO_LIMITS_COMPILE_TIME_CONSTANTS
+<span class="lineNum">     914 </span>            :    BOOST_STATIC_ASSERT( ::std::numeric_limits&lt;T&gt;::is_specialized);
+<span class="lineNum">     915 </span>            :    BOOST_STATIC_ASSERT( ::std::numeric_limits&lt;T&gt;::radix == 2);
+<span class="lineNum">     916 </span>            : #else
+<span class="lineNum">     917 </span>            :    BOOST_ASSERT(::std::numeric_limits&lt;T&gt;::is_specialized);
+<span class="lineNum">     918 </span>            :    BOOST_ASSERT(::std::numeric_limits&lt;T&gt;::radix == 2);
+<span class="lineNum">     919 </span>            : #endif
+<span class="lineNum">     920 </span>            :    typedef typename boost::math::policies::precision&lt;T, Policy&gt;::type p_t;
+<span class="lineNum">     921 </span>            :    typedef mpl::bool_&lt;p_t::value &lt;= std::numeric_limits&lt;boost::uintmax_t&gt;::digits&gt; is_small_int;
+<span class="lineNum">     922 </span>            :    typedef mpl::bool_&lt;p_t::value &gt;= std::numeric_limits&lt;T&gt;::digits&gt; is_default_value;
+<span class="lineNum">     923 </span>            :    return series_factor_calc&lt;T, p_t, is_small_int, is_default_value&gt;::get();
+<span class="lineNum">     924 </span>            : }
+<span class="lineNum">     925 </span>            : 
+<span class="lineNum">     926 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">     927 </span>            : inline T get_epsilon_imp(mpl::false_ const&amp;)
+<span class="lineNum">     928 </span>            : {
+<span class="lineNum">     929 </span>            :    return tools::epsilon&lt;T&gt;();
+<span class="lineNum">     930 </span>            : }
+<span class="lineNum">     931 </span>            : 
+<span class="lineNum">     932 </span>            : } // namespace detail
+<span class="lineNum">     933 </span>            : 
+<span class="lineNum">     934 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">     935 </span>            : inline T get_epsilon(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE(T))
+<span class="lineNum">     936 </span>            : {
+<span class="lineNum">     937 </span>            :    typedef mpl::bool_&lt; (std::numeric_limits&lt;T&gt;::is_specialized &amp;&amp; (std::numeric_limits&lt;T&gt;::radix == 2)) &gt; tag_type;
+<span class="lineNum">     938 </span>            :    return detail::get_epsilon_imp&lt;T, Policy&gt;(tag_type());
+<span class="lineNum">     939 </span>            : }
+<span class="lineNum">     940 </span>            : 
+<span class="lineNum">     941 </span>            : namespace detail{
+<span class="lineNum">     942 </span>            : 
+<span class="lineNum">     943 </span>            : template &lt;class A1, 
+<span class="lineNum">     944 </span>            :           class A2, 
+<span class="lineNum">     945 </span>            :           class A3,
+<span class="lineNum">     946 </span>            :           class A4,
+<span class="lineNum">     947 </span>            :           class A5,
+<span class="lineNum">     948 </span>            :           class A6,
+<span class="lineNum">     949 </span>            :           class A7,
+<span class="lineNum">     950 </span>            :           class A8,
+<span class="lineNum">     951 </span>            :           class A9,
+<span class="lineNum">     952 </span>            :           class A10,
+<span class="lineNum">     953 </span>            :           class A11&gt;
+<span class="lineNum">     954 </span>            : char test_is_policy(const policy&lt;A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11&gt;*);
+<span class="lineNum">     955 </span>            : double test_is_policy(...);
+<span class="lineNum">     956 </span>            : 
+<span class="lineNum">     957 </span>            : template &lt;class P&gt;
+<span class="lineNum">     958 </span>            : struct is_policy_imp
+<span class="lineNum">     959 </span>            : {
+<span class="lineNum">     960 </span>            :    BOOST_STATIC_CONSTANT(bool, value = (sizeof(::boost::math::policies::detail::test_is_policy(static_cast&lt;P*&gt;(0))) == 1));
+<span class="lineNum">     961 </span>            : };
+<span class="lineNum">     962 </span>            : 
+<span class="lineNum">     963 </span>            : }
+<span class="lineNum">     964 </span>            : 
+<span class="lineNum">     965 </span>            : template &lt;class P&gt;
+<span class="lineNum">     966 </span>            : struct is_policy : public mpl::bool_&lt; ::boost::math::policies::detail::is_policy_imp&lt;P&gt;::value&gt; {};
+<span class="lineNum">     967 </span>            : 
+<span class="lineNum">     968 </span>            : //
+<span class="lineNum">     969 </span>            : // Helper traits class for distribution error handling:
+<span class="lineNum">     970 </span>            : //
+<span class="lineNum">     971 </span>            : template &lt;class Policy&gt;
+<span class="lineNum">     972 </span>            : struct constructor_error_check
+<span class="lineNum">     973 </span>            : {
+<span class="lineNum">     974 </span>            :    typedef typename Policy::domain_error_type domain_error_type;
+<span class="lineNum">     975 </span>            :    typedef typename mpl::if_c&lt;
+<span class="lineNum">     976 </span>            :       (domain_error_type::value == throw_on_error) || (domain_error_type::value == user_error),
+<span class="lineNum">     977 </span>            :       mpl::true_,
+<span class="lineNum">     978 </span>            :       mpl::false_&gt;::type type;
+<span class="lineNum">     979 </span>            : };
+<span class="lineNum">     980 </span>            : 
+<span class="lineNum">     981 </span>            : template &lt;class Policy&gt;
+<span class="lineNum">     982 </span>            : struct method_error_check
+<span class="lineNum">     983 </span>            : {
+<span class="lineNum">     984 </span>            :    typedef typename Policy::domain_error_type domain_error_type;
+<span class="lineNum">     985 </span>            :    typedef typename mpl::if_c&lt;
+<span class="lineNum">     986 </span>            :       (domain_error_type::value == throw_on_error) &amp;&amp; (domain_error_type::value != user_error),
+<span class="lineNum">     987 </span>            :       mpl::false_,
+<span class="lineNum">     988 </span>            :       mpl::true_&gt;::type type;
+<span class="lineNum">     989 </span>            : };
+<span class="lineNum">     990 </span>            : 
+<span class="lineNum">     991 </span>            : }}} // namespaces
+<span class="lineNum">     992 </span>            : 
+<span class="lineNum">     993 </span>            : #endif // BOOST_MATH_POLICY_HPP
+<span class="lineNum">     994 </span>            : 
+<span class="lineNum">     995 </span>            : 
+<span class="lineNum">     996 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

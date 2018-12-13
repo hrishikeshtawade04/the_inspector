@@ -1,0 +1,963 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/ros/serialization.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/ros</a> - serialization.h<span style="font-size: 80%;"> (source / <a href="serialization.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">61</td>
+            <td class="headerCovTableEntry">63</td>
+            <td class="headerCovTableEntryHi">96.8 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            :  * Copyright (C) 2009, Willow Garage, Inc.
+<span class="lineNum">       3 </span>            :  *
+<span class="lineNum">       4 </span>            :  * Redistribution and use in source and binary forms, with or without
+<span class="lineNum">       5 </span>            :  * modification, are permitted provided that the following conditions are met:
+<span class="lineNum">       6 </span>            :  *   * Redistributions of source code must retain the above copyright notice,
+<span class="lineNum">       7 </span>            :  *     this list of conditions and the following disclaimer.
+<span class="lineNum">       8 </span>            :  *   * Redistributions in binary form must reproduce the above copyright
+<span class="lineNum">       9 </span>            :  *     notice, this list of conditions and the following disclaimer in the
+<span class="lineNum">      10 </span>            :  *     documentation and/or other materials provided with the distribution.
+<span class="lineNum">      11 </span>            :  *   * Neither the names of Willow Garage, Inc. nor the names of its
+<span class="lineNum">      12 </span>            :  *     contributors may be used to endorse or promote products derived from
+<span class="lineNum">      13 </span>            :  *     this software without specific prior written permission.
+<span class="lineNum">      14 </span>            :  *
+<span class="lineNum">      15 </span>            :  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;
+<span class="lineNum">      16 </span>            :  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+<span class="lineNum">      17 </span>            :  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+<span class="lineNum">      18 </span>            :  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+<span class="lineNum">      19 </span>            :  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+<span class="lineNum">      20 </span>            :  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+<span class="lineNum">      21 </span>            :  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+<span class="lineNum">      22 </span>            :  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+<span class="lineNum">      23 </span>            :  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+<span class="lineNum">      24 </span>            :  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+<span class="lineNum">      25 </span>            :  * POSSIBILITY OF SUCH DAMAGE.
+<span class="lineNum">      26 </span>            :  */
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            : #ifndef ROSCPP_SERIALIZATION_H
+<span class="lineNum">      29 </span>            : #define ROSCPP_SERIALIZATION_H
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            : #include &quot;roscpp_serialization_macros.h&quot;
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span>            : #include &lt;ros/types.h&gt;
+<span class="lineNum">      34 </span>            : #include &lt;ros/time.h&gt;
+<span class="lineNum">      35 </span>            : 
+<span class="lineNum">      36 </span>            : #include &quot;serialized_message.h&quot;
+<span class="lineNum">      37 </span>            : #include &quot;ros/message_traits.h&quot;
+<span class="lineNum">      38 </span>            : #include &quot;ros/builtin_message_traits.h&quot;
+<span class="lineNum">      39 </span>            : #include &quot;ros/exception.h&quot;
+<span class="lineNum">      40 </span>            : #include &quot;ros/datatypes.h&quot;
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      43 </span>            : #include &lt;map&gt;
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : #include &lt;boost/array.hpp&gt;
+<span class="lineNum">      46 </span>            : #include &lt;boost/call_traits.hpp&gt;
+<span class="lineNum">      47 </span>            : #include &lt;boost/utility/enable_if.hpp&gt;
+<span class="lineNum">      48 </span>            : #include &lt;boost/mpl/and.hpp&gt;
+<span class="lineNum">      49 </span>            : #include &lt;boost/mpl/or.hpp&gt;
+<span class="lineNum">      50 </span>            : #include &lt;boost/mpl/not.hpp&gt;
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            : #include &lt;cstring&gt;
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            : #define ROS_NEW_SERIALIZATION_API 1
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : /**
+<span class="lineNum">      57 </span>            :  * \brief Declare your serializer to use an allInOne member instead of requiring 3 different serialization
+<span class="lineNum">      58 </span>            :  * functions.
+<span class="lineNum">      59 </span>            :  *
+<span class="lineNum">      60 </span>            :  * The allinone method has the form:
+<span class="lineNum">      61 </span>            : \verbatim
+<span class="lineNum">      62 </span>            : template&lt;typename Stream, typename T&gt;
+<span class="lineNum">      63 </span>            : inline static void allInOne(Stream&amp; stream, T t)
+<span class="lineNum">      64 </span>            : {
+<span class="lineNum">      65 </span>            :   stream.next(t.a);
+<span class="lineNum">      66 </span>            :   stream.next(t.b);
+<span class="lineNum">      67 </span>            :   ...
+<span class="lineNum">      68 </span>            : }
+<span class="lineNum">      69 </span>            : \endverbatim
+<span class="lineNum">      70 </span>            :  *
+<span class="lineNum">      71 </span>            :  * The only guarantee given is that Stream::next(T) is defined.
+<span class="lineNum">      72 </span>            :  */
+<span class="lineNum">      73 </span>            : #define ROS_DECLARE_ALLINONE_SERIALIZER \
+<span class="lineNum">      74 </span>            :   template&lt;typename Stream, typename T&gt; \
+<span class="lineNum">      75 </span>            :   inline static void write(Stream&amp; stream, const T&amp; t) \
+<span class="lineNum">      76 </span>            :   { \
+<span class="lineNum">      77 </span>            :     allInOne&lt;Stream, const T&amp;&gt;(stream, t); \
+<span class="lineNum">      78 </span>            :   } \
+<span class="lineNum">      79 </span>            :   \
+<span class="lineNum">      80 </span>            :   template&lt;typename Stream, typename T&gt; \
+<span class="lineNum">      81 </span>            :   inline static void read(Stream&amp; stream, T&amp; t) \
+<span class="lineNum">      82 </span>            :   { \
+<span class="lineNum">      83 </span>            :     allInOne&lt;Stream, T&amp;&gt;(stream, t); \
+<span class="lineNum">      84 </span>            :   } \
+<span class="lineNum">      85 </span>            :   \
+<span class="lineNum">      86 </span>            :   template&lt;typename T&gt; \
+<span class="lineNum">      87 </span>            :   inline static uint32_t serializedLength(const T&amp; t) \
+<span class="lineNum">      88 </span>            :   { \
+<span class="lineNum">      89 </span>            :     LStream stream; \
+<span class="lineNum">      90 </span>            :     allInOne&lt;LStream, const T&amp;&gt;(stream, t); \
+<span class="lineNum">      91 </span>            :     return stream.getLength(); \
+<span class="lineNum">      92 </span>            :   }
+<span class="lineNum">      93 </span>            : 
+<span class="lineNum">      94 </span>            : namespace ros
+<span class="lineNum">      95 </span>            : {
+<span class="lineNum">      96 </span>            : namespace serialization
+<span class="lineNum">      97 </span>            : {
+<span class="lineNum">      98 </span>            : namespace mt = message_traits;
+<span class="lineNum">      99 </span>            : namespace mpl = boost::mpl;
+<span class="lineNum">     100 </span>            : 
+<span class="lineNum">     101 </span>            : class ROSCPP_SERIALIZATION_DECL StreamOverrunException : public ros::Exception
+<span class="lineNum">     102 </span>            : {
+<span class="lineNum">     103 </span>            : public:
+<span class="lineNum">     104 </span>            :   StreamOverrunException(const std::string&amp; what)
+<span class="lineNum">     105 </span>            :   : Exception(what)
+<span class="lineNum">     106 </span>            :   {}
+<span class="lineNum">     107 </span>            : };
+<span class="lineNum">     108 </span>            : 
+<span class="lineNum">     109 </span>            : ROSCPP_SERIALIZATION_DECL void throwStreamOverrun();
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span>            : /**
+<span class="lineNum">     112 </span>            :  * \brief Templated serialization class.  Default implementation provides backwards compatibility with
+<span class="lineNum">     113 </span>            :  * old message types.
+<span class="lineNum">     114 </span>            :  *
+<span class="lineNum">     115 </span>            :  * Specializing the Serializer class is the only thing you need to do to get the ROS serialization system
+<span class="lineNum">     116 </span>            :  * to work with a type.
+<span class="lineNum">     117 </span>            :  */
+<span class="lineNum">     118 </span>            : template&lt;typename T&gt;
+<span class="lineNum">     119 </span>            : struct Serializer
+<span class="lineNum">     120 </span>            : {
+<span class="lineNum">     121 </span>            :   /**
+<span class="lineNum">     122 </span>            :    * \brief Write an object to the stream.  Normally the stream passed in here will be a ros::serialization::OStream
+<span class="lineNum">     123 </span>            :    */
+<span class="lineNum">     124 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     125 </span>            :   inline static void write(Stream&amp; stream, typename boost::call_traits&lt;T&gt;::param_type t)
+<span class="lineNum">     126 </span>            :   {
+<span class="lineNum">     127 </span>            :     t.serialize(stream.getData(), 0);
+<span class="lineNum">     128 </span>            :   }
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span>            :   /**
+<span class="lineNum">     131 </span>            :    * \brief Read an object from the stream.  Normally the stream passed in here will be a ros::serialization::IStream
+<span class="lineNum">     132 </span>            :    */
+<span class="lineNum">     133 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     134 </span>            :   inline static void read(Stream&amp; stream, typename boost::call_traits&lt;T&gt;::reference t)
+<span class="lineNum">     135 </span>            :   {
+<span class="lineNum">     136 </span>            :     t.deserialize(stream.getData());
+<span class="lineNum">     137 </span>            :   }
+<span class="lineNum">     138 </span>            : 
+<span class="lineNum">     139 </span>            :   /**
+<span class="lineNum">     140 </span>            :    * \brief Determine the serialized length of an object.
+<span class="lineNum">     141 </span>            :    */
+<span class="lineNum">     142 </span>            :   inline static uint32_t serializedLength(typename boost::call_traits&lt;T&gt;::param_type t)
+<span class="lineNum">     143 </span>            :   {
+<span class="lineNum">     144 </span>            :     return t.serializationLength();
+<span class="lineNum">     145 </span>            :   }
+<span class="lineNum">     146 </span>            : };
+<span class="lineNum">     147 </span>            : 
+<span class="lineNum">     148 </span>            : /**
+<span class="lineNum">     149 </span>            :  * \brief Serialize an object.  Stream here should normally be a ros::serialization::OStream
+<a name="150"><span class="lineNum">     150 </span>            :  */</a>
+<span class="lineNum">     151 </span>            : template&lt;typename T, typename Stream&gt;
+<span class="lineNum">     152 </span><span class="lineCov"> 1090704450 : inline void serialize(Stream&amp; stream, const T&amp; t)</span>
+<span class="lineNum">     153 </span>            : {
+<span class="lineNum">     154 </span><span class="lineCov"> 1090704450 :   Serializer&lt;T&gt;::write(stream, t);</span>
+<span class="lineNum">     155 </span><span class="lineCov"> 1090704450 : }</span>
+<span class="lineNum">     156 </span>            : 
+<span class="lineNum">     157 </span>            : /**
+<span class="lineNum">     158 </span>            :  * \brief Deserialize an object.  Stream here should normally be a ros::serialization::IStream
+<a name="159"><span class="lineNum">     159 </span>            :  */</a>
+<span class="lineNum">     160 </span>            : template&lt;typename T, typename Stream&gt;
+<span class="lineNum">     161 </span><span class="lineCov">      37755 : inline void deserialize(Stream&amp; stream, T&amp; t)</span>
+<span class="lineNum">     162 </span>            : {
+<span class="lineNum">     163 </span><span class="lineCov">      37755 :   Serializer&lt;T&gt;::read(stream, t);</span>
+<span class="lineNum">     164 </span><span class="lineCov">      37755 : }</span>
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            : /**
+<span class="lineNum">     167 </span>            :  * \brief Determine the serialized length of an object
+<a name="168"><span class="lineNum">     168 </span>            :  */</a>
+<span class="lineNum">     169 </span>            : template&lt;typename T&gt;
+<span class="lineNum">     170 </span><span class="lineCov">  981634005 : inline uint32_t serializationLength(const T&amp; t)</span>
+<span class="lineNum">     171 </span>            : {
+<span class="lineNum">     172 </span><span class="lineCov">  981634005 :   return Serializer&lt;T&gt;::serializedLength(t);</span>
+<span class="lineNum">     173 </span>            : }
+<span class="lineNum">     174 </span>            : 
+<span class="lineNum">     175 </span>            : #define ROS_CREATE_SIMPLE_SERIALIZER(Type) \
+<span class="lineNum">     176 </span>            :   template&lt;&gt; struct Serializer&lt;Type&gt; \
+<span class="lineNum">     177 </span>            :   { \
+<span class="lineNum">     178 </span>            :     template&lt;typename Stream&gt; inline static void write(Stream&amp; stream, const Type v) \
+<span class="lineNum">     179 </span>            :     { \
+<span class="lineNum">     180 </span>            :       memcpy(stream.advance(sizeof(v)), &amp;v, sizeof(v) ); \
+<span class="lineNum">     181 </span>            :     } \
+<span class="lineNum">     182 </span>            :     \
+<span class="lineNum">     183 </span>            :     template&lt;typename Stream&gt; inline static void read(Stream&amp; stream, Type&amp; v) \
+<span class="lineNum">     184 </span>            :     { \
+<span class="lineNum">     185 </span>            :       memcpy(&amp;v, stream.advance(sizeof(v)), sizeof(v) ); \
+<span class="lineNum">     186 </span>            :     } \
+<span class="lineNum">     187 </span>            :     \
+<span class="lineNum">     188 </span>            :     inline static uint32_t serializedLength(const Type&amp;) \
+<span class="lineNum">     189 </span>            :       { \
+<span class="lineNum">     190 </span>            :       return sizeof(Type); \
+<span class="lineNum">     191 </span>            :     } \
+<a name="192"><span class="lineNum">     192 </span>            : };</a>
+<span class="lineNum">     193 </span>            : 
+<span class="lineNum">     194 </span><span class="lineCov">       5034 : ROS_CREATE_SIMPLE_SERIALIZER(uint8_t)</span>
+<span class="lineNum">     195 </span>            : ROS_CREATE_SIMPLE_SERIALIZER(int8_t)
+<a name="196"><span class="lineNum">     196 </span>            : ROS_CREATE_SIMPLE_SERIALIZER(uint16_t)</a>
+<span class="lineNum">     197 </span>            : ROS_CREATE_SIMPLE_SERIALIZER(int16_t)
+<span class="lineNum">     198 </span><span class="lineCov">  218186196 : ROS_CREATE_SIMPLE_SERIALIZER(uint32_t)</span>
+<span class="lineNum">     199 </span>            : ROS_CREATE_SIMPLE_SERIALIZER(int32_t)
+<span class="lineNum">     200 </span>            : ROS_CREATE_SIMPLE_SERIALIZER(uint64_t)
+<a name="201"><span class="lineNum">     201 </span>            : ROS_CREATE_SIMPLE_SERIALIZER(int64_t)</a>
+<span class="lineNum">     202 </span>            : ROS_CREATE_SIMPLE_SERIALIZER(float)
+<span class="lineNum">     203 </span><span class="lineCov"> 1963268010 : ROS_CREATE_SIMPLE_SERIALIZER(double)</span>
+<span class="lineNum">     204 </span>            : 
+<span class="lineNum">     205 </span>            : /**
+<span class="lineNum">     206 </span>            :  * \brief Serializer specialized for bool (serialized as uint8)
+<span class="lineNum">     207 </span>            :  */
+<span class="lineNum">     208 </span>            : template&lt;&gt; struct Serializer&lt;bool&gt;
+<span class="lineNum">     209 </span>            : {
+<span class="lineNum">     210 </span>            :   template&lt;typename Stream&gt; inline static void write(Stream&amp; stream, const bool v)
+<span class="lineNum">     211 </span>            :   {
+<span class="lineNum">     212 </span>            :     uint8_t b = (uint8_t)v;
+<span class="lineNum">     213 </span>            :     memcpy(stream.advance(1), &amp;b, 1 );
+<span class="lineNum">     214 </span>            :   }
+<span class="lineNum">     215 </span>            : 
+<span class="lineNum">     216 </span>            :   template&lt;typename Stream&gt; inline static void read(Stream&amp; stream, bool&amp; v)
+<span class="lineNum">     217 </span>            :   {
+<span class="lineNum">     218 </span>            :     uint8_t b;
+<span class="lineNum">     219 </span>            :     memcpy(&amp;b, stream.advance(1), 1 );
+<span class="lineNum">     220 </span>            :     v = (bool)b;
+<span class="lineNum">     221 </span>            :   }
+<span class="lineNum">     222 </span>            : 
+<span class="lineNum">     223 </span>            :   inline static uint32_t serializedLength(bool)
+<span class="lineNum">     224 </span>            :   {
+<span class="lineNum">     225 </span>            :     return 1;
+<span class="lineNum">     226 </span>            :   }
+<span class="lineNum">     227 </span>            : };
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span>            : /**
+<span class="lineNum">     230 </span>            :  * \brief  Serializer specialized for std::string
+<span class="lineNum">     231 </span>            :  */
+<span class="lineNum">     232 </span>            : template&lt;class ContainerAllocator&gt;
+<span class="lineNum">     233 </span>            : struct Serializer&lt;std::basic_string&lt;char, std::char_traits&lt;char&gt;, ContainerAllocator&gt; &gt;
+<span class="lineNum">     234 </span>            : {
+<span class="lineNum">     235 </span>            :   typedef std::basic_string&lt;char, std::char_traits&lt;char&gt;, ContainerAllocator&gt; StringType;
+<span class="lineNum">     236 </span>            : 
+<span class="lineNum">     237 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     238 </span>            :   inline static void write(Stream&amp; stream, const StringType&amp; str)
+<span class="lineNum">     239 </span>            :   {
+<span class="lineNum">     240 </span>            :     size_t len = str.size();
+<span class="lineNum">     241 </span>            :     stream.next((uint32_t)len);
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            :     if (len &gt; 0)
+<span class="lineNum">     244 </span>            :     {
+<span class="lineNum">     245 </span>            :       memcpy(stream.advance((uint32_t)len), str.data(), len);
+<span class="lineNum">     246 </span>            :     }
+<span class="lineNum">     247 </span>            :   }
+<a name="248"><span class="lineNum">     248 </span>            : </a>
+<span class="lineNum">     249 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     250 </span><span class="lineCov">       5034 :   inline static void read(Stream&amp; stream, StringType&amp; str)</span>
+<span class="lineNum">     251 </span>            :   {
+<span class="lineNum">     252 </span>            :     uint32_t len;
+<span class="lineNum">     253 </span>            :     stream.next(len);
+<span class="lineNum">     254 </span><span class="lineCov">       5034 :     if (len &gt; 0)</span>
+<span class="lineNum">     255 </span>            :     {
+<span class="lineNum">     256 </span><span class="lineCov">      10068 :       str = StringType((char*)stream.advance(len), len);</span>
+<span class="lineNum">     257 </span>            :     }
+<span class="lineNum">     258 </span>            :     else
+<span class="lineNum">     259 </span>            :     {
+<span class="lineNum">     260 </span><span class="lineNoCov">          0 :       str.clear();</span>
+<span class="lineNum">     261 </span>            :     }
+<span class="lineNum">     262 </span><span class="lineCov">       5034 :   }</span>
+<span class="lineNum">     263 </span>            : 
+<span class="lineNum">     264 </span>            :   inline static uint32_t serializedLength(const StringType&amp; str)
+<span class="lineNum">     265 </span>            :   {
+<span class="lineNum">     266 </span>            :     return 4 + (uint32_t)str.size();
+<span class="lineNum">     267 </span>            :   }
+<span class="lineNum">     268 </span>            : };
+<span class="lineNum">     269 </span>            : 
+<span class="lineNum">     270 </span>            : /**
+<span class="lineNum">     271 </span>            :  * \brief Serializer specialized for ros::Time
+<span class="lineNum">     272 </span>            :  */
+<span class="lineNum">     273 </span>            : template&lt;&gt;
+<span class="lineNum">     274 </span>            : struct Serializer&lt;ros::Time&gt;
+<span class="lineNum">     275 </span>            : {
+<span class="lineNum">     276 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     277 </span>            :   inline static void write(Stream&amp; stream, const ros::Time&amp; v)
+<span class="lineNum">     278 </span>            :   {
+<span class="lineNum">     279 </span>            :     stream.next(v.sec);
+<span class="lineNum">     280 </span>            :     stream.next(v.nsec);
+<span class="lineNum">     281 </span>            :   }
+<a name="282"><span class="lineNum">     282 </span>            : </a>
+<span class="lineNum">     283 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     284 </span><span class="lineCov">       2517 :   inline static void read(Stream&amp; stream, ros::Time&amp; v)</span>
+<span class="lineNum">     285 </span>            :   {
+<span class="lineNum">     286 </span><span class="lineCov">       2517 :     stream.next(v.sec);</span>
+<span class="lineNum">     287 </span><span class="lineCov">       2517 :     stream.next(v.nsec);</span>
+<span class="lineNum">     288 </span><span class="lineCov">       2517 :   }</span>
+<span class="lineNum">     289 </span>            : 
+<span class="lineNum">     290 </span>            :   inline static uint32_t serializedLength(const ros::Time&amp;)
+<span class="lineNum">     291 </span>            :   {
+<span class="lineNum">     292 </span>            :     return 8;
+<span class="lineNum">     293 </span>            :   }
+<span class="lineNum">     294 </span>            : };
+<span class="lineNum">     295 </span>            : 
+<span class="lineNum">     296 </span>            : /**
+<span class="lineNum">     297 </span>            :  * \brief Serializer specialized for ros::Duration
+<span class="lineNum">     298 </span>            :  */
+<span class="lineNum">     299 </span>            : template&lt;&gt;
+<span class="lineNum">     300 </span>            : struct Serializer&lt;ros::Duration&gt;
+<span class="lineNum">     301 </span>            : {
+<span class="lineNum">     302 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     303 </span>            :   inline static void write(Stream&amp; stream, const ros::Duration&amp; v)
+<span class="lineNum">     304 </span>            :   {
+<span class="lineNum">     305 </span>            :     stream.next(v.sec);
+<span class="lineNum">     306 </span>            :     stream.next(v.nsec);
+<span class="lineNum">     307 </span>            :   }
+<span class="lineNum">     308 </span>            : 
+<span class="lineNum">     309 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     310 </span>            :   inline static void read(Stream&amp; stream, ros::Duration&amp; v)
+<span class="lineNum">     311 </span>            :   {
+<span class="lineNum">     312 </span>            :     stream.next(v.sec);
+<span class="lineNum">     313 </span>            :     stream.next(v.nsec);
+<span class="lineNum">     314 </span>            :   }
+<span class="lineNum">     315 </span>            : 
+<span class="lineNum">     316 </span>            :   inline static uint32_t serializedLength(const ros::Duration&amp;)
+<span class="lineNum">     317 </span>            :   {
+<span class="lineNum">     318 </span>            :     return 8;
+<span class="lineNum">     319 </span>            :   }
+<span class="lineNum">     320 </span>            : };
+<span class="lineNum">     321 </span>            : 
+<span class="lineNum">     322 </span>            : /**
+<span class="lineNum">     323 </span>            :  * \brief Vector serializer.  Default implementation does nothing
+<span class="lineNum">     324 </span>            :  */
+<span class="lineNum">     325 </span>            : template&lt;typename T, class ContainerAllocator, class Enabled = void&gt;
+<span class="lineNum">     326 </span>            : struct VectorSerializer
+<span class="lineNum">     327 </span>            : {};
+<span class="lineNum">     328 </span>            : 
+<span class="lineNum">     329 </span>            : /**
+<span class="lineNum">     330 </span>            :  * \brief Vector serializer, specialized for non-fixed-size, non-simple types
+<span class="lineNum">     331 </span>            :  */
+<span class="lineNum">     332 </span>            : template&lt;typename T, class ContainerAllocator&gt;
+<span class="lineNum">     333 </span>            : struct VectorSerializer&lt;T, ContainerAllocator, typename boost::disable_if&lt;mt::IsFixedSize&lt;T&gt; &gt;::type &gt;
+<span class="lineNum">     334 </span>            : {
+<span class="lineNum">     335 </span>            :   typedef std::vector&lt;T, typename ContainerAllocator::template rebind&lt;T&gt;::other&gt; VecType;
+<span class="lineNum">     336 </span>            :   typedef typename VecType::iterator IteratorType;
+<span class="lineNum">     337 </span>            :   typedef typename VecType::const_iterator ConstIteratorType;
+<span class="lineNum">     338 </span>            : 
+<span class="lineNum">     339 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     340 </span>            :   inline static void write(Stream&amp; stream, const VecType&amp; v)
+<span class="lineNum">     341 </span>            :   {
+<span class="lineNum">     342 </span>            :     stream.next((uint32_t)v.size());
+<span class="lineNum">     343 </span>            :     ConstIteratorType it = v.begin();
+<span class="lineNum">     344 </span>            :     ConstIteratorType end = v.end();
+<span class="lineNum">     345 </span>            :     for (; it != end; ++it)
+<span class="lineNum">     346 </span>            :     {
+<span class="lineNum">     347 </span>            :       stream.next(*it);
+<span class="lineNum">     348 </span>            :     }
+<span class="lineNum">     349 </span>            :   }
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     352 </span>            :   inline static void read(Stream&amp; stream, VecType&amp; v)
+<span class="lineNum">     353 </span>            :   {
+<span class="lineNum">     354 </span>            :     uint32_t len;
+<span class="lineNum">     355 </span>            :     stream.next(len);
+<span class="lineNum">     356 </span>            :     v.resize(len);
+<span class="lineNum">     357 </span>            :     IteratorType it = v.begin();
+<span class="lineNum">     358 </span>            :     IteratorType end = v.end();
+<span class="lineNum">     359 </span>            :     for (; it != end; ++it)
+<span class="lineNum">     360 </span>            :     {
+<span class="lineNum">     361 </span>            :       stream.next(*it);
+<span class="lineNum">     362 </span>            :     }
+<span class="lineNum">     363 </span>            :   }
+<span class="lineNum">     364 </span>            : 
+<span class="lineNum">     365 </span>            :   inline static uint32_t serializedLength(const VecType&amp; v)
+<span class="lineNum">     366 </span>            :   {
+<span class="lineNum">     367 </span>            :     uint32_t size = 4;
+<span class="lineNum">     368 </span>            :     ConstIteratorType it = v.begin();
+<span class="lineNum">     369 </span>            :     ConstIteratorType end = v.end();
+<span class="lineNum">     370 </span>            :     for (; it != end; ++it)
+<span class="lineNum">     371 </span>            :     {
+<span class="lineNum">     372 </span>            :       size += serializationLength(*it);
+<span class="lineNum">     373 </span>            :     }
+<span class="lineNum">     374 </span>            : 
+<span class="lineNum">     375 </span>            :     return size;
+<span class="lineNum">     376 </span>            :   }
+<span class="lineNum">     377 </span>            : };
+<span class="lineNum">     378 </span>            : 
+<span class="lineNum">     379 </span>            : /**
+<span class="lineNum">     380 </span>            :  * \brief Vector serializer, specialized for fixed-size simple types
+<span class="lineNum">     381 </span>            :  */
+<span class="lineNum">     382 </span>            : template&lt;typename T, class ContainerAllocator&gt;
+<span class="lineNum">     383 </span>            : struct VectorSerializer&lt;T, ContainerAllocator, typename boost::enable_if&lt;mt::IsSimple&lt;T&gt; &gt;::type &gt;
+<span class="lineNum">     384 </span>            : {
+<span class="lineNum">     385 </span>            :   typedef std::vector&lt;T, typename ContainerAllocator::template rebind&lt;T&gt;::other&gt; VecType;
+<span class="lineNum">     386 </span>            :   typedef typename VecType::iterator IteratorType;
+<span class="lineNum">     387 </span>            :   typedef typename VecType::const_iterator ConstIteratorType;
+<span class="lineNum">     388 </span>            : 
+<span class="lineNum">     389 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     390 </span>            :   inline static void write(Stream&amp; stream, const VecType&amp; v)
+<span class="lineNum">     391 </span>            :   {
+<span class="lineNum">     392 </span>            :     uint32_t len = (uint32_t)v.size();
+<span class="lineNum">     393 </span>            :     stream.next(len);
+<span class="lineNum">     394 </span>            :     if (!v.empty())
+<span class="lineNum">     395 </span>            :     {
+<span class="lineNum">     396 </span>            :       const uint32_t data_len = len * (uint32_t)sizeof(T);
+<span class="lineNum">     397 </span>            :       memcpy(stream.advance(data_len), &amp;v.front(), data_len);
+<span class="lineNum">     398 </span>            :     }
+<span class="lineNum">     399 </span>            :   }
+<a name="400"><span class="lineNum">     400 </span>            : </a>
+<span class="lineNum">     401 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     402 </span><span class="lineCov">       2517 :   inline static void read(Stream&amp; stream, VecType&amp; v)</span>
+<span class="lineNum">     403 </span>            :   {
+<span class="lineNum">     404 </span>            :     uint32_t len;
+<span class="lineNum">     405 </span>            :     stream.next(len);
+<span class="lineNum">     406 </span><span class="lineCov">       2517 :     v.resize(len);</span>
+<span class="lineNum">     407 </span>            : 
+<span class="lineNum">     408 </span><span class="lineCov">       2517 :     if (len &gt; 0)</span>
+<span class="lineNum">     409 </span>            :     {
+<span class="lineNum">     410 </span><span class="lineCov">       2517 :       const uint32_t data_len = (uint32_t)sizeof(T) * len;</span>
+<span class="lineNum">     411 </span><span class="lineCov">       5034 :       memcpy(&amp;v.front(), stream.advance(data_len), data_len);</span>
+<span class="lineNum">     412 </span>            :     }
+<span class="lineNum">     413 </span><span class="lineCov">       2517 :   }</span>
+<span class="lineNum">     414 </span>            : 
+<span class="lineNum">     415 </span>            :   inline static uint32_t serializedLength(const VecType&amp; v)
+<span class="lineNum">     416 </span>            :   {
+<span class="lineNum">     417 </span>            :     return 4 + v.size() * (uint32_t)sizeof(T);
+<span class="lineNum">     418 </span>            :   }
+<span class="lineNum">     419 </span>            : };
+<span class="lineNum">     420 </span>            : 
+<span class="lineNum">     421 </span>            : /**
+<span class="lineNum">     422 </span>            :  * \brief Vector serializer, specialized for fixed-size non-simple types
+<span class="lineNum">     423 </span>            :  */
+<span class="lineNum">     424 </span>            : template&lt;typename T, class ContainerAllocator&gt;
+<span class="lineNum">     425 </span>            : struct VectorSerializer&lt;T, ContainerAllocator, typename boost::enable_if&lt;mpl::and_&lt;mt::IsFixedSize&lt;T&gt;, mpl::not_&lt;mt::IsSimple&lt;T&gt; &gt; &gt; &gt;::type &gt;
+<span class="lineNum">     426 </span>            : {
+<span class="lineNum">     427 </span>            :   typedef std::vector&lt;T, typename ContainerAllocator::template rebind&lt;T&gt;::other&gt; VecType;
+<span class="lineNum">     428 </span>            :   typedef typename VecType::iterator IteratorType;
+<span class="lineNum">     429 </span>            :   typedef typename VecType::const_iterator ConstIteratorType;
+<span class="lineNum">     430 </span>            : 
+<span class="lineNum">     431 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     432 </span>            :   inline static void write(Stream&amp; stream, const VecType&amp; v)
+<span class="lineNum">     433 </span>            :   {
+<span class="lineNum">     434 </span>            :     stream.next((uint32_t)v.size());
+<span class="lineNum">     435 </span>            :     ConstIteratorType it = v.begin();
+<span class="lineNum">     436 </span>            :     ConstIteratorType end = v.end();
+<span class="lineNum">     437 </span>            :     for (; it != end; ++it)
+<span class="lineNum">     438 </span>            :     {
+<span class="lineNum">     439 </span>            :       stream.next(*it);
+<span class="lineNum">     440 </span>            :     }
+<span class="lineNum">     441 </span>            :   }
+<span class="lineNum">     442 </span>            : 
+<span class="lineNum">     443 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     444 </span>            :   inline static void read(Stream&amp; stream, VecType&amp; v)
+<span class="lineNum">     445 </span>            :   {
+<span class="lineNum">     446 </span>            :     uint32_t len;
+<span class="lineNum">     447 </span>            :     stream.next(len);
+<span class="lineNum">     448 </span>            :     v.resize(len);
+<span class="lineNum">     449 </span>            :     IteratorType it = v.begin();
+<span class="lineNum">     450 </span>            :     IteratorType end = v.end();
+<span class="lineNum">     451 </span>            :     for (; it != end; ++it)
+<span class="lineNum">     452 </span>            :     {
+<span class="lineNum">     453 </span>            :       stream.next(*it);
+<span class="lineNum">     454 </span>            :     }
+<span class="lineNum">     455 </span>            :   }
+<span class="lineNum">     456 </span>            : 
+<span class="lineNum">     457 </span>            :   inline static uint32_t serializedLength(const VecType&amp; v)
+<span class="lineNum">     458 </span>            :   {
+<span class="lineNum">     459 </span>            :     uint32_t size = 4;
+<span class="lineNum">     460 </span>            :     if (!v.empty())
+<span class="lineNum">     461 </span>            :     {
+<span class="lineNum">     462 </span>            :       uint32_t len_each = serializationLength(v.front());
+<span class="lineNum">     463 </span>            :       size += len_each * (uint32_t)v.size();
+<span class="lineNum">     464 </span>            :     }
+<span class="lineNum">     465 </span>            : 
+<span class="lineNum">     466 </span>            :     return size;
+<span class="lineNum">     467 </span>            :   }
+<span class="lineNum">     468 </span>            : };
+<span class="lineNum">     469 </span>            : 
+<span class="lineNum">     470 </span>            : /**
+<span class="lineNum">     471 </span>            :  * \brief serialize version for std::vector
+<span class="lineNum">     472 </span>            :  */
+<span class="lineNum">     473 </span>            : template&lt;typename T, class ContainerAllocator, typename Stream&gt;
+<span class="lineNum">     474 </span>            : inline void serialize(Stream&amp; stream, const std::vector&lt;T, ContainerAllocator&gt;&amp; t)
+<span class="lineNum">     475 </span>            : {
+<span class="lineNum">     476 </span>            :   VectorSerializer&lt;T, ContainerAllocator&gt;::write(stream, t);
+<span class="lineNum">     477 </span>            : }
+<span class="lineNum">     478 </span>            : 
+<span class="lineNum">     479 </span>            : /**
+<span class="lineNum">     480 </span>            :  * \brief deserialize version for std::vector
+<a name="481"><span class="lineNum">     481 </span>            :  */</a>
+<span class="lineNum">     482 </span>            : template&lt;typename T, class ContainerAllocator, typename Stream&gt;
+<span class="lineNum">     483 </span><span class="lineCov">       2517 : inline void deserialize(Stream&amp; stream, std::vector&lt;T, ContainerAllocator&gt;&amp; t)</span>
+<span class="lineNum">     484 </span>            : {
+<span class="lineNum">     485 </span><span class="lineCov">       2517 :   VectorSerializer&lt;T, ContainerAllocator&gt;::read(stream, t);</span>
+<span class="lineNum">     486 </span><span class="lineCov">       2517 : }</span>
+<span class="lineNum">     487 </span>            : 
+<span class="lineNum">     488 </span>            : /**
+<span class="lineNum">     489 </span>            :  * \brief serializationLength version for std::vector
+<span class="lineNum">     490 </span>            :  */
+<span class="lineNum">     491 </span>            : template&lt;typename T, class ContainerAllocator&gt;
+<span class="lineNum">     492 </span>            : inline uint32_t serializationLength(const std::vector&lt;T, ContainerAllocator&gt;&amp; t)
+<span class="lineNum">     493 </span>            : {
+<span class="lineNum">     494 </span>            :   return VectorSerializer&lt;T, ContainerAllocator&gt;::serializedLength(t);
+<span class="lineNum">     495 </span>            : }
+<span class="lineNum">     496 </span>            : 
+<span class="lineNum">     497 </span>            : /**
+<span class="lineNum">     498 </span>            :  * \brief Array serializer, default implementation does nothing
+<span class="lineNum">     499 </span>            :  */
+<span class="lineNum">     500 </span>            : template&lt;typename T, size_t N, class Enabled = void&gt;
+<span class="lineNum">     501 </span>            : struct ArraySerializer
+<span class="lineNum">     502 </span>            : {};
+<span class="lineNum">     503 </span>            : 
+<span class="lineNum">     504 </span>            : /**
+<span class="lineNum">     505 </span>            :  * \brief Array serializer, specialized for non-fixed-size, non-simple types
+<span class="lineNum">     506 </span>            :  */
+<span class="lineNum">     507 </span>            : template&lt;typename T, size_t N&gt;
+<span class="lineNum">     508 </span>            : struct ArraySerializer&lt;T, N, typename boost::disable_if&lt;mt::IsFixedSize&lt;T&gt; &gt;::type&gt;
+<span class="lineNum">     509 </span>            : {
+<span class="lineNum">     510 </span>            :   typedef boost::array&lt;T, N &gt; ArrayType;
+<span class="lineNum">     511 </span>            :   typedef typename ArrayType::iterator IteratorType;
+<span class="lineNum">     512 </span>            :   typedef typename ArrayType::const_iterator ConstIteratorType;
+<span class="lineNum">     513 </span>            : 
+<span class="lineNum">     514 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     515 </span>            :   inline static void write(Stream&amp; stream, const ArrayType&amp; v)
+<span class="lineNum">     516 </span>            :   {
+<span class="lineNum">     517 </span>            :     ConstIteratorType it = v.begin();
+<span class="lineNum">     518 </span>            :     ConstIteratorType end = v.end();
+<span class="lineNum">     519 </span>            :     for (; it != end; ++it)
+<span class="lineNum">     520 </span>            :     {
+<span class="lineNum">     521 </span>            :       stream.next(*it);
+<span class="lineNum">     522 </span>            :     }
+<span class="lineNum">     523 </span>            :   }
+<span class="lineNum">     524 </span>            : 
+<span class="lineNum">     525 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     526 </span>            :   inline static void read(Stream&amp; stream, ArrayType&amp; v)
+<span class="lineNum">     527 </span>            :   {
+<span class="lineNum">     528 </span>            :     IteratorType it = v.begin();
+<span class="lineNum">     529 </span>            :     IteratorType end = v.end();
+<span class="lineNum">     530 </span>            :     for (; it != end; ++it)
+<span class="lineNum">     531 </span>            :     {
+<span class="lineNum">     532 </span>            :       stream.next(*it);
+<span class="lineNum">     533 </span>            :     }
+<span class="lineNum">     534 </span>            :   }
+<span class="lineNum">     535 </span>            : 
+<span class="lineNum">     536 </span>            :   inline static uint32_t serializedLength(const ArrayType&amp; v)
+<span class="lineNum">     537 </span>            :   {
+<span class="lineNum">     538 </span>            :     uint32_t size = 0;
+<span class="lineNum">     539 </span>            :     ConstIteratorType it = v.begin();
+<span class="lineNum">     540 </span>            :     ConstIteratorType end = v.end();
+<span class="lineNum">     541 </span>            :     for (; it != end; ++it)
+<span class="lineNum">     542 </span>            :     {
+<span class="lineNum">     543 </span>            :       size += serializationLength(*it);
+<span class="lineNum">     544 </span>            :     }
+<span class="lineNum">     545 </span>            : 
+<span class="lineNum">     546 </span>            :     return size;
+<span class="lineNum">     547 </span>            :   }
+<span class="lineNum">     548 </span>            : };
+<span class="lineNum">     549 </span>            : 
+<span class="lineNum">     550 </span>            : /**
+<span class="lineNum">     551 </span>            :  * \brief Array serializer, specialized for fixed-size, simple types
+<span class="lineNum">     552 </span>            :  */
+<span class="lineNum">     553 </span>            : template&lt;typename T, size_t N&gt;
+<span class="lineNum">     554 </span>            : struct ArraySerializer&lt;T, N, typename boost::enable_if&lt;mt::IsSimple&lt;T&gt; &gt;::type&gt;
+<span class="lineNum">     555 </span>            : {
+<span class="lineNum">     556 </span>            :   typedef boost::array&lt;T, N &gt; ArrayType;
+<span class="lineNum">     557 </span>            :   typedef typename ArrayType::iterator IteratorType;
+<span class="lineNum">     558 </span>            :   typedef typename ArrayType::const_iterator ConstIteratorType;
+<span class="lineNum">     559 </span>            : 
+<span class="lineNum">     560 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     561 </span>            :   inline static void write(Stream&amp; stream, const ArrayType&amp; v)
+<span class="lineNum">     562 </span>            :   {
+<span class="lineNum">     563 </span>            :     const uint32_t data_len = N * sizeof(T);
+<span class="lineNum">     564 </span>            :     memcpy(stream.advance(data_len), &amp;v.front(), data_len);
+<span class="lineNum">     565 </span>            :   }
+<span class="lineNum">     566 </span>            : 
+<span class="lineNum">     567 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     568 </span>            :   inline static void read(Stream&amp; stream, ArrayType&amp; v)
+<span class="lineNum">     569 </span>            :   {
+<span class="lineNum">     570 </span>            :     const uint32_t data_len = N * sizeof(T);
+<span class="lineNum">     571 </span>            :     memcpy(&amp;v.front(), stream.advance(data_len), data_len);
+<span class="lineNum">     572 </span>            :   }
+<span class="lineNum">     573 </span>            : 
+<span class="lineNum">     574 </span>            :   inline static uint32_t serializedLength(const ArrayType&amp;)
+<span class="lineNum">     575 </span>            :   {
+<span class="lineNum">     576 </span>            :     return N * sizeof(T);
+<span class="lineNum">     577 </span>            :   }
+<span class="lineNum">     578 </span>            : };
+<span class="lineNum">     579 </span>            : 
+<span class="lineNum">     580 </span>            : /**
+<span class="lineNum">     581 </span>            :  * \brief Array serializer, specialized for fixed-size, non-simple types
+<span class="lineNum">     582 </span>            :  */
+<span class="lineNum">     583 </span>            : template&lt;typename T, size_t N&gt;
+<span class="lineNum">     584 </span>            : struct ArraySerializer&lt;T, N, typename boost::enable_if&lt;mpl::and_&lt;mt::IsFixedSize&lt;T&gt;, mpl::not_&lt;mt::IsSimple&lt;T&gt; &gt; &gt; &gt;::type&gt;
+<span class="lineNum">     585 </span>            : {
+<span class="lineNum">     586 </span>            :   typedef boost::array&lt;T, N &gt; ArrayType;
+<span class="lineNum">     587 </span>            :   typedef typename ArrayType::iterator IteratorType;
+<span class="lineNum">     588 </span>            :   typedef typename ArrayType::const_iterator ConstIteratorType;
+<span class="lineNum">     589 </span>            : 
+<span class="lineNum">     590 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     591 </span>            :   inline static void write(Stream&amp; stream, const ArrayType&amp; v)
+<span class="lineNum">     592 </span>            :   {
+<span class="lineNum">     593 </span>            :     ConstIteratorType it = v.begin();
+<span class="lineNum">     594 </span>            :     ConstIteratorType end = v.end();
+<span class="lineNum">     595 </span>            :     for (; it != end; ++it)
+<span class="lineNum">     596 </span>            :     {
+<span class="lineNum">     597 </span>            :       stream.next(*it);
+<span class="lineNum">     598 </span>            :     }
+<span class="lineNum">     599 </span>            :   }
+<span class="lineNum">     600 </span>            : 
+<span class="lineNum">     601 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     602 </span>            :   inline static void read(Stream&amp; stream, ArrayType&amp; v)
+<span class="lineNum">     603 </span>            :   {
+<span class="lineNum">     604 </span>            :     IteratorType it = v.begin();
+<span class="lineNum">     605 </span>            :     IteratorType end = v.end();
+<span class="lineNum">     606 </span>            :     for (; it != end; ++it)
+<span class="lineNum">     607 </span>            :     {
+<span class="lineNum">     608 </span>            :       stream.next(*it);
+<span class="lineNum">     609 </span>            :     }
+<span class="lineNum">     610 </span>            :   }
+<span class="lineNum">     611 </span>            : 
+<span class="lineNum">     612 </span>            :   inline static uint32_t serializedLength(const ArrayType&amp; v)
+<span class="lineNum">     613 </span>            :   {
+<span class="lineNum">     614 </span>            :     return serializationLength(v.front()) * N;
+<span class="lineNum">     615 </span>            :   }
+<span class="lineNum">     616 </span>            : };
+<span class="lineNum">     617 </span>            : 
+<span class="lineNum">     618 </span>            : /**
+<span class="lineNum">     619 </span>            :  * \brief serialize version for boost::array
+<span class="lineNum">     620 </span>            :  */
+<span class="lineNum">     621 </span>            : template&lt;typename T, size_t N, typename Stream&gt;
+<span class="lineNum">     622 </span>            : inline void serialize(Stream&amp; stream, const boost::array&lt;T, N&gt;&amp; t)
+<span class="lineNum">     623 </span>            : {
+<span class="lineNum">     624 </span>            :   ArraySerializer&lt;T, N&gt;::write(stream, t);
+<span class="lineNum">     625 </span>            : }
+<span class="lineNum">     626 </span>            : 
+<span class="lineNum">     627 </span>            : /**
+<span class="lineNum">     628 </span>            :  * \brief deserialize version for boost::array
+<span class="lineNum">     629 </span>            :  */
+<span class="lineNum">     630 </span>            : template&lt;typename T, size_t N, typename Stream&gt;
+<span class="lineNum">     631 </span>            : inline void deserialize(Stream&amp; stream, boost::array&lt;T, N&gt;&amp; t)
+<span class="lineNum">     632 </span>            : {
+<span class="lineNum">     633 </span>            :   ArraySerializer&lt;T, N&gt;::read(stream, t);
+<span class="lineNum">     634 </span>            : }
+<span class="lineNum">     635 </span>            : 
+<span class="lineNum">     636 </span>            : /**
+<span class="lineNum">     637 </span>            :  * \brief serializationLength version for boost::array
+<span class="lineNum">     638 </span>            :  */
+<span class="lineNum">     639 </span>            : template&lt;typename T, size_t N&gt;
+<span class="lineNum">     640 </span>            : inline uint32_t serializationLength(const boost::array&lt;T, N&gt;&amp; t)
+<span class="lineNum">     641 </span>            : {
+<span class="lineNum">     642 </span>            :   return ArraySerializer&lt;T, N&gt;::serializedLength(t);
+<span class="lineNum">     643 </span>            : }
+<span class="lineNum">     644 </span>            : 
+<span class="lineNum">     645 </span>            : /**
+<span class="lineNum">     646 </span>            :  * \brief Enum
+<span class="lineNum">     647 </span>            :  */
+<span class="lineNum">     648 </span>            : namespace stream_types
+<span class="lineNum">     649 </span>            : {
+<span class="lineNum">     650 </span>            : enum StreamType
+<span class="lineNum">     651 </span>            : {
+<span class="lineNum">     652 </span>            :   Input,
+<span class="lineNum">     653 </span>            :   Output,
+<span class="lineNum">     654 </span>            :   Length
+<span class="lineNum">     655 </span>            : };
+<span class="lineNum">     656 </span>            : }
+<span class="lineNum">     657 </span>            : typedef stream_types::StreamType StreamType;
+<span class="lineNum">     658 </span>            : 
+<span class="lineNum">     659 </span>            : /**
+<span class="lineNum">     660 </span>            :  * \brief Stream base-class, provides common functionality for IStream and OStream
+<span class="lineNum">     661 </span>            :  */
+<span class="lineNum">     662 </span>            : struct ROSCPP_SERIALIZATION_DECL Stream
+<span class="lineNum">     663 </span>            : {
+<span class="lineNum">     664 </span>            :   /*
+<a name="665"><span class="lineNum">     665 </span>            :    * \brief Returns a pointer to the current position of the stream</a>
+<span class="lineNum">     666 </span>            :    */
+<span class="lineNum">     667 </span><span class="lineCov">  109070445 :   inline uint8_t* getData() { return data_; }</span>
+<span class="lineNum">     668 </span>            :   /**
+<span class="lineNum">     669 </span>            :    * \brief Advances the stream, checking bounds, and returns a pointer to the position before it
+<span class="lineNum">     670 </span>            :    * was advanced.
+<span class="lineNum">     671 </span>            :    * \throws StreamOverrunException if len would take this stream past the end of its buffer
+<span class="lineNum">     672 </span>            :    */
+<span class="lineNum">     673 </span>            :   ROS_FORCE_INLINE uint8_t* advance(uint32_t len)
+<span class="lineNum">     674 </span>            :   {
+<span class="lineNum">     675 </span><span class="lineCov">  763525836 :     uint8_t* old_data = data_;</span>
+<span class="lineNum">     676 </span><span class="lineCov">  763525836 :     data_ += len;</span>
+<span class="lineNum">     677 </span><span class="lineCov">  763525836 :     if (data_ &gt; end_)</span>
+<span class="lineNum">     678 </span>            :     {
+<span class="lineNum">     679 </span>            :       // Throwing directly here causes a significant speed hit due to the extra code generated
+<span class="lineNum">     680 </span>            :       // for the throw statement
+<span class="lineNum">     681 </span><span class="lineNoCov">          0 :       throwStreamOverrun();</span>
+<span class="lineNum">     682 </span>            :     }
+<span class="lineNum">     683 </span><span class="lineCov">  763525836 :     return old_data;</span>
+<span class="lineNum">     684 </span>            :   }
+<span class="lineNum">     685 </span>            : 
+<span class="lineNum">     686 </span>            :   /**
+<span class="lineNum">     687 </span>            :    * \brief Returns the amount of space left in the stream
+<span class="lineNum">     688 </span>            :    */
+<span class="lineNum">     689 </span>            :   inline uint32_t getLength() { return (uint32_t)(end_ - data_); }
+<a name="690"><span class="lineNum">     690 </span>            : </a>
+<span class="lineNum">     691 </span>            : protected:
+<span class="lineNum">     692 </span><span class="lineCov">   51809303 :   Stream(uint8_t* _data, uint32_t _count)</span>
+<span class="lineNum">     693 </span>            :   : data_(_data)
+<span class="lineNum">     694 </span><span class="lineCov">   51809303 :   , end_(_data + _count)</span>
+<span class="lineNum">     695 </span><span class="lineCov">   51809303 :   {}</span>
+<span class="lineNum">     696 </span>            : 
+<span class="lineNum">     697 </span>            : private:
+<span class="lineNum">     698 </span>            :   uint8_t* data_;
+<span class="lineNum">     699 </span>            :   uint8_t* end_;
+<span class="lineNum">     700 </span>            : };
+<span class="lineNum">     701 </span>            : 
+<span class="lineNum">     702 </span>            : /**
+<span class="lineNum">     703 </span>            :  * \brief Input stream
+<span class="lineNum">     704 </span>            :  */
+<span class="lineNum">     705 </span>            : struct ROSCPP_SERIALIZATION_DECL IStream : public Stream
+<span class="lineNum">     706 </span>            : {
+<a name="707"><span class="lineNum">     707 </span>            :   static const StreamType stream_type = stream_types::Input;</a>
+<span class="lineNum">     708 </span>            : 
+<span class="lineNum">     709 </span><span class="lineCov">       2517 :   IStream(uint8_t* data, uint32_t count)</span>
+<span class="lineNum">     710 </span><span class="lineCov">       2517 :   : Stream(data, count)</span>
+<span class="lineNum">     711 </span><span class="lineCov">       2517 :   {}</span>
+<span class="lineNum">     712 </span>            : 
+<span class="lineNum">     713 </span>            :   /**
+<span class="lineNum">     714 </span>            :    * \brief Deserialize an item from this input stream
+<span class="lineNum">     715 </span>            :    */
+<span class="lineNum">     716 </span>            :   template&lt;typename T&gt;
+<span class="lineNum">     717 </span>            :   ROS_FORCE_INLINE void next(T&amp; t)
+<span class="lineNum">     718 </span>            :   {
+<span class="lineNum">     719 </span><span class="lineCov">      37755 :     deserialize(*this, t);</span>
+<span class="lineNum">     720 </span>            :   }
+<span class="lineNum">     721 </span>            : 
+<span class="lineNum">     722 </span>            :   template&lt;typename T&gt;
+<span class="lineNum">     723 </span>            :   ROS_FORCE_INLINE IStream&amp; operator&gt;&gt;(T&amp; t)
+<span class="lineNum">     724 </span>            :   {
+<span class="lineNum">     725 </span>            :     deserialize(*this, t);
+<span class="lineNum">     726 </span>            :     return *this;
+<span class="lineNum">     727 </span>            :   }
+<span class="lineNum">     728 </span>            : };
+<span class="lineNum">     729 </span>            : 
+<span class="lineNum">     730 </span>            : /**
+<span class="lineNum">     731 </span>            :  * \brief Output stream
+<span class="lineNum">     732 </span>            :  */
+<span class="lineNum">     733 </span>            : struct ROSCPP_SERIALIZATION_DECL OStream : public Stream
+<span class="lineNum">     734 </span>            : {
+<a name="735"><span class="lineNum">     735 </span>            :   static const StreamType stream_type = stream_types::Output;</a>
+<span class="lineNum">     736 </span>            : 
+<span class="lineNum">     737 </span><span class="lineCov">  109070445 :   OStream(uint8_t* data, uint32_t count)</span>
+<span class="lineNum">     738 </span><span class="lineCov">  109070445 :   : Stream(data, count)</span>
+<span class="lineNum">     739 </span><span class="lineCov">  109070445 :   {}</span>
+<span class="lineNum">     740 </span>            : 
+<span class="lineNum">     741 </span>            :   /**
+<span class="lineNum">     742 </span>            :    * \brief Serialize an item to this output stream
+<span class="lineNum">     743 </span>            :    */
+<span class="lineNum">     744 </span>            :   template&lt;typename T&gt;
+<span class="lineNum">     745 </span>            :   ROS_FORCE_INLINE void next(const T&amp; t)
+<span class="lineNum">     746 </span>            :   {
+<span class="lineNum">     747 </span><span class="lineCov">  872563560 :     serialize(*this, t);</span>
+<span class="lineNum">     748 </span>            :   }
+<span class="lineNum">     749 </span>            : 
+<span class="lineNum">     750 </span>            :   template&lt;typename T&gt;
+<span class="lineNum">     751 </span>            :   ROS_FORCE_INLINE OStream&amp; operator&lt;&lt;(const T&amp; t)
+<span class="lineNum">     752 </span>            :   {
+<span class="lineNum">     753 </span>            :     serialize(*this, t);
+<span class="lineNum">     754 </span>            :     return *this;
+<span class="lineNum">     755 </span>            :   }
+<span class="lineNum">     756 </span>            : };
+<span class="lineNum">     757 </span>            : 
+<span class="lineNum">     758 </span>            : 
+<span class="lineNum">     759 </span>            : /**
+<span class="lineNum">     760 </span>            :  * \brief Length stream
+<span class="lineNum">     761 </span>            :  *
+<span class="lineNum">     762 </span>            :  * LStream is not what you would normally think of as a stream, but it is used in order to support
+<span class="lineNum">     763 </span>            :  * allinone serializers.
+<span class="lineNum">     764 </span>            :  */
+<span class="lineNum">     765 </span>            : struct ROSCPP_SERIALIZATION_DECL LStream
+<span class="lineNum">     766 </span>            : {
+<a name="767"><span class="lineNum">     767 </span>            :   static const StreamType stream_type = stream_types::Length;</a>
+<span class="lineNum">     768 </span>            : 
+<span class="lineNum">     769 </span><span class="lineCov">  327211335 :   LStream()</span>
+<span class="lineNum">     770 </span><span class="lineCov">  327211335 :   : count_(0)</span>
+<span class="lineNum">     771 </span><span class="lineCov">  327211335 :   {}</span>
+<span class="lineNum">     772 </span>            : 
+<span class="lineNum">     773 </span>            :   /**
+<span class="lineNum">     774 </span>            :    * \brief Add the length of an item to this length stream
+<span class="lineNum">     775 </span>            :    */
+<span class="lineNum">     776 </span>            :   template&lt;typename T&gt;
+<span class="lineNum">     777 </span>            :   ROS_FORCE_INLINE void next(const T&amp; t)
+<span class="lineNum">     778 </span>            :   {
+<span class="lineNum">     779 </span><span class="lineCov">  872563560 :     count_ += serializationLength(t);</span>
+<span class="lineNum">     780 </span>            :   }
+<span class="lineNum">     781 </span>            : 
+<span class="lineNum">     782 </span>            :   /**
+<span class="lineNum">     783 </span>            :    * \brief increment the length by len
+<span class="lineNum">     784 </span>            :    */
+<span class="lineNum">     785 </span>            :   ROS_FORCE_INLINE uint32_t advance(uint32_t len)
+<span class="lineNum">     786 </span>            :   {
+<span class="lineNum">     787 </span>            :     uint32_t old = count_;
+<span class="lineNum">     788 </span>            :     count_ += len;
+<span class="lineNum">     789 </span>            :     return old;
+<span class="lineNum">     790 </span>            :   }
+<span class="lineNum">     791 </span>            : 
+<span class="lineNum">     792 </span>            :   /**
+<a name="793"><span class="lineNum">     793 </span>            :    * \brief Get the total length of this tream</a>
+<span class="lineNum">     794 </span>            :    */
+<span class="lineNum">     795 </span><span class="lineCov">  327211335 :   inline uint32_t getLength() { return count_; }</span>
+<span class="lineNum">     796 </span>            : 
+<span class="lineNum">     797 </span>            : private:
+<span class="lineNum">     798 </span>            :   uint32_t count_;
+<span class="lineNum">     799 </span>            : };
+<span class="lineNum">     800 </span>            : 
+<span class="lineNum">     801 </span>            : /**
+<span class="lineNum">     802 </span>            :  * \brief Serialize a message
+<a name="803"><span class="lineNum">     803 </span>            :  */</a>
+<span class="lineNum">     804 </span>            : template&lt;typename M&gt;
+<span class="lineNum">     805 </span><span class="lineCov">  109070445 : inline SerializedMessage serializeMessage(const M&amp; message)</span>
+<span class="lineNum">     806 </span>            : {
+<span class="lineNum">     807 </span><span class="lineCov">  109070445 :   SerializedMessage m;</span>
+<span class="lineNum">     808 </span><span class="lineCov">  109070445 :   uint32_t len = serializationLength(message);</span>
+<span class="lineNum">     809 </span><span class="lineCov">  109070445 :   m.num_bytes = len + 4;</span>
+<span class="lineNum">     810 </span><span class="lineCov">  109070445 :   m.buf.reset(new uint8_t[m.num_bytes]);</span>
+<span class="lineNum">     811 </span>            : 
+<span class="lineNum">     812 </span><span class="lineCov">  109070445 :   OStream s(m.buf.get(), (uint32_t)m.num_bytes);</span>
+<span class="lineNum">     813 </span><span class="lineCov">  109070445 :   serialize(s, (uint32_t)m.num_bytes - 4);</span>
+<span class="lineNum">     814 </span><span class="lineCov">  109070445 :   m.message_start = s.getData();</span>
+<span class="lineNum">     815 </span><span class="lineCov">  109070445 :   serialize(s, message);</span>
+<span class="lineNum">     816 </span>            : 
+<span class="lineNum">     817 </span><span class="lineCov">  109070445 :   return m;</span>
+<span class="lineNum">     818 </span>            : }
+<span class="lineNum">     819 </span>            : 
+<span class="lineNum">     820 </span>            : /**
+<span class="lineNum">     821 </span>            :  * \brief Serialize a service response
+<span class="lineNum">     822 </span>            :  */
+<span class="lineNum">     823 </span>            : template&lt;typename M&gt;
+<span class="lineNum">     824 </span>            : inline SerializedMessage serializeServiceResponse(bool ok, const M&amp; message)
+<span class="lineNum">     825 </span>            : {
+<span class="lineNum">     826 </span>            :   SerializedMessage m;
+<span class="lineNum">     827 </span>            : 
+<span class="lineNum">     828 </span>            :   if (ok)
+<span class="lineNum">     829 </span>            :   {
+<span class="lineNum">     830 </span>            :     uint32_t len = serializationLength(message);
+<span class="lineNum">     831 </span>            :     m.num_bytes = len + 5;
+<span class="lineNum">     832 </span>            :     m.buf.reset(new uint8_t[m.num_bytes]);
+<span class="lineNum">     833 </span>            : 
+<span class="lineNum">     834 </span>            :     OStream s(m.buf.get(), (uint32_t)m.num_bytes);
+<span class="lineNum">     835 </span>            :     serialize(s, (uint8_t)ok);
+<span class="lineNum">     836 </span>            :     serialize(s, (uint32_t)m.num_bytes - 5);
+<span class="lineNum">     837 </span>            :     serialize(s, message);
+<span class="lineNum">     838 </span>            :   }
+<span class="lineNum">     839 </span>            :   else
+<span class="lineNum">     840 </span>            :   {
+<span class="lineNum">     841 </span>            :     uint32_t len = serializationLength(message);
+<span class="lineNum">     842 </span>            :     m.num_bytes = len + 1;
+<span class="lineNum">     843 </span>            :     m.buf.reset(new uint8_t[m.num_bytes]);
+<span class="lineNum">     844 </span>            : 
+<span class="lineNum">     845 </span>            :     OStream s(m.buf.get(), (uint32_t)m.num_bytes);
+<span class="lineNum">     846 </span>            :     serialize(s, (uint8_t)ok);
+<span class="lineNum">     847 </span>            :     serialize(s, message);
+<span class="lineNum">     848 </span>            :   }
+<span class="lineNum">     849 </span>            : 
+<span class="lineNum">     850 </span>            :   return m;
+<span class="lineNum">     851 </span>            : }
+<span class="lineNum">     852 </span>            : 
+<span class="lineNum">     853 </span>            : /**
+<span class="lineNum">     854 </span>            :  * \brief Deserialize a message.  If includes_length is true, skips the first 4 bytes
+<span class="lineNum">     855 </span>            :  */
+<span class="lineNum">     856 </span>            : template&lt;typename M&gt;
+<span class="lineNum">     857 </span>            : inline void deserializeMessage(const SerializedMessage&amp; m, M&amp; message)
+<span class="lineNum">     858 </span>            : {
+<span class="lineNum">     859 </span>            :   IStream s(m.message_start, m.num_bytes - (m.message_start - m.buf.get()));
+<span class="lineNum">     860 </span>            :   deserialize(s, message);
+<span class="lineNum">     861 </span>            : }
+<span class="lineNum">     862 </span>            : 
+<span class="lineNum">     863 </span>            : 
+<span class="lineNum">     864 </span>            : // Additional serialization traits
+<a name="865"><span class="lineNum">     865 </span>            : </a>
+<span class="lineNum">     866 </span>            : template&lt;typename M&gt;
+<span class="lineNum">     867 </span><span class="lineCov">       5034 : struct PreDeserializeParams</span>
+<span class="lineNum">     868 </span>            : {
+<span class="lineNum">     869 </span>            :   boost::shared_ptr&lt;M&gt; message;
+<span class="lineNum">     870 </span>            :   boost::shared_ptr&lt;std::map&lt;std::string, std::string&gt; &gt; connection_header;
+<span class="lineNum">     871 </span>            : };
+<span class="lineNum">     872 </span>            : 
+<span class="lineNum">     873 </span>            : /**
+<span class="lineNum">     874 </span>            :  * \brief called by the SubscriptionCallbackHelper after a message is
+<span class="lineNum">     875 </span>            :  * instantiated but before that message is deserialized
+<span class="lineNum">     876 </span>            :  */
+<span class="lineNum">     877 </span>            : template&lt;typename M&gt;
+<a name="878"><span class="lineNum">     878 </span>            : struct PreDeserialize</a>
+<span class="lineNum">     879 </span>            : {
+<span class="lineNum">     880 </span><span class="lineCov">       2517 :   static void notify(const PreDeserializeParams&lt;M&gt;&amp;) { }</span>
+<span class="lineNum">     881 </span>            : };
+<span class="lineNum">     882 </span>            : 
+<span class="lineNum">     883 </span>            : } // namespace serialization
+<span class="lineNum">     884 </span>            : 
+<span class="lineNum">     885 </span>            : } // namespace ros
+<span class="lineNum">     886 </span>            : 
+<span class="lineNum">     887 </span>            : #endif // ROSCPP_SERIALIZATION_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

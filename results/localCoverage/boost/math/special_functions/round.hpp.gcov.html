@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - boost/math/special_functions/round.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">boost/math/special_functions</a> - round.hpp<span style="font-size: 80%;"> (source / <a href="round.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryLo">57.1 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //  Copyright John Maddock 2007.</a>
+<span class="lineNum">       2 </span>            : //  Use, modification and distribution are subject to the
+<span class="lineNum">       3 </span>            : //  Boost Software License, Version 1.0. (See accompanying file
+<span class="lineNum">       4 </span>            : //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span>            : #ifndef BOOST_MATH_ROUND_HPP
+<span class="lineNum">       7 </span>            : #define BOOST_MATH_ROUND_HPP
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : #ifdef _MSC_VER
+<span class="lineNum">      10 </span>            : #pragma once
+<span class="lineNum">      11 </span>            : #endif
+<span class="lineNum">      12 </span>            : 
+<span class="lineNum">      13 </span>            : #include &lt;boost/math/tools/config.hpp&gt;
+<span class="lineNum">      14 </span>            : #include &lt;boost/math/policies/error_handling.hpp&gt;
+<span class="lineNum">      15 </span>            : #include &lt;boost/math/special_functions/math_fwd.hpp&gt;
+<span class="lineNum">      16 </span>            : #include &lt;boost/math/special_functions/fpclassify.hpp&gt;
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : namespace boost{ namespace math{
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            : namespace detail{
+<a name="21"><span class="lineNum">      21 </span>            : </a>
+<span class="lineNum">      22 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">      23 </span><span class="lineCov">  109095710 : inline typename tools::promote_args&lt;T&gt;::type round(const T&amp; v, const Policy&amp; pol, const mpl::false_)</span>
+<span class="lineNum">      24 </span>            : {
+<span class="lineNum">      25 </span>            :    BOOST_MATH_STD_USING
+<span class="lineNum">      26 </span>            :       typedef typename tools::promote_args&lt;T&gt;::type result_type;
+<span class="lineNum">      27 </span><span class="lineCov">  109095710 :    if(!(boost::math::isfinite)(v))</span>
+<span class="lineNum">      28 </span><span class="lineNoCov">          0 :       return policies::raise_rounding_error(&quot;boost::math::round&lt;%1%&gt;(%1%)&quot;, 0, static_cast&lt;result_type&gt;(v), static_cast&lt;result_type&gt;(v), pol);</span>
+<span class="lineNum">      29 </span>            :    //
+<span class="lineNum">      30 </span>            :    // The logic here is rather convoluted, but avoids a number of traps,
+<span class="lineNum">      31 </span>            :    // see discussion here https://github.com/boostorg/math/pull/8
+<span class="lineNum">      32 </span>            :    //
+<span class="lineNum">      33 </span><span class="lineCov">  109095710 :    if (-0.5 &lt; v &amp;&amp; v &lt; 0.5)</span>
+<span class="lineNum">      34 </span>            :    {
+<span class="lineNum">      35 </span>            :       // special case to avoid rounding error on the direct
+<span class="lineNum">      36 </span>            :       // predecessor of +0.5 resp. the direct successor of -0.5 in
+<span class="lineNum">      37 </span>            :       // IEEE floating point types
+<span class="lineNum">      38 </span><span class="lineCov">  109095710 :       return 0;</span>
+<span class="lineNum">      39 </span>            :    }
+<span class="lineNum">      40 </span><span class="lineNoCov">          0 :    else if (v &gt; 0)</span>
+<span class="lineNum">      41 </span>            :    {
+<span class="lineNum">      42 </span>            :       // subtract v from ceil(v) first in order to avoid rounding
+<span class="lineNum">      43 </span>            :       // errors on largest representable integer numbers
+<span class="lineNum">      44 </span><span class="lineNoCov">          0 :       result_type c(ceil(v));</span>
+<span class="lineNum">      45 </span><span class="lineNoCov">          0 :       return 0.5 &lt; c - v ? c - 1 : c;</span>
+<span class="lineNum">      46 </span>            :    }
+<span class="lineNum">      47 </span>            :    else
+<span class="lineNum">      48 </span>            :    {
+<span class="lineNum">      49 </span>            :       // see former branch
+<span class="lineNum">      50 </span><span class="lineNoCov">          0 :       result_type f(floor(v));</span>
+<span class="lineNum">      51 </span><span class="lineNoCov">          0 :       return 0.5 &lt; v - f ? f + 1 : f;</span>
+<span class="lineNum">      52 </span>            :    }
+<span class="lineNum">      53 </span>            : }
+<span class="lineNum">      54 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">      55 </span>            : inline typename tools::promote_args&lt;T&gt;::type round(const T&amp; v, const Policy&amp;, const mpl::true_)
+<span class="lineNum">      56 </span>            : {
+<span class="lineNum">      57 </span>            :    return v;
+<span class="lineNum">      58 </span>            : }
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : } // namespace detail
+<a name="61"><span class="lineNum">      61 </span>            : </a>
+<span class="lineNum">      62 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">      63 </span><span class="lineCov">  109095710 : inline typename tools::promote_args&lt;T&gt;::type round(const T&amp; v, const Policy&amp; pol)</span>
+<span class="lineNum">      64 </span>            : {
+<span class="lineNum">      65 </span><span class="lineCov">  109095710 :    return detail::round(v, pol, mpl::bool_&lt;detail::is_integer_for_rounding&lt;T&gt;::value&gt;());</span>
+<a name="66"><span class="lineNum">      66 </span>            : }</a>
+<span class="lineNum">      67 </span>            : template &lt;class T&gt;
+<span class="lineNum">      68 </span><span class="lineCov">  109095710 : inline typename tools::promote_args&lt;T&gt;::type round(const T&amp; v)</span>
+<span class="lineNum">      69 </span>            : {
+<span class="lineNum">      70 </span><span class="lineCov">  109095710 :    return round(v, policies::policy&lt;&gt;());</span>
+<span class="lineNum">      71 </span>            : }
+<span class="lineNum">      72 </span>            : //
+<span class="lineNum">      73 </span>            : // The following functions will not compile unless T has an
+<span class="lineNum">      74 </span>            : // implicit convertion to the integer types.  For user-defined
+<span class="lineNum">      75 </span>            : // number types this will likely not be the case.  In that case
+<span class="lineNum">      76 </span>            : // these functions should either be specialized for the UDT in
+<span class="lineNum">      77 </span>            : // question, or else overloads should be placed in the same 
+<span class="lineNum">      78 </span>            : // namespace as the UDT: these will then be found via argument
+<span class="lineNum">      79 </span>            : // dependent lookup.  See our concept archetypes for examples.
+<span class="lineNum">      80 </span>            : //
+<span class="lineNum">      81 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">      82 </span>            : inline int iround(const T&amp; v, const Policy&amp; pol)
+<span class="lineNum">      83 </span>            : {
+<span class="lineNum">      84 </span>            :    BOOST_MATH_STD_USING
+<span class="lineNum">      85 </span>            :    T r = boost::math::round(v, pol);
+<span class="lineNum">      86 </span>            :    if((r &gt; (std::numeric_limits&lt;int&gt;::max)()) || (r &lt; (std::numeric_limits&lt;int&gt;::min)()))
+<span class="lineNum">      87 </span>            :       return static_cast&lt;int&gt;(policies::raise_rounding_error(&quot;boost::math::iround&lt;%1%&gt;(%1%)&quot;, 0, v, 0, pol));
+<span class="lineNum">      88 </span>            :    return static_cast&lt;int&gt;(r);
+<span class="lineNum">      89 </span>            : }
+<span class="lineNum">      90 </span>            : template &lt;class T&gt;
+<span class="lineNum">      91 </span>            : inline int iround(const T&amp; v)
+<span class="lineNum">      92 </span>            : {
+<span class="lineNum">      93 </span>            :    return iround(v, policies::policy&lt;&gt;());
+<span class="lineNum">      94 </span>            : }
+<span class="lineNum">      95 </span>            : 
+<span class="lineNum">      96 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">      97 </span>            : inline long lround(const T&amp; v, const Policy&amp; pol)
+<span class="lineNum">      98 </span>            : {
+<span class="lineNum">      99 </span>            :    BOOST_MATH_STD_USING
+<span class="lineNum">     100 </span>            :    T r = boost::math::round(v, pol);
+<span class="lineNum">     101 </span>            :    if((r &gt; (std::numeric_limits&lt;long&gt;::max)()) || (r &lt; (std::numeric_limits&lt;long&gt;::min)()))
+<span class="lineNum">     102 </span>            :       return static_cast&lt;long int&gt;(policies::raise_rounding_error(&quot;boost::math::lround&lt;%1%&gt;(%1%)&quot;, 0, v, 0L, pol));
+<span class="lineNum">     103 </span>            :    return static_cast&lt;long int&gt;(r);
+<span class="lineNum">     104 </span>            : }
+<span class="lineNum">     105 </span>            : template &lt;class T&gt;
+<span class="lineNum">     106 </span>            : inline long lround(const T&amp; v)
+<span class="lineNum">     107 </span>            : {
+<span class="lineNum">     108 </span>            :    return lround(v, policies::policy&lt;&gt;());
+<span class="lineNum">     109 </span>            : }
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span>            : #ifdef BOOST_HAS_LONG_LONG
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span>            : template &lt;class T, class Policy&gt;
+<span class="lineNum">     114 </span>            : inline boost::long_long_type llround(const T&amp; v, const Policy&amp; pol)
+<span class="lineNum">     115 </span>            : {
+<span class="lineNum">     116 </span>            :    BOOST_MATH_STD_USING
+<span class="lineNum">     117 </span>            :    T r = boost::math::round(v, pol);
+<span class="lineNum">     118 </span>            :    if((r &gt; (std::numeric_limits&lt;boost::long_long_type&gt;::max)()) || (r &lt; (std::numeric_limits&lt;boost::long_long_type&gt;::min)()))
+<span class="lineNum">     119 </span>            :       return static_cast&lt;boost::long_long_type&gt;(policies::raise_rounding_error(&quot;boost::math::llround&lt;%1%&gt;(%1%)&quot;, 0, v, static_cast&lt;boost::long_long_type&gt;(0), pol));
+<span class="lineNum">     120 </span>            :    return static_cast&lt;boost::long_long_type&gt;(r);
+<span class="lineNum">     121 </span>            : }
+<span class="lineNum">     122 </span>            : template &lt;class T&gt;
+<span class="lineNum">     123 </span>            : inline boost::long_long_type llround(const T&amp; v)
+<span class="lineNum">     124 </span>            : {
+<span class="lineNum">     125 </span>            :    return llround(v, policies::policy&lt;&gt;());
+<span class="lineNum">     126 </span>            : }
+<span class="lineNum">     127 </span>            : 
+<span class="lineNum">     128 </span>            : #endif
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span>            : }} // namespaces
+<span class="lineNum">     131 </span>            : 
+<span class="lineNum">     132 </span>            : #endif // BOOST_MATH_ROUND_HPP
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

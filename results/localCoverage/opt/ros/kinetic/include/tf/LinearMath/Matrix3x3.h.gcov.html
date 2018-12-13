@@ -1,0 +1,772 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/tf/LinearMath/Matrix3x3.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/tf/LinearMath</a> - Matrix3x3.h<span style="font-size: 80%;"> (source / <a href="Matrix3x3.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">59</td>
+            <td class="headerCovTableEntry">76</td>
+            <td class="headerCovTableEntryMed">77.6 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : Copyright (c) 2003-2006 Gino van den Bergen / Erwin Coumans  http://continuousphysics.com/Bullet/
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : This software is provided 'as-is', without any express or implied warranty.
+<span class="lineNum">       5 </span>            : In no event will the authors be held liable for any damages arising from the use of this software.
+<span class="lineNum">       6 </span>            : Permission is granted to anyone to use this software for any purpose, 
+<span class="lineNum">       7 </span>            : including commercial applications, and to alter it and redistribute it freely, 
+<span class="lineNum">       8 </span>            : subject to the following restrictions:
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+<span class="lineNum">      11 </span>            : 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+<span class="lineNum">      12 </span>            : 3. This notice may not be removed or altered from any source distribution.
+<span class="lineNum">      13 </span>            : */
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : #ifndef TF_MATRIX3x3_H
+<span class="lineNum">      17 </span>            : #define TF_MATRIX3x3_H
+<span class="lineNum">      18 </span>            : 
+<span class="lineNum">      19 </span>            : #include &quot;Vector3.h&quot;
+<span class="lineNum">      20 </span>            : #include &quot;Quaternion.h&quot;
+<span class="lineNum">      21 </span>            : 
+<span class="lineNum">      22 </span>            : namespace tf
+<span class="lineNum">      23 </span>            : {
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : 
+<span class="lineNum">      26 </span>            : #define Matrix3x3Data   Matrix3x3DoubleData 
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            : 
+<span class="lineNum">      29 </span>            : /**@brief The Matrix3x3 class implements a 3x3 rotation matrix, to perform linear algebra in combination with Quaternion, Transform and Vector3.
+<span class="lineNum">      30 </span>            : * Make sure to only include a pure orthogonal matrix without scaling. */
+<span class="lineNum">      31 </span>            : class Matrix3x3 {
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span>            :         ///Data storage for the matrix, each vector is a row of the matrix
+<span class="lineNum">      34 </span>            :         Vector3 m_el[3];
+<span class="lineNum">      35 </span>            : 
+<a name="36"><span class="lineNum">      36 </span>            : public:</a>
+<span class="lineNum">      37 </span>            :         /** @brief No initializaion constructor */
+<span class="lineNum">      38 </span><span class="lineCov">         33 :         Matrix3x3 () {}</span>
+<span class="lineNum">      39 </span>            : 
+<span class="lineNum">      40 </span>            :         //              explicit Matrix3x3(const tfScalar *m) { setFromOpenGLSubMatrix(m); }
+<a name="41"><span class="lineNum">      41 </span>            : </a>
+<span class="lineNum">      42 </span>            :         /**@brief Constructor from Quaternion */
+<span class="lineNum">      43 </span><span class="lineCov">   71072280 :         explicit Matrix3x3(const Quaternion&amp; q) { setRotation(q); }</span>
+<span class="lineNum">      44 </span>            :         /*
+<span class="lineNum">      45 </span>            :         template &lt;typename tfScalar&gt;
+<span class="lineNum">      46 </span>            :         Matrix3x3(const tfScalar&amp; yaw, const tfScalar&amp; pitch, const tfScalar&amp; roll)
+<span class="lineNum">      47 </span>            :         { 
+<span class="lineNum">      48 </span>            :         setEulerYPR(yaw, pitch, roll);
+<span class="lineNum">      49 </span>            :         }
+<span class="lineNum">      50 </span>            :         */
+<span class="lineNum">      51 </span>            :         /** @brief Constructor with row major formatting */
+<span class="lineNum">      52 </span>            :         Matrix3x3(const tfScalar&amp; xx, const tfScalar&amp; xy, const tfScalar&amp; xz,
+<span class="lineNum">      53 </span>            :                 const tfScalar&amp; yx, const tfScalar&amp; yy, const tfScalar&amp; yz,
+<span class="lineNum">      54 </span>            :                 const tfScalar&amp; zx, const tfScalar&amp; zy, const tfScalar&amp; zz)
+<span class="lineNum">      55 </span>            :         { 
+<span class="lineNum">      56 </span>            :                 setValue(xx, xy, xz, 
+<span class="lineNum">      57 </span>            :                         yx, yy, yz, 
+<span class="lineNum">      58 </span>            :                         zx, zy, zz);
+<span class="lineNum">      59 </span>            :         }
+<span class="lineNum">      60 </span>            :         /** @brief Copy constructor */
+<span class="lineNum">      61 </span>            :         TFSIMD_FORCE_INLINE Matrix3x3 (const Matrix3x3&amp; other)
+<span class="lineNum">      62 </span>            :         {
+<span class="lineNum">      63 </span>            :                 m_el[0] = other.m_el[0];
+<span class="lineNum">      64 </span>            :                 m_el[1] = other.m_el[1];
+<span class="lineNum">      65 </span>            :                 m_el[2] = other.m_el[2];
+<span class="lineNum">      66 </span>            :         }
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span>            :         /** @brief Assignment Operator */
+<span class="lineNum">      70 </span>            :         TFSIMD_FORCE_INLINE Matrix3x3&amp; operator=(const Matrix3x3&amp; other)
+<span class="lineNum">      71 </span>            :         {
+<span class="lineNum">      72 </span>            :                 m_el[0] = other.m_el[0];
+<span class="lineNum">      73 </span>            :                 m_el[1] = other.m_el[1];
+<span class="lineNum">      74 </span>            :                 m_el[2] = other.m_el[2];
+<span class="lineNum">      75 </span>            :                 return *this;
+<span class="lineNum">      76 </span>            :         }
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span>            : 
+<span class="lineNum">      79 </span>            :         /** @brief Get a column of the matrix as a vector 
+<span class="lineNum">      80 </span>            :         *  @param i Column number 0 indexed */
+<span class="lineNum">      81 </span>            :         TFSIMD_FORCE_INLINE Vector3 getColumn(int i) const
+<span class="lineNum">      82 </span>            :         {
+<span class="lineNum">      83 </span>            :                 return Vector3(m_el[0][i],m_el[1][i],m_el[2][i]);
+<span class="lineNum">      84 </span>            :         }
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span>            :         /** @brief Get a row of the matrix as a vector 
+<span class="lineNum">      88 </span>            :         *  @param i Row number 0 indexed */
+<span class="lineNum">      89 </span>            :         TFSIMD_FORCE_INLINE const Vector3&amp; getRow(int i) const
+<span class="lineNum">      90 </span>            :         {
+<span class="lineNum">      91 </span>            :                 tfFullAssert(0 &lt;= i &amp;&amp; i &lt; 3);
+<span class="lineNum">      92 </span>            :                 return m_el[i];
+<span class="lineNum">      93 </span>            :         }
+<span class="lineNum">      94 </span>            : 
+<span class="lineNum">      95 </span>            :         /** @brief Get a mutable reference to a row of the matrix as a vector 
+<span class="lineNum">      96 </span>            :         *  @param i Row number 0 indexed */
+<span class="lineNum">      97 </span>            :         TFSIMD_FORCE_INLINE Vector3&amp;  operator[](int i)
+<span class="lineNum">      98 </span>            :         { 
+<span class="lineNum">      99 </span>            :                 tfFullAssert(0 &lt;= i &amp;&amp; i &lt; 3);
+<span class="lineNum">     100 </span>            :                 return m_el[i]; 
+<span class="lineNum">     101 </span>            :         }
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            :         /** @brief Get a const reference to a row of the matrix as a vector 
+<span class="lineNum">     104 </span>            :         *  @param i Row number 0 indexed */
+<span class="lineNum">     105 </span>            :         TFSIMD_FORCE_INLINE const Vector3&amp; operator[](int i) const
+<span class="lineNum">     106 </span>            :         {
+<span class="lineNum">     107 </span>            :                 tfFullAssert(0 &lt;= i &amp;&amp; i &lt; 3);
+<span class="lineNum">     108 </span>            :                 return m_el[i]; 
+<span class="lineNum">     109 </span>            :         }
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span>            :         /** @brief Multiply by the target matrix on the right
+<span class="lineNum">     112 </span>            :         *  @param m Rotation matrix to be applied 
+<span class="lineNum">     113 </span>            :         * Equivilant to this = this * m */
+<span class="lineNum">     114 </span>            :         Matrix3x3&amp; operator*=(const Matrix3x3&amp; m); 
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span>            :         /** @brief Set from a carray of tfScalars 
+<span class="lineNum">     117 </span>            :         *  @param m A pointer to the beginning of an array of 9 tfScalars */
+<span class="lineNum">     118 </span>            :         void setFromOpenGLSubMatrix(const tfScalar *m)
+<span class="lineNum">     119 </span>            :         {
+<span class="lineNum">     120 </span>            :                 m_el[0].setValue(m[0],m[4],m[8]);
+<span class="lineNum">     121 </span>            :                 m_el[1].setValue(m[1],m[5],m[9]);
+<span class="lineNum">     122 </span>            :                 m_el[2].setValue(m[2],m[6],m[10]);
+<span class="lineNum">     123 </span>            : 
+<span class="lineNum">     124 </span>            :         }
+<span class="lineNum">     125 </span>            :         /** @brief Set the values of the matrix explicitly (row major)
+<span class="lineNum">     126 </span>            :         *  @param xx Top left
+<span class="lineNum">     127 </span>            :         *  @param xy Top Middle
+<span class="lineNum">     128 </span>            :         *  @param xz Top Right
+<span class="lineNum">     129 </span>            :         *  @param yx Middle Left
+<span class="lineNum">     130 </span>            :         *  @param yy Middle Middle
+<span class="lineNum">     131 </span>            :         *  @param yz Middle Right
+<span class="lineNum">     132 </span>            :         *  @param zx Bottom Left
+<a name="133"><span class="lineNum">     133 </span>            :         *  @param zy Bottom Middle</a>
+<span class="lineNum">     134 </span>            :         *  @param zz Bottom Right*/
+<span class="lineNum">     135 </span><span class="lineCov">   71072280 :         void setValue(const tfScalar&amp; xx, const tfScalar&amp; xy, const tfScalar&amp; xz, </span>
+<span class="lineNum">     136 </span>            :                 const tfScalar&amp; yx, const tfScalar&amp; yy, const tfScalar&amp; yz, 
+<span class="lineNum">     137 </span>            :                 const tfScalar&amp; zx, const tfScalar&amp; zy, const tfScalar&amp; zz)
+<span class="lineNum">     138 </span>            :         {
+<span class="lineNum">     139 </span><span class="lineCov">   71072280 :                 m_el[0].setValue(xx,xy,xz);</span>
+<span class="lineNum">     140 </span><span class="lineCov">   71072280 :                 m_el[1].setValue(yx,yy,yz);</span>
+<span class="lineNum">     141 </span><span class="lineCov">   71072280 :                 m_el[2].setValue(zx,zy,zz);</span>
+<span class="lineNum">     142 </span><span class="lineCov">   71072280 :         }</span>
+<span class="lineNum">     143 </span>            : 
+<a name="144"><span class="lineNum">     144 </span>            :         /** @brief Set the matrix from a quaternion</a>
+<span class="lineNum">     145 </span>            :         *  @param q The Quaternion to match */  
+<span class="lineNum">     146 </span><span class="lineCov">   71072280 :         void setRotation(const Quaternion&amp; q) </span>
+<span class="lineNum">     147 </span>            :         {
+<span class="lineNum">     148 </span><span class="lineCov">   71072280 :                 tfScalar d = q.length2();</span>
+<span class="lineNum">     149 </span>            :                 tfFullAssert(d != tfScalar(0.0));
+<span class="lineNum">     150 </span><span class="lineCov">   71072280 :                 tfScalar s = tfScalar(2.0) / d;</span>
+<span class="lineNum">     151 </span><span class="lineCov">   71072280 :                 tfScalar xs = q.x() * s,   ys = q.y() * s,   zs = q.z() * s;</span>
+<span class="lineNum">     152 </span><span class="lineCov">   71072280 :                 tfScalar wx = q.w() * xs,  wy = q.w() * ys,  wz = q.w() * zs;</span>
+<span class="lineNum">     153 </span><span class="lineCov">   71072280 :                 tfScalar xx = q.x() * xs,  xy = q.x() * ys,  xz = q.x() * zs;</span>
+<span class="lineNum">     154 </span><span class="lineCov">   71072280 :                 tfScalar yy = q.y() * ys,  yz = q.y() * zs,  zz = q.z() * zs;</span>
+<span class="lineNum">     155 </span><span class="lineCov">  497505960 :                 setValue(tfScalar(1.0) - (yy + zz), xy - wz, xz + wy,</span>
+<span class="lineNum">     156 </span><span class="lineCov">  213216840 :                         xy + wz, tfScalar(1.0) - (xx + zz), yz - wx,</span>
+<span class="lineNum">     157 </span><span class="lineCov">  284289120 :                         xz - wy, yz + wx, tfScalar(1.0) - (xx + yy));</span>
+<span class="lineNum">     158 </span><span class="lineCov">   71072280 :         }</span>
+<span class="lineNum">     159 </span>            : 
+<span class="lineNum">     160 </span>            : 
+<span class="lineNum">     161 </span>            :         /** @brief Set the matrix from euler angles using YPR around ZYX respectively
+<span class="lineNum">     162 </span>            :         *  @param yaw Yaw about Z axis
+<span class="lineNum">     163 </span>            :         *  @param pitch Pitch about Y axis
+<span class="lineNum">     164 </span>            :         *  @param roll Roll about X axis 
+<span class="lineNum">     165 </span>            :         */
+<span class="lineNum">     166 </span>            :         void setEulerZYX(const tfScalar&amp; yaw, const tfScalar&amp; pitch, const tfScalar&amp; roll) __attribute__((deprecated))
+<span class="lineNum">     167 </span>            :         {
+<span class="lineNum">     168 </span>            :                 setEulerYPR(yaw, pitch, roll);
+<span class="lineNum">     169 </span>            :         }
+<span class="lineNum">     170 </span>            : 
+<span class="lineNum">     171 </span>            :         /** @brief Set the matrix from euler angles YPR around ZYX axes
+<span class="lineNum">     172 </span>            :         * @param eulerZ Yaw aboud Z axis
+<span class="lineNum">     173 </span>            :         * @param eulerY Pitch around Y axis
+<span class="lineNum">     174 </span>            :         * @param eulerX Roll about X axis
+<span class="lineNum">     175 </span>            :         * 
+<span class="lineNum">     176 </span>            :         * These angles are used to produce a rotation matrix. The euler
+<span class="lineNum">     177 </span>            :         * angles are applied in ZYX order. I.e a vector is first rotated 
+<span class="lineNum">     178 </span>            :         * about X then Y and then Z
+<span class="lineNum">     179 </span>            :         **/
+<span class="lineNum">     180 </span>            :         void setEulerYPR(tfScalar eulerZ, tfScalar eulerY,tfScalar eulerX)  { 
+<span class="lineNum">     181 </span>            :                 tfScalar ci ( tfCos(eulerX)); 
+<span class="lineNum">     182 </span>            :                 tfScalar cj ( tfCos(eulerY)); 
+<span class="lineNum">     183 </span>            :                 tfScalar ch ( tfCos(eulerZ)); 
+<span class="lineNum">     184 </span>            :                 tfScalar si ( tfSin(eulerX)); 
+<span class="lineNum">     185 </span>            :                 tfScalar sj ( tfSin(eulerY)); 
+<span class="lineNum">     186 </span>            :                 tfScalar sh ( tfSin(eulerZ)); 
+<span class="lineNum">     187 </span>            :                 tfScalar cc = ci * ch; 
+<span class="lineNum">     188 </span>            :                 tfScalar cs = ci * sh; 
+<span class="lineNum">     189 </span>            :                 tfScalar sc = si * ch; 
+<span class="lineNum">     190 </span>            :                 tfScalar ss = si * sh;
+<span class="lineNum">     191 </span>            : 
+<span class="lineNum">     192 </span>            :                 setValue(cj * ch, sj * sc - cs, sj * cc + ss,
+<span class="lineNum">     193 </span>            :                         cj * sh, sj * ss + cc, sj * cs - sc, 
+<span class="lineNum">     194 </span>            :                         -sj,      cj * si,      cj * ci);
+<span class="lineNum">     195 </span>            :         }
+<span class="lineNum">     196 </span>            : 
+<span class="lineNum">     197 </span>            :         /** @brief Set the matrix using RPY about XYZ fixed axes
+<span class="lineNum">     198 </span>            :          * @param roll Roll about X axis
+<span class="lineNum">     199 </span>            :          * @param pitch Pitch around Y axis
+<span class="lineNum">     200 </span>            :          * @param yaw Yaw aboud Z axis
+<span class="lineNum">     201 </span>            :          * 
+<span class="lineNum">     202 </span>            :          **/
+<span class="lineNum">     203 </span>            :         void setRPY(tfScalar roll, tfScalar pitch,tfScalar yaw) { 
+<span class="lineNum">     204 </span>            :                setEulerYPR(yaw, pitch, roll);
+<span class="lineNum">     205 </span>            :         }
+<span class="lineNum">     206 </span>            : 
+<span class="lineNum">     207 </span>            :         /**@brief Set the matrix to the identity */
+<span class="lineNum">     208 </span>            :         void setIdentity()
+<span class="lineNum">     209 </span>            :         { 
+<span class="lineNum">     210 </span>            :                 setValue(tfScalar(1.0), tfScalar(0.0), tfScalar(0.0), 
+<span class="lineNum">     211 </span>            :                         tfScalar(0.0), tfScalar(1.0), tfScalar(0.0), 
+<span class="lineNum">     212 </span>            :                         tfScalar(0.0), tfScalar(0.0), tfScalar(1.0)); 
+<span class="lineNum">     213 </span>            :         }
+<span class="lineNum">     214 </span>            : 
+<span class="lineNum">     215 </span>            :         static const Matrix3x3&amp;     getIdentity()
+<span class="lineNum">     216 </span>            :         {
+<span class="lineNum">     217 </span>            :                 static const Matrix3x3 identityMatrix(tfScalar(1.0), tfScalar(0.0), tfScalar(0.0), 
+<span class="lineNum">     218 </span>            :                         tfScalar(0.0), tfScalar(1.0), tfScalar(0.0), 
+<span class="lineNum">     219 </span>            :                         tfScalar(0.0), tfScalar(0.0), tfScalar(1.0));
+<span class="lineNum">     220 </span>            :                 return identityMatrix;
+<span class="lineNum">     221 </span>            :         }
+<span class="lineNum">     222 </span>            : 
+<span class="lineNum">     223 </span>            :         /**@brief Fill the values of the matrix into a 9 element array 
+<span class="lineNum">     224 </span>            :         * @param m The array to be filled */
+<span class="lineNum">     225 </span>            :         void getOpenGLSubMatrix(tfScalar *m) const 
+<span class="lineNum">     226 </span>            :         {
+<span class="lineNum">     227 </span>            :                 m[0]  = tfScalar(m_el[0].x()); 
+<span class="lineNum">     228 </span>            :                 m[1]  = tfScalar(m_el[1].x());
+<span class="lineNum">     229 </span>            :                 m[2]  = tfScalar(m_el[2].x());
+<span class="lineNum">     230 </span>            :                 m[3]  = tfScalar(0.0); 
+<span class="lineNum">     231 </span>            :                 m[4]  = tfScalar(m_el[0].y());
+<span class="lineNum">     232 </span>            :                 m[5]  = tfScalar(m_el[1].y());
+<span class="lineNum">     233 </span>            :                 m[6]  = tfScalar(m_el[2].y());
+<span class="lineNum">     234 </span>            :                 m[7]  = tfScalar(0.0); 
+<span class="lineNum">     235 </span>            :                 m[8]  = tfScalar(m_el[0].z()); 
+<span class="lineNum">     236 </span>            :                 m[9]  = tfScalar(m_el[1].z());
+<span class="lineNum">     237 </span>            :                 m[10] = tfScalar(m_el[2].z());
+<span class="lineNum">     238 </span>            :                 m[11] = tfScalar(0.0); 
+<span class="lineNum">     239 </span>            :         }
+<span class="lineNum">     240 </span>            : 
+<a name="241"><span class="lineNum">     241 </span>            :         /**@brief Get the matrix represented as a quaternion </a>
+<span class="lineNum">     242 </span>            :         * @param q The quaternion which will be set */
+<span class="lineNum">     243 </span><span class="lineCov">   71072280 :         void getRotation(Quaternion&amp; q) const</span>
+<span class="lineNum">     244 </span>            :         {
+<span class="lineNum">     245 </span><span class="lineCov">   71072280 :                 tfScalar trace = m_el[0].x() + m_el[1].y() + m_el[2].z();</span>
+<span class="lineNum">     246 </span>            :                 tfScalar temp[4];
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span><span class="lineCov">   71072280 :                 if (trace &gt; tfScalar(0.0)) </span>
+<span class="lineNum">     249 </span>            :                 {
+<span class="lineNum">     250 </span><span class="lineCov">   58234153 :                         tfScalar s = tfSqrt(trace + tfScalar(1.0));</span>
+<span class="lineNum">     251 </span><span class="lineCov">   58234153 :                         temp[3]=(s * tfScalar(0.5));</span>
+<span class="lineNum">     252 </span><span class="lineCov">   58234153 :                         s = tfScalar(0.5) / s;</span>
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span><span class="lineCov">   58234153 :                         temp[0]=((m_el[2].y() - m_el[1].z()) * s);</span>
+<span class="lineNum">     255 </span><span class="lineCov">   58234153 :                         temp[1]=((m_el[0].z() - m_el[2].x()) * s);</span>
+<span class="lineNum">     256 </span><span class="lineCov">   58234153 :                         temp[2]=((m_el[1].x() - m_el[0].y()) * s);</span>
+<span class="lineNum">     257 </span>            :                 } 
+<span class="lineNum">     258 </span>            :                 else 
+<span class="lineNum">     259 </span>            :                 {
+<span class="lineNum">     260 </span><span class="lineCov">   12838127 :                         int i = m_el[0].x() &lt; m_el[1].y() ? </span>
+<span class="lineNum">     261 </span><span class="lineNoCov">          0 :                                 (m_el[1].y() &lt; m_el[2].z() ? 2 : 1) :</span>
+<span class="lineNum">     262 </span><span class="lineCov">   12838127 :                                 (m_el[0].x() &lt; m_el[2].z() ? 2 : 0); </span>
+<span class="lineNum">     263 </span><span class="lineCov">   12838127 :                         int j = (i + 1) % 3;  </span>
+<span class="lineNum">     264 </span><span class="lineCov">   12838127 :                         int k = (i + 2) % 3;</span>
+<span class="lineNum">     265 </span>            : 
+<span class="lineNum">     266 </span><span class="lineCov">   12838127 :                         tfScalar s = tfSqrt(m_el[i][i] - m_el[j][j] - m_el[k][k] + tfScalar(1.0));</span>
+<span class="lineNum">     267 </span><span class="lineCov">   12838127 :                         temp[i] = s * tfScalar(0.5);</span>
+<span class="lineNum">     268 </span><span class="lineCov">   12838127 :                         s = tfScalar(0.5) / s;</span>
+<span class="lineNum">     269 </span>            : 
+<span class="lineNum">     270 </span><span class="lineCov">   12838127 :                         temp[3] = (m_el[k][j] - m_el[j][k]) * s;</span>
+<span class="lineNum">     271 </span><span class="lineCov">   12838127 :                         temp[j] = (m_el[j][i] + m_el[i][j]) * s;</span>
+<span class="lineNum">     272 </span><span class="lineCov">   12838127 :                         temp[k] = (m_el[k][i] + m_el[i][k]) * s;</span>
+<span class="lineNum">     273 </span>            :                 }
+<span class="lineNum">     274 </span><span class="lineCov">   71072280 :                 q.setValue(temp[0],temp[1],temp[2],temp[3]);</span>
+<span class="lineNum">     275 </span><span class="lineCov">   71072280 :         }</span>
+<span class="lineNum">     276 </span>            : 
+<span class="lineNum">     277 </span>            :         /**@brief Get the matrix represented as euler angles around ZYX
+<span class="lineNum">     278 </span>            :         * @param yaw Yaw around Z axis
+<span class="lineNum">     279 </span>            :         * @param pitch Pitch around Y axis
+<span class="lineNum">     280 </span>            :         * @param roll around X axis 
+<span class="lineNum">     281 </span>            :         * @param solution_number Which solution of two possible solutions ( 1 or 2) are possible values*/       
+<span class="lineNum">     282 </span>            :         __attribute__((deprecated)) void getEulerZYX(tfScalar&amp; yaw, tfScalar&amp; pitch, tfScalar&amp; roll, unsigned int solution_number = 1) const
+<span class="lineNum">     283 </span>            :         {
+<span class="lineNum">     284 </span>            :                 getEulerYPR(yaw, pitch, roll, solution_number);
+<span class="lineNum">     285 </span>            :         };
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span>            : 
+<span class="lineNum">     288 </span>            :         /**@brief Get the matrix represented as euler angles around YXZ, roundtrip with setEulerYPR
+<span class="lineNum">     289 </span>            :         * @param yaw Yaw around Z axis
+<a name="290"><span class="lineNum">     290 </span>            :         * @param pitch Pitch around Y axis</a>
+<span class="lineNum">     291 </span>            :         * @param roll around X axis */  
+<span class="lineNum">     292 </span><span class="lineCov">   71072280 :         void getEulerYPR(tfScalar&amp; yaw, tfScalar&amp; pitch, tfScalar&amp; roll, unsigned int solution_number = 1) const</span>
+<span class="lineNum">     293 </span>            :         {
+<span class="lineNum">     294 </span>            :                 struct Euler
+<span class="lineNum">     295 </span>            :                 {
+<span class="lineNum">     296 </span>            :                         tfScalar yaw;
+<span class="lineNum">     297 </span>            :                         tfScalar pitch;
+<span class="lineNum">     298 </span>            :                         tfScalar roll;
+<span class="lineNum">     299 </span>            :                 };
+<span class="lineNum">     300 </span>            : 
+<span class="lineNum">     301 </span>            :                 Euler euler_out;
+<span class="lineNum">     302 </span>            :                 Euler euler_out2; //second solution
+<span class="lineNum">     303 </span>            :                 //get the pointer to the raw data
+<span class="lineNum">     304 </span>            : 
+<span class="lineNum">     305 </span>            :                 // Check that pitch is not at a singularity
+<span class="lineNum">     306 </span>            :                 // Check that pitch is not at a singularity
+<span class="lineNum">     307 </span><span class="lineCov">   71072280 :                 if (tfFabs(m_el[2].x()) &gt;= 1)</span>
+<span class="lineNum">     308 </span>            :                 {
+<span class="lineNum">     309 </span><span class="lineNoCov">          0 :                         euler_out.yaw = 0;</span>
+<span class="lineNum">     310 </span><span class="lineNoCov">          0 :                         euler_out2.yaw = 0;</span>
+<span class="lineNum">     311 </span>            :         
+<span class="lineNum">     312 </span>            :                         // From difference of angles formula
+<span class="lineNum">     313 </span><span class="lineNoCov">          0 :                         if (m_el[2].x() &lt; 0)  //gimbal locked down</span>
+<span class="lineNum">     314 </span>            :                         {
+<span class="lineNum">     315 </span><span class="lineNoCov">          0 :                           tfScalar delta = tfAtan2(m_el[0].y(),m_el[0].z());</span>
+<span class="lineNum">     316 </span><span class="lineNoCov">          0 :                                 euler_out.pitch = TFSIMD_PI / tfScalar(2.0);</span>
+<span class="lineNum">     317 </span><span class="lineNoCov">          0 :                                 euler_out2.pitch = TFSIMD_PI / tfScalar(2.0);</span>
+<span class="lineNum">     318 </span><span class="lineNoCov">          0 :                                 euler_out.roll = delta;</span>
+<span class="lineNum">     319 </span><span class="lineNoCov">          0 :                                 euler_out2.roll = delta;</span>
+<span class="lineNum">     320 </span>            :                         }
+<span class="lineNum">     321 </span>            :                         else // gimbal locked up
+<span class="lineNum">     322 </span>            :                         {
+<span class="lineNum">     323 </span><span class="lineNoCov">          0 :                           tfScalar delta = tfAtan2(-m_el[0].y(),-m_el[0].z());</span>
+<span class="lineNum">     324 </span><span class="lineNoCov">          0 :                                 euler_out.pitch = -TFSIMD_PI / tfScalar(2.0);</span>
+<span class="lineNum">     325 </span><span class="lineNoCov">          0 :                                 euler_out2.pitch = -TFSIMD_PI / tfScalar(2.0);</span>
+<span class="lineNum">     326 </span><span class="lineNoCov">          0 :                                 euler_out.roll = delta;</span>
+<span class="lineNum">     327 </span><span class="lineNoCov">          0 :                                 euler_out2.roll = delta;</span>
+<span class="lineNum">     328 </span>            :                         }
+<span class="lineNum">     329 </span>            :                 }
+<span class="lineNum">     330 </span>            :                 else
+<span class="lineNum">     331 </span>            :                 {
+<span class="lineNum">     332 </span><span class="lineCov">   71072280 :                         euler_out.pitch = - tfAsin(m_el[2].x());</span>
+<span class="lineNum">     333 </span><span class="lineCov">   71072280 :                         euler_out2.pitch = TFSIMD_PI - euler_out.pitch;</span>
+<span class="lineNum">     334 </span>            : 
+<span class="lineNum">     335 </span><span class="lineCov">  142144560 :                         euler_out.roll = tfAtan2(m_el[2].y()/tfCos(euler_out.pitch), </span>
+<span class="lineNum">     336 </span><span class="lineCov">  213216840 :                                 m_el[2].z()/tfCos(euler_out.pitch));</span>
+<span class="lineNum">     337 </span><span class="lineCov">  142144560 :                         euler_out2.roll = tfAtan2(m_el[2].y()/tfCos(euler_out2.pitch), </span>
+<span class="lineNum">     338 </span><span class="lineCov">  213216840 :                                 m_el[2].z()/tfCos(euler_out2.pitch));</span>
+<span class="lineNum">     339 </span>            : 
+<span class="lineNum">     340 </span><span class="lineCov">  142144560 :                         euler_out.yaw = tfAtan2(m_el[1].x()/tfCos(euler_out.pitch), </span>
+<span class="lineNum">     341 </span><span class="lineCov">  213216840 :                                 m_el[0].x()/tfCos(euler_out.pitch));</span>
+<span class="lineNum">     342 </span><span class="lineCov">  142144560 :                         euler_out2.yaw = tfAtan2(m_el[1].x()/tfCos(euler_out2.pitch), </span>
+<span class="lineNum">     343 </span><span class="lineCov">  213216840 :                                 m_el[0].x()/tfCos(euler_out2.pitch));</span>
+<span class="lineNum">     344 </span>            :                 }
+<span class="lineNum">     345 </span>            : 
+<span class="lineNum">     346 </span><span class="lineCov">   71072280 :                 if (solution_number == 1)</span>
+<span class="lineNum">     347 </span>            :                 { 
+<span class="lineNum">     348 </span><span class="lineCov">   71072280 :                         yaw = euler_out.yaw; </span>
+<span class="lineNum">     349 </span><span class="lineCov">   71072280 :                         pitch = euler_out.pitch;</span>
+<span class="lineNum">     350 </span><span class="lineCov">   71072280 :                         roll = euler_out.roll;</span>
+<span class="lineNum">     351 </span>            :                 }
+<span class="lineNum">     352 </span>            :                 else
+<span class="lineNum">     353 </span>            :                 { 
+<span class="lineNum">     354 </span><span class="lineNoCov">          0 :                         yaw = euler_out2.yaw; </span>
+<span class="lineNum">     355 </span><span class="lineNoCov">          0 :                         pitch = euler_out2.pitch;</span>
+<span class="lineNum">     356 </span><span class="lineNoCov">          0 :                         roll = euler_out2.roll;</span>
+<span class="lineNum">     357 </span>            :                 }
+<span class="lineNum">     358 </span><span class="lineCov">   71072280 :         }</span>
+<span class="lineNum">     359 </span>            : 
+<span class="lineNum">     360 </span>            :         /**@brief Get the matrix represented as roll pitch and yaw about fixed axes XYZ
+<span class="lineNum">     361 </span>            :         * @param roll around X axis 
+<span class="lineNum">     362 </span>            :         * @param pitch Pitch around Y axis
+<a name="363"><span class="lineNum">     363 </span>            :         * @param yaw Yaw around Z axis</a>
+<span class="lineNum">     364 </span>            :         * @param solution_number Which solution of two possible solutions ( 1 or 2) are possible values*/       
+<span class="lineNum">     365 </span><span class="lineCov">   71072280 :         void getRPY(tfScalar&amp; roll, tfScalar&amp; pitch, tfScalar&amp; yaw, unsigned int solution_number = 1) const</span>
+<span class="lineNum">     366 </span>            :         {
+<span class="lineNum">     367 </span><span class="lineCov">   71072280 :         getEulerYPR(yaw, pitch, roll, solution_number);</span>
+<span class="lineNum">     368 </span><span class="lineCov">   71072280 :         }</span>
+<span class="lineNum">     369 </span>            : 
+<span class="lineNum">     370 </span>            :         /**@brief Create a scaled copy of the matrix 
+<span class="lineNum">     371 </span>            :         * @param s Scaling vector The elements of the vector will scale each column */
+<span class="lineNum">     372 </span>            : 
+<span class="lineNum">     373 </span>            :         Matrix3x3 scaled(const Vector3&amp; s) const
+<span class="lineNum">     374 </span>            :         {
+<span class="lineNum">     375 </span>            :                 return Matrix3x3(m_el[0].x() * s.x(), m_el[0].y() * s.y(), m_el[0].z() * s.z(),
+<span class="lineNum">     376 </span>            :                         m_el[1].x() * s.x(), m_el[1].y() * s.y(), m_el[1].z() * s.z(),
+<span class="lineNum">     377 </span>            :                         m_el[2].x() * s.x(), m_el[2].y() * s.y(), m_el[2].z() * s.z());
+<span class="lineNum">     378 </span>            :         }
+<span class="lineNum">     379 </span>            : 
+<span class="lineNum">     380 </span>            :         /**@brief Return the determinant of the matrix */
+<span class="lineNum">     381 </span>            :         tfScalar            determinant() const;
+<span class="lineNum">     382 </span>            :         /**@brief Return the adjoint of the matrix */
+<span class="lineNum">     383 </span>            :         Matrix3x3 adjoint() const;
+<span class="lineNum">     384 </span>            :         /**@brief Return the matrix with all values non negative */
+<span class="lineNum">     385 </span>            :         Matrix3x3 absolute() const;
+<span class="lineNum">     386 </span>            :         /**@brief Return the transpose of the matrix */
+<span class="lineNum">     387 </span>            :         Matrix3x3 transpose() const;
+<span class="lineNum">     388 </span>            :         /**@brief Return the inverse of the matrix */
+<span class="lineNum">     389 </span>            :         Matrix3x3 inverse() const; 
+<span class="lineNum">     390 </span>            : 
+<span class="lineNum">     391 </span>            :         Matrix3x3 transposeTimes(const Matrix3x3&amp; m) const;
+<span class="lineNum">     392 </span>            :         Matrix3x3 timesTranspose(const Matrix3x3&amp; m) const;
+<span class="lineNum">     393 </span>            : 
+<span class="lineNum">     394 </span>            :         TFSIMD_FORCE_INLINE tfScalar tdotx(const Vector3&amp; v) const 
+<span class="lineNum">     395 </span>            :         {
+<span class="lineNum">     396 </span>            :                 return m_el[0].x() * v.x() + m_el[1].x() * v.y() + m_el[2].x() * v.z();
+<span class="lineNum">     397 </span>            :         }
+<span class="lineNum">     398 </span>            :         TFSIMD_FORCE_INLINE tfScalar tdoty(const Vector3&amp; v) const 
+<span class="lineNum">     399 </span>            :         {
+<span class="lineNum">     400 </span>            :                 return m_el[0].y() * v.x() + m_el[1].y() * v.y() + m_el[2].y() * v.z();
+<span class="lineNum">     401 </span>            :         }
+<span class="lineNum">     402 </span>            :         TFSIMD_FORCE_INLINE tfScalar tdotz(const Vector3&amp; v) const 
+<span class="lineNum">     403 </span>            :         {
+<span class="lineNum">     404 </span>            :                 return m_el[0].z() * v.x() + m_el[1].z() * v.y() + m_el[2].z() * v.z();
+<span class="lineNum">     405 </span>            :         }
+<span class="lineNum">     406 </span>            : 
+<span class="lineNum">     407 </span>            : 
+<span class="lineNum">     408 </span>            :         /**@brief diagonalizes this matrix by the Jacobi method.
+<span class="lineNum">     409 </span>            :         * @param rot stores the rotation from the coordinate system in which the matrix is diagonal to the original
+<span class="lineNum">     410 </span>            :         * coordinate system, i.e., old_this = rot * new_this * rot^T. 
+<span class="lineNum">     411 </span>            :         * @param threshold See iteration
+<span class="lineNum">     412 </span>            :         * @param iteration The iteration stops when all off-diagonal elements are less than the threshold multiplied 
+<span class="lineNum">     413 </span>            :         * by the sum of the absolute values of the diagonal, or when maxSteps have been executed. 
+<span class="lineNum">     414 </span>            :         * 
+<span class="lineNum">     415 </span>            :         * Note that this matrix is assumed to be symmetric. 
+<span class="lineNum">     416 </span>            :         */
+<span class="lineNum">     417 </span>            :         void diagonalize(Matrix3x3&amp; rot, tfScalar threshold, int maxSteps)
+<span class="lineNum">     418 </span>            :         {
+<span class="lineNum">     419 </span>            :                 rot.setIdentity();
+<span class="lineNum">     420 </span>            :                 for (int step = maxSteps; step &gt; 0; step--)
+<span class="lineNum">     421 </span>            :                 {
+<span class="lineNum">     422 </span>            :                         // find off-diagonal element [p][q] with largest magnitude
+<span class="lineNum">     423 </span>            :                         int p = 0;
+<span class="lineNum">     424 </span>            :                         int q = 1;
+<span class="lineNum">     425 </span>            :                         int r = 2;
+<span class="lineNum">     426 </span>            :                         tfScalar max = tfFabs(m_el[0][1]);
+<span class="lineNum">     427 </span>            :                         tfScalar v = tfFabs(m_el[0][2]);
+<span class="lineNum">     428 </span>            :                         if (v &gt; max)
+<span class="lineNum">     429 </span>            :                         {
+<span class="lineNum">     430 </span>            :                                 q = 2;
+<span class="lineNum">     431 </span>            :                                 r = 1;
+<span class="lineNum">     432 </span>            :                                 max = v;
+<span class="lineNum">     433 </span>            :                         }
+<span class="lineNum">     434 </span>            :                         v = tfFabs(m_el[1][2]);
+<span class="lineNum">     435 </span>            :                         if (v &gt; max)
+<span class="lineNum">     436 </span>            :                         {
+<span class="lineNum">     437 </span>            :                                 p = 1;
+<span class="lineNum">     438 </span>            :                                 q = 2;
+<span class="lineNum">     439 </span>            :                                 r = 0;
+<span class="lineNum">     440 </span>            :                                 max = v;
+<span class="lineNum">     441 </span>            :                         }
+<span class="lineNum">     442 </span>            : 
+<span class="lineNum">     443 </span>            :                         tfScalar t = threshold * (tfFabs(m_el[0][0]) + tfFabs(m_el[1][1]) + tfFabs(m_el[2][2]));
+<span class="lineNum">     444 </span>            :                         if (max &lt;= t)
+<span class="lineNum">     445 </span>            :                         {
+<span class="lineNum">     446 </span>            :                                 if (max &lt;= TFSIMD_EPSILON * t)
+<span class="lineNum">     447 </span>            :                                 {
+<span class="lineNum">     448 </span>            :                                         return;
+<span class="lineNum">     449 </span>            :                                 }
+<span class="lineNum">     450 </span>            :                                 step = 1;
+<span class="lineNum">     451 </span>            :                         }
+<span class="lineNum">     452 </span>            : 
+<span class="lineNum">     453 </span>            :                         // compute Jacobi rotation J which leads to a zero for element [p][q] 
+<span class="lineNum">     454 </span>            :                         tfScalar mpq = m_el[p][q];
+<span class="lineNum">     455 </span>            :                         tfScalar theta = (m_el[q][q] - m_el[p][p]) / (2 * mpq);
+<span class="lineNum">     456 </span>            :                         tfScalar theta2 = theta * theta;
+<span class="lineNum">     457 </span>            :                         tfScalar cos;
+<span class="lineNum">     458 </span>            :                         tfScalar sin;
+<span class="lineNum">     459 </span>            :                         if (theta2 * theta2 &lt; tfScalar(10 / TFSIMD_EPSILON))
+<span class="lineNum">     460 </span>            :                         {
+<span class="lineNum">     461 </span>            :                                 t = (theta &gt;= 0) ? 1 / (theta + tfSqrt(1 + theta2))
+<span class="lineNum">     462 </span>            :                                         : 1 / (theta - tfSqrt(1 + theta2));
+<span class="lineNum">     463 </span>            :                                 cos = 1 / tfSqrt(1 + t * t);
+<span class="lineNum">     464 </span>            :                                 sin = cos * t;
+<span class="lineNum">     465 </span>            :                         }
+<span class="lineNum">     466 </span>            :                         else
+<span class="lineNum">     467 </span>            :                         {
+<span class="lineNum">     468 </span>            :                                 // approximation for large theta-value, i.e., a nearly diagonal matrix
+<span class="lineNum">     469 </span>            :                                 t = 1 / (theta * (2 + tfScalar(0.5) / theta2));
+<span class="lineNum">     470 </span>            :                                 cos = 1 - tfScalar(0.5) * t * t;
+<span class="lineNum">     471 </span>            :                                 sin = cos * t;
+<span class="lineNum">     472 </span>            :                         }
+<span class="lineNum">     473 </span>            : 
+<span class="lineNum">     474 </span>            :                         // apply rotation to matrix (this = J^T * this * J)
+<span class="lineNum">     475 </span>            :                         m_el[p][q] = m_el[q][p] = 0;
+<span class="lineNum">     476 </span>            :                         m_el[p][p] -= t * mpq;
+<span class="lineNum">     477 </span>            :                         m_el[q][q] += t * mpq;
+<span class="lineNum">     478 </span>            :                         tfScalar mrp = m_el[r][p];
+<span class="lineNum">     479 </span>            :                         tfScalar mrq = m_el[r][q];
+<span class="lineNum">     480 </span>            :                         m_el[r][p] = m_el[p][r] = cos * mrp - sin * mrq;
+<span class="lineNum">     481 </span>            :                         m_el[r][q] = m_el[q][r] = cos * mrq + sin * mrp;
+<span class="lineNum">     482 </span>            : 
+<span class="lineNum">     483 </span>            :                         // apply rotation to rot (rot = rot * J)
+<span class="lineNum">     484 </span>            :                         for (int i = 0; i &lt; 3; i++)
+<span class="lineNum">     485 </span>            :                         {
+<span class="lineNum">     486 </span>            :                                 Vector3&amp; row = rot[i];
+<span class="lineNum">     487 </span>            :                                 mrp = row[p];
+<span class="lineNum">     488 </span>            :                                 mrq = row[q];
+<span class="lineNum">     489 </span>            :                                 row[p] = cos * mrp - sin * mrq;
+<span class="lineNum">     490 </span>            :                                 row[q] = cos * mrq + sin * mrp;
+<span class="lineNum">     491 </span>            :                         }
+<span class="lineNum">     492 </span>            :                 }
+<span class="lineNum">     493 </span>            :         }
+<span class="lineNum">     494 </span>            : 
+<span class="lineNum">     495 </span>            : 
+<span class="lineNum">     496 </span>            : 
+<span class="lineNum">     497 </span>            : 
+<span class="lineNum">     498 </span>            :         /**@brief Calculate the matrix cofactor 
+<span class="lineNum">     499 </span>            :         * @param r1 The first row to use for calculating the cofactor
+<span class="lineNum">     500 </span>            :         * @param c1 The first column to use for calculating the cofactor
+<span class="lineNum">     501 </span>            :         * @param r1 The second row to use for calculating the cofactor
+<span class="lineNum">     502 </span>            :         * @param c1 The second column to use for calculating the cofactor
+<span class="lineNum">     503 </span>            :         * See http://en.wikipedia.org/wiki/Cofactor_(linear_algebra) for more details
+<span class="lineNum">     504 </span>            :         */
+<span class="lineNum">     505 </span>            :         tfScalar cofac(int r1, int c1, int r2, int c2) const 
+<span class="lineNum">     506 </span>            :         {
+<span class="lineNum">     507 </span>            :                 return m_el[r1][c1] * m_el[r2][c2] - m_el[r1][c2] * m_el[r2][c1];
+<span class="lineNum">     508 </span>            :         }
+<span class="lineNum">     509 </span>            : 
+<span class="lineNum">     510 </span>            :         void    serialize(struct        Matrix3x3Data&amp; dataOut) const;
+<span class="lineNum">     511 </span>            : 
+<span class="lineNum">     512 </span>            :         void    serializeFloat(struct   Matrix3x3FloatData&amp; dataOut) const;
+<span class="lineNum">     513 </span>            : 
+<span class="lineNum">     514 </span>            :         void    deSerialize(const struct        Matrix3x3Data&amp; dataIn);
+<span class="lineNum">     515 </span>            : 
+<span class="lineNum">     516 </span>            :         void    deSerializeFloat(const struct   Matrix3x3FloatData&amp; dataIn);
+<span class="lineNum">     517 </span>            : 
+<span class="lineNum">     518 </span>            :         void    deSerializeDouble(const struct  Matrix3x3DoubleData&amp; dataIn);
+<span class="lineNum">     519 </span>            : 
+<span class="lineNum">     520 </span>            : };
+<span class="lineNum">     521 </span>            : 
+<span class="lineNum">     522 </span>            : 
+<span class="lineNum">     523 </span>            : TFSIMD_FORCE_INLINE Matrix3x3&amp; 
+<span class="lineNum">     524 </span>            : Matrix3x3::operator*=(const Matrix3x3&amp; m)
+<span class="lineNum">     525 </span>            : {
+<span class="lineNum">     526 </span>            :         setValue(m.tdotx(m_el[0]), m.tdoty(m_el[0]), m.tdotz(m_el[0]),
+<span class="lineNum">     527 </span>            :                 m.tdotx(m_el[1]), m.tdoty(m_el[1]), m.tdotz(m_el[1]),
+<span class="lineNum">     528 </span>            :                 m.tdotx(m_el[2]), m.tdoty(m_el[2]), m.tdotz(m_el[2]));
+<span class="lineNum">     529 </span>            :         return *this;
+<span class="lineNum">     530 </span>            : }
+<span class="lineNum">     531 </span>            : 
+<span class="lineNum">     532 </span>            : TFSIMD_FORCE_INLINE tfScalar 
+<span class="lineNum">     533 </span>            : Matrix3x3::determinant() const
+<span class="lineNum">     534 </span>            : { 
+<span class="lineNum">     535 </span>            :         return tfTriple((*this)[0], (*this)[1], (*this)[2]);
+<span class="lineNum">     536 </span>            : }
+<span class="lineNum">     537 </span>            : 
+<span class="lineNum">     538 </span>            : 
+<span class="lineNum">     539 </span>            : TFSIMD_FORCE_INLINE Matrix3x3 
+<span class="lineNum">     540 </span>            : Matrix3x3::absolute() const
+<span class="lineNum">     541 </span>            : {
+<span class="lineNum">     542 </span>            :         return Matrix3x3(
+<span class="lineNum">     543 </span>            :                 tfFabs(m_el[0].x()), tfFabs(m_el[0].y()), tfFabs(m_el[0].z()),
+<span class="lineNum">     544 </span>            :                 tfFabs(m_el[1].x()), tfFabs(m_el[1].y()), tfFabs(m_el[1].z()),
+<span class="lineNum">     545 </span>            :                 tfFabs(m_el[2].x()), tfFabs(m_el[2].y()), tfFabs(m_el[2].z()));
+<span class="lineNum">     546 </span>            : }
+<span class="lineNum">     547 </span>            : 
+<span class="lineNum">     548 </span>            : TFSIMD_FORCE_INLINE Matrix3x3 
+<span class="lineNum">     549 </span>            : Matrix3x3::transpose() const 
+<span class="lineNum">     550 </span>            : {
+<span class="lineNum">     551 </span>            :         return Matrix3x3(m_el[0].x(), m_el[1].x(), m_el[2].x(),
+<span class="lineNum">     552 </span>            :                 m_el[0].y(), m_el[1].y(), m_el[2].y(),
+<span class="lineNum">     553 </span>            :                 m_el[0].z(), m_el[1].z(), m_el[2].z());
+<span class="lineNum">     554 </span>            : }
+<span class="lineNum">     555 </span>            : 
+<span class="lineNum">     556 </span>            : TFSIMD_FORCE_INLINE Matrix3x3 
+<span class="lineNum">     557 </span>            : Matrix3x3::adjoint() const 
+<span class="lineNum">     558 </span>            : {
+<span class="lineNum">     559 </span>            :         return Matrix3x3(cofac(1, 1, 2, 2), cofac(0, 2, 2, 1), cofac(0, 1, 1, 2),
+<span class="lineNum">     560 </span>            :                 cofac(1, 2, 2, 0), cofac(0, 0, 2, 2), cofac(0, 2, 1, 0),
+<span class="lineNum">     561 </span>            :                 cofac(1, 0, 2, 1), cofac(0, 1, 2, 0), cofac(0, 0, 1, 1));
+<span class="lineNum">     562 </span>            : }
+<span class="lineNum">     563 </span>            : 
+<span class="lineNum">     564 </span>            : TFSIMD_FORCE_INLINE Matrix3x3 
+<span class="lineNum">     565 </span>            : Matrix3x3::inverse() const
+<span class="lineNum">     566 </span>            : {
+<span class="lineNum">     567 </span>            :         Vector3 co(cofac(1, 1, 2, 2), cofac(1, 2, 2, 0), cofac(1, 0, 2, 1));
+<span class="lineNum">     568 </span>            :         tfScalar det = (*this)[0].dot(co);
+<span class="lineNum">     569 </span>            :         tfFullAssert(det != tfScalar(0.0));
+<span class="lineNum">     570 </span>            :         tfScalar s = tfScalar(1.0) / det;
+<span class="lineNum">     571 </span>            :         return Matrix3x3(co.x() * s, cofac(0, 2, 2, 1) * s, cofac(0, 1, 1, 2) * s,
+<span class="lineNum">     572 </span>            :                 co.y() * s, cofac(0, 0, 2, 2) * s, cofac(0, 2, 1, 0) * s,
+<span class="lineNum">     573 </span>            :                 co.z() * s, cofac(0, 1, 2, 0) * s, cofac(0, 0, 1, 1) * s);
+<span class="lineNum">     574 </span>            : }
+<span class="lineNum">     575 </span>            : 
+<span class="lineNum">     576 </span>            : TFSIMD_FORCE_INLINE Matrix3x3 
+<span class="lineNum">     577 </span>            : Matrix3x3::transposeTimes(const Matrix3x3&amp; m) const
+<span class="lineNum">     578 </span>            : {
+<span class="lineNum">     579 </span>            :         return Matrix3x3(
+<span class="lineNum">     580 </span>            :                 m_el[0].x() * m[0].x() + m_el[1].x() * m[1].x() + m_el[2].x() * m[2].x(),
+<span class="lineNum">     581 </span>            :                 m_el[0].x() * m[0].y() + m_el[1].x() * m[1].y() + m_el[2].x() * m[2].y(),
+<span class="lineNum">     582 </span>            :                 m_el[0].x() * m[0].z() + m_el[1].x() * m[1].z() + m_el[2].x() * m[2].z(),
+<span class="lineNum">     583 </span>            :                 m_el[0].y() * m[0].x() + m_el[1].y() * m[1].x() + m_el[2].y() * m[2].x(),
+<span class="lineNum">     584 </span>            :                 m_el[0].y() * m[0].y() + m_el[1].y() * m[1].y() + m_el[2].y() * m[2].y(),
+<span class="lineNum">     585 </span>            :                 m_el[0].y() * m[0].z() + m_el[1].y() * m[1].z() + m_el[2].y() * m[2].z(),
+<span class="lineNum">     586 </span>            :                 m_el[0].z() * m[0].x() + m_el[1].z() * m[1].x() + m_el[2].z() * m[2].x(),
+<span class="lineNum">     587 </span>            :                 m_el[0].z() * m[0].y() + m_el[1].z() * m[1].y() + m_el[2].z() * m[2].y(),
+<span class="lineNum">     588 </span>            :                 m_el[0].z() * m[0].z() + m_el[1].z() * m[1].z() + m_el[2].z() * m[2].z());
+<span class="lineNum">     589 </span>            : }
+<span class="lineNum">     590 </span>            : 
+<span class="lineNum">     591 </span>            : TFSIMD_FORCE_INLINE Matrix3x3 
+<span class="lineNum">     592 </span>            : Matrix3x3::timesTranspose(const Matrix3x3&amp; m) const
+<span class="lineNum">     593 </span>            : {
+<span class="lineNum">     594 </span>            :         return Matrix3x3(
+<span class="lineNum">     595 </span>            :                 m_el[0].dot(m[0]), m_el[0].dot(m[1]), m_el[0].dot(m[2]),
+<span class="lineNum">     596 </span>            :                 m_el[1].dot(m[0]), m_el[1].dot(m[1]), m_el[1].dot(m[2]),
+<span class="lineNum">     597 </span>            :                 m_el[2].dot(m[0]), m_el[2].dot(m[1]), m_el[2].dot(m[2]));
+<span class="lineNum">     598 </span>            : 
+<span class="lineNum">     599 </span>            : }
+<span class="lineNum">     600 </span>            : 
+<span class="lineNum">     601 </span>            : TFSIMD_FORCE_INLINE Vector3 
+<span class="lineNum">     602 </span>            : operator*(const Matrix3x3&amp; m, const Vector3&amp; v) 
+<span class="lineNum">     603 </span>            : {
+<span class="lineNum">     604 </span>            :         return Vector3(m[0].dot(v), m[1].dot(v), m[2].dot(v));
+<span class="lineNum">     605 </span>            : }
+<span class="lineNum">     606 </span>            : 
+<span class="lineNum">     607 </span>            : 
+<span class="lineNum">     608 </span>            : TFSIMD_FORCE_INLINE Vector3
+<span class="lineNum">     609 </span>            : operator*(const Vector3&amp; v, const Matrix3x3&amp; m)
+<span class="lineNum">     610 </span>            : {
+<span class="lineNum">     611 </span>            :         return Vector3(m.tdotx(v), m.tdoty(v), m.tdotz(v));
+<span class="lineNum">     612 </span>            : }
+<span class="lineNum">     613 </span>            : 
+<span class="lineNum">     614 </span>            : TFSIMD_FORCE_INLINE Matrix3x3 
+<span class="lineNum">     615 </span>            : operator*(const Matrix3x3&amp; m1, const Matrix3x3&amp; m2)
+<span class="lineNum">     616 </span>            : {
+<span class="lineNum">     617 </span>            :         return Matrix3x3(
+<span class="lineNum">     618 </span>            :                 m2.tdotx( m1[0]), m2.tdoty( m1[0]), m2.tdotz( m1[0]),
+<span class="lineNum">     619 </span>            :                 m2.tdotx( m1[1]), m2.tdoty( m1[1]), m2.tdotz( m1[1]),
+<span class="lineNum">     620 </span>            :                 m2.tdotx( m1[2]), m2.tdoty( m1[2]), m2.tdotz( m1[2]));
+<span class="lineNum">     621 </span>            : }
+<span class="lineNum">     622 </span>            : 
+<span class="lineNum">     623 </span>            : /*
+<span class="lineNum">     624 </span>            : TFSIMD_FORCE_INLINE Matrix3x3 tfMultTransposeLeft(const Matrix3x3&amp; m1, const Matrix3x3&amp; m2) {
+<span class="lineNum">     625 </span>            : return Matrix3x3(
+<span class="lineNum">     626 </span>            : m1[0][0] * m2[0][0] + m1[1][0] * m2[1][0] + m1[2][0] * m2[2][0],
+<span class="lineNum">     627 </span>            : m1[0][0] * m2[0][1] + m1[1][0] * m2[1][1] + m1[2][0] * m2[2][1],
+<span class="lineNum">     628 </span>            : m1[0][0] * m2[0][2] + m1[1][0] * m2[1][2] + m1[2][0] * m2[2][2],
+<span class="lineNum">     629 </span>            : m1[0][1] * m2[0][0] + m1[1][1] * m2[1][0] + m1[2][1] * m2[2][0],
+<span class="lineNum">     630 </span>            : m1[0][1] * m2[0][1] + m1[1][1] * m2[1][1] + m1[2][1] * m2[2][1],
+<span class="lineNum">     631 </span>            : m1[0][1] * m2[0][2] + m1[1][1] * m2[1][2] + m1[2][1] * m2[2][2],
+<span class="lineNum">     632 </span>            : m1[0][2] * m2[0][0] + m1[1][2] * m2[1][0] + m1[2][2] * m2[2][0],
+<span class="lineNum">     633 </span>            : m1[0][2] * m2[0][1] + m1[1][2] * m2[1][1] + m1[2][2] * m2[2][1],
+<span class="lineNum">     634 </span>            : m1[0][2] * m2[0][2] + m1[1][2] * m2[1][2] + m1[2][2] * m2[2][2]);
+<span class="lineNum">     635 </span>            : }
+<span class="lineNum">     636 </span>            : */
+<span class="lineNum">     637 </span>            : 
+<span class="lineNum">     638 </span>            : /**@brief Equality operator between two matrices
+<span class="lineNum">     639 </span>            : * It will test all elements are equal.  */
+<span class="lineNum">     640 </span>            : TFSIMD_FORCE_INLINE bool operator==(const Matrix3x3&amp; m1, const Matrix3x3&amp; m2)
+<span class="lineNum">     641 </span>            : {
+<span class="lineNum">     642 </span>            :         return ( m1[0][0] == m2[0][0] &amp;&amp; m1[1][0] == m2[1][0] &amp;&amp; m1[2][0] == m2[2][0] &amp;&amp;
+<span class="lineNum">     643 </span>            :                 m1[0][1] == m2[0][1] &amp;&amp; m1[1][1] == m2[1][1] &amp;&amp; m1[2][1] == m2[2][1] &amp;&amp;
+<span class="lineNum">     644 </span>            :                 m1[0][2] == m2[0][2] &amp;&amp; m1[1][2] == m2[1][2] &amp;&amp; m1[2][2] == m2[2][2] );
+<span class="lineNum">     645 </span>            : }
+<span class="lineNum">     646 </span>            : 
+<span class="lineNum">     647 </span>            : ///for serialization
+<span class="lineNum">     648 </span>            : struct  Matrix3x3FloatData
+<span class="lineNum">     649 </span>            : {
+<span class="lineNum">     650 </span>            :         Vector3FloatData m_el[3];
+<span class="lineNum">     651 </span>            : };
+<span class="lineNum">     652 </span>            : 
+<span class="lineNum">     653 </span>            : ///for serialization
+<span class="lineNum">     654 </span>            : struct  Matrix3x3DoubleData
+<span class="lineNum">     655 </span>            : {
+<span class="lineNum">     656 </span>            :         Vector3DoubleData m_el[3];
+<span class="lineNum">     657 </span>            : };
+<span class="lineNum">     658 </span>            : 
+<span class="lineNum">     659 </span>            : 
+<span class="lineNum">     660 </span>            :         
+<span class="lineNum">     661 </span>            : 
+<span class="lineNum">     662 </span>            : TFSIMD_FORCE_INLINE     void    Matrix3x3::serialize(struct     Matrix3x3Data&amp; dataOut) const
+<span class="lineNum">     663 </span>            : {
+<span class="lineNum">     664 </span>            :         for (int i=0;i&lt;3;i++)
+<span class="lineNum">     665 </span>            :                 m_el[i].serialize(dataOut.m_el[i]);
+<span class="lineNum">     666 </span>            : }
+<span class="lineNum">     667 </span>            : 
+<span class="lineNum">     668 </span>            : TFSIMD_FORCE_INLINE     void    Matrix3x3::serializeFloat(struct        Matrix3x3FloatData&amp; dataOut) const
+<span class="lineNum">     669 </span>            : {
+<span class="lineNum">     670 </span>            :         for (int i=0;i&lt;3;i++)
+<span class="lineNum">     671 </span>            :                 m_el[i].serializeFloat(dataOut.m_el[i]);
+<span class="lineNum">     672 </span>            : }
+<span class="lineNum">     673 </span>            : 
+<span class="lineNum">     674 </span>            : 
+<span class="lineNum">     675 </span>            : TFSIMD_FORCE_INLINE     void    Matrix3x3::deSerialize(const struct     Matrix3x3Data&amp; dataIn)
+<span class="lineNum">     676 </span>            : {
+<span class="lineNum">     677 </span>            :         for (int i=0;i&lt;3;i++)
+<span class="lineNum">     678 </span>            :                 m_el[i].deSerialize(dataIn.m_el[i]);
+<span class="lineNum">     679 </span>            : }
+<span class="lineNum">     680 </span>            : 
+<span class="lineNum">     681 </span>            : TFSIMD_FORCE_INLINE     void    Matrix3x3::deSerializeFloat(const struct        Matrix3x3FloatData&amp; dataIn)
+<span class="lineNum">     682 </span>            : {
+<span class="lineNum">     683 </span>            :         for (int i=0;i&lt;3;i++)
+<span class="lineNum">     684 </span>            :                 m_el[i].deSerializeFloat(dataIn.m_el[i]);
+<span class="lineNum">     685 </span>            : }
+<span class="lineNum">     686 </span>            : 
+<span class="lineNum">     687 </span>            : TFSIMD_FORCE_INLINE     void    Matrix3x3::deSerializeDouble(const struct       Matrix3x3DoubleData&amp; dataIn)
+<span class="lineNum">     688 </span>            : {
+<span class="lineNum">     689 </span>            :         for (int i=0;i&lt;3;i++)
+<span class="lineNum">     690 </span>            :                 m_el[i].deSerializeDouble(dataIn.m_el[i]);
+<span class="lineNum">     691 </span>            : }
+<span class="lineNum">     692 </span>            : 
+<span class="lineNum">     693 </span>            : }
+<span class="lineNum">     694 </span>            : 
+<span class="lineNum">     695 </span>            : #endif //TF_MATRIX3x3_H
+<span class="lineNum">     696 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/ros/parameter_adapter.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/ros</a> - parameter_adapter.h<span style="font-size: 80%;"> (source / <a href="parameter_adapter.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            :  * Copyright (C) 2010, Willow Garage, Inc.
+<span class="lineNum">       3 </span>            :  *
+<span class="lineNum">       4 </span>            :  * Redistribution and use in source and binary forms, with or without
+<span class="lineNum">       5 </span>            :  * modification, are permitted provided that the following conditions are met:
+<span class="lineNum">       6 </span>            :  *   * Redistributions of source code must retain the above copyright notice,
+<span class="lineNum">       7 </span>            :  *     this list of conditions and the following disclaimer.
+<span class="lineNum">       8 </span>            :  *   * Redistributions in binary form must reproduce the above copyright
+<span class="lineNum">       9 </span>            :  *     notice, this list of conditions and the following disclaimer in the
+<span class="lineNum">      10 </span>            :  *     documentation and/or other materials provided with the distribution.
+<span class="lineNum">      11 </span>            :  *   * Neither the names of Stanford University or Willow Garage, Inc. nor the names of its
+<span class="lineNum">      12 </span>            :  *     contributors may be used to endorse or promote products derived from
+<span class="lineNum">      13 </span>            :  *     this software without specific prior written permission.
+<span class="lineNum">      14 </span>            :  *
+<span class="lineNum">      15 </span>            :  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;
+<span class="lineNum">      16 </span>            :  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+<span class="lineNum">      17 </span>            :  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+<span class="lineNum">      18 </span>            :  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+<span class="lineNum">      19 </span>            :  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+<span class="lineNum">      20 </span>            :  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+<span class="lineNum">      21 </span>            :  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+<span class="lineNum">      22 </span>            :  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+<span class="lineNum">      23 </span>            :  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+<span class="lineNum">      24 </span>            :  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+<span class="lineNum">      25 </span>            :  * POSSIBILITY OF SUCH DAMAGE.
+<span class="lineNum">      26 </span>            :  */
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            : #ifndef ROSCPP_PARAMETER_ADAPTER_H
+<span class="lineNum">      29 </span>            : #define ROSCPP_PARAMETER_ADAPTER_H
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            : #include &quot;ros/forwards.h&quot;
+<span class="lineNum">      32 </span>            : #include &quot;ros/message_event.h&quot;
+<span class="lineNum">      33 </span>            : #include &lt;ros/static_assert.h&gt;
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : #include &lt;boost/type_traits/add_const.hpp&gt;
+<span class="lineNum">      36 </span>            : #include &lt;boost/type_traits/remove_const.hpp&gt;
+<span class="lineNum">      37 </span>            : #include &lt;boost/type_traits/remove_reference.hpp&gt;
+<span class="lineNum">      38 </span>            : 
+<span class="lineNum">      39 </span>            : namespace ros
+<span class="lineNum">      40 </span>            : {
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            : /**
+<span class="lineNum">      43 </span>            :  * \brief Generally not for outside use.  Adapts a function parameter type into the message type, event type and parameter.  Allows you to
+<span class="lineNum">      44 </span>            :  * retrieve a parameter type from an event type.
+<span class="lineNum">      45 </span>            :  *
+<span class="lineNum">      46 </span>            :  * ParameterAdapter is generally only useful for outside use when implementing things that require message callbacks
+<span class="lineNum">      47 </span>            :  * (such as the message_filters package)and you would like to support all the roscpp message parameter types
+<span class="lineNum">      48 </span>            :  *
+<span class="lineNum">      49 </span>            :  * The ParameterAdapter is templated on the callback parameter type (\b not the bare message type), and provides 3 things:
+<span class="lineNum">      50 </span>            :  *  - Message typedef, which provides the bare message type, no const or reference qualifiers
+<span class="lineNum">      51 </span>            :  *  - Event typedef, which provides the ros::MessageEvent type
+<span class="lineNum">      52 </span>            :  *  - Parameter typedef, which provides the actual parameter type (may be slightly different from M)
+<span class="lineNum">      53 </span>            :  *  - static getParameter(event) function, which returns a parameter type given the event
+<span class="lineNum">      54 </span>            :  *  - static bool is_const informs you whether or not the parameter type is a const message
+<span class="lineNum">      55 </span>            :  *
+<span class="lineNum">      56 </span>            :  *  ParameterAdapter is specialized to allow callbacks of any of the forms:
+<span class="lineNum">      57 </span>            : \verbatim
+<span class="lineNum">      58 </span>            : void callback(const boost::shared_ptr&lt;M const&gt;&amp;);
+<span class="lineNum">      59 </span>            : void callback(const boost::shared_ptr&lt;M&gt;&amp;);
+<span class="lineNum">      60 </span>            : void callback(boost::shared_ptr&lt;M const&gt;);
+<span class="lineNum">      61 </span>            : void callback(boost::shared_ptr&lt;M&gt;);
+<span class="lineNum">      62 </span>            : void callback(const M&amp;);
+<span class="lineNum">      63 </span>            : void callback(M);
+<span class="lineNum">      64 </span>            : void callback(const MessageEvent&lt;M const&gt;&amp;);
+<span class="lineNum">      65 </span>            : void callback(const MessageEvent&lt;M&gt;&amp;);
+<span class="lineNum">      66 </span>            : \endverbatim
+<span class="lineNum">      67 </span>            :  */
+<span class="lineNum">      68 </span>            : template&lt;typename M&gt;
+<span class="lineNum">      69 </span>            : struct ParameterAdapter
+<span class="lineNum">      70 </span>            : {
+<span class="lineNum">      71 </span>            :   typedef typename boost::remove_reference&lt;typename boost::remove_const&lt;M&gt;::type&gt;::type Message;
+<span class="lineNum">      72 </span>            :   typedef ros::MessageEvent&lt;Message const&gt; Event;
+<span class="lineNum">      73 </span>            :   typedef M Parameter;
+<span class="lineNum">      74 </span>            :   static const bool is_const = true;
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            :   static Parameter getParameter(const Event&amp; event)
+<span class="lineNum">      77 </span>            :   {
+<span class="lineNum">      78 </span>            :     return *event.getMessage();
+<span class="lineNum">      79 </span>            :   }
+<span class="lineNum">      80 </span>            : };
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span>            : template&lt;typename M&gt;
+<span class="lineNum">      83 </span>            : struct ParameterAdapter&lt;const boost::shared_ptr&lt;M const&gt;&amp; &gt;
+<span class="lineNum">      84 </span>            : {
+<span class="lineNum">      85 </span>            :   typedef typename boost::remove_reference&lt;typename boost::remove_const&lt;M&gt;::type&gt;::type Message;
+<span class="lineNum">      86 </span>            :   typedef ros::MessageEvent&lt;Message const&gt; Event;
+<span class="lineNum">      87 </span>            :   typedef const boost::shared_ptr&lt;Message const&gt; Parameter;
+<a name="88"><span class="lineNum">      88 </span>            :   static const bool is_const = true;</a>
+<span class="lineNum">      89 </span>            : 
+<span class="lineNum">      90 </span><span class="lineCov">       2517 :   static Parameter getParameter(const Event&amp; event)</span>
+<span class="lineNum">      91 </span>            :   {
+<span class="lineNum">      92 </span><span class="lineCov">       2517 :     return event.getMessage();</span>
+<span class="lineNum">      93 </span>            :   }
+<span class="lineNum">      94 </span>            : };
+<span class="lineNum">      95 </span>            : 
+<span class="lineNum">      96 </span>            : template&lt;typename M&gt;
+<span class="lineNum">      97 </span>            : struct ParameterAdapter&lt;const boost::shared_ptr&lt;M&gt;&amp; &gt;
+<span class="lineNum">      98 </span>            : {
+<span class="lineNum">      99 </span>            :   typedef typename boost::remove_reference&lt;typename boost::remove_const&lt;M&gt;::type&gt;::type Message;
+<span class="lineNum">     100 </span>            :   typedef ros::MessageEvent&lt;Message const&gt; Event;
+<span class="lineNum">     101 </span>            :   typedef boost::shared_ptr&lt;Message&gt; Parameter;
+<span class="lineNum">     102 </span>            :   static const bool is_const = false;
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            :   static Parameter getParameter(const Event&amp; event)
+<span class="lineNum">     105 </span>            :   {
+<span class="lineNum">     106 </span>            :     return ros::MessageEvent&lt;Message&gt;(event).getMessage();
+<span class="lineNum">     107 </span>            :   }
+<span class="lineNum">     108 </span>            : };
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span>            : template&lt;typename M&gt;
+<span class="lineNum">     111 </span>            : struct ParameterAdapter&lt;const M&amp;&gt;
+<span class="lineNum">     112 </span>            : {
+<span class="lineNum">     113 </span>            :   typedef typename boost::remove_reference&lt;typename boost::remove_const&lt;M&gt;::type&gt;::type Message;
+<span class="lineNum">     114 </span>            :   typedef ros::MessageEvent&lt;Message const&gt; Event;
+<span class="lineNum">     115 </span>            :   typedef const M&amp; Parameter;
+<span class="lineNum">     116 </span>            :   static const bool is_const = true;
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            :   static Parameter getParameter(const Event&amp; event)
+<span class="lineNum">     119 </span>            :   {
+<span class="lineNum">     120 </span>            :     return *event.getMessage();
+<span class="lineNum">     121 </span>            :   }
+<span class="lineNum">     122 </span>            : };
+<span class="lineNum">     123 </span>            : 
+<span class="lineNum">     124 </span>            : template&lt;typename M&gt;
+<span class="lineNum">     125 </span>            : struct ParameterAdapter&lt;boost::shared_ptr&lt;M const&gt; &gt;
+<span class="lineNum">     126 </span>            : {
+<span class="lineNum">     127 </span>            :   typedef typename boost::remove_reference&lt;typename boost::remove_const&lt;M&gt;::type&gt;::type Message;
+<span class="lineNum">     128 </span>            :   typedef ros::MessageEvent&lt;Message const&gt; Event;
+<span class="lineNum">     129 </span>            :   typedef boost::shared_ptr&lt;Message const&gt; Parameter;
+<span class="lineNum">     130 </span>            :   static const bool is_const = true;
+<span class="lineNum">     131 </span>            : 
+<span class="lineNum">     132 </span>            :   static Parameter getParameter(const Event&amp; event)
+<span class="lineNum">     133 </span>            :   {
+<span class="lineNum">     134 </span>            :     return event.getMessage();
+<span class="lineNum">     135 </span>            :   }
+<span class="lineNum">     136 </span>            : };
+<span class="lineNum">     137 </span>            : 
+<span class="lineNum">     138 </span>            : template&lt;typename M&gt;
+<span class="lineNum">     139 </span>            : struct ParameterAdapter&lt;boost::shared_ptr&lt;M&gt; &gt;
+<span class="lineNum">     140 </span>            : {
+<span class="lineNum">     141 </span>            :   typedef typename boost::remove_reference&lt;typename boost::remove_const&lt;M&gt;::type&gt;::type Message;
+<span class="lineNum">     142 </span>            :   typedef ros::MessageEvent&lt;Message const&gt; Event;
+<span class="lineNum">     143 </span>            :   typedef boost::shared_ptr&lt;Message&gt; Parameter;
+<span class="lineNum">     144 </span>            :   static const bool is_const = false;
+<span class="lineNum">     145 </span>            : 
+<span class="lineNum">     146 </span>            :   static Parameter getParameter(const Event&amp; event)
+<span class="lineNum">     147 </span>            :   {
+<span class="lineNum">     148 </span>            :     return ros::MessageEvent&lt;Message&gt;(event).getMessage();
+<span class="lineNum">     149 </span>            :   }
+<span class="lineNum">     150 </span>            : };
+<span class="lineNum">     151 </span>            : 
+<span class="lineNum">     152 </span>            : template&lt;typename M&gt;
+<span class="lineNum">     153 </span>            : struct ParameterAdapter&lt;const ros::MessageEvent&lt;M const&gt;&amp; &gt;
+<span class="lineNum">     154 </span>            : {
+<span class="lineNum">     155 </span>            :   typedef typename boost::remove_reference&lt;typename boost::remove_const&lt;M&gt;::type&gt;::type Message;
+<span class="lineNum">     156 </span>            :   typedef ros::MessageEvent&lt;Message const&gt; Event;
+<span class="lineNum">     157 </span>            :   typedef const ros::MessageEvent&lt;Message const&gt;&amp; Parameter;
+<span class="lineNum">     158 </span>            :   static const bool is_const = true;
+<span class="lineNum">     159 </span>            : 
+<span class="lineNum">     160 </span>            :   static Parameter getParameter(const Event&amp; event)
+<span class="lineNum">     161 </span>            :   {
+<span class="lineNum">     162 </span>            :     return event;
+<span class="lineNum">     163 </span>            :   }
+<span class="lineNum">     164 </span>            : };
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            : template&lt;typename M&gt;
+<span class="lineNum">     167 </span>            : struct ParameterAdapter&lt;const ros::MessageEvent&lt;M&gt;&amp; &gt;
+<span class="lineNum">     168 </span>            : {
+<span class="lineNum">     169 </span>            :   typedef typename boost::remove_reference&lt;typename boost::remove_const&lt;M&gt;::type&gt;::type Message;
+<span class="lineNum">     170 </span>            :   typedef ros::MessageEvent&lt;Message const&gt; Event;
+<span class="lineNum">     171 </span>            :   typedef ros::MessageEvent&lt;Message&gt; Parameter;
+<span class="lineNum">     172 </span>            :   static const bool is_const = false;
+<span class="lineNum">     173 </span>            : 
+<span class="lineNum">     174 </span>            :   static Parameter getParameter(const Event&amp; event)
+<span class="lineNum">     175 </span>            :   {
+<span class="lineNum">     176 </span>            :     return ros::MessageEvent&lt;Message&gt;(event);
+<span class="lineNum">     177 </span>            :   }
+<span class="lineNum">     178 </span>            : };
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span>            : }
+<span class="lineNum">     181 </span>            : 
+<span class="lineNum">     182 </span>            : #endif // ROSCPP_PARAMETER_ADAPTER_H
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

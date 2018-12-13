@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - boost/move/utility_core.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">boost/move</a> - utility_core.hpp<span style="font-size: 80%;"> (source / <a href="utility_core.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryLo">50.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryLo">50.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //////////////////////////////////////////////////////////////////////////////</a>
+<span class="lineNum">       2 </span>            : //
+<span class="lineNum">       3 </span>            : // (C) Copyright Ion Gaztanaga 2012-2012.
+<span class="lineNum">       4 </span>            : // Distributed under the Boost Software License, Version 1.0.
+<span class="lineNum">       5 </span>            : // (See accompanying file LICENSE_1_0.txt or copy at
+<span class="lineNum">       6 </span>            : // http://www.boost.org/LICENSE_1_0.txt)
+<span class="lineNum">       7 </span>            : //
+<span class="lineNum">       8 </span>            : // See http://www.boost.org/libs/move for documentation.
+<span class="lineNum">       9 </span>            : //
+<span class="lineNum">      10 </span>            : //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : //! \file
+<span class="lineNum">      13 </span>            : //! This header defines core utilities to ease the development
+<span class="lineNum">      14 </span>            : //! of move-aware functions. This header minimizes dependencies
+<span class="lineNum">      15 </span>            : //! from other libraries.
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : #ifndef BOOST_MOVE_MOVE_UTILITY_CORE_HPP
+<span class="lineNum">      18 </span>            : #define BOOST_MOVE_MOVE_UTILITY_CORE_HPP
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            : #ifndef BOOST_CONFIG_HPP
+<span class="lineNum">      21 </span>            : #  include &lt;boost/config.hpp&gt;
+<span class="lineNum">      22 </span>            : #endif
+<span class="lineNum">      23 </span>            : #
+<span class="lineNum">      24 </span>            : #if defined(BOOST_HAS_PRAGMA_ONCE)
+<span class="lineNum">      25 </span>            : #  pragma once
+<span class="lineNum">      26 </span>            : #endif
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            : #include &lt;boost/move/detail/config_begin.hpp&gt;
+<span class="lineNum">      29 </span>            : #include &lt;boost/move/core.hpp&gt;
+<span class="lineNum">      30 </span>            : #include &lt;boost/move/detail/meta_utils.hpp&gt;
+<span class="lineNum">      31 </span>            : #include &lt;boost/static_assert.hpp&gt;
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span>            : #if defined(BOOST_NO_CXX11_RVALUE_REFERENCES) &amp;&amp; !defined(BOOST_MOVE_DOXYGEN_INVOKED)
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            :    namespace boost {
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            :    template&lt;class T&gt;
+<span class="lineNum">      38 </span>            :    struct enable_move_utility_emulation
+<span class="lineNum">      39 </span>            :    {
+<span class="lineNum">      40 </span>            :       static const bool value = true;
+<span class="lineNum">      41 </span>            :    };
+<span class="lineNum">      42 </span>            :     
+<span class="lineNum">      43 </span>            :    //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">      44 </span>            :    //
+<span class="lineNum">      45 </span>            :    //                            move()
+<span class="lineNum">      46 </span>            :    //
+<span class="lineNum">      47 </span>            :    //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            :    template &lt;class T&gt;
+<span class="lineNum">      50 </span>            :    inline typename ::boost::move_detail::enable_if_c
+<span class="lineNum">      51 </span>            :       &lt; enable_move_utility_emulation&lt;T&gt;::value &amp;&amp; !has_move_emulation_enabled&lt;T&gt;::value, T&amp;&gt;::type
+<span class="lineNum">      52 </span>            :          move(T&amp; x) BOOST_NOEXCEPT
+<span class="lineNum">      53 </span>            :    {
+<span class="lineNum">      54 </span>            :       return x;
+<span class="lineNum">      55 </span>            :    }
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            :    template &lt;class T&gt;
+<span class="lineNum">      58 </span>            :    inline typename ::boost::move_detail::enable_if_c
+<span class="lineNum">      59 </span>            :       &lt; enable_move_utility_emulation&lt;T&gt;::value &amp;&amp; has_move_emulation_enabled&lt;T&gt;::value, rv&lt;T&gt;&amp;&gt;::type
+<span class="lineNum">      60 </span>            :          move(T&amp; x) BOOST_NOEXCEPT
+<span class="lineNum">      61 </span>            :    {
+<span class="lineNum">      62 </span>            :       return *static_cast&lt;rv&lt;T&gt;* &gt;(::boost::move_detail::addressof(x));
+<span class="lineNum">      63 </span>            :    }
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span>            :    template &lt;class T&gt;
+<span class="lineNum">      66 </span>            :    inline typename ::boost::move_detail::enable_if_c
+<span class="lineNum">      67 </span>            :       &lt; enable_move_utility_emulation&lt;T&gt;::value &amp;&amp; has_move_emulation_enabled&lt;T&gt;::value, rv&lt;T&gt;&amp;&gt;::type
+<span class="lineNum">      68 </span>            :          move(rv&lt;T&gt;&amp; x) BOOST_NOEXCEPT
+<span class="lineNum">      69 </span>            :    {
+<span class="lineNum">      70 </span>            :       return x;
+<span class="lineNum">      71 </span>            :    }
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            :    //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">      74 </span>            :    //
+<span class="lineNum">      75 </span>            :    //                            forward()
+<span class="lineNum">      76 </span>            :    //
+<span class="lineNum">      77 </span>            :    //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">      78 </span>            : 
+<span class="lineNum">      79 </span>            :    template &lt;class T&gt;
+<span class="lineNum">      80 </span>            :    inline typename ::boost::move_detail::enable_if_c
+<span class="lineNum">      81 </span>            :       &lt; enable_move_utility_emulation&lt;T&gt;::value &amp;&amp; ::boost::move_detail::is_rv&lt;T&gt;::value, T &amp;&gt;::type
+<span class="lineNum">      82 </span>            :          forward(const typename ::boost::move_detail::identity&lt;T&gt;::type &amp;x) BOOST_NOEXCEPT
+<span class="lineNum">      83 </span>            :    {
+<span class="lineNum">      84 </span>            :       return const_cast&lt;T&amp;&gt;(x);
+<span class="lineNum">      85 </span>            :    }
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span>            :    template &lt;class T&gt;
+<span class="lineNum">      88 </span>            :    inline typename ::boost::move_detail::enable_if_c
+<span class="lineNum">      89 </span>            :       &lt; enable_move_utility_emulation&lt;T&gt;::value &amp;&amp; !::boost::move_detail::is_rv&lt;T&gt;::value, const T &amp;&gt;::type
+<span class="lineNum">      90 </span>            :       forward(const typename ::boost::move_detail::identity&lt;T&gt;::type &amp;x) BOOST_NOEXCEPT
+<span class="lineNum">      91 </span>            :    {
+<span class="lineNum">      92 </span>            :       return x;
+<span class="lineNum">      93 </span>            :    }
+<span class="lineNum">      94 </span>            : 
+<span class="lineNum">      95 </span>            :    //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">      96 </span>            :    //
+<span class="lineNum">      97 </span>            :    //                        move_if_not_lvalue_reference()
+<span class="lineNum">      98 </span>            :    //
+<span class="lineNum">      99 </span>            :    //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">     100 </span>            : 
+<span class="lineNum">     101 </span>            :    template &lt;class T&gt;
+<span class="lineNum">     102 </span>            :    inline typename ::boost::move_detail::enable_if_c
+<span class="lineNum">     103 </span>            :       &lt; enable_move_utility_emulation&lt;T&gt;::value &amp;&amp;
+<span class="lineNum">     104 </span>            :         ::boost::move_detail::is_rv&lt;T&gt;::value
+<span class="lineNum">     105 </span>            :       , T &amp;&gt;::type
+<span class="lineNum">     106 </span>            :          move_if_not_lvalue_reference(const typename ::boost::move_detail::identity&lt;T&gt;::type &amp;x) BOOST_NOEXCEPT
+<span class="lineNum">     107 </span>            :    {
+<span class="lineNum">     108 </span>            :       return const_cast&lt;T&amp;&gt;(x);
+<span class="lineNum">     109 </span>            :    }
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span>            :    template &lt;class T&gt;
+<span class="lineNum">     112 </span>            :    inline typename ::boost::move_detail::enable_if_c
+<span class="lineNum">     113 </span>            :       &lt; enable_move_utility_emulation&lt;T&gt;::value &amp;&amp;
+<span class="lineNum">     114 </span>            :         !::boost::move_detail::is_rv&lt;T&gt;::value  &amp;&amp;
+<span class="lineNum">     115 </span>            :         (::boost::move_detail::is_lvalue_reference&lt;T&gt;::value ||
+<span class="lineNum">     116 </span>            :          !has_move_emulation_enabled&lt;T&gt;::value)
+<span class="lineNum">     117 </span>            :       , typename ::boost::move_detail::add_lvalue_reference&lt;T&gt;::type
+<span class="lineNum">     118 </span>            :       &gt;::type
+<span class="lineNum">     119 </span>            :          move_if_not_lvalue_reference(typename ::boost::move_detail::remove_reference&lt;T&gt;::type &amp;x) BOOST_NOEXCEPT
+<span class="lineNum">     120 </span>            :    {
+<span class="lineNum">     121 </span>            :       return x;
+<span class="lineNum">     122 </span>            :    }
+<span class="lineNum">     123 </span>            : 
+<span class="lineNum">     124 </span>            :    template &lt;class T&gt;
+<span class="lineNum">     125 </span>            :    inline typename ::boost::move_detail::enable_if_c
+<span class="lineNum">     126 </span>            :       &lt; enable_move_utility_emulation&lt;T&gt;::value &amp;&amp;
+<span class="lineNum">     127 </span>            :         !::boost::move_detail::is_rv&lt;T&gt;::value  &amp;&amp;
+<span class="lineNum">     128 </span>            :         (!::boost::move_detail::is_lvalue_reference&lt;T&gt;::value &amp;&amp;
+<span class="lineNum">     129 </span>            :          has_move_emulation_enabled&lt;T&gt;::value)
+<span class="lineNum">     130 </span>            :       , rv&lt;T&gt;&amp;
+<span class="lineNum">     131 </span>            :       &gt;::type
+<span class="lineNum">     132 </span>            :          move_if_not_lvalue_reference(typename ::boost::move_detail::remove_reference&lt;T&gt;::type &amp;x) BOOST_NOEXCEPT
+<span class="lineNum">     133 </span>            :    {
+<span class="lineNum">     134 </span>            :       return move(x);
+<span class="lineNum">     135 </span>            :    }
+<span class="lineNum">     136 </span>            : 
+<span class="lineNum">     137 </span>            :    }  //namespace boost
+<span class="lineNum">     138 </span>            : 
+<span class="lineNum">     139 </span>            : #else    //#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES) &amp;&amp; !defined(BOOST_MOVE_DOXYGEN_INVOKED)
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            :    #if defined(BOOST_MOVE_USE_STANDARD_LIBRARY_MOVE)
+<span class="lineNum">     142 </span>            :       #include &lt;utility&gt;
+<span class="lineNum">     143 </span>            : 
+<span class="lineNum">     144 </span>            :       namespace boost{
+<span class="lineNum">     145 </span>            : 
+<span class="lineNum">     146 </span>            :       using ::std::move;
+<span class="lineNum">     147 </span>            :       using ::std::forward;
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span>            :       }  //namespace boost
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            :    #else //!BOOST_MOVE_USE_STANDARD_LIBRARY_MOVE
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span>            :       namespace boost {
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span>            :       //! This trait's internal boolean `value` is false in compilers with rvalue references
+<span class="lineNum">     156 </span>            :       //! and true in compilers without rvalue references.
+<span class="lineNum">     157 </span>            :       //!
+<span class="lineNum">     158 </span>            :       //! A user can specialize this trait for a type T to false to SFINAE out `move` and `forward`
+<span class="lineNum">     159 </span>            :       //! so that the user can define a different move emulation for that type in namespace boost
+<span class="lineNum">     160 </span>            :       //! (e.g. another Boost library for its types) and avoid any overload ambiguity.
+<span class="lineNum">     161 </span>            :       template&lt;class T&gt;
+<span class="lineNum">     162 </span>            :       struct enable_move_utility_emulation
+<span class="lineNum">     163 </span>            :       {
+<span class="lineNum">     164 </span>            :          static const bool value = false;
+<span class="lineNum">     165 </span>            :       };
+<span class="lineNum">     166 </span>            : 
+<span class="lineNum">     167 </span>            :       //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">     168 </span>            :       //
+<span class="lineNum">     169 </span>            :       //                                  move
+<span class="lineNum">     170 </span>            :       //
+<span class="lineNum">     171 </span>            :       //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span>            :       #if defined(BOOST_MOVE_DOXYGEN_INVOKED)
+<span class="lineNum">     174 </span>            :          //! This function provides a way to convert a reference into a rvalue reference
+<span class="lineNum">     175 </span>            :          //! in compilers with rvalue references. For other compilers if `T` is Boost.Move
+<span class="lineNum">     176 </span>            :          //! enabled type then it converts `T&amp;` into &lt;tt&gt;::boost::rv&lt;T&gt; &amp;&lt;/tt&gt; so that
+<span class="lineNum">     177 </span>            :          //! move emulation is activated, else it returns `T &amp;`.
+<span class="lineNum">     178 </span>            :          template &lt;class T&gt;
+<span class="lineNum">     179 </span>            :          rvalue_reference move(input_reference) noexcept;
+<span class="lineNum">     180 </span>            : 
+<span class="lineNum">     181 </span>            :       #elif defined(BOOST_MOVE_OLD_RVALUE_REF_BINDING_RULES)
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span>            :          //Old move approach, lvalues could bind to rvalue references
+<span class="lineNum">     184 </span>            :          template &lt;class T&gt;
+<span class="lineNum">     185 </span>            :          inline typename ::boost::move_detail::remove_reference&lt;T&gt;::type &amp;&amp; move(T&amp;&amp; t) BOOST_NOEXCEPT
+<span class="lineNum">     186 </span>            :          {  return t;   }
+<span class="lineNum">     187 </span>            : 
+<span class="lineNum">     188 </span>            :       #else //BOOST_MOVE_OLD_RVALUE_REF_BINDING_RULES
+<a name="189"><span class="lineNum">     189 </span>            : </a>
+<span class="lineNum">     190 </span>            :          template &lt;class T&gt;
+<span class="lineNum">     191 </span><span class="lineNoCov">          0 :          inline typename ::boost::move_detail::remove_reference&lt;T&gt;::type &amp;&amp; move(T&amp;&amp; t) BOOST_NOEXCEPT</span>
+<span class="lineNum">     192 </span><span class="lineNoCov">          0 :          { return static_cast&lt;typename ::boost::move_detail::remove_reference&lt;T&gt;::type &amp;&amp;&gt;(t); }</span>
+<span class="lineNum">     193 </span>            : 
+<span class="lineNum">     194 </span>            :       #endif   //BOOST_MOVE_OLD_RVALUE_REF_BINDING_RULES
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span>            :       //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">     197 </span>            :       //
+<span class="lineNum">     198 </span>            :       //                                  forward
+<span class="lineNum">     199 </span>            :       //
+<span class="lineNum">     200 </span>            :       //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">     201 </span>            : 
+<span class="lineNum">     202 </span>            : 
+<span class="lineNum">     203 </span>            :       #if defined(BOOST_MOVE_DOXYGEN_INVOKED)
+<span class="lineNum">     204 </span>            :          //! This function provides limited form of forwarding that is usually enough for
+<span class="lineNum">     205 </span>            :          //! in-place construction and avoids the exponential overloading for
+<span class="lineNum">     206 </span>            :          //! achieve the limited forwarding in C++03.
+<span class="lineNum">     207 </span>            :          //!
+<span class="lineNum">     208 </span>            :          //! For compilers with rvalue references this function provides perfect forwarding.
+<span class="lineNum">     209 </span>            :          //!
+<span class="lineNum">     210 </span>            :          //! Otherwise:
+<span class="lineNum">     211 </span>            :          //! * If input_reference binds to const ::boost::rv&lt;T&gt; &amp; then it output_reference is
+<span class="lineNum">     212 </span>            :          //!   ::boost::rv&lt;T&gt; &amp;
+<span class="lineNum">     213 </span>            :          //!
+<span class="lineNum">     214 </span>            :          //! * Else, output_reference is equal to input_reference.
+<span class="lineNum">     215 </span>            :          template &lt;class T&gt; output_reference forward(input_reference) noexcept;
+<span class="lineNum">     216 </span>            :       #elif defined(BOOST_MOVE_OLD_RVALUE_REF_BINDING_RULES)
+<span class="lineNum">     217 </span>            : 
+<span class="lineNum">     218 </span>            :          //Old move approach, lvalues could bind to rvalue references
+<span class="lineNum">     219 </span>            : 
+<span class="lineNum">     220 </span>            :          template &lt;class T&gt;
+<span class="lineNum">     221 </span>            :          inline T&amp;&amp; forward(typename ::boost::move_detail::identity&lt;T&gt;::type&amp;&amp; t) BOOST_NOEXCEPT
+<span class="lineNum">     222 </span>            :          {  return t;   }
+<span class="lineNum">     223 </span>            : 
+<span class="lineNum">     224 </span>            :       #else //Old move
+<a name="225"><span class="lineNum">     225 </span>            : </a>
+<span class="lineNum">     226 </span>            :          template &lt;class T&gt;
+<span class="lineNum">     227 </span><span class="lineCov">      10068 :          inline T&amp;&amp; forward(typename ::boost::move_detail::remove_reference&lt;T&gt;::type&amp; t) BOOST_NOEXCEPT</span>
+<span class="lineNum">     228 </span><span class="lineCov">      10068 :          {  return static_cast&lt;T&amp;&amp;&gt;(t);   }</span>
+<span class="lineNum">     229 </span>            : 
+<span class="lineNum">     230 </span>            :          template &lt;class T&gt;
+<span class="lineNum">     231 </span>            :          inline T&amp;&amp; forward(typename ::boost::move_detail::remove_reference&lt;T&gt;::type&amp;&amp; t) BOOST_NOEXCEPT
+<span class="lineNum">     232 </span>            :          {
+<span class="lineNum">     233 </span>            :             //&quot;boost::forward&lt;T&gt; error: 'T' is a lvalue reference, can't forward as rvalue.&quot;;
+<span class="lineNum">     234 </span>            :             BOOST_STATIC_ASSERT(!boost::move_detail::is_lvalue_reference&lt;T&gt;::value);
+<span class="lineNum">     235 </span>            :             return static_cast&lt;T&amp;&amp;&gt;(t);
+<span class="lineNum">     236 </span>            :          }
+<span class="lineNum">     237 </span>            : 
+<span class="lineNum">     238 </span>            :       #endif   //BOOST_MOVE_DOXYGEN_INVOKED
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span>            :       //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">     241 </span>            :       //
+<span class="lineNum">     242 </span>            :       //                         move_if_not_lvalue_reference
+<span class="lineNum">     243 </span>            :       //
+<span class="lineNum">     244 </span>            :       //////////////////////////////////////////////////////////////////////////////
+<span class="lineNum">     245 </span>            : 
+<span class="lineNum">     246 </span>            : 
+<span class="lineNum">     247 </span>            :       #if defined(BOOST_MOVE_DOXYGEN_INVOKED)
+<span class="lineNum">     248 </span>            :          template &lt;class T&gt; output_reference move_if_not_lvalue_reference(input_reference) noexcept;
+<span class="lineNum">     249 </span>            :       #elif defined(BOOST_MOVE_OLD_RVALUE_REF_BINDING_RULES)
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span>            :          //Old move approach, lvalues could bind to rvalue references
+<span class="lineNum">     252 </span>            : 
+<span class="lineNum">     253 </span>            :          template &lt;class T&gt;
+<span class="lineNum">     254 </span>            :          inline T&amp;&amp; move_if_not_lvalue_reference(typename ::boost::move_detail::identity&lt;T&gt;::type&amp;&amp; t) BOOST_NOEXCEPT
+<span class="lineNum">     255 </span>            :          {  return t;   }
+<span class="lineNum">     256 </span>            : 
+<span class="lineNum">     257 </span>            :       #else //Old move
+<span class="lineNum">     258 </span>            : 
+<span class="lineNum">     259 </span>            :          template &lt;class T&gt;
+<span class="lineNum">     260 </span>            :          inline T&amp;&amp; move_if_not_lvalue_reference(typename ::boost::move_detail::remove_reference&lt;T&gt;::type&amp; t) BOOST_NOEXCEPT
+<span class="lineNum">     261 </span>            :          {  return static_cast&lt;T&amp;&amp;&gt;(t);   }
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span>            :          template &lt;class T&gt;
+<span class="lineNum">     264 </span>            :          inline T&amp;&amp; move_if_not_lvalue_reference(typename ::boost::move_detail::remove_reference&lt;T&gt;::type&amp;&amp; t) BOOST_NOEXCEPT
+<span class="lineNum">     265 </span>            :          {
+<span class="lineNum">     266 </span>            :             //&quot;boost::forward&lt;T&gt; error: 'T' is a lvalue reference, can't forward as rvalue.&quot;;
+<span class="lineNum">     267 </span>            :             BOOST_STATIC_ASSERT(!boost::move_detail::is_lvalue_reference&lt;T&gt;::value);
+<span class="lineNum">     268 </span>            :             return static_cast&lt;T&amp;&amp;&gt;(t);
+<span class="lineNum">     269 </span>            :          }
+<span class="lineNum">     270 </span>            : 
+<span class="lineNum">     271 </span>            :       #endif   //BOOST_MOVE_DOXYGEN_INVOKED
+<span class="lineNum">     272 </span>            : 
+<span class="lineNum">     273 </span>            :       }  //namespace boost {
+<span class="lineNum">     274 </span>            : 
+<span class="lineNum">     275 </span>            :    #endif   //#if defined(BOOST_MOVE_USE_STANDARD_LIBRARY_MOVE)
+<span class="lineNum">     276 </span>            : 
+<span class="lineNum">     277 </span>            : #endif   //BOOST_NO_CXX11_RVALUE_REFERENCES
+<span class="lineNum">     278 </span>            : 
+<span class="lineNum">     279 </span>            : #if !defined(BOOST_MOVE_DOXYGEN_INVOKED)
+<span class="lineNum">     280 </span>            : 
+<span class="lineNum">     281 </span>            : namespace boost{
+<span class="lineNum">     282 </span>            : namespace move_detail{
+<span class="lineNum">     283 </span>            : 
+<span class="lineNum">     284 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     285 </span>            : typename boost::move_detail::add_rvalue_reference&lt;T&gt;::type declval();
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span>            : }  //namespace move_detail{
+<span class="lineNum">     288 </span>            : }  //namespace boost{
+<span class="lineNum">     289 </span>            : 
+<span class="lineNum">     290 </span>            : #endif   //#if !defined(BOOST_MOVE_DOXYGEN_INVOKED)
+<span class="lineNum">     291 </span>            : 
+<span class="lineNum">     292 </span>            : 
+<span class="lineNum">     293 </span>            : #include &lt;boost/move/detail/config_end.hpp&gt;
+<span class="lineNum">     294 </span>            : 
+<span class="lineNum">     295 </span>            : #endif //#ifndef BOOST_MOVE_MOVE_UTILITY_CORE_HPP
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

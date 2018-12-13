@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - boost/format/internals.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">boost/format</a> - internals.hpp<span style="font-size: 80%;"> (source / <a href="internals.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">47</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">17</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // ----------------------------------------------------------------------------</a>
+<span class="lineNum">       2 </span>            : // internals.hpp :  internal structs : stream_format_state, format_item. 
+<span class="lineNum">       3 </span>            : //                  included by format.hpp
+<span class="lineNum">       4 </span>            : // ----------------------------------------------------------------------------
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span>            : //  Copyright Samuel Krempp 2003. Use, modification, and distribution are
+<span class="lineNum">       7 </span>            : //  subject to the Boost Software License, Version 1.0. (See accompanying
+<span class="lineNum">       8 </span>            : //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : //  See http://www.boost.org/libs/format for library home page
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : // ----------------------------------------------------------------------------
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : #ifndef BOOST_FORMAT_INTERNALS_HPP
+<span class="lineNum">      15 </span>            : #define BOOST_FORMAT_INTERNALS_HPP
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : #include &lt;string&gt;
+<span class="lineNum">      19 </span>            : #include &lt;boost/assert.hpp&gt;
+<span class="lineNum">      20 </span>            : #include &lt;boost/optional.hpp&gt;
+<span class="lineNum">      21 </span>            : #include &lt;boost/limits.hpp&gt;
+<span class="lineNum">      22 </span>            : #include &lt;boost/format/detail/compat_workarounds.hpp&gt;
+<span class="lineNum">      23 </span>            : #include &lt;boost/format/alt_sstream.hpp&gt; // used as a dummy stream
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : namespace boost {
+<span class="lineNum">      26 </span>            : namespace io {
+<span class="lineNum">      27 </span>            : namespace detail {
+<span class="lineNum">      28 </span>            : 
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : //---- stream_format_state --------------------------------------------------//
+<span class="lineNum">      31 </span>            : 
+<a name="32"><span class="lineNum">      32 </span>            : //   set of params that define the format state of a stream</a>
+<span class="lineNum">      33 </span>            :     template&lt;class Ch, class Tr&gt; 
+<span class="lineNum">      34 </span><span class="lineNoCov">          0 :     struct stream_format_state </span>
+<span class="lineNum">      35 </span>            :     {
+<a name="36"><span class="lineNum">      36 </span>            :         typedef BOOST_IO_STD basic_ios&lt;Ch, Tr&gt;   basic_ios;</a>
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span><span class="lineNoCov">          0 :         stream_format_state(Ch fill)                 { reset(fill); }</span>
+<span class="lineNum">      39 </span>            : //        stream_format_state(const basic_ios&amp; os)     { set_by_stream(os); }
+<span class="lineNum">      40 </span>            : 
+<span class="lineNum">      41 </span>            :         void reset(Ch fill);                     //- sets to default state.
+<span class="lineNum">      42 </span>            :         void set_by_stream(const basic_ios&amp; os); //- sets to os's state.
+<span class="lineNum">      43 </span>            :         void apply_on(basic_ios &amp; os,            //- applies format_state to the stream
+<span class="lineNum">      44 </span>            :                       boost::io::detail::locale_t * loc_default = 0) const;
+<span class="lineNum">      45 </span>            :         template&lt;class T&gt; 
+<span class="lineNum">      46 </span>            :         void apply_manip(T manipulator)          //- modifies state by applying manipulator
+<span class="lineNum">      47 </span>            :             { apply_manip_body&lt;Ch, Tr, T&gt;( *this, manipulator) ; }
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            :         // --- data ---
+<span class="lineNum">      50 </span>            :         std::streamsize width_;
+<span class="lineNum">      51 </span>            :         std::streamsize precision_;
+<span class="lineNum">      52 </span>            :         Ch fill_; 
+<span class="lineNum">      53 </span>            :         std::ios_base::fmtflags flags_;
+<span class="lineNum">      54 </span>            :         std::ios_base::iostate  rdstate_;
+<span class="lineNum">      55 </span>            :         std::ios_base::iostate  exceptions_;
+<span class="lineNum">      56 </span>            :         boost::optional&lt;boost::io::detail::locale_t&gt;  loc_;
+<span class="lineNum">      57 </span>            :     };  
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : //---- format_item  ---------------------------------------------------------//
+<span class="lineNum">      61 </span>            : 
+<a name="62"><span class="lineNum">      62 </span>            : //   stores all parameters that can be specified in format strings</a>
+<span class="lineNum">      63 </span>            :     template&lt;class Ch, class Tr, class Alloc&gt;  
+<span class="lineNum">      64 </span><span class="lineNoCov">          0 :     struct format_item </span>
+<span class="lineNum">      65 </span>            :     {     
+<span class="lineNum">      66 </span>            :         enum pad_values { zeropad = 1, spacepad =2, centered=4, tabulation = 8 };
+<span class="lineNum">      67 </span>            :                          // 1. if zeropad is set, all other bits are not, 
+<span class="lineNum">      68 </span>            :                          // 2. if tabulation is set, all others are not.
+<span class="lineNum">      69 </span>            :                          // centered and spacepad can be mixed freely.
+<span class="lineNum">      70 </span>            :         enum arg_values { argN_no_posit   = -1, // non-positional directive. will set argN later
+<span class="lineNum">      71 </span>            :                           argN_tabulation = -2, // tabulation directive. (no argument read) 
+<span class="lineNum">      72 </span>            :                           argN_ignored    = -3  // ignored directive. (no argument read)
+<span class="lineNum">      73 </span>            :         };
+<span class="lineNum">      74 </span>            :         typedef BOOST_IO_STD basic_ios&lt;Ch, Tr&gt;                    basic_ios;
+<span class="lineNum">      75 </span>            :         typedef detail::stream_format_state&lt;Ch, Tr&gt;               stream_format_state;
+<a name="76"><span class="lineNum">      76 </span>            :         typedef ::std::basic_string&lt;Ch, Tr, Alloc&gt;                string_type;</a>
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span><span class="lineNoCov">          0 :         format_item(Ch fill) :argN_(argN_no_posit), fmtstate_(fill), </span>
+<span class="lineNum">      79 </span><span class="lineNoCov">          0 :                               truncate_(max_streamsize()), pad_scheme_(0)  {}</span>
+<span class="lineNum">      80 </span>            :         void reset(Ch fill);
+<a name="81"><span class="lineNum">      81 </span>            :         void compute_states(); // sets states  according to truncate and pad_scheme.</a>
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span><span class="lineNoCov">          0 :         static std::streamsize max_streamsize() { </span>
+<span class="lineNum">      84 </span><span class="lineNoCov">          0 :             return (std::numeric_limits&lt;std::streamsize&gt;::max)();</span>
+<span class="lineNum">      85 </span>            :         }
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span>            :         // --- data ---
+<span class="lineNum">      88 </span>            :         int         argN_;  //- argument number (starts at 0,  eg : %1 =&gt; argN=0)
+<span class="lineNum">      89 </span>            :                             //  negative values for items that don't process an argument
+<span class="lineNum">      90 </span>            :         string_type  res_;      //- result of the formatting of this item
+<span class="lineNum">      91 </span>            :         string_type  appendix_; //- piece of string between this item and the next
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span>            :         stream_format_state fmtstate_;// set by parsing, is only affected by modify_item
+<span class="lineNum">      94 </span>            : 
+<span class="lineNum">      95 </span>            :         std::streamsize truncate_;//- is set for directives like %.5s that ask truncation
+<span class="lineNum">      96 </span>            :         unsigned int pad_scheme_;//- several possible padding schemes can mix. see pad_values
+<span class="lineNum">      97 </span>            :     }; 
+<span class="lineNum">      98 </span>            : 
+<span class="lineNum">      99 </span>            : 
+<span class="lineNum">     100 </span>            : 
+<span class="lineNum">     101 </span>            : //--- Definitions  ------------------------------------------------------------
+<span class="lineNum">     102 </span>            : 
+<a name="103"><span class="lineNum">     103 </span>            : // -   stream_format_state:: -------------------------------------------------</a>
+<span class="lineNum">     104 </span>            :     template&lt;class Ch, class Tr&gt;
+<span class="lineNum">     105 </span><span class="lineNoCov">          0 :     void stream_format_state&lt;Ch,Tr&gt;:: apply_on (basic_ios &amp; os,</span>
+<span class="lineNum">     106 </span>            :                       boost::io::detail::locale_t * loc_default) const {
+<span class="lineNum">     107 </span>            :     // If a locale is available, set it first. &quot;os.fill(fill_);&quot; may chrash otherwise. 
+<span class="lineNum">     108 </span>            : #if !defined(BOOST_NO_STD_LOCALE)
+<span class="lineNum">     109 </span><span class="lineNoCov">          0 :         if(loc_)</span>
+<span class="lineNum">     110 </span><span class="lineNoCov">          0 :             os.imbue(loc_.get());</span>
+<span class="lineNum">     111 </span><span class="lineNoCov">          0 :         else if(loc_default)</span>
+<span class="lineNum">     112 </span><span class="lineNoCov">          0 :             os.imbue(*loc_default);</span>
+<span class="lineNum">     113 </span>            : #else
+<span class="lineNum">     114 </span>            :         (void) loc_default; // keep compiler quiet if we don't support locales
+<span class="lineNum">     115 </span>            : #endif        
+<span class="lineNum">     116 </span>            :         // set the state of this stream according to our params
+<span class="lineNum">     117 </span><span class="lineNoCov">          0 :         if(width_ != -1)</span>
+<span class="lineNum">     118 </span><span class="lineNoCov">          0 :             os.width(width_);</span>
+<span class="lineNum">     119 </span><span class="lineNoCov">          0 :         if(precision_ != -1)</span>
+<span class="lineNum">     120 </span><span class="lineNoCov">          0 :             os.precision(precision_);</span>
+<span class="lineNum">     121 </span><span class="lineNoCov">          0 :         if(fill_ != 0)</span>
+<span class="lineNum">     122 </span><span class="lineNoCov">          0 :             os.fill(fill_);</span>
+<span class="lineNum">     123 </span><span class="lineNoCov">          0 :         os.flags(flags_);</span>
+<span class="lineNum">     124 </span><span class="lineNoCov">          0 :         os.clear(rdstate_);</span>
+<span class="lineNum">     125 </span><span class="lineNoCov">          0 :         os.exceptions(exceptions_);</span>
+<span class="lineNum">     126 </span><span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">     127 </span>            : 
+<span class="lineNum">     128 </span>            :     template&lt;class Ch, class Tr&gt;
+<span class="lineNum">     129 </span>            :     void stream_format_state&lt;Ch,Tr&gt;:: set_by_stream(const basic_ios&amp; os) {
+<span class="lineNum">     130 </span>            :         // set our params according to the state of this stream
+<span class="lineNum">     131 </span>            :         flags_ = os.flags();
+<span class="lineNum">     132 </span>            :         width_ = os.width();
+<span class="lineNum">     133 </span>            :         precision_ = os.precision();
+<span class="lineNum">     134 </span>            :         fill_ = os.fill();
+<span class="lineNum">     135 </span>            :         rdstate_ = os.rdstate();
+<span class="lineNum">     136 </span>            :         exceptions_ = os.exceptions();
+<span class="lineNum">     137 </span>            :     }
+<span class="lineNum">     138 </span>            : 
+<span class="lineNum">     139 </span>            : 
+<span class="lineNum">     140 </span>            :     template&lt;class Ch, class Tr, class T&gt;
+<span class="lineNum">     141 </span>            :     void apply_manip_body( stream_format_state&lt;Ch, Tr&gt;&amp; self,
+<span class="lineNum">     142 </span>            :                            T manipulator) {
+<span class="lineNum">     143 </span>            :         // modify our params according to the manipulator
+<span class="lineNum">     144 </span>            :         basic_oaltstringstream&lt;Ch, Tr&gt;  ss;
+<span class="lineNum">     145 </span>            :         self.apply_on( ss );
+<span class="lineNum">     146 </span>            :         ss &lt;&lt; manipulator;
+<span class="lineNum">     147 </span>            :         self.set_by_stream( ss );
+<span class="lineNum">     148 </span>            :     }
+<a name="149"><span class="lineNum">     149 </span>            : </a>
+<span class="lineNum">     150 </span>            :     template&lt;class Ch, class Tr&gt; inline
+<span class="lineNum">     151 </span><span class="lineNoCov">          0 :     void stream_format_state&lt;Ch,Tr&gt;:: reset(Ch fill) {</span>
+<span class="lineNum">     152 </span>            :         // set our params to standard's default state.   cf 27.4.4.1 of the C++ norm
+<span class="lineNum">     153 </span><span class="lineNoCov">          0 :         width_=0; precision_=6; </span>
+<span class="lineNum">     154 </span><span class="lineNoCov">          0 :         fill_=fill; // default is widen(' '), but we cant compute it without the locale</span>
+<span class="lineNum">     155 </span><span class="lineNoCov">          0 :         flags_ = std::ios_base::dec | std::ios_base::skipws; </span>
+<span class="lineNum">     156 </span>            :         // the adjust_field part is left equal to 0, which means right.
+<span class="lineNum">     157 </span><span class="lineNoCov">          0 :         exceptions_ = std::ios_base::goodbit;</span>
+<span class="lineNum">     158 </span><span class="lineNoCov">          0 :         rdstate_ = std::ios_base::goodbit;</span>
+<span class="lineNum">     159 </span><span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">     160 </span>            : 
+<span class="lineNum">     161 </span>            : 
+<span class="lineNum">     162 </span>            : // ---   format_item:: --------------------------------------------------------
+<a name="163"><span class="lineNum">     163 </span>            : </a>
+<span class="lineNum">     164 </span>            :     template&lt;class Ch, class Tr, class Alloc&gt; 
+<span class="lineNum">     165 </span><span class="lineNoCov">          0 :     void format_item&lt;Ch, Tr, Alloc&gt;:: </span>
+<span class="lineNum">     166 </span>            :     reset (Ch fill) { 
+<span class="lineNum">     167 </span><span class="lineNoCov">          0 :         argN_=argN_no_posit; truncate_ = max_streamsize(); pad_scheme_ =0; </span>
+<span class="lineNum">     168 </span><span class="lineNoCov">          0 :         res_.resize(0); appendix_.resize(0);</span>
+<span class="lineNum">     169 </span><span class="lineNoCov">          0 :         fmtstate_.reset(fill);</span>
+<span class="lineNum">     170 </span><span class="lineNoCov">          0 :     }</span>
+<a name="171"><span class="lineNum">     171 </span>            : </a>
+<span class="lineNum">     172 </span>            :     template&lt;class Ch, class Tr, class Alloc&gt; 
+<span class="lineNum">     173 </span><span class="lineNoCov">          0 :     void format_item&lt;Ch, Tr, Alloc&gt;:: </span>
+<span class="lineNum">     174 </span>            :     compute_states() {
+<span class="lineNum">     175 </span>            :         // reflect pad_scheme_   on  fmt_state_
+<span class="lineNum">     176 </span>            :         //   because some pad_schemes has complex consequences on several state params.
+<span class="lineNum">     177 </span><span class="lineNoCov">          0 :         if(pad_scheme_ &amp; zeropad) {</span>
+<span class="lineNum">     178 </span>            :             // ignore zeropad in left alignment :
+<span class="lineNum">     179 </span><span class="lineNoCov">          0 :             if(fmtstate_.flags_ &amp; std::ios_base::left) {</span>
+<span class="lineNum">     180 </span><span class="lineNoCov">          0 :               BOOST_ASSERT(!(fmtstate_.flags_ &amp;(std::ios_base::adjustfield ^std::ios_base::left)));</span>
+<span class="lineNum">     181 </span>            :               // only left bit might be set. (not right, nor internal)
+<span class="lineNum">     182 </span><span class="lineNoCov">          0 :               pad_scheme_ = pad_scheme_ &amp; (~zeropad); </span>
+<span class="lineNum">     183 </span>            :             }
+<span class="lineNum">     184 </span>            :             else { 
+<span class="lineNum">     185 </span><span class="lineNoCov">          0 :                 pad_scheme_ &amp;= ~spacepad; // printf ignores spacepad when zeropadding</span>
+<span class="lineNum">     186 </span><span class="lineNoCov">          0 :                 fmtstate_.fill_='0'; </span>
+<span class="lineNum">     187 </span><span class="lineNoCov">          0 :                 fmtstate_.flags_ = (fmtstate_.flags_ &amp; ~std::ios_base::adjustfield) </span>
+<span class="lineNum">     188 </span><span class="lineNoCov">          0 :                     | std::ios_base::internal;</span>
+<span class="lineNum">     189 </span>            :                 // removes all adjustfield bits, and adds internal.
+<span class="lineNum">     190 </span>            :             }
+<span class="lineNum">     191 </span>            :         }
+<span class="lineNum">     192 </span><span class="lineNoCov">          0 :         if(pad_scheme_ &amp; spacepad) {</span>
+<span class="lineNum">     193 </span><span class="lineNoCov">          0 :             if(fmtstate_.flags_ &amp; std::ios_base::showpos)</span>
+<span class="lineNum">     194 </span><span class="lineNoCov">          0 :                 pad_scheme_ &amp;= ~spacepad;</span>
+<span class="lineNum">     195 </span>            :         }
+<span class="lineNum">     196 </span><span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">     197 </span>            : 
+<span class="lineNum">     198 </span>            : 
+<span class="lineNum">     199 </span>            : } } } // namespaces boost :: io :: detail
+<span class="lineNum">     200 </span>            : 
+<span class="lineNum">     201 </span>            : 
+<span class="lineNum">     202 </span>            : #endif // BOOST_FORMAT_INTERNALS_HPP
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

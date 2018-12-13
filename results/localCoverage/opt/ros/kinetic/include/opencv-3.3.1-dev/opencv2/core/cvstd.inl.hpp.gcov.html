@@ -1,0 +1,362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/cvstd.inl.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core</a> - cvstd.inl.hpp<span style="font-size: 80%;"> (source / <a href="cvstd.inl.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*M///////////////////////////////////////////////////////////////////////////////////////</a>
+<span class="lineNum">       2 </span>            : //
+<span class="lineNum">       3 </span>            : //  IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING.
+<span class="lineNum">       4 </span>            : //
+<span class="lineNum">       5 </span>            : //  By downloading, copying, installing or using the software you agree to this license.
+<span class="lineNum">       6 </span>            : //  If you do not agree to this license, do not download, install,
+<span class="lineNum">       7 </span>            : //  copy or use the software.
+<span class="lineNum">       8 </span>            : //
+<span class="lineNum">       9 </span>            : //
+<span class="lineNum">      10 </span>            : //                          License Agreement
+<span class="lineNum">      11 </span>            : //                For Open Source Computer Vision Library
+<span class="lineNum">      12 </span>            : //
+<span class="lineNum">      13 </span>            : // Copyright (C) 2000-2008, Intel Corporation, all rights reserved.
+<span class="lineNum">      14 </span>            : // Copyright (C) 2009, Willow Garage Inc., all rights reserved.
+<span class="lineNum">      15 </span>            : // Copyright (C) 2013, OpenCV Foundation, all rights reserved.
+<span class="lineNum">      16 </span>            : // Third party copyrights are property of their respective owners.
+<span class="lineNum">      17 </span>            : //
+<span class="lineNum">      18 </span>            : // Redistribution and use in source and binary forms, with or without modification,
+<span class="lineNum">      19 </span>            : // are permitted provided that the following conditions are met:
+<span class="lineNum">      20 </span>            : //
+<span class="lineNum">      21 </span>            : //   * Redistribution's of source code must retain the above copyright notice,
+<span class="lineNum">      22 </span>            : //     this list of conditions and the following disclaimer.
+<span class="lineNum">      23 </span>            : //
+<span class="lineNum">      24 </span>            : //   * Redistribution's in binary form must reproduce the above copyright notice,
+<span class="lineNum">      25 </span>            : //     this list of conditions and the following disclaimer in the documentation
+<span class="lineNum">      26 </span>            : //     and/or other materials provided with the distribution.
+<span class="lineNum">      27 </span>            : //
+<span class="lineNum">      28 </span>            : //   * The name of the copyright holders may not be used to endorse or promote products
+<span class="lineNum">      29 </span>            : //     derived from this software without specific prior written permission.
+<span class="lineNum">      30 </span>            : //
+<span class="lineNum">      31 </span>            : // This software is provided by the copyright holders and contributors &quot;as is&quot; and
+<span class="lineNum">      32 </span>            : // any express or implied warranties, including, but not limited to, the implied
+<span class="lineNum">      33 </span>            : // warranties of merchantability and fitness for a particular purpose are disclaimed.
+<span class="lineNum">      34 </span>            : // In no event shall the Intel Corporation or contributors be liable for any direct,
+<span class="lineNum">      35 </span>            : // indirect, incidental, special, exemplary, or consequential damages
+<span class="lineNum">      36 </span>            : // (including, but not limited to, procurement of substitute goods or services;
+<span class="lineNum">      37 </span>            : // loss of use, data, or profits; or business interruption) however caused
+<span class="lineNum">      38 </span>            : // and on any theory of liability, whether in contract, strict liability,
+<span class="lineNum">      39 </span>            : // or tort (including negligence or otherwise) arising in any way out of
+<span class="lineNum">      40 </span>            : // the use of this software, even if advised of the possibility of such damage.
+<span class="lineNum">      41 </span>            : //
+<span class="lineNum">      42 </span>            : //M*/
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : #ifndef OPENCV_CORE_CVSTDINL_HPP
+<span class="lineNum">      45 </span>            : #define OPENCV_CORE_CVSTDINL_HPP
+<span class="lineNum">      46 </span>            : 
+<span class="lineNum">      47 </span>            : #include &lt;complex&gt;
+<span class="lineNum">      48 </span>            : #include &lt;ostream&gt;
+<span class="lineNum">      49 </span>            : 
+<span class="lineNum">      50 </span>            : //! @cond IGNORED
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            : #ifdef _MSC_VER
+<span class="lineNum">      53 </span>            : #pragma warning( push )
+<span class="lineNum">      54 </span>            : #pragma warning( disable: 4127 )
+<span class="lineNum">      55 </span>            : #endif
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : namespace cv
+<span class="lineNum">      58 </span>            : {
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : template&lt;typename _Tp&gt; class DataType&lt; std::complex&lt;_Tp&gt; &gt;
+<span class="lineNum">      61 </span>            : {
+<span class="lineNum">      62 </span>            : public:
+<span class="lineNum">      63 </span>            :     typedef std::complex&lt;_Tp&gt;  value_type;
+<span class="lineNum">      64 </span>            :     typedef value_type         work_type;
+<span class="lineNum">      65 </span>            :     typedef _Tp                channel_type;
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span>            :     enum { generic_type = 0,
+<span class="lineNum">      68 </span>            :            depth        = DataType&lt;channel_type&gt;::depth,
+<span class="lineNum">      69 </span>            :            channels     = 2,
+<span class="lineNum">      70 </span>            :            fmt          = DataType&lt;channel_type&gt;::fmt + ((channels - 1) &lt;&lt; 8),
+<span class="lineNum">      71 </span>            :            type         = CV_MAKETYPE(depth, channels) };
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            :     typedef Vec&lt;channel_type, channels&gt; vec_type;
+<span class="lineNum">      74 </span>            : };
+<a name="75"><span class="lineNum">      75 </span>            : </a>
+<span class="lineNum">      76 </span>            : inline
+<span class="lineNum">      77 </span><span class="lineCov">          6 : String::String(const std::string&amp; str)</span>
+<span class="lineNum">      78 </span><span class="lineCov">          6 :     : cstr_(0), len_(0)</span>
+<span class="lineNum">      79 </span>            : {
+<span class="lineNum">      80 </span><span class="lineCov">          6 :     if (!str.empty())</span>
+<span class="lineNum">      81 </span>            :     {
+<span class="lineNum">      82 </span><span class="lineCov">          6 :         size_t len = str.size();</span>
+<span class="lineNum">      83 </span><span class="lineCov">          6 :         if (len) memcpy(allocate(len), str.c_str(), len);</span>
+<span class="lineNum">      84 </span>            :     }
+<span class="lineNum">      85 </span><span class="lineCov">          6 : }</span>
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span>            : inline
+<span class="lineNum">      88 </span>            : String::String(const std::string&amp; str, size_t pos, size_t len)
+<span class="lineNum">      89 </span>            :     : cstr_(0), len_(0)
+<span class="lineNum">      90 </span>            : {
+<span class="lineNum">      91 </span>            :     size_t strlen = str.size();
+<span class="lineNum">      92 </span>            :     pos = min(pos, strlen);
+<span class="lineNum">      93 </span>            :     len = min(strlen - pos, len);
+<span class="lineNum">      94 </span>            :     if (!len) return;
+<span class="lineNum">      95 </span>            :     memcpy(allocate(len), str.c_str() + pos, len);
+<span class="lineNum">      96 </span>            : }
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span>            : inline
+<span class="lineNum">      99 </span>            : String&amp; String::operator = (const std::string&amp; str)
+<span class="lineNum">     100 </span>            : {
+<span class="lineNum">     101 </span>            :     deallocate();
+<span class="lineNum">     102 </span>            :     if (!str.empty())
+<span class="lineNum">     103 </span>            :     {
+<span class="lineNum">     104 </span>            :         size_t len = str.size();
+<span class="lineNum">     105 </span>            :         if (len) memcpy(allocate(len), str.c_str(), len);
+<span class="lineNum">     106 </span>            :     }
+<span class="lineNum">     107 </span>            :     return *this;
+<span class="lineNum">     108 </span>            : }
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span>            : inline
+<span class="lineNum">     111 </span>            : String&amp; String::operator += (const std::string&amp; str)
+<span class="lineNum">     112 </span>            : {
+<span class="lineNum">     113 </span>            :     *this = *this + str;
+<span class="lineNum">     114 </span>            :     return *this;
+<span class="lineNum">     115 </span>            : }
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span>            : inline
+<span class="lineNum">     118 </span>            : String::operator std::string() const
+<span class="lineNum">     119 </span>            : {
+<span class="lineNum">     120 </span>            :     return std::string(cstr_, len_);
+<span class="lineNum">     121 </span>            : }
+<span class="lineNum">     122 </span>            : 
+<span class="lineNum">     123 </span>            : inline
+<span class="lineNum">     124 </span>            : String operator + (const String&amp; lhs, const std::string&amp; rhs)
+<span class="lineNum">     125 </span>            : {
+<span class="lineNum">     126 </span>            :     String s;
+<span class="lineNum">     127 </span>            :     size_t rhslen = rhs.size();
+<span class="lineNum">     128 </span>            :     s.allocate(lhs.len_ + rhslen);
+<span class="lineNum">     129 </span>            :     if (lhs.len_) memcpy(s.cstr_, lhs.cstr_, lhs.len_);
+<span class="lineNum">     130 </span>            :     if (rhslen) memcpy(s.cstr_ + lhs.len_, rhs.c_str(), rhslen);
+<span class="lineNum">     131 </span>            :     return s;
+<span class="lineNum">     132 </span>            : }
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span>            : inline
+<span class="lineNum">     135 </span>            : String operator + (const std::string&amp; lhs, const String&amp; rhs)
+<span class="lineNum">     136 </span>            : {
+<span class="lineNum">     137 </span>            :     String s;
+<span class="lineNum">     138 </span>            :     size_t lhslen = lhs.size();
+<span class="lineNum">     139 </span>            :     s.allocate(lhslen + rhs.len_);
+<span class="lineNum">     140 </span>            :     if (lhslen) memcpy(s.cstr_, lhs.c_str(), lhslen);
+<span class="lineNum">     141 </span>            :     if (rhs.len_) memcpy(s.cstr_ + lhslen, rhs.cstr_, rhs.len_);
+<span class="lineNum">     142 </span>            :     return s;
+<span class="lineNum">     143 </span>            : }
+<span class="lineNum">     144 </span>            : 
+<span class="lineNum">     145 </span>            : inline
+<span class="lineNum">     146 </span>            : FileNode::operator std::string() const
+<span class="lineNum">     147 </span>            : {
+<span class="lineNum">     148 </span>            :     String value;
+<span class="lineNum">     149 </span>            :     read(*this, value, value);
+<span class="lineNum">     150 </span>            :     return value;
+<span class="lineNum">     151 </span>            : }
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span>            : template&lt;&gt; inline
+<span class="lineNum">     154 </span>            : void operator &gt;&gt; (const FileNode&amp; n, std::string&amp; value)
+<span class="lineNum">     155 </span>            : {
+<span class="lineNum">     156 </span>            :     read(n, value, std::string());
+<span class="lineNum">     157 </span>            : }
+<span class="lineNum">     158 </span>            : 
+<span class="lineNum">     159 </span>            : template&lt;&gt; inline
+<span class="lineNum">     160 </span>            : FileStorage&amp; operator &lt;&lt; (FileStorage&amp; fs, const std::string&amp; value)
+<span class="lineNum">     161 </span>            : {
+<span class="lineNum">     162 </span>            :     return fs &lt;&lt; cv::String(value);
+<span class="lineNum">     163 </span>            : }
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            : static inline
+<span class="lineNum">     166 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; os, const String&amp; str)
+<span class="lineNum">     167 </span>            : {
+<span class="lineNum">     168 </span>            :     return os &lt;&lt; str.c_str();
+<span class="lineNum">     169 </span>            : }
+<span class="lineNum">     170 </span>            : 
+<span class="lineNum">     171 </span>            : static inline
+<span class="lineNum">     172 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, Ptr&lt;Formatted&gt; fmtd)
+<span class="lineNum">     173 </span>            : {
+<span class="lineNum">     174 </span>            :     fmtd-&gt;reset();
+<span class="lineNum">     175 </span>            :     for(const char* str = fmtd-&gt;next(); str; str = fmtd-&gt;next())
+<span class="lineNum">     176 </span>            :         out &lt;&lt; str;
+<span class="lineNum">     177 </span>            :     return out;
+<span class="lineNum">     178 </span>            : }
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span>            : static inline
+<span class="lineNum">     181 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const Mat&amp; mtx)
+<span class="lineNum">     182 </span>            : {
+<span class="lineNum">     183 </span>            :     return out &lt;&lt; Formatter::get()-&gt;format(mtx);
+<span class="lineNum">     184 </span>            : }
+<span class="lineNum">     185 </span>            : 
+<span class="lineNum">     186 </span>            : static inline
+<span class="lineNum">     187 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const UMat&amp; m)
+<span class="lineNum">     188 </span>            : {
+<span class="lineNum">     189 </span>            :     return out &lt;&lt; m.getMat(ACCESS_READ);
+<span class="lineNum">     190 </span>            : }
+<span class="lineNum">     191 </span>            : 
+<span class="lineNum">     192 </span>            : template&lt;typename _Tp&gt; static inline
+<span class="lineNum">     193 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const Complex&lt;_Tp&gt;&amp; c)
+<span class="lineNum">     194 </span>            : {
+<span class="lineNum">     195 </span>            :     return out &lt;&lt; &quot;(&quot; &lt;&lt; c.re &lt;&lt; &quot;,&quot; &lt;&lt; c.im &lt;&lt; &quot;)&quot;;
+<span class="lineNum">     196 </span>            : }
+<span class="lineNum">     197 </span>            : 
+<span class="lineNum">     198 </span>            : template&lt;typename _Tp&gt; static inline
+<span class="lineNum">     199 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const std::vector&lt;Point_&lt;_Tp&gt; &gt;&amp; vec)
+<span class="lineNum">     200 </span>            : {
+<span class="lineNum">     201 </span>            :     return out &lt;&lt; Formatter::get()-&gt;format(Mat(vec));
+<span class="lineNum">     202 </span>            : }
+<span class="lineNum">     203 </span>            : 
+<span class="lineNum">     204 </span>            : 
+<span class="lineNum">     205 </span>            : template&lt;typename _Tp&gt; static inline
+<span class="lineNum">     206 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const std::vector&lt;Point3_&lt;_Tp&gt; &gt;&amp; vec)
+<span class="lineNum">     207 </span>            : {
+<span class="lineNum">     208 </span>            :     return out &lt;&lt; Formatter::get()-&gt;format(Mat(vec));
+<span class="lineNum">     209 </span>            : }
+<span class="lineNum">     210 </span>            : 
+<span class="lineNum">     211 </span>            : 
+<span class="lineNum">     212 </span>            : template&lt;typename _Tp, int m, int n&gt; static inline
+<span class="lineNum">     213 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const Matx&lt;_Tp, m, n&gt;&amp; matx)
+<span class="lineNum">     214 </span>            : {
+<span class="lineNum">     215 </span>            :     return out &lt;&lt; Formatter::get()-&gt;format(Mat(matx));
+<span class="lineNum">     216 </span>            : }
+<span class="lineNum">     217 </span>            : 
+<span class="lineNum">     218 </span>            : template&lt;typename _Tp&gt; static inline
+<span class="lineNum">     219 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const Point_&lt;_Tp&gt;&amp; p)
+<span class="lineNum">     220 </span>            : {
+<span class="lineNum">     221 </span>            :     out &lt;&lt; &quot;[&quot; &lt;&lt; p.x &lt;&lt; &quot;, &quot; &lt;&lt; p.y &lt;&lt; &quot;]&quot;;
+<span class="lineNum">     222 </span>            :     return out;
+<span class="lineNum">     223 </span>            : }
+<span class="lineNum">     224 </span>            : 
+<span class="lineNum">     225 </span>            : template&lt;typename _Tp&gt; static inline
+<span class="lineNum">     226 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const Point3_&lt;_Tp&gt;&amp; p)
+<span class="lineNum">     227 </span>            : {
+<span class="lineNum">     228 </span>            :     out &lt;&lt; &quot;[&quot; &lt;&lt; p.x &lt;&lt; &quot;, &quot; &lt;&lt; p.y &lt;&lt; &quot;, &quot; &lt;&lt; p.z &lt;&lt; &quot;]&quot;;
+<span class="lineNum">     229 </span>            :     return out;
+<span class="lineNum">     230 </span>            : }
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span>            : template&lt;typename _Tp, int n&gt; static inline
+<span class="lineNum">     233 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const Vec&lt;_Tp, n&gt;&amp; vec)
+<span class="lineNum">     234 </span>            : {
+<span class="lineNum">     235 </span>            :     out &lt;&lt; &quot;[&quot;;
+<span class="lineNum">     236 </span>            :     if (cv::traits::Depth&lt;_Tp&gt;::value &lt;= CV_32S)
+<span class="lineNum">     237 </span>            :     {
+<span class="lineNum">     238 </span>            :         for (int i = 0; i &lt; n - 1; ++i) {
+<span class="lineNum">     239 </span>            :             out &lt;&lt; (int)vec[i] &lt;&lt; &quot;, &quot;;
+<span class="lineNum">     240 </span>            :         }
+<span class="lineNum">     241 </span>            :         out &lt;&lt; (int)vec[n-1] &lt;&lt; &quot;]&quot;;
+<span class="lineNum">     242 </span>            :     }
+<span class="lineNum">     243 </span>            :     else
+<span class="lineNum">     244 </span>            :     {
+<span class="lineNum">     245 </span>            :         for (int i = 0; i &lt; n - 1; ++i) {
+<span class="lineNum">     246 </span>            :             out &lt;&lt; vec[i] &lt;&lt; &quot;, &quot;;
+<span class="lineNum">     247 </span>            :         }
+<span class="lineNum">     248 </span>            :         out &lt;&lt; vec[n-1] &lt;&lt; &quot;]&quot;;
+<span class="lineNum">     249 </span>            :     }
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span>            :     return out;
+<span class="lineNum">     252 </span>            : }
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span>            : template&lt;typename _Tp&gt; static inline
+<span class="lineNum">     255 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const Size_&lt;_Tp&gt;&amp; size)
+<span class="lineNum">     256 </span>            : {
+<span class="lineNum">     257 </span>            :     return out &lt;&lt; &quot;[&quot; &lt;&lt; size.width &lt;&lt; &quot; x &quot; &lt;&lt; size.height &lt;&lt; &quot;]&quot;;
+<span class="lineNum">     258 </span>            : }
+<span class="lineNum">     259 </span>            : 
+<span class="lineNum">     260 </span>            : template&lt;typename _Tp&gt; static inline
+<span class="lineNum">     261 </span>            : std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const Rect_&lt;_Tp&gt;&amp; rect)
+<span class="lineNum">     262 </span>            : {
+<span class="lineNum">     263 </span>            :     return out &lt;&lt; &quot;[&quot; &lt;&lt; rect.width &lt;&lt; &quot; x &quot; &lt;&lt; rect.height &lt;&lt; &quot; from (&quot; &lt;&lt; rect.x &lt;&lt; &quot;, &quot; &lt;&lt; rect.y &lt;&lt; &quot;)]&quot;;
+<span class="lineNum">     264 </span>            : }
+<span class="lineNum">     265 </span>            : 
+<span class="lineNum">     266 </span>            : static inline std::ostream&amp; operator &lt;&lt; (std::ostream&amp; out, const MatSize&amp; msize)
+<span class="lineNum">     267 </span>            : {
+<span class="lineNum">     268 </span>            :     int i, dims = msize.p[-1];
+<span class="lineNum">     269 </span>            :     for( i = 0; i &lt; dims; i++ )
+<span class="lineNum">     270 </span>            :     {
+<span class="lineNum">     271 </span>            :         out &lt;&lt; msize.p[i];
+<span class="lineNum">     272 </span>            :         if( i &lt; dims-1 )
+<span class="lineNum">     273 </span>            :             out &lt;&lt; &quot; x &quot;;
+<span class="lineNum">     274 </span>            :     }
+<span class="lineNum">     275 </span>            :     return out;
+<span class="lineNum">     276 </span>            : }
+<span class="lineNum">     277 </span>            : 
+<span class="lineNum">     278 </span>            : } // cv
+<span class="lineNum">     279 </span>            : 
+<span class="lineNum">     280 </span>            : #ifdef _MSC_VER
+<span class="lineNum">     281 </span>            : #pragma warning( pop )
+<span class="lineNum">     282 </span>            : #endif
+<span class="lineNum">     283 </span>            : 
+<span class="lineNum">     284 </span>            : //! @endcond
+<span class="lineNum">     285 </span>            : 
+<span class="lineNum">     286 </span>            : #endif // OPENCV_CORE_CVSTDINL_HPP
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
