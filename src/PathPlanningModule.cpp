@@ -1,8 +1,7 @@
 /**
  * BSD 3-Clause License
-
-
- * Copyright (c) 2018, KapilRawal, Hrishikesh Tawde.
+ *
+ * Copyright (c) 2018, KapilRawal, Hrishikesh Tawade.
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -38,38 +37,149 @@
  *
  *  @copyright   BSD License
  *
- *  @brief    Path planning module file
+ *  @brief    PathPlanningModule Class implementation
  *
  *  @section   DESCRIPTION
  *
- *  Path planning module gives turtlebot the goals to be navigated. 
+ *  This file contains implementation of pathPlanningModule class
+ *  methods
+ *
  */
 
-#include<iostream>
-#include "ros/ros.h"
-#include <tf/transform_listener.h>
-#include "geometry_msgs/Twist.h"
 #include "../include/PathPlanningModule.h"
+#include <tf/transform_listener.h>
+#include<iostream>
+#include "geometry_msgs/Twist.h"
+#include "ros/ros.h"
 
-PathPlanningModule::PathPlanningModule(){
- velocityPublish = n.advertise < geometry_msgs::Twist
-      > ("/cmd_vel_mux/input/navi", 1);
- nextX_= 0;
- nextY_= 0;
- currentX_= 0.0;
- currentY_= 0.0;
- currentAngle_ =0;
- 
+PathPlanningModule::PathPlanningModule()
+    : nextX_(0),
+      nextY_(0),
+      currentX_(0),
+      currentY_(0),
+      currentAngle_(0),
+      exceptionHandled_(false),
+      angleExceptionHandled_(false),
+      velocityPublish(
+          n.advertise < geometry_msgs::Twist > ("/cmd_vel_mux/input/navi", 1)) {
+  /// publisher for velocity commands to turtlebot
+  /// setting variables to initial values
 }
 
-PathPlanningModule::~PathPlanningModule(){
-}
- 
-void PathPlanningModule::currentLocation() {
-  
+PathPlanningModule::~PathPlanningModule() {
 }
 
-double PathPlanningModule::getX() { 
+void PathPlanningModule::currentLocation(int loopOnce) {
+  int in = 0;
+  /// read the  odometry data and find current robot location
+  while (ros::ok() && in == 0) {
+    /// get the base_link to odom transform and print any exceptions
+    try {
+      listener.lookupTransform("/odom", "/base_link", ros::Time(0), transform);
+      currentX_ = transform.getOrigin().x();
+      currentY_ = transform.getOrigin().y();
+      in = 1;
+    } catch (tf::TransformException &ex) {
+      ROS_INFO("Trying again for transform and printing the exception below");
+      ROS_WARN("%s", ex.what());
+      ros::Duration(0.001).sleep();
+      exceptionHandled_ = true;
+      if (loopOnce == 1) {
+        break;
+      }
+    }
+    ros::spinOnce();
+  }
+}
+
+bool PathPlanningModule::getExceptionHandled() {
+  return exceptionHandled_;
+}
+
+bool PathPlanningModule::getAngleExceptionHandled() {
+  return angleExceptionHandled_;
+}
+
+void PathPlanningModule::moveToAngle(double angle) {
+  while (ros::ok()) {
+    /// get the base_link to odom transform and print any exceptions
+    try {
+      listener.lookupTransform("/odom", "/base_link", ros::Time(0), transform);
+      tf::Matrix3x3 rotationMatrix(transform.getRotation());
+      double roll;
+      double pitch;
+      double prevYaw;
+      rotationMatrix.getRPY(roll, pitch, prevYaw);
+      double yaw = ((prevYaw * 180.0 / 3.142));
+      if ((fabs(angle - yaw) <= 0.5)) {
+        break;
+      }
+      if (fabs(angle - yaw) >= 20) {
+        vel_msg.angular.z = 0.5;
+        velocityPublish.publish(vel_msg);
+      } else {
+        vel_msg.angular.z = 0.05;
+        velocityPublish.publish(vel_msg);
+      }
+    } catch (tf::TransformException &ex) {
+      ROS_INFO("Trying again for transform and printing the exception below");
+      ROS_WARN("%s", ex.what());
+      ros::Duration(1.0).sleep();
+      continue;
+    }
+    ros::spinOnce();
+  }
+  vel_msg.angular.z = 0.0;
+  velocityPublish.publish(vel_msg);
+  ros::Duration(0.1).sleep();
+}
+
+void PathPlanningModule::navigate() {
+  /// Navigate to x-coordinate
+  moveToAngle(0);
+  currentLocation(0);
+  while (ros::ok() && (fabs((currentX_ - nextX_)) >= 0.1)) {
+    currentLocation(0);
+    if ((currentX_ - nextX_) < 0) {
+     
+        vel_msg.linear.x = 1.0;
+      
+      velocityPublish.publish(vel_msg);
+    } else {
+      
+      vel_msg.linear.x = -1.0;
+      
+      velocityPublish.publish(vel_msg);
+  }
+    ros::spinOnce();
+  }
+  vel_msg.linear.x = 0.0;
+  velocityPublish.publish(vel_msg);
+  ros::Duration(0.1).sleep();
+  /// navigate to y-coordinate
+  moveToAngle(90);
+  currentLocation(0);
+  while (ros::ok() && (fabs((currentY_ - nextY_)) >= 0.1)) {
+    currentLocation(0);
+    if ((currentY_ - nextY_) < 0) {
+     
+        vel_msg.linear.x = 1.0;
+     
+      velocityPublish.publish(vel_msg);
+    } else {
+      
+        vel_msg.linear.x = -1.0;
+    
+      velocityPublish.publish(vel_msg);
+  }
+    ros::spinOnce();
+  }
+  vel_msg.linear.x = 0.0;
+  velocityPublish.publish(vel_msg);
+  ros::Duration(0.1).sleep();
+}
+
+double PathPlanningModule::getX() {
   return currentX_;
 }
 
@@ -77,7 +187,7 @@ double PathPlanningModule::getY() {
   return currentY_;
 }
 
-double PathPlanningModule::getNextX() { 
+double PathPlanningModule::getNextX() {
   return nextX_;
 }
 
@@ -85,21 +195,24 @@ double PathPlanningModule::getNextY() {
   return nextY_;
 }
 
-double PathPlanningModule::getCurrentAngle(){
-  return currentAngle_;
+double PathPlanningModule::getCurrentAngle(int loopOnce) {
+  double yaw;
+  
+    /// get the base_link to odom transform and print any exceptions
+    
+      listener.lookupTransform("/odom", "/base_link", ros::Time(0), transform);
+      tf::Matrix3x3 rotationMatrix(transform.getRotation());
+      double roll;
+      double pitch;
+      double prevYaw;
+      rotationMatrix.getRPY(roll, pitch, prevYaw);
+      yaw = ((prevYaw * 180.0 / 3.142));
+      return yaw;
+    
+  
 }
-
-
-void PathPlanningModule::moveToAngle(double angle) {
-  currentAngle_ = angle;
-}
-
-void PathPlanningModule::navigate() {
-  currentX_ = nextX_;
-  currentY_ = nextY_;
-}
-
-void PathPlanningModule::setGoal(double x, double y){
+void PathPlanningModule::setGoal(double x, double y) {
   nextX_ = x;
   nextY_ = y;
 }
+
