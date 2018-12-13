@@ -1,8 +1,7 @@
 /**
  * BSD 3-Clause License
-
-
- * Copyright (c) 2018, KapilRawal, Hrishikesh Tawde.
+ *
+ * Copyright (c) 2018, KapilRawal, Hrishikesh Tawade.
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -42,34 +41,41 @@
  *
  *  @section DESCRIPTION
  *
- *  This program will check the image processing operation for the turtlebot to check 
- *  for image conversion and contour
+ *  This program will check the methods, boundary conditions and exceptions of ImageProcessingModule
+ *  class
  */
 #include <gtest/gtest.h>
 #include <ros/ros.h>
-#include "ImageProcessingModule.h"
+#include <iostream>
+#include <vector>
+#include "../include/ImageProcessingModule.h"
+
 
 /**
- * @brief  checks if the convertImage is executed 
+ * @brief  checks if the convertImage is executed
  *
- * @param  ImageProcessingModuleTest of the test suite
+ * @param  ImageProcessingModuleTest name of the test suite
  *
  * @param  convertImageTest name of the test
  */
-TEST(ImageProcessingModuleTest, convertImageTest) { 
-  ImageProcessingModule processor; 
+TEST(ImageProcessingModuleTest, convertImageTest) {
+  ImageProcessingModule processor;
+  ros::WallDuration(5).sleep();
   ros::spinOnce();
-  EXPECT_EQ(true, processor.getImage().empty());
+  EXPECT_EQ(false, processor.getImage().empty());
 }
 
 /**
- * @brief  checks if the detectContour is executed 
+ * @brief  checks if the detectContour is executed
  *
- * @param  ImageProcessingModuleTest of the test suite
+ * @param  ImageProcessingModuleTest name of the test suite
  *
  * @param  detectContourTest name of the test
  */
-TEST(ImageProcessingModuleTest, detectContourTest) { 
+
+TEST(ImageProcessingModuleTest, detectContourTest) {
   ImageProcessingModule processor_;
-  EXPECT_EQ(true, processor_.detectContour("1").empty());
+  std::vector<double> location = processor_.detectContour("1", 1);
+  std::cout << location.size() << std::endl;
+  EXPECT_NEAR(2, (location.size()) / 2, 1);
 }

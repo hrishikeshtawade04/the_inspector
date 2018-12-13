@@ -1,8 +1,7 @@
 /**
  * BSD 3-Clause License
-
-
- * Copyright (c) 2018, KapilRawal, Hrishikesh Tawde.
+ *
+ * Copyright (c) 2018, KapilRawal, Hrishikesh Tawade.
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -28,7 +27,7 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+ *
  *  @copyright (c) BSD
  *
  *  @file   RobotModuleTest.cpp
@@ -38,27 +37,68 @@
  *
  *  @copyright BSD License
  *
- *  @brief  Robot module test file
+ *  @brief  Robot Class test file
  *
  *  @section DESCRIPTION
  *
- *  This program will check the Robot operation for the turtlebot to check 
- *  for finding leakages
+ *  This program will check the methods, boundary conditions and exceptions of
+ *  Robot Class
  */
 
 #include <gtest/gtest.h>
 #include <ros/ros.h>
 #include "RobotModule.h"
+#include <vector>
 
 /**
- * @brief  checks if the findLeakages is executed 
+ * @brief  checks if the putCoordinates method
+ *         works properly
  *
- * @param  RobotModuleTest of the test suite
+ * @param  RobotModuleTest name of the test suite
+ *
+ * @param  putCoordinatesTest name of the test
+ */
+TEST(RobotModuleTest, putCoordinatesTest) {
+  Robot robot;
+  std::vector<std::vector<double>> coordinates = robot.putCoordinates(2.3, 2.3);
+  EXPECT_EQ(4, coordinates.size());
+}
+
+/**
+ * @brief  checks if the genClickCoordinates method
+ *         works properly and its boundary  condition
+ *
+ * @param  RobotModuleTest name of the test suite
+ *
+ * @param  genClickCoordinatesTest name of the test
+ */
+TEST(RobotModuleTest, genClickCoordinatesTest) {
+  Robot robot;
+  std::vector<std::vector<double>> coordinates = robot.genClickCoordinates(10,
+                                                                           10);
+  EXPECT_EQ(-2.875, coordinates[0][1]);
+  EXPECT_EQ(90, coordinates[0][2]);
+  coordinates = robot.genClickCoordinates(1, 10);
+  EXPECT_EQ(true, coordinates.empty());
+}
+
+/**
+ * @brief  checks if the findLeakages is executed
+ *
+ * @param  RobotModuleTest name of the test suite
  *
  * @param  findLeakagesTest name of the test
  */
-TEST(RobotModuleTest, findLeakagesCheck) {
- Robot robot;
- robot.findLeakages();
- EXPECT_EQ(true , robot.getLeakages().empty());
+TEST(RobotModuleTest, findLeakagesTest) {
+  Robot robot;
+  std::vector<std::vector<double>> vector2;
+  std::vector<double> vector1;
+  vector1.emplace_back(-2.3);
+  vector1.emplace_back(0);
+  vector1.emplace_back(0);
+  vector2.emplace_back(vector1);
+  robot.findLeakages(vector2);
+  EXPECT_NEAR(3, robot.getLeakageCount(), 1);
 }
+
+

@@ -1,8 +1,7 @@
 /**
  * BSD 3-Clause License
-
-
- * Copyright (c) 2018, KapilRawal, Hrishikesh Tawde.
+ *
+ * Copyright (c) 2018, KapilRawal, Hrishikesh Tawade.
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -28,7 +27,7 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+ *
  *  @copyright (c) BSD
  *
  *  @file   main.cpp
@@ -41,8 +40,8 @@
  *  @brief ROS node
  *
  *  @section DESCRIPTION
- * 
- *  Main file for google test framework which tests the functionalities of the  
+ *
+ *  Main file for google test framework which runs all tests of
  *  the_inspector package
  */
 
@@ -55,14 +54,14 @@
  *
  *  @param   argc  Count of arguments given on terminal
  *
- *  @param   argv  Pointer to the array of pointers pointing to the argument given in the terminal
+ *  @param   argv  Pointer to the array of pointers pointing to the arguments given in the terminal
  *
- *  @return  returns to run all test
+ *  @return  returns 0 if all tests are successfully executed
+ *                   1 if an exception occurs while running any test
  */
 int main(int argc, char** argv) {
-  ros::init(argc, argv, "RobotTest");
-  
-  testing::InitGoogleTest(&argc, argv);
+  ros::init(argc, argv, "test_the_inspector");
+  ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
 
