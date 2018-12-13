@@ -93,6 +93,39 @@ TEST(PathPlanningModuleTest, moveToAngleTest) {
 }
 
 /**
+ * @brief  checks if the robot can navigate to a negative x
+ *         and positive y coordinate with high accuracy
+ *
+ * @param  PathPlanningModuleTest of the test suite
+ *
+ * @param  navigateNegativeXPositveYTest name of the test
+ */
+TEST(PathPlanningModuleTest, navigateNegativeXPositveYTest) {
+  PathPlanningModule pathplanner;
+  pathplanner.setGoal(-2.3, 2.0);
+  pathplanner.navigate();
+  pathplanner.currentLocation(0);
+  EXPECT_NEAR(-2.3, pathplanner.getX(), 0.2);
+  EXPECT_NEAR(2.0, pathplanner.getY(), 0.2);
+
+/**
+ * @brief  checks if the robot can navigate to a positive x
+ *         and negative y coordinate with high accuracy
+ *
+ * @param  PathPlanningModuleTest of the test suite
+ *
+ * @param  navigatePositveXNegativeYTest name of the test
+ */
+TEST(PathPlanningModuleTest, navigatePositveXNegativeYTest) {
+  PathPlanningModule pathplanner;
+  pathplanner.setGoal(0, -1);
+  pathplanner.navigate();
+  pathplanner.currentLocation(0);
+  EXPECT_NEAR(0, pathplanner.getX(), 0.2);
+  EXPECT_NEAR(-1, pathplanner.getY(), 0.2);
+}
+
+/**
  * @brief  checks if the robot can navigate to the
  *         wall photo clicking position and aligns
  *         itself perpendicular to wall
