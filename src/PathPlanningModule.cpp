@@ -142,20 +142,20 @@ void PathPlanningModule::navigate() {
     currentLocation(0);
     if ((currentX_ - nextX_) < 0) {
       if (fabs((currentX_ - nextX_)) > 1.0) {
-        vel_msg.linear.x = 1.5;
-      } else if (fabs((currentX_ - nextX_)) > 0.75) {
         vel_msg.linear.x = 1.0;
-      } else {
+      } else if (fabs((currentX_ - nextX_)) > 0.75) {
         vel_msg.linear.x = 0.5;
+      } else {
+        vel_msg.linear.x = 0.1;
       }
       velocityPublish.publish(vel_msg);
     } else {
       if (fabs((currentX_ - nextX_)) > 1.0) {
-        vel_msg.linear.x = -1.5;
-      } else if (fabs((currentX_ - nextX_)) > 0.75) {
         vel_msg.linear.x = -1.0;
-      } else {
+      } else if (fabs((currentX_ - nextX_)) > 0.75) {
         vel_msg.linear.x = -0.5;
+      } else {
+        vel_msg.linear.x = -0.1;
       }
       velocityPublish.publish(vel_msg);
   }
@@ -171,20 +171,20 @@ void PathPlanningModule::navigate() {
     currentLocation(0);
     if ((currentY_ - nextY_) < 0) {
       if (fabs((currentY_ - nextY_)) > 1.0) {
-        vel_msg.linear.x = 1.5;
-      } else if (fabs((currentY_ - nextY_)) > 0.75) {
         vel_msg.linear.x = 1.0;
-      } else {
+      } else if (fabs((currentY_ - nextY_)) > 0.75) {
         vel_msg.linear.x = 0.5;
+      } else {
+        vel_msg.linear.x = 0.1;
       }
       velocityPublish.publish(vel_msg);
     } else {
       if (fabs((currentY_ - nextY_)) > 1.0) {
-        vel_msg.linear.x = -1.5;
-      } else if (fabs((currentY_ - nextY_)) > 0.75) {
         vel_msg.linear.x = -1.0;
-      } else {
+      } else if (fabs((currentY_ - nextY_)) > 0.75) {
         vel_msg.linear.x = -0.5;
+      } else {
+        vel_msg.linear.x = -0.1;
       }
       velocityPublish.publish(vel_msg);
   }
@@ -194,6 +194,7 @@ void PathPlanningModule::navigate() {
   velocityPublish.publish(vel_msg);
   ros::Duration(0.1).sleep();
 }
+
 double PathPlanningModule::getX() {
   return currentX_;
 }
@@ -212,9 +213,9 @@ double PathPlanningModule::getNextY() {
 
 double PathPlanningModule::getCurrentAngle(int loopOnce) {
   double yaw;
-  
+ 
     /// get the base_link to odom transform and print any exceptions
-    
+  
       listener.lookupTransform("/odom", "/base_link", ros::Time(0), transform);
       tf::Matrix3x3 rotationMatrix(transform.getRotation());
       double roll;
@@ -223,6 +224,7 @@ double PathPlanningModule::getCurrentAngle(int loopOnce) {
       rotationMatrix.getRPY(roll, pitch, prevYaw);
       yaw = ((prevYaw * 180.0 / 3.142));
       return yaw;
+    
     
   
 }
