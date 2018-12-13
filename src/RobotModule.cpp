@@ -94,12 +94,19 @@ std::vector<std::vector<double>> Robot::putCoordinates(double wall13,
 std::vector<std::vector<double>> Robot::genClickCoordinates(double length,
                                                             double breadth) {
   /// finding the  coordinates based on turtlebot camera field of view
-
+  if (length - breadth * 0.7875 > 0 && (breadth - length * 0.7875 > 0)) {
     double wall13 = 0;
     double wall24 = 0;
     wall13 = breadth * 0.7875 - length / 2;
     wall24 = length * 0.7875 - breadth / 2;
     return putCoordinates(wall13, wall24);
+  } else {
+    /// cannot create coordinates since the dimensions of infrastructure
+    /// improper
+    ROS_INFO("Cannot create coordinates");
+    std::vector<std::vector<double>> noCoordinates;
+    return noCoordinates;
+  }
 }
 
 void Robot::findLeakages(std::vector<std::vector<double>> mapCoordinates) {
