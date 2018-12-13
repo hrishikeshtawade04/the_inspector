@@ -155,7 +155,7 @@ std::vector<double> ImageProcessingModule::detectContour(
       if (storeImage == 1) {
         std::stringstream sstream;
         sstream
-            << "../data/FinalOutput"
+            << "FinalOutput"
             << wallNumber << ".png";
         ROS_ASSERT(cv::imwrite(sstream.str(), imageLeakage));
       }
