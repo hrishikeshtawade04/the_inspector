@@ -233,9 +233,9 @@ $ roslaunch the_inspector the_inspector.launch
 ```
 >[NOTE: Make sure to run the source command otherwise the launch file won't detect the package. Also you will see **warnings** which our package will output, on the screen till gazebo is launched completely]
 
-You can also launch the .world  in the World folder spearatelyNow when the world opens up run the following commands to run 'the_inspector' node. Running both of them together
-
+You can also launch the .world  in the World folder spearately by opening Gazebo. Now when the world opens up run the following commands to run 'the_inspector' node. Running both of them together
 ```
+$ roscore (in a new terminal)
 $ cd <path to catkin_ws>
 $ source devel/setup.bash
 $ cd <data folder in the_inspector>
