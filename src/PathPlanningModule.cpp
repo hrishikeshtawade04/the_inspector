@@ -141,14 +141,22 @@ void PathPlanningModule::navigate() {
   while (ros::ok() && (fabs((currentX_ - nextX_)) >= 0.1)) {
     currentLocation(0);
     if ((currentX_ - nextX_) < 0) {
-     
+      if (fabs((currentX_ - nextX_)) > 1.0) {
+        vel_msg.linear.x = 1.5;
+      } else if (fabs((currentX_ - nextX_)) > 0.75) {
         vel_msg.linear.x = 1.0;
-      
+      } else {
+        vel_msg.linear.x = 0.5;
+      }
       velocityPublish.publish(vel_msg);
     } else {
-      
-      vel_msg.linear.x = -1.0;
-      
+      if (fabs((currentX_ - nextX_)) > 1.0) {
+        vel_msg.linear.x = -1.5;
+      } else if (fabs((currentX_ - nextX_)) > 0.75) {
+        vel_msg.linear.x = -1.0;
+      } else {
+        vel_msg.linear.x = -0.5;
+      }
       velocityPublish.publish(vel_msg);
   }
     ros::spinOnce();
@@ -162,14 +170,22 @@ void PathPlanningModule::navigate() {
   while (ros::ok() && (fabs((currentY_ - nextY_)) >= 0.1)) {
     currentLocation(0);
     if ((currentY_ - nextY_) < 0) {
-     
+      if (fabs((currentY_ - nextY_)) > 1.0) {
+        vel_msg.linear.x = 1.5;
+      } else if (fabs((currentY_ - nextY_)) > 0.75) {
         vel_msg.linear.x = 1.0;
-     
+      } else {
+        vel_msg.linear.x = 0.5;
+      }
       velocityPublish.publish(vel_msg);
     } else {
-      
+      if (fabs((currentY_ - nextY_)) > 1.0) {
+        vel_msg.linear.x = -1.5;
+      } else if (fabs((currentY_ - nextY_)) > 0.75) {
         vel_msg.linear.x = -1.0;
-    
+      } else {
+        vel_msg.linear.x = -0.5;
+      }
       velocityPublish.publish(vel_msg);
   }
     ros::spinOnce();
@@ -178,7 +194,6 @@ void PathPlanningModule::navigate() {
   velocityPublish.publish(vel_msg);
   ros::Duration(0.1).sleep();
 }
-
 double PathPlanningModule::getX() {
   return currentX_;
 }
