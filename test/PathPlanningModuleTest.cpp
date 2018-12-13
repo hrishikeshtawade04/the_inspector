@@ -48,6 +48,22 @@
 #include <ros/ros.h>
 #include "../include/PathPlanningModule.h"
 
+/**
+ * @brief  checks if the exceptions are caught by
+ *         currentLocation and getCurrentAngle methods
+ *
+ * @param  PathPlanningModuleTest name of the test suite
+ *
+ * @param  exceptionsTest name of the test
+ */
+TEST(PathPlanningModuleTest, exceptionsTest) {
+  PathPlanningModule pathplanner;
+  pathplanner.currentLocation(1);
+  pathplanner.getCurrentAngle(1);
+  ros::WallDuration(5).sleep();
+  EXPECT_EQ(true, pathplanner.getExceptionHandled());
+  EXPECT_EQ(true, pathplanner.getAngleExceptionHandled());
+}
 
 /**
  * @brief  checks if the currentLocation is executed
@@ -107,6 +123,7 @@ TEST(PathPlanningModuleTest, navigateNegativeXPositveYTest) {
   pathplanner.currentLocation(0);
   EXPECT_NEAR(-2.3, pathplanner.getX(), 0.2);
   EXPECT_NEAR(2.0, pathplanner.getY(), 0.2);
+}
 
 /**
  * @brief  checks if the robot can navigate to a positive x
