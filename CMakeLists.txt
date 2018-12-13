@@ -36,10 +36,10 @@ if (CATKIN_ENABLE_TESTING)
   add_rostest_gtest(
    test_the_inspector
    test/inspect.launch 
-   test/main.cpp
-   test/RobotModuleTest.cpp 
+   test/main.cpp 
    test/PathPlanningModuleTest.cpp 
    test/ImageProcessingModuleTest.cpp
+   test/RobotModuleTest.cpp
    src/RobotModule.cpp 
    src/ImageProcessingModule.cpp
    src/PathPlanningModule.cpp )
@@ -50,8 +50,8 @@ if (CATKIN_ENABLE_TESTING)
    ${OpenCV_LIBS})
   
   add_dependencies(
-    the_inspector
     test_the_inspector
+    the_inspector
     ${catkin_EXPORTED_TARGETS}
   )
 endif()
