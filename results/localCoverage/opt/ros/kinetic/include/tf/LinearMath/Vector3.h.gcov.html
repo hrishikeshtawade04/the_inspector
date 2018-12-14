@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">6</td>
@@ -131,7 +131,7 @@
 <span class="lineNum">      69 </span>            :         public:
 <a name="70"><span class="lineNum">      70 </span>            : </a>
 <span class="lineNum">      71 </span>            :   /**@brief No initialization constructor */
-<span class="lineNum">      72 </span><span class="lineCov">  213216972 :         TFSIMD_FORCE_INLINE Vector3() {}</span>
+<span class="lineNum">      72 </span><span class="lineCov">   34274689 :         TFSIMD_FORCE_INLINE Vector3() {}</span>
 <span class="lineNum">      73 </span>            : 
 <span class="lineNum">      74 </span>            : 
 <span class="lineNum">      75 </span>            :   /**@brief Constructor from scalars 
@@ -322,11 +322,11 @@
 <span class="lineNum">     260 </span>            :   /**@brief Set the w value */
 <a name="261"><span class="lineNum">     261 </span>            :                 TFSIMD_FORCE_INLINE void        setW(tfScalar w) { m_floats[3] = w;};</a>
 <span class="lineNum">     262 </span>            :   /**@brief Return the x value */
-<a name="263"><span class="lineNum">     263 </span><span class="lineCov">  677673925 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; x() const { return m_floats[0]; }</span></a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineCov">  108036117 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; x() const { return m_floats[0]; }</span></a>
 <span class="lineNum">     264 </span>            :   /**@brief Return the y value */
-<a name="265"><span class="lineNum">     265 </span><span class="lineCov">  380546678 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; y() const { return m_floats[1]; }</span></a>
+<a name="265"><span class="lineNum">     265 </span><span class="lineCov">   60406686 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; y() const { return m_floats[1]; }</span></a>
 <span class="lineNum">     266 </span>            :   /**@brief Return the z value */
-<span class="lineNum">     267 </span><span class="lineCov">  342523273 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; z() const { return m_floats[2]; }</span>
+<span class="lineNum">     267 </span><span class="lineCov">   55194516 :                 TFSIMD_FORCE_INLINE const tfScalar&amp; z() const { return m_floats[2]; }</span>
 <span class="lineNum">     268 </span>            :   /**@brief Return the w value */
 <span class="lineNum">     269 </span>            :                 TFSIMD_FORCE_INLINE const tfScalar&amp; w() const { return m_floats[3]; }
 <span class="lineNum">     270 </span>            : 
@@ -334,7 +334,7 @@
 <span class="lineNum">     272 </span>            :         //TFSIMD_FORCE_INLINE const tfScalar&amp; operator[](int i) const { return (&amp;m_floats[0])[i]; }
 <a name="273"><span class="lineNum">     273 </span>            :         ///operator tfScalar*() replaces operator[], using implicit conversion. We added operator != and operator == to avoid pointer comparisons.</a>
 <span class="lineNum">     274 </span>            :         TFSIMD_FORCE_INLINE     operator       tfScalar *()       { return &amp;m_floats[0]; }
-<span class="lineNum">     275 </span><span class="lineCov">  115543143 :         TFSIMD_FORCE_INLINE     operator const tfScalar *() const { return &amp;m_floats[0]; }</span>
+<span class="lineNum">     275 </span><span class="lineCov">   17369091 :         TFSIMD_FORCE_INLINE     operator const tfScalar *() const { return &amp;m_floats[0]; }</span>
 <span class="lineNum">     276 </span>            : 
 <span class="lineNum">     277 </span>            :         TFSIMD_FORCE_INLINE     bool    operator==(const Vector3&amp; other) const
 <span class="lineNum">     278 </span>            :         {
@@ -367,13 +367,13 @@
 <span class="lineNum">     305 </span>            :                         tfSetMin(m_floats[3], other.w());
 <a name="306"><span class="lineNum">     306 </span>            :                 }</a>
 <span class="lineNum">     307 </span>            : 
-<span class="lineNum">     308 </span><span class="lineCov">  213216840 :                 TFSIMD_FORCE_INLINE void        setValue(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z)</span>
+<span class="lineNum">     308 </span><span class="lineCov">   34274649 :                 TFSIMD_FORCE_INLINE void        setValue(const tfScalar&amp; x, const tfScalar&amp; y, const tfScalar&amp; z)</span>
 <span class="lineNum">     309 </span>            :                 {
-<span class="lineNum">     310 </span><span class="lineCov">  213216840 :                         m_floats[0]=x;</span>
-<span class="lineNum">     311 </span><span class="lineCov">  213216840 :                         m_floats[1]=y;</span>
-<span class="lineNum">     312 </span><span class="lineCov">  213216840 :                         m_floats[2]=z;</span>
-<span class="lineNum">     313 </span><span class="lineCov">  213216840 :                         m_floats[3] = tfScalar(0.);</span>
-<span class="lineNum">     314 </span><span class="lineCov">  213216840 :                 }</span>
+<span class="lineNum">     310 </span><span class="lineCov">   34274649 :                         m_floats[0]=x;</span>
+<span class="lineNum">     311 </span><span class="lineCov">   34274649 :                         m_floats[1]=y;</span>
+<span class="lineNum">     312 </span><span class="lineCov">   34274649 :                         m_floats[2]=z;</span>
+<span class="lineNum">     313 </span><span class="lineCov">   34274649 :                         m_floats[3] = tfScalar(0.);</span>
+<span class="lineNum">     314 </span><span class="lineCov">   34274649 :                 }</span>
 <span class="lineNum">     315 </span>            : 
 <span class="lineNum">     316 </span>            :                 void    getSkewSymmetricMatrix(Vector3* v0,Vector3* v1,Vector3* v2) const
 <span class="lineNum">     317 </span>            :                 {

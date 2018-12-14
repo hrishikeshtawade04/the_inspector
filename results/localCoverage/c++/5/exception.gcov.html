@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -119,10 +119,10 @@
 <span class="lineNum">      57 </span>            :    *  your own %exception classes, or use a different hierarchy, or to
 <a name="58"><span class="lineNum">      58 </span>            :    *  throw non-class data (e.g., fundamental types).</a>
 <span class="lineNum">      59 </span>            :    */
-<span class="lineNum">      60 </span><span class="lineCov">         12 :   class exception</span>
+<span class="lineNum">      60 </span><span class="lineCov">          4 :   class exception</span>
 <a name="61"><span class="lineNum">      61 </span>            :   {</a>
 <span class="lineNum">      62 </span>            :   public:
-<span class="lineNum">      63 </span><span class="lineCov">          6 :     exception() _GLIBCXX_USE_NOEXCEPT { }</span>
+<span class="lineNum">      63 </span><span class="lineCov">          2 :     exception() _GLIBCXX_USE_NOEXCEPT { }</span>
 <span class="lineNum">      64 </span>            :     virtual ~exception() _GLIBCXX_USE_NOEXCEPT;
 <span class="lineNum">      65 </span>            : 
 <span class="lineNum">      66 </span>            :     /** Returns a C-style character string describing the general cause
@@ -132,10 +132,10 @@
 <span class="lineNum">      70 </span>            : 
 <a name="71"><span class="lineNum">      71 </span>            :   /** If an %exception is thrown which is not listed in a function's</a>
 <span class="lineNum">      72 </span>            :    *  %exception specification, one of these may be thrown.  */
-<span class="lineNum">      73 </span><span class="lineCov">          6 :   class bad_exception : public exception</span>
+<span class="lineNum">      73 </span><span class="lineCov">          2 :   class bad_exception : public exception</span>
 <a name="74"><span class="lineNum">      74 </span>            :   {</a>
 <span class="lineNum">      75 </span>            :   public:
-<span class="lineNum">      76 </span><span class="lineCov">          3 :     bad_exception() _GLIBCXX_USE_NOEXCEPT { }</span>
+<span class="lineNum">      76 </span><span class="lineCov">          1 :     bad_exception() _GLIBCXX_USE_NOEXCEPT { }</span>
 <span class="lineNum">      77 </span>            : 
 <span class="lineNum">      78 </span>            :     // This declaration is not useless:
 <span class="lineNum">      79 </span>            :     // http://gcc.gnu.org/onlinedocs/gcc-3.0.2/gcc_6.html#SEC118

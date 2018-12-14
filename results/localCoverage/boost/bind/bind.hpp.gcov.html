@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">17</td>
@@ -175,9 +175,9 @@
 <span class="lineNum">     113 </span>            : {
 <a name="114"><span class="lineNum">     114 </span>            : public:</a>
 <span class="lineNum">     115 </span>            : 
-<a name="116"><span class="lineNum">     116 </span><span class="lineCov">         15 :     value(T const &amp; t): t_(t) {}</span></a>
+<a name="116"><span class="lineNum">     116 </span><span class="lineCov">          5 :     value(T const &amp; t): t_(t) {}</span></a>
 <span class="lineNum">     117 </span>            : 
-<span class="lineNum">     118 </span><span class="lineCov">       2517 :     T &amp; get() { return t_; }</span>
+<span class="lineNum">     118 </span><span class="lineCov">        840 :     T &amp; get() { return t_; }</span>
 <span class="lineNum">     119 </span>            :     T const &amp; get() const { return t_; }
 <span class="lineNum">     120 </span>            : 
 <span class="lineNum">     121 </span>            :     bool operator==(value const &amp; rhs) const
@@ -205,9 +205,9 @@
 <span class="lineNum">     143 </span>            : 
 <a name="144"><span class="lineNum">     144 </span>            : template&lt;class F&gt; struct unwrapper</a>
 <span class="lineNum">     145 </span>            : {
-<span class="lineNum">     146 </span><span class="lineCov">  109072962 :     static inline F &amp; unwrap( F &amp; f, long )</span>
+<span class="lineNum">     146 </span><span class="lineCov">   16637888 :     static inline F &amp; unwrap( F &amp; f, long )</span>
 <span class="lineNum">     147 </span>            :     {
-<span class="lineNum">     148 </span><span class="lineCov">  109072962 :         return f;</span>
+<span class="lineNum">     148 </span><span class="lineCov">   16637888 :         return f;</span>
 <span class="lineNum">     149 </span>            :     }
 <span class="lineNum">     150 </span>            : 
 <span class="lineNum">     151 </span>            :     template&lt;class F2&gt; static inline F2 &amp; unwrap( reference_wrapper&lt;F2&gt; rf, int )
@@ -227,13 +227,13 @@
 <span class="lineNum">     165 </span>            : {
 <a name="166"><span class="lineNum">     166 </span>            : public:</a>
 <span class="lineNum">     167 </span>            : 
-<span class="lineNum">     168 </span><span class="lineCov">  109070445 :     list0() {}</span>
+<span class="lineNum">     168 </span><span class="lineCov">   16637048 :     list0() {}</span>
 <span class="lineNum">     169 </span>            : 
 <span class="lineNum">     170 </span>            :     template&lt;class T&gt; T &amp; operator[] (_bi::value&lt;T&gt; &amp; v) const { return v.get(); }
 <span class="lineNum">     171 </span>            : 
 <a name="172"><span class="lineNum">     172 </span>            :     template&lt;class T&gt; T const &amp; operator[] (_bi::value&lt;T&gt; const &amp; v) const { return v.get(); }</a>
 <span class="lineNum">     173 </span>            : 
-<span class="lineNum">     174 </span><span class="lineCov">  218140890 :     template&lt;class T&gt; T &amp; operator[] (reference_wrapper&lt;T&gt; const &amp; v) const { return v.get(); }</span>
+<span class="lineNum">     174 </span><span class="lineCov">   33274096 :     template&lt;class T&gt; T &amp; operator[] (reference_wrapper&lt;T&gt; const &amp; v) const { return v.get(); }</span>
 <span class="lineNum">     175 </span>            : 
 <span class="lineNum">     176 </span>            :     template&lt;class R, class F, class L&gt; typename result_traits&lt;R, F&gt;::type operator[] (bind_t&lt;R, F, L&gt; &amp; b) const { return b.eval(*this); }
 <span class="lineNum">     177 </span>            : 
@@ -284,13 +284,13 @@
 <span class="lineNum">     222 </span>            : 
 <a name="223"><span class="lineNum">     223 </span>            : public:</a>
 <span class="lineNum">     224 </span>            : 
-<span class="lineNum">     225 </span><span class="lineCov">  109098200 :     explicit list1( A1 a1 ): base_type( a1 ) {}</span>
+<span class="lineNum">     225 </span><span class="lineCov">   16637888 :     explicit list1( A1 a1 ): base_type( a1 ) {}</span>
 <span class="lineNum">     226 </span>            : 
 <a name="227"><span class="lineNum">     227 </span>            :     A1 operator[] (boost::arg&lt;1&gt;) const { return base_type::a1_; }</a>
 <span class="lineNum">     228 </span>            : 
-<a name="229"><span class="lineNum">     229 </span><span class="lineCov">       2517 :     A1 operator[] (boost::arg&lt;1&gt; (*) ()) const { return base_type::a1_; }</span></a>
+<a name="229"><span class="lineNum">     229 </span><span class="lineCov">        840 :     A1 operator[] (boost::arg&lt;1&gt; (*) ()) const { return base_type::a1_; }</span></a>
 <span class="lineNum">     230 </span>            : 
-<span class="lineNum">     231 </span><span class="lineCov">       2517 :     template&lt;class T&gt; T &amp; operator[] ( _bi::value&lt;T&gt; &amp; v ) const { return v.get(); }</span>
+<span class="lineNum">     231 </span><span class="lineCov">        840 :     template&lt;class T&gt; T &amp; operator[] ( _bi::value&lt;T&gt; &amp; v ) const { return v.get(); }</span>
 <span class="lineNum">     232 </span>            : 
 <span class="lineNum">     233 </span>            :     template&lt;class T&gt; T const &amp; operator[] ( _bi::value&lt;T&gt; const &amp; v ) const { return v.get(); }
 <span class="lineNum">     234 </span>            : 
@@ -300,9 +300,9 @@
 <span class="lineNum">     238 </span>            : 
 <a name="239"><span class="lineNum">     239 </span>            :     template&lt;class R, class F, class L&gt; typename result_traits&lt;R, F&gt;::type operator[] (bind_t&lt;R, F, L&gt; const &amp; b) const { return b.eval(*this); }</a>
 <span class="lineNum">     240 </span>            : 
-<span class="lineNum">     241 </span><span class="lineCov">  109070445 :     template&lt;class R, class F, class A&gt; R operator()(type&lt;R&gt;, F &amp; f, A &amp; a, long)</span>
+<span class="lineNum">     241 </span><span class="lineCov">   16637048 :     template&lt;class R, class F, class A&gt; R operator()(type&lt;R&gt;, F &amp; f, A &amp; a, long)</span>
 <span class="lineNum">     242 </span>            :     {
-<span class="lineNum">     243 </span><span class="lineCov">  109070445 :         return unwrapper&lt;F&gt;::unwrap(f, 0)(a[base_type::a1_]);</span>
+<span class="lineNum">     243 </span><span class="lineCov">   16637048 :         return unwrapper&lt;F&gt;::unwrap(f, 0)(a[base_type::a1_]);</span>
 <span class="lineNum">     244 </span>            :     }
 <span class="lineNum">     245 </span>            : 
 <span class="lineNum">     246 </span>            :     template&lt;class R, class F, class A&gt; R operator()(type&lt;R&gt;, F const &amp; f, A &amp; a, long) const
@@ -342,7 +342,7 @@
 <span class="lineNum">     280 </span>            : 
 <a name="281"><span class="lineNum">     281 </span>            : public:</a>
 <span class="lineNum">     282 </span>            : 
-<span class="lineNum">     283 </span><span class="lineCov">         15 :     list2( A1 a1, A2 a2 ): base_type( a1, a2 ) {}</span>
+<span class="lineNum">     283 </span><span class="lineCov">          5 :     list2( A1 a1, A2 a2 ): base_type( a1, a2 ) {}</span>
 <span class="lineNum">     284 </span>            : 
 <span class="lineNum">     285 </span>            :     A1 operator[] (boost::arg&lt;1&gt;) const { return base_type::a1_; }
 <span class="lineNum">     286 </span>            :     A2 operator[] (boost::arg&lt;2&gt;) const { return base_type::a2_; }
@@ -370,10 +370,10 @@
 <span class="lineNum">     308 </span>            :         return unwrapper&lt;F const&gt;::unwrap(f, 0)(a[base_type::a1_], a[base_type::a2_]);
 <a name="309"><span class="lineNum">     309 </span>            :     }</a>
 <span class="lineNum">     310 </span>            : 
-<span class="lineNum">     311 </span><span class="lineCov">       2517 :     template&lt;class F, class A&gt; void operator()(type&lt;void&gt;, F &amp; f, A &amp; a, int)</span>
+<span class="lineNum">     311 </span><span class="lineCov">        840 :     template&lt;class F, class A&gt; void operator()(type&lt;void&gt;, F &amp; f, A &amp; a, int)</span>
 <span class="lineNum">     312 </span>            :     {
-<span class="lineNum">     313 </span><span class="lineCov">       2517 :         unwrapper&lt;F&gt;::unwrap(f, 0)(a[base_type::a1_], a[base_type::a2_]);</span>
-<span class="lineNum">     314 </span><span class="lineCov">       2517 :     }</span>
+<span class="lineNum">     313 </span><span class="lineCov">        840 :         unwrapper&lt;F&gt;::unwrap(f, 0)(a[base_type::a1_], a[base_type::a2_]);</span>
+<span class="lineNum">     314 </span><span class="lineCov">        840 :     }</span>
 <span class="lineNum">     315 </span>            : 
 <span class="lineNum">     316 </span>            :     template&lt;class F, class A&gt; void operator()(type&lt;void&gt;, F const &amp; f, A &amp; a, int) const
 <span class="lineNum">     317 </span>            :     {
@@ -945,14 +945,14 @@
 <span class="lineNum">     883 </span>            :     typedef typename result_traits&lt;R, F&gt;::type result_type;
 <a name="884"><span class="lineNum">     884 </span>            :     typedef bind_t this_type;</a>
 <span class="lineNum">     885 </span>            : 
-<span class="lineNum">     886 </span><span class="lineCov">  109095698 :     bind_t( F f, L const &amp; l ): f_( f ), l_( l ) {}</span>
+<span class="lineNum">     886 </span><span class="lineCov">   16637053 :     bind_t( F f, L const &amp; l ): f_( f ), l_( l ) {}</span>
 <span class="lineNum">     887 </span>            : 
 <a name="888"><span class="lineNum">     888 </span>            :     //</a>
 <span class="lineNum">     889 </span>            : 
-<span class="lineNum">     890 </span><span class="lineCov">  109070445 :     result_type operator()()</span>
+<span class="lineNum">     890 </span><span class="lineCov">   16637048 :     result_type operator()()</span>
 <span class="lineNum">     891 </span>            :     {
-<span class="lineNum">     892 </span><span class="lineCov">  109070445 :         list0 a;</span>
-<span class="lineNum">     893 </span><span class="lineCov">  109070445 :         return l_( type&lt;result_type&gt;(), f_, a, 0 );</span>
+<span class="lineNum">     892 </span><span class="lineCov">   16637048 :         list0 a;</span>
+<span class="lineNum">     893 </span><span class="lineCov">   16637048 :         return l_( type&lt;result_type&gt;(), f_, a, 0 );</span>
 <span class="lineNum">     894 </span>            :     }
 <span class="lineNum">     895 </span>            : 
 <span class="lineNum">     896 </span>            :     result_type operator()() const
@@ -961,10 +961,10 @@
 <span class="lineNum">     899 </span>            :         return l_( type&lt;result_type&gt;(), f_, a, 0 );
 <a name="900"><span class="lineNum">     900 </span>            :     }</a>
 <span class="lineNum">     901 </span>            : 
-<span class="lineNum">     902 </span><span class="lineCov">       2517 :     template&lt;class A1&gt; result_type operator()( A1 &amp;&amp; a1 )</span>
+<span class="lineNum">     902 </span><span class="lineCov">        840 :     template&lt;class A1&gt; result_type operator()( A1 &amp;&amp; a1 )</span>
 <span class="lineNum">     903 </span>            :     {
-<span class="lineNum">     904 </span><span class="lineCov">       2517 :         list1&lt; typename list_add_cref&lt;A1&gt;::type &gt; a( a1 );</span>
-<span class="lineNum">     905 </span><span class="lineCov">       2517 :         return l_( type&lt;result_type&gt;(), f_, a, 0 );</span>
+<span class="lineNum">     904 </span><span class="lineCov">        840 :         list1&lt; typename list_add_cref&lt;A1&gt;::type &gt; a( a1 );</span>
+<span class="lineNum">     905 </span><span class="lineCov">        840 :         return l_( type&lt;result_type&gt;(), f_, a, 0 );</span>
 <span class="lineNum">     906 </span>            :     }
 <span class="lineNum">     907 </span>            : 
 <span class="lineNum">     908 </span>            :     template&lt;class A1&gt; result_type operator()( A1 &amp;&amp; a1 ) const

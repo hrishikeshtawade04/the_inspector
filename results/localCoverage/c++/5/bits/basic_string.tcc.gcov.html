@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -269,34 +269,34 @@
 <span class="lineNum">     207 </span>            :   template&lt;typename _CharT, typename _Traits, typename _Alloc&gt;
 <a name="208"><span class="lineNum">     208 </span>            :     template&lt;typename _InIterator&gt;</a>
 <span class="lineNum">     209 </span>            :       void
-<span class="lineNum">     210 </span><span class="lineCov">      20115 :       basic_string&lt;_CharT, _Traits, _Alloc&gt;::</span>
+<span class="lineNum">     210 </span><span class="lineCov">       8197 :       basic_string&lt;_CharT, _Traits, _Alloc&gt;::</span>
 <span class="lineNum">     211 </span>            :       _M_construct(_InIterator __beg, _InIterator __end,
 <span class="lineNum">     212 </span>            :                    std::forward_iterator_tag)
 <span class="lineNum">     213 </span>            :       {
 <span class="lineNum">     214 </span>            :         // NB: Not required, but considered best practice.
-<span class="lineNum">     215 </span><span class="lineCov">      20115 :         if (__gnu_cxx::__is_null_pointer(__beg) &amp;&amp; __beg != __end)</span>
+<span class="lineNum">     215 </span><span class="lineCov">       8197 :         if (__gnu_cxx::__is_null_pointer(__beg) &amp;&amp; __beg != __end)</span>
 <span class="lineNum">     216 </span><span class="lineNoCov">          0 :           std::__throw_logic_error(__N(&quot;basic_string::&quot;</span>
 <span class="lineNum">     217 </span>            :                                        &quot;_M_construct null not valid&quot;));
 <span class="lineNum">     218 </span>            : 
-<span class="lineNum">     219 </span><span class="lineCov">      20115 :         size_type __dnew = static_cast&lt;size_type&gt;(std::distance(__beg, __end));</span>
+<span class="lineNum">     219 </span><span class="lineCov">       8197 :         size_type __dnew = static_cast&lt;size_type&gt;(std::distance(__beg, __end));</span>
 <span class="lineNum">     220 </span>            : 
-<span class="lineNum">     221 </span><span class="lineCov">      20115 :         if (__dnew &gt; size_type(_S_local_capacity))</span>
+<span class="lineNum">     221 </span><span class="lineCov">       8197 :         if (__dnew &gt; size_type(_S_local_capacity))</span>
 <span class="lineNum">     222 </span>            :           {
-<span class="lineNum">     223 </span><span class="lineCov">       9925 :             _M_data(_M_create(__dnew, size_type(0)));</span>
-<span class="lineNum">     224 </span><span class="lineCov">       9925 :             _M_capacity(__dnew);</span>
+<span class="lineNum">     223 </span><span class="lineCov">       4804 :             _M_data(_M_create(__dnew, size_type(0)));</span>
+<span class="lineNum">     224 </span><span class="lineCov">       4804 :             _M_capacity(__dnew);</span>
 <span class="lineNum">     225 </span>            :           }
 <span class="lineNum">     226 </span>            : 
 <span class="lineNum">     227 </span>            :         // Check for out_of_range and length_error exceptions.
 <span class="lineNum">     228 </span>            :         __try
-<span class="lineNum">     229 </span><span class="lineCov">      20115 :           { this-&gt;_S_copy_chars(_M_data(), __beg, __end); }</span>
+<span class="lineNum">     229 </span><span class="lineCov">       8197 :           { this-&gt;_S_copy_chars(_M_data(), __beg, __end); }</span>
 <span class="lineNum">     230 </span><span class="lineNoCov">          0 :         __catch(...)</span>
 <span class="lineNum">     231 </span>            :           {
 <span class="lineNum">     232 </span><span class="lineNoCov">          0 :             _M_dispose();</span>
 <span class="lineNum">     233 </span><span class="lineNoCov">          0 :             __throw_exception_again;</span>
 <span class="lineNum">     234 </span>            :           }
 <span class="lineNum">     235 </span>            : 
-<span class="lineNum">     236 </span><span class="lineCov">      20115 :         _M_set_length(__dnew);</span>
-<span class="lineNum">     237 </span><span class="lineCov">      20115 :       }</span>
+<span class="lineNum">     236 </span><span class="lineCov">       8197 :         _M_set_length(__dnew);</span>
+<span class="lineNum">     237 </span><span class="lineCov">       8197 :       }</span>
 <span class="lineNum">     238 </span>            : 
 <span class="lineNum">     239 </span>            :   template&lt;typename _CharT, typename _Traits, typename _Alloc&gt;
 <span class="lineNum">     240 </span>            :     void

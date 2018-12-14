@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -136,15 +136,15 @@
 <span class="lineNum">      74 </span>            : };
 <a name="75"><span class="lineNum">      75 </span>            : </a>
 <span class="lineNum">      76 </span>            : inline
-<span class="lineNum">      77 </span><span class="lineCov">          6 : String::String(const std::string&amp; str)</span>
-<span class="lineNum">      78 </span><span class="lineCov">          6 :     : cstr_(0), len_(0)</span>
+<span class="lineNum">      77 </span><span class="lineCov">          2 : String::String(const std::string&amp; str)</span>
+<span class="lineNum">      78 </span><span class="lineCov">          2 :     : cstr_(0), len_(0)</span>
 <span class="lineNum">      79 </span>            : {
-<span class="lineNum">      80 </span><span class="lineCov">          6 :     if (!str.empty())</span>
+<span class="lineNum">      80 </span><span class="lineCov">          2 :     if (!str.empty())</span>
 <span class="lineNum">      81 </span>            :     {
-<span class="lineNum">      82 </span><span class="lineCov">          6 :         size_t len = str.size();</span>
-<span class="lineNum">      83 </span><span class="lineCov">          6 :         if (len) memcpy(allocate(len), str.c_str(), len);</span>
+<span class="lineNum">      82 </span><span class="lineCov">          2 :         size_t len = str.size();</span>
+<span class="lineNum">      83 </span><span class="lineCov">          2 :         if (len) memcpy(allocate(len), str.c_str(), len);</span>
 <span class="lineNum">      84 </span>            :     }
-<span class="lineNum">      85 </span><span class="lineCov">          6 : }</span>
+<span class="lineNum">      85 </span><span class="lineCov">          2 : }</span>
 <span class="lineNum">      86 </span>            : 
 <span class="lineNum">      87 </span>            : inline
 <span class="lineNum">      88 </span>            : String::String(const std::string&amp; str, size_t pos, size_t len)

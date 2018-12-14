@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -173,14 +173,14 @@
 <span class="lineNum">     111 </span>            : 
 <a name="112"><span class="lineNum">     112 </span>            : public:</a>
 <span class="lineNum">     113 </span>            : 
-<span class="lineNum">     114 </span><span class="lineCov">  207252500 :     shared_count(): pi_(0) // nothrow</span>
+<span class="lineNum">     114 </span><span class="lineCov">   66556644 :     shared_count(): pi_(0) // nothrow</span>
 <span class="lineNum">     115 </span>            : #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
 <span class="lineNum">     116 </span>            :         , id_(shared_count_id)
 <span class="lineNum">     117 </span>            : #endif
 <span class="lineNum">     118 </span>            :     {
-<a name="119"><span class="lineNum">     119 </span><span class="lineCov">  207252500 :     }</span></a>
+<a name="119"><span class="lineNum">     119 </span><span class="lineCov">   66556644 :     }</span></a>
 <span class="lineNum">     120 </span>            : 
-<span class="lineNum">     121 </span><span class="lineCov">          6 :     template&lt;class Y&gt; explicit shared_count( Y * p ): pi_( 0 )</span>
+<span class="lineNum">     121 </span><span class="lineCov">          2 :     template&lt;class Y&gt; explicit shared_count( Y * p ): pi_( 0 )</span>
 <span class="lineNum">     122 </span>            : #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
 <span class="lineNum">     123 </span>            :         , id_(shared_count_id)
 <span class="lineNum">     124 </span>            : #endif
@@ -189,7 +189,7 @@
 <span class="lineNum">     127 </span>            : 
 <span class="lineNum">     128 </span>            :         try
 <span class="lineNum">     129 </span>            :         {
-<span class="lineNum">     130 </span><span class="lineCov">          6 :             pi_ = new sp_counted_impl_p&lt;Y&gt;( p );</span>
+<span class="lineNum">     130 </span><span class="lineCov">          2 :             pi_ = new sp_counted_impl_p&lt;Y&gt;( p );</span>
 <span class="lineNum">     131 </span>            :         }
 <span class="lineNum">     132 </span><span class="lineNoCov">          0 :         catch(...)</span>
 <span class="lineNum">     133 </span>            :         {
@@ -208,12 +208,12 @@
 <span class="lineNum">     146 </span>            :         }
 <span class="lineNum">     147 </span>            : 
 <span class="lineNum">     148 </span>            : #endif
-<span class="lineNum">     149 </span><span class="lineCov">          6 :     }</span>
+<span class="lineNum">     149 </span><span class="lineCov">          2 :     }</span>
 <span class="lineNum">     150 </span>            : 
 <span class="lineNum">     151 </span>            : #if defined( BOOST_MSVC ) &amp;&amp; BOOST_WORKAROUND( BOOST_MSVC, &lt;= 1200 )
 <a name="152"><span class="lineNum">     152 </span>            :     template&lt;class Y, class D&gt; shared_count( Y * p, D d ): pi_(0)</a>
 <span class="lineNum">     153 </span>            : #else
-<span class="lineNum">     154 </span><span class="lineCov">  109070445 :     template&lt;class P, class D&gt; shared_count( P p, D d ): pi_(0)</span>
+<span class="lineNum">     154 </span><span class="lineCov">   16637048 :     template&lt;class P, class D&gt; shared_count( P p, D d ): pi_(0)</span>
 <span class="lineNum">     155 </span>            : #endif
 <span class="lineNum">     156 </span>            : #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
 <span class="lineNum">     157 </span>            :         , id_(shared_count_id)
@@ -226,7 +226,7 @@
 <span class="lineNum">     164 </span>            : 
 <span class="lineNum">     165 </span>            :         try
 <span class="lineNum">     166 </span>            :         {
-<span class="lineNum">     167 </span><span class="lineCov">  109070445 :             pi_ = new sp_counted_impl_pd&lt;P, D&gt;(p, d);</span>
+<span class="lineNum">     167 </span><span class="lineCov">   16637048 :             pi_ = new sp_counted_impl_pd&lt;P, D&gt;(p, d);</span>
 <span class="lineNum">     168 </span>            :         }
 <span class="lineNum">     169 </span><span class="lineNoCov">          0 :         catch(...)</span>
 <span class="lineNum">     170 </span>            :         {
@@ -245,11 +245,11 @@
 <span class="lineNum">     183 </span>            :         }
 <span class="lineNum">     184 </span>            : 
 <span class="lineNum">     185 </span>            : #endif
-<span class="lineNum">     186 </span><span class="lineCov">  109070445 :     }</span>
+<span class="lineNum">     186 </span><span class="lineCov">   16637048 :     }</span>
 <span class="lineNum">     187 </span>            : 
 <a name="188"><span class="lineNum">     188 </span>            : #if !defined( BOOST_NO_FUNCTION_TEMPLATE_ORDERING )</a>
 <span class="lineNum">     189 </span>            : 
-<span class="lineNum">     190 </span><span class="lineCov">       2532 :     template&lt; class P, class D &gt; shared_count( P p, sp_inplace_tag&lt;D&gt; ): pi_( 0 )</span>
+<span class="lineNum">     190 </span><span class="lineCov">        845 :     template&lt; class P, class D &gt; shared_count( P p, sp_inplace_tag&lt;D&gt; ): pi_( 0 )</span>
 <span class="lineNum">     191 </span>            : #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
 <span class="lineNum">     192 </span>            :         , id_(shared_count_id)
 <span class="lineNum">     193 </span>            : #endif
@@ -258,7 +258,7 @@
 <span class="lineNum">     196 </span>            : 
 <span class="lineNum">     197 </span>            :         try
 <span class="lineNum">     198 </span>            :         {
-<span class="lineNum">     199 </span><span class="lineCov">       2532 :             pi_ = new sp_counted_impl_pd&lt; P, D &gt;( p );</span>
+<span class="lineNum">     199 </span><span class="lineCov">        845 :             pi_ = new sp_counted_impl_pd&lt; P, D &gt;( p );</span>
 <span class="lineNum">     200 </span>            :         }
 <span class="lineNum">     201 </span><span class="lineNoCov">          0 :         catch( ... )</span>
 <span class="lineNum">     202 </span>            :         {
@@ -277,7 +277,7 @@
 <span class="lineNum">     215 </span>            :         }
 <span class="lineNum">     216 </span>            : 
 <span class="lineNum">     217 </span>            : #endif // #ifndef BOOST_NO_EXCEPTIONS
-<span class="lineNum">     218 </span><span class="lineCov">       2532 :     }</span>
+<span class="lineNum">     218 </span><span class="lineCov">        845 :     }</span>
 <span class="lineNum">     219 </span>            : 
 <span class="lineNum">     220 </span>            : #endif // !defined( BOOST_NO_FUNCTION_TEMPLATE_ORDERING )
 <span class="lineNum">     221 </span>            : 
@@ -500,21 +500,21 @@
 <span class="lineNum">     438 </span>            : 
 <a name="439"><span class="lineNum">     439 </span>            : #endif</a>
 <span class="lineNum">     440 </span>            : 
-<span class="lineNum">     441 </span><span class="lineCov">  155473644 :     ~shared_count() // nothrow</span>
-<span class="lineNum">     442 </span><span class="lineCov">  155473644 :     {</span>
-<span class="lineNum">     443 </span><span class="lineCov">  155473644 :         if( pi_ != 0 ) pi_-&gt;release();</span>
+<span class="lineNum">     441 </span><span class="lineCov">   49928917 :     ~shared_count() // nothrow</span>
+<span class="lineNum">     442 </span><span class="lineCov">   49928917 :     {</span>
+<span class="lineNum">     443 </span><span class="lineCov">   49928917 :         if( pi_ != 0 ) pi_-&gt;release();</span>
 <span class="lineNum">     444 </span>            : #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
 <span class="lineNum">     445 </span>            :         id_ = 0;
 <span class="lineNum">     446 </span>            : #endif
-<a name="447"><span class="lineNum">     447 </span><span class="lineCov">  155473644 :     }</span></a>
+<a name="447"><span class="lineNum">     447 </span><span class="lineCov">   49928917 :     }</span></a>
 <span class="lineNum">     448 </span>            : 
-<span class="lineNum">     449 </span><span class="lineCov">      25242 :     shared_count(shared_count const &amp; r): pi_(r.pi_) // nothrow</span>
+<span class="lineNum">     449 </span><span class="lineCov">       8414 :     shared_count(shared_count const &amp; r): pi_(r.pi_) // nothrow</span>
 <span class="lineNum">     450 </span>            : #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
 <span class="lineNum">     451 </span>            :         , id_(shared_count_id)
 <span class="lineNum">     452 </span>            : #endif
 <span class="lineNum">     453 </span>            :     {
-<span class="lineNum">     454 </span><span class="lineCov">      25242 :         if( pi_ != 0 ) pi_-&gt;add_ref_copy();</span>
-<span class="lineNum">     455 </span><span class="lineCov">      25242 :     }</span>
+<span class="lineNum">     454 </span><span class="lineCov">       8414 :         if( pi_ != 0 ) pi_-&gt;add_ref_copy();</span>
+<span class="lineNum">     455 </span><span class="lineCov">       8414 :     }</span>
 <span class="lineNum">     456 </span>            : 
 <span class="lineNum">     457 </span>            : #if !defined( BOOST_NO_CXX11_RVALUE_REFERENCES )
 <span class="lineNum">     458 </span>            : 
@@ -545,12 +545,12 @@
 <span class="lineNum">     483 </span>            :         return *this;
 <a name="484"><span class="lineNum">     484 </span>            :     }</a>
 <span class="lineNum">     485 </span>            : 
-<span class="lineNum">     486 </span><span class="lineCov">   51832067 :     void swap(shared_count &amp; r) // nothrow</span>
+<span class="lineNum">     486 </span><span class="lineCov">   16645475 :     void swap(shared_count &amp; r) // nothrow</span>
 <span class="lineNum">     487 </span>            :     {
-<span class="lineNum">     488 </span><span class="lineCov">   51832067 :         sp_counted_base * tmp = r.pi_;</span>
-<span class="lineNum">     489 </span><span class="lineCov">   51832067 :         r.pi_ = pi_;</span>
-<span class="lineNum">     490 </span><span class="lineCov">   51832067 :         pi_ = tmp;</span>
-<span class="lineNum">     491 </span><span class="lineCov">   51832067 :     }</span>
+<span class="lineNum">     488 </span><span class="lineCov">   16645475 :         sp_counted_base * tmp = r.pi_;</span>
+<span class="lineNum">     489 </span><span class="lineCov">   16645475 :         r.pi_ = pi_;</span>
+<span class="lineNum">     490 </span><span class="lineCov">   16645475 :         pi_ = tmp;</span>
+<span class="lineNum">     491 </span><span class="lineCov">   16645475 :     }</span>
 <span class="lineNum">     492 </span>            : 
 <span class="lineNum">     493 </span>            :     long use_count() const // nothrow
 <span class="lineNum">     494 </span>            :     {
@@ -582,9 +582,9 @@
 <span class="lineNum">     520 </span>            :         return pi_? pi_-&gt;get_deleter( ti ): 0;
 <a name="521"><span class="lineNum">     521 </span>            :     }</a>
 <span class="lineNum">     522 </span>            : 
-<span class="lineNum">     523 </span><span class="lineCov">       2532 :     void * get_untyped_deleter() const</span>
+<span class="lineNum">     523 </span><span class="lineCov">        845 :     void * get_untyped_deleter() const</span>
 <span class="lineNum">     524 </span>            :     {
-<span class="lineNum">     525 </span><span class="lineCov">       2532 :         return pi_? pi_-&gt;get_untyped_deleter(): 0;</span>
+<span class="lineNum">     525 </span><span class="lineCov">        845 :         return pi_? pi_-&gt;get_untyped_deleter(): 0;</span>
 <span class="lineNum">     526 </span>            :     }
 <span class="lineNum">     527 </span>            : };
 <span class="lineNum">     528 </span>            : 

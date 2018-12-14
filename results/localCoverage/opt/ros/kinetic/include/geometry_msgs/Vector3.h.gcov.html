@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -85,11 +85,11 @@
 <span class="lineNum">      23 </span>            : {
 <a name="24"><span class="lineNum">      24 </span>            :   typedef Vector3_&lt;ContainerAllocator&gt; Type;</a>
 <span class="lineNum">      25 </span>            : 
-<span class="lineNum">      26 </span><span class="lineCov">         66 :   Vector3_()</span>
+<span class="lineNum">      26 </span><span class="lineCov">         20 :   Vector3_()</span>
 <span class="lineNum">      27 </span>            :     : x(0.0)
 <span class="lineNum">      28 </span>            :     , y(0.0)
-<span class="lineNum">      29 </span><span class="lineCov">         66 :     , z(0.0)  {</span>
-<span class="lineNum">      30 </span><span class="lineCov">         66 :     }</span>
+<span class="lineNum">      29 </span><span class="lineCov">         20 :     , z(0.0)  {</span>
+<span class="lineNum">      30 </span><span class="lineCov">         20 :     }</span>
 <span class="lineNum">      31 </span>            :   Vector3_(const ContainerAllocator&amp; _alloc)
 <span class="lineNum">      32 </span>            :     : x(0.0)
 <span class="lineNum">      33 </span>            :     , y(0.0)
@@ -236,14 +236,14 @@
 <span class="lineNum">     174 </span>            : 
 <a name="175"><span class="lineNum">     175 </span>            :   template&lt;class ContainerAllocator&gt; struct Serializer&lt; ::geometry_msgs::Vector3_&lt;ContainerAllocator&gt; &gt;</a>
 <span class="lineNum">     176 </span>            :   {
-<span class="lineNum">     177 </span><span class="lineCov">  436281780 :     template&lt;typename Stream, typename T&gt; inline static void allInOne(Stream&amp; stream, T m)</span>
+<span class="lineNum">     177 </span><span class="lineCov">   66548192 :     template&lt;typename Stream, typename T&gt; inline static void allInOne(Stream&amp; stream, T m)</span>
 <span class="lineNum">     178 </span>            :     {
-<span class="lineNum">     179 </span><span class="lineCov">  436281780 :       stream.next(m.x);</span>
-<span class="lineNum">     180 </span><span class="lineCov">  436281780 :       stream.next(m.y);</span>
-<span class="lineNum">     181 </span><span class="lineCov">  436281780 :       stream.next(m.z);</span>
-<a name="182"><span class="lineNum">     182 </span><span class="lineCov">  436281780 :     }</span></a>
+<span class="lineNum">     179 </span><span class="lineCov">   66548192 :       stream.next(m.x);</span>
+<span class="lineNum">     180 </span><span class="lineCov">   66548192 :       stream.next(m.y);</span>
+<span class="lineNum">     181 </span><span class="lineCov">   66548192 :       stream.next(m.z);</span>
+<a name="182"><span class="lineNum">     182 </span><span class="lineCov">   66548192 :     }</span></a>
 <span class="lineNum">     183 </span>            : 
-<span class="lineNum">     184 </span><span class="lineCov">  436281780 :     ROS_DECLARE_ALLINONE_SERIALIZER</span>
+<span class="lineNum">     184 </span><span class="lineCov">   66548192 :     ROS_DECLARE_ALLINONE_SERIALIZER</span>
 <span class="lineNum">     185 </span>            :   }; // struct Vector3_
 <span class="lineNum">     186 </span>            : 
 <span class="lineNum">     187 </span>            : } // namespace serialization

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -82,22 +82,22 @@
 <span class="lineNum">      20 </span>            : namespace detail{
 <a name="21"><span class="lineNum">      21 </span>            : </a>
 <span class="lineNum">      22 </span>            : template &lt;class T, class Policy&gt;
-<span class="lineNum">      23 </span><span class="lineCov">  109095710 : inline typename tools::promote_args&lt;T&gt;::type round(const T&amp; v, const Policy&amp; pol, const mpl::false_)</span>
+<span class="lineNum">      23 </span><span class="lineCov">   16637060 : inline typename tools::promote_args&lt;T&gt;::type round(const T&amp; v, const Policy&amp; pol, const mpl::false_)</span>
 <span class="lineNum">      24 </span>            : {
 <span class="lineNum">      25 </span>            :    BOOST_MATH_STD_USING
 <span class="lineNum">      26 </span>            :       typedef typename tools::promote_args&lt;T&gt;::type result_type;
-<span class="lineNum">      27 </span><span class="lineCov">  109095710 :    if(!(boost::math::isfinite)(v))</span>
+<span class="lineNum">      27 </span><span class="lineCov">   16637060 :    if(!(boost::math::isfinite)(v))</span>
 <span class="lineNum">      28 </span><span class="lineNoCov">          0 :       return policies::raise_rounding_error(&quot;boost::math::round&lt;%1%&gt;(%1%)&quot;, 0, static_cast&lt;result_type&gt;(v), static_cast&lt;result_type&gt;(v), pol);</span>
 <span class="lineNum">      29 </span>            :    //
 <span class="lineNum">      30 </span>            :    // The logic here is rather convoluted, but avoids a number of traps,
 <span class="lineNum">      31 </span>            :    // see discussion here https://github.com/boostorg/math/pull/8
 <span class="lineNum">      32 </span>            :    //
-<span class="lineNum">      33 </span><span class="lineCov">  109095710 :    if (-0.5 &lt; v &amp;&amp; v &lt; 0.5)</span>
+<span class="lineNum">      33 </span><span class="lineCov">   16637060 :    if (-0.5 &lt; v &amp;&amp; v &lt; 0.5)</span>
 <span class="lineNum">      34 </span>            :    {
 <span class="lineNum">      35 </span>            :       // special case to avoid rounding error on the direct
 <span class="lineNum">      36 </span>            :       // predecessor of +0.5 resp. the direct successor of -0.5 in
 <span class="lineNum">      37 </span>            :       // IEEE floating point types
-<span class="lineNum">      38 </span><span class="lineCov">  109095710 :       return 0;</span>
+<span class="lineNum">      38 </span><span class="lineCov">   16637060 :       return 0;</span>
 <span class="lineNum">      39 </span>            :    }
 <span class="lineNum">      40 </span><span class="lineNoCov">          0 :    else if (v &gt; 0)</span>
 <span class="lineNum">      41 </span>            :    {
@@ -122,14 +122,14 @@
 <span class="lineNum">      60 </span>            : } // namespace detail
 <a name="61"><span class="lineNum">      61 </span>            : </a>
 <span class="lineNum">      62 </span>            : template &lt;class T, class Policy&gt;
-<span class="lineNum">      63 </span><span class="lineCov">  109095710 : inline typename tools::promote_args&lt;T&gt;::type round(const T&amp; v, const Policy&amp; pol)</span>
+<span class="lineNum">      63 </span><span class="lineCov">   16637060 : inline typename tools::promote_args&lt;T&gt;::type round(const T&amp; v, const Policy&amp; pol)</span>
 <span class="lineNum">      64 </span>            : {
-<span class="lineNum">      65 </span><span class="lineCov">  109095710 :    return detail::round(v, pol, mpl::bool_&lt;detail::is_integer_for_rounding&lt;T&gt;::value&gt;());</span>
+<span class="lineNum">      65 </span><span class="lineCov">   16637060 :    return detail::round(v, pol, mpl::bool_&lt;detail::is_integer_for_rounding&lt;T&gt;::value&gt;());</span>
 <a name="66"><span class="lineNum">      66 </span>            : }</a>
 <span class="lineNum">      67 </span>            : template &lt;class T&gt;
-<span class="lineNum">      68 </span><span class="lineCov">  109095710 : inline typename tools::promote_args&lt;T&gt;::type round(const T&amp; v)</span>
+<span class="lineNum">      68 </span><span class="lineCov">   16637060 : inline typename tools::promote_args&lt;T&gt;::type round(const T&amp; v)</span>
 <span class="lineNum">      69 </span>            : {
-<span class="lineNum">      70 </span><span class="lineCov">  109095710 :    return round(v, policies::policy&lt;&gt;());</span>
+<span class="lineNum">      70 </span><span class="lineCov">   16637060 :    return round(v, policies::policy&lt;&gt;());</span>
 <span class="lineNum">      71 </span>            : }
 <span class="lineNum">      72 </span>            : //
 <span class="lineNum">      73 </span>            : // The following functions will not compile unless T has an

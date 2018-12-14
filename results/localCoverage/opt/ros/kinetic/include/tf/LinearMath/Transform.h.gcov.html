@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -100,7 +100,7 @@
 <span class="lineNum">      38 </span>            : public:
 <a name="39"><span class="lineNum">      39 </span>            :         </a>
 <span class="lineNum">      40 </span>            :   /**@brief No initialization constructor */
-<span class="lineNum">      41 </span><span class="lineCov">         33 :         Transform() {}</span>
+<span class="lineNum">      41 </span><span class="lineCov">         10 :         Transform() {}</span>
 <span class="lineNum">      42 </span>            :   /**@brief Constructor from Quaternion (optional Vector3 )
 <span class="lineNum">      43 </span>            :    * @param q Rotation from quaternion 
 <span class="lineNum">      44 </span>            :    * @param c Translation from Vector (default 0,0,0) */
@@ -174,15 +174,15 @@
 <span class="lineNum">     112 </span>            :         TFSIMD_FORCE_INLINE const Matrix3x3&amp; getBasis()    const { return m_basis; }
 <a name="113"><span class="lineNum">     113 </span>            : </a>
 <span class="lineNum">     114 </span>            :   /**@brief Return the origin vector translation */
-<span class="lineNum">     115 </span><span class="lineCov">   76046810 :         TFSIMD_FORCE_INLINE Vector3&amp;         getOrigin()         { return m_origin; }</span>
+<span class="lineNum">     115 </span><span class="lineCov">   10424340 :         TFSIMD_FORCE_INLINE Vector3&amp;         getOrigin()         { return m_origin; }</span>
 <span class="lineNum">     116 </span>            :   /**@brief Return the origin vector translation */
 <span class="lineNum">     117 </span>            :         TFSIMD_FORCE_INLINE const Vector3&amp;   getOrigin()   const { return m_origin; }
 <a name="118"><span class="lineNum">     118 </span>            : </a>
 <span class="lineNum">     119 </span>            :   /**@brief Return a quaternion representing the rotation */
-<span class="lineNum">     120 </span><span class="lineCov">   71072280 :         Quaternion getRotation() const { </span>
-<span class="lineNum">     121 </span><span class="lineCov">   71072280 :                 Quaternion q;</span>
-<span class="lineNum">     122 </span><span class="lineCov">   71072280 :                 m_basis.getRotation(q);</span>
-<span class="lineNum">     123 </span><span class="lineCov">   71072280 :                 return q;</span>
+<span class="lineNum">     120 </span><span class="lineCov">   11424883 :         Quaternion getRotation() const { </span>
+<span class="lineNum">     121 </span><span class="lineCov">   11424883 :                 Quaternion q;</span>
+<span class="lineNum">     122 </span><span class="lineCov">   11424883 :                 m_basis.getRotation(q);</span>
+<span class="lineNum">     123 </span><span class="lineCov">   11424883 :                 return q;</span>
 <span class="lineNum">     124 </span>            :         }
 <span class="lineNum">     125 </span>            :         
 <span class="lineNum">     126 </span>            :         

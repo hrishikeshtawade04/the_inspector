@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -308,12 +308,12 @@
 <span class="lineNum">     246 </span>            :      * otherwise invalid graph resource name
 <a name="247"><span class="lineNum">     247 </span>            :      */</a>
 <span class="lineNum">     248 </span>            :     template &lt;class M&gt;
-<span class="lineNum">     249 </span><span class="lineCov">         33 :     Publisher advertise(const std::string&amp; topic, uint32_t queue_size, bool latch = false)</span>
+<span class="lineNum">     249 </span><span class="lineCov">         10 :     Publisher advertise(const std::string&amp; topic, uint32_t queue_size, bool latch = false)</span>
 <span class="lineNum">     250 </span>            :     {
-<span class="lineNum">     251 </span><span class="lineCov">         66 :       AdvertiseOptions ops;</span>
-<span class="lineNum">     252 </span><span class="lineCov">         33 :       ops.template init&lt;M&gt;(topic, queue_size);</span>
-<span class="lineNum">     253 </span><span class="lineCov">         33 :       ops.latch = latch;</span>
-<span class="lineNum">     254 </span><span class="lineCov">         66 :       return advertise(ops);</span>
+<span class="lineNum">     251 </span><span class="lineCov">         20 :       AdvertiseOptions ops;</span>
+<span class="lineNum">     252 </span><span class="lineCov">         10 :       ops.template init&lt;M&gt;(topic, queue_size);</span>
+<span class="lineNum">     253 </span><span class="lineCov">         10 :       ops.latch = latch;</span>
+<span class="lineNum">     254 </span><span class="lineCov">         20 :       return advertise(ops);</span>
 <span class="lineNum">     255 </span>            :     }
 <span class="lineNum">     256 </span>            : 
 <span class="lineNum">     257 </span>            :     /**
@@ -524,14 +524,14 @@
 <span class="lineNum">     462 </span>            :    *  \throws ConflictingSubscriptionException If this node is already subscribed to the same topic with a different datatype
 <a name="463"><span class="lineNum">     463 </span>            :    */</a>
 <span class="lineNum">     464 </span>            :   template&lt;class M, class T&gt;
-<span class="lineNum">     465 </span><span class="lineCov">         15 :   Subscriber subscribe(const std::string&amp; topic, uint32_t queue_size, </span>
+<span class="lineNum">     465 </span><span class="lineCov">          5 :   Subscriber subscribe(const std::string&amp; topic, uint32_t queue_size, </span>
 <span class="lineNum">     466 </span>            :                        void(T::*fp)(const boost::shared_ptr&lt;M const&gt;&amp;), T* obj, 
 <span class="lineNum">     467 </span>            :                        const TransportHints&amp; transport_hints = TransportHints())
 <span class="lineNum">     468 </span>            :   {
-<span class="lineNum">     469 </span><span class="lineCov">         30 :     SubscribeOptions ops;</span>
-<span class="lineNum">     470 </span><span class="lineCov">         15 :     ops.template init&lt;M&gt;(topic, queue_size, boost::bind(fp, obj, _1));</span>
-<span class="lineNum">     471 </span><span class="lineCov">         15 :     ops.transport_hints = transport_hints;</span>
-<span class="lineNum">     472 </span><span class="lineCov">         30 :     return subscribe(ops);</span>
+<span class="lineNum">     469 </span><span class="lineCov">         10 :     SubscribeOptions ops;</span>
+<span class="lineNum">     470 </span><span class="lineCov">          5 :     ops.template init&lt;M&gt;(topic, queue_size, boost::bind(fp, obj, _1));</span>
+<span class="lineNum">     471 </span><span class="lineCov">          5 :     ops.transport_hints = transport_hints;</span>
+<span class="lineNum">     472 </span><span class="lineCov">         10 :     return subscribe(ops);</span>
 <span class="lineNum">     473 </span>            :   }
 <span class="lineNum">     474 </span>            :   template&lt;class M, class T&gt;
 <span class="lineNum">     475 </span>            :   Subscriber subscribe(const std::string&amp; topic, uint32_t queue_size, 

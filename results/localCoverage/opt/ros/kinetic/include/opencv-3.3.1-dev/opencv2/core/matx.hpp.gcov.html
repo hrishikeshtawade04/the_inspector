@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -596,10 +596,10 @@
 <span class="lineNum">     534 </span>            : ////////////////////////////////// Matx Implementation ///////////////////////////////////
 <a name="535"><span class="lineNum">     535 </span>            : </a>
 <span class="lineNum">     536 </span>            : template&lt;typename _Tp, int m, int n&gt; inline
-<span class="lineNum">     537 </span><span class="lineCov">         33 : Matx&lt;_Tp, m, n&gt;::Matx()</span>
+<span class="lineNum">     537 </span><span class="lineCov">         10 : Matx&lt;_Tp, m, n&gt;::Matx()</span>
 <span class="lineNum">     538 </span>            : {
-<span class="lineNum">     539 </span><span class="lineCov">         33 :     for(int i = 0; i &lt; channels; i++) val[i] = _Tp(0);</span>
-<span class="lineNum">     540 </span><span class="lineCov">         33 : }</span>
+<span class="lineNum">     539 </span><span class="lineCov">         10 :     for(int i = 0; i &lt; channels; i++) val[i] = _Tp(0);</span>
+<span class="lineNum">     540 </span><span class="lineCov">         10 : }</span>
 <span class="lineNum">     541 </span>            : 
 <span class="lineNum">     542 </span>            : template&lt;typename _Tp, int m, int n&gt; inline
 <span class="lineNum">     543 </span>            : Matx&lt;_Tp, m, n&gt;::Matx(_Tp v0)
@@ -1031,7 +1031,7 @@
 <span class="lineNum">     969 </span>            : /////////////////////////////////// Vec Implementation ///////////////////////////////////
 <a name="970"><span class="lineNum">     970 </span>            : </a>
 <span class="lineNum">     971 </span>            : template&lt;typename _Tp, int cn&gt; inline
-<span class="lineNum">     972 </span><span class="lineCov">         33 : Vec&lt;_Tp, cn&gt;::Vec() {}</span>
+<span class="lineNum">     972 </span><span class="lineCov">         10 : Vec&lt;_Tp, cn&gt;::Vec() {}</span>
 <span class="lineNum">     973 </span>            : 
 <span class="lineNum">     974 </span>            : template&lt;typename _Tp, int cn&gt; inline
 <span class="lineNum">     975 </span>            : Vec&lt;_Tp, cn&gt;::Vec(_Tp v0)

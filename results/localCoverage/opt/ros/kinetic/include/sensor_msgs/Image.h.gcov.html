@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">6</td>
@@ -82,19 +82,19 @@
 <span class="lineNum">      20 </span>            : namespace sensor_msgs
 <a name="21"><span class="lineNum">      21 </span>            : {</a>
 <span class="lineNum">      22 </span>            : template &lt;class ContainerAllocator&gt;
-<span class="lineNum">      23 </span><span class="lineCov">       2517 : struct Image_</span>
+<span class="lineNum">      23 </span><span class="lineCov">        840 : struct Image_</span>
 <span class="lineNum">      24 </span>            : {
 <a name="25"><span class="lineNum">      25 </span>            :   typedef Image_&lt;ContainerAllocator&gt; Type;</a>
 <span class="lineNum">      26 </span>            : 
-<span class="lineNum">      27 </span><span class="lineCov">       2517 :   Image_()</span>
+<span class="lineNum">      27 </span><span class="lineCov">        840 :   Image_()</span>
 <span class="lineNum">      28 </span>            :     : header()
 <span class="lineNum">      29 </span>            :     , height(0)
 <span class="lineNum">      30 </span>            :     , width(0)
 <span class="lineNum">      31 </span>            :     , encoding()
 <span class="lineNum">      32 </span>            :     , is_bigendian(0)
 <span class="lineNum">      33 </span>            :     , step(0)
-<span class="lineNum">      34 </span><span class="lineCov">       2517 :     , data()  {</span>
-<span class="lineNum">      35 </span><span class="lineCov">       2517 :     }</span>
+<span class="lineNum">      34 </span><span class="lineCov">        840 :     , data()  {</span>
+<span class="lineNum">      35 </span><span class="lineCov">        840 :     }</span>
 <span class="lineNum">      36 </span>            :   Image_(const ContainerAllocator&amp; _alloc)
 <span class="lineNum">      37 </span>            :     : header(_alloc)
 <span class="lineNum">      38 </span>            :     , height(0)
@@ -205,9 +205,9 @@
 <span class="lineNum">     143 </span>            : template&lt;class ContainerAllocator&gt;
 <a name="144"><span class="lineNum">     144 </span>            : struct MD5Sum&lt; ::sensor_msgs::Image_&lt;ContainerAllocator&gt; &gt;</a>
 <span class="lineNum">     145 </span>            : {
-<span class="lineNum">     146 </span><span class="lineCov">         15 :   static const char* value()</span>
+<span class="lineNum">     146 </span><span class="lineCov">          5 :   static const char* value()</span>
 <span class="lineNum">     147 </span>            :   {
-<span class="lineNum">     148 </span><span class="lineCov">         15 :     return &quot;060021388200f6f0f447d0fcd9c64743&quot;;</span>
+<span class="lineNum">     148 </span><span class="lineCov">          5 :     return &quot;060021388200f6f0f447d0fcd9c64743&quot;;</span>
 <span class="lineNum">     149 </span>            :   }
 <span class="lineNum">     150 </span>            : 
 <span class="lineNum">     151 </span>            :   static const char* value(const ::sensor_msgs::Image_&lt;ContainerAllocator&gt;&amp;) { return value(); }
@@ -218,9 +218,9 @@
 <span class="lineNum">     156 </span>            : template&lt;class ContainerAllocator&gt;
 <a name="157"><span class="lineNum">     157 </span>            : struct DataType&lt; ::sensor_msgs::Image_&lt;ContainerAllocator&gt; &gt;</a>
 <span class="lineNum">     158 </span>            : {
-<span class="lineNum">     159 </span><span class="lineCov">         15 :   static const char* value()</span>
+<span class="lineNum">     159 </span><span class="lineCov">          5 :   static const char* value()</span>
 <span class="lineNum">     160 </span>            :   {
-<span class="lineNum">     161 </span><span class="lineCov">         15 :     return &quot;sensor_msgs/Image&quot;;</span>
+<span class="lineNum">     161 </span><span class="lineCov">          5 :     return &quot;sensor_msgs/Image&quot;;</span>
 <span class="lineNum">     162 </span>            :   }
 <span class="lineNum">     163 </span>            : 
 <span class="lineNum">     164 </span>            :   static const char* value(const ::sensor_msgs::Image_&lt;ContainerAllocator&gt;&amp;) { return value(); }
@@ -292,18 +292,18 @@
 <span class="lineNum">     230 </span>            : 
 <a name="231"><span class="lineNum">     231 </span>            :   template&lt;class ContainerAllocator&gt; struct Serializer&lt; ::sensor_msgs::Image_&lt;ContainerAllocator&gt; &gt;</a>
 <span class="lineNum">     232 </span>            :   {
-<span class="lineNum">     233 </span><span class="lineCov">       2517 :     template&lt;typename Stream, typename T&gt; inline static void allInOne(Stream&amp; stream, T m)</span>
+<span class="lineNum">     233 </span><span class="lineCov">        840 :     template&lt;typename Stream, typename T&gt; inline static void allInOne(Stream&amp; stream, T m)</span>
 <span class="lineNum">     234 </span>            :     {
-<span class="lineNum">     235 </span><span class="lineCov">       2517 :       stream.next(m.header);</span>
-<span class="lineNum">     236 </span><span class="lineCov">       2517 :       stream.next(m.height);</span>
-<span class="lineNum">     237 </span><span class="lineCov">       2517 :       stream.next(m.width);</span>
-<span class="lineNum">     238 </span><span class="lineCov">       2517 :       stream.next(m.encoding);</span>
-<span class="lineNum">     239 </span><span class="lineCov">       2517 :       stream.next(m.is_bigendian);</span>
-<span class="lineNum">     240 </span><span class="lineCov">       2517 :       stream.next(m.step);</span>
-<span class="lineNum">     241 </span><span class="lineCov">       2517 :       stream.next(m.data);</span>
-<a name="242"><span class="lineNum">     242 </span><span class="lineCov">       2517 :     }</span></a>
+<span class="lineNum">     235 </span><span class="lineCov">        840 :       stream.next(m.header);</span>
+<span class="lineNum">     236 </span><span class="lineCov">        840 :       stream.next(m.height);</span>
+<span class="lineNum">     237 </span><span class="lineCov">        840 :       stream.next(m.width);</span>
+<span class="lineNum">     238 </span><span class="lineCov">        840 :       stream.next(m.encoding);</span>
+<span class="lineNum">     239 </span><span class="lineCov">        840 :       stream.next(m.is_bigendian);</span>
+<span class="lineNum">     240 </span><span class="lineCov">        840 :       stream.next(m.step);</span>
+<span class="lineNum">     241 </span><span class="lineCov">        840 :       stream.next(m.data);</span>
+<a name="242"><span class="lineNum">     242 </span><span class="lineCov">        840 :     }</span></a>
 <span class="lineNum">     243 </span>            : 
-<span class="lineNum">     244 </span><span class="lineCov">       2517 :     ROS_DECLARE_ALLINONE_SERIALIZER</span>
+<span class="lineNum">     244 </span><span class="lineCov">        840 :     ROS_DECLARE_ALLINONE_SERIALIZER</span>
 <span class="lineNum">     245 </span>            :   }; // struct Image_
 <span class="lineNum">     246 </span>            : 
 <span class="lineNum">     247 </span>            : } // namespace serialization

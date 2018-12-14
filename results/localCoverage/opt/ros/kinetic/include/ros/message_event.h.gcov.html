@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
@@ -110,9 +110,9 @@
 <span class="lineNum">      48 </span>            : template&lt;typename M&gt;
 <a name="49"><span class="lineNum">      49 </span>            : struct DefaultMessageCreator</a>
 <span class="lineNum">      50 </span>            : {
-<span class="lineNum">      51 </span><span class="lineCov">       2517 :   boost::shared_ptr&lt;M&gt; operator()()</span>
+<span class="lineNum">      51 </span><span class="lineCov">        840 :   boost::shared_ptr&lt;M&gt; operator()()</span>
 <span class="lineNum">      52 </span>            :   {
-<span class="lineNum">      53 </span><span class="lineCov">       2517 :     return boost::make_shared&lt;M&gt;();</span>
+<span class="lineNum">      53 </span><span class="lineCov">        840 :     return boost::make_shared&lt;M&gt;();</span>
 <span class="lineNum">      54 </span>            :   }
 <span class="lineNum">      55 </span>            : };
 <span class="lineNum">      56 </span>            : 
@@ -128,7 +128,7 @@
 <span class="lineNum">      66 </span>            :  * Useful if you need to retrieve meta-data about the message, such as the full connection header, or the publisher's node name
 <a name="67"><span class="lineNum">      67 </span>            :  */</a>
 <span class="lineNum">      68 </span>            : template&lt;typename M&gt;
-<span class="lineNum">      69 </span><span class="lineCov">       2517 : class MessageEvent</span>
+<span class="lineNum">      69 </span><span class="lineCov">        840 : class MessageEvent</span>
 <span class="lineNum">      70 </span>            : {
 <span class="lineNum">      71 </span>            : public:
 <span class="lineNum">      72 </span>            :   typedef typename boost::add_const&lt;M&gt;::type ConstMessage;
@@ -163,10 +163,10 @@
 <span class="lineNum">     101 </span>            :     nonconst_need_copy_ = nonconst_need_copy;
 <a name="102"><span class="lineNum">     102 </span>            :   }</a>
 <span class="lineNum">     103 </span>            : 
-<span class="lineNum">     104 </span><span class="lineCov">       2517 :   MessageEvent(const MessageEvent&lt;void const&gt;&amp; rhs, const CreateFunction&amp; create)</span>
-<span class="lineNum">     105 </span><span class="lineCov">       2517 :   {</span>
-<span class="lineNum">     106 </span><span class="lineCov">       2517 :     init(boost::const_pointer_cast&lt;Message&gt;(boost::static_pointer_cast&lt;ConstMessage&gt;(rhs.getMessage())), rhs.getConnectionHeaderPtr(), rhs.getReceiptTime(), rhs.nonConstWillCopy(), create);</span>
-<span class="lineNum">     107 </span><span class="lineCov">       2517 :   }</span>
+<span class="lineNum">     104 </span><span class="lineCov">        840 :   MessageEvent(const MessageEvent&lt;void const&gt;&amp; rhs, const CreateFunction&amp; create)</span>
+<span class="lineNum">     105 </span><span class="lineCov">        840 :   {</span>
+<span class="lineNum">     106 </span><span class="lineCov">        840 :     init(boost::const_pointer_cast&lt;Message&gt;(boost::static_pointer_cast&lt;ConstMessage&gt;(rhs.getMessage())), rhs.getConnectionHeaderPtr(), rhs.getReceiptTime(), rhs.nonConstWillCopy(), create);</span>
+<span class="lineNum">     107 </span><span class="lineCov">        840 :   }</span>
 <span class="lineNum">     108 </span>            : 
 <span class="lineNum">     109 </span>            :   /**
 <span class="lineNum">     110 </span>            :    * \todo Make this explicit in ROS 2.0.  Keep as auto-converting for now to maintain backwards compatibility in some places (message_filters)
@@ -191,14 +191,14 @@
 <span class="lineNum">     129 </span>            :     init(message, connection_header, receipt_time, nonconst_need_copy, create);
 <a name="130"><span class="lineNum">     130 </span>            :   }</a>
 <span class="lineNum">     131 </span>            : 
-<span class="lineNum">     132 </span><span class="lineCov">       2517 :   void init(const ConstMessagePtr&amp; message, const boost::shared_ptr&lt;M_string&gt;&amp; connection_header, ros::Time receipt_time, bool nonconst_need_copy, const CreateFunction&amp; create)</span>
+<span class="lineNum">     132 </span><span class="lineCov">        840 :   void init(const ConstMessagePtr&amp; message, const boost::shared_ptr&lt;M_string&gt;&amp; connection_header, ros::Time receipt_time, bool nonconst_need_copy, const CreateFunction&amp; create)</span>
 <span class="lineNum">     133 </span>            :   {
-<span class="lineNum">     134 </span><span class="lineCov">       2517 :     message_ = message;</span>
-<span class="lineNum">     135 </span><span class="lineCov">       2517 :     connection_header_ = connection_header;</span>
-<span class="lineNum">     136 </span><span class="lineCov">       2517 :     receipt_time_ = receipt_time;</span>
-<span class="lineNum">     137 </span><span class="lineCov">       2517 :     nonconst_need_copy_ = nonconst_need_copy;</span>
-<span class="lineNum">     138 </span><span class="lineCov">       2517 :     create_ = create;</span>
-<span class="lineNum">     139 </span><span class="lineCov">       2517 :   }</span>
+<span class="lineNum">     134 </span><span class="lineCov">        840 :     message_ = message;</span>
+<span class="lineNum">     135 </span><span class="lineCov">        840 :     connection_header_ = connection_header;</span>
+<span class="lineNum">     136 </span><span class="lineCov">        840 :     receipt_time_ = receipt_time;</span>
+<span class="lineNum">     137 </span><span class="lineCov">        840 :     nonconst_need_copy_ = nonconst_need_copy;</span>
+<span class="lineNum">     138 </span><span class="lineCov">        840 :     create_ = create;</span>
+<span class="lineNum">     139 </span><span class="lineCov">        840 :   }</span>
 <span class="lineNum">     140 </span>            : 
 <span class="lineNum">     141 </span>            :   void operator=(const MessageEvent&lt;Message&gt;&amp; rhs)
 <span class="lineNum">     142 </span>            :   {
@@ -217,9 +217,9 @@
 <span class="lineNum">     155 </span>            :    * and this event requires it, returns a copy.  Note that it caches this copy for later use, so it will
 <a name="156"><span class="lineNum">     156 </span>            :    * only every make the copy once</a>
 <span class="lineNum">     157 </span>            :    */
-<span class="lineNum">     158 </span><span class="lineCov">       5034 :   boost::shared_ptr&lt;M&gt; getMessage() const</span>
+<span class="lineNum">     158 </span><span class="lineCov">       1680 :   boost::shared_ptr&lt;M&gt; getMessage() const</span>
 <span class="lineNum">     159 </span>            :   {
-<span class="lineNum">     160 </span><span class="lineCov">       5034 :     return copyMessageIfNecessary&lt;M&gt;();</span>
+<span class="lineNum">     160 </span><span class="lineCov">       1680 :     return copyMessageIfNecessary&lt;M&gt;();</span>
 <span class="lineNum">     161 </span>            :   }
 <span class="lineNum">     162 </span>            : 
 <span class="lineNum">     163 </span>            :   /**
@@ -230,7 +230,7 @@
 <span class="lineNum">     168 </span>            :    * \brief Retrieve the connection header
 <a name="169"><span class="lineNum">     169 </span>            :    */</a>
 <span class="lineNum">     170 </span>            :   M_string&amp; getConnectionHeader() const { return *connection_header_; }
-<span class="lineNum">     171 </span><span class="lineCov">       2517 :   const boost::shared_ptr&lt;M_string&gt;&amp; getConnectionHeaderPtr() const { return connection_header_; }</span>
+<span class="lineNum">     171 </span><span class="lineCov">        840 :   const boost::shared_ptr&lt;M_string&gt;&amp; getConnectionHeaderPtr() const { return connection_header_; }</span>
 <span class="lineNum">     172 </span>            : 
 <span class="lineNum">     173 </span>            :   /**
 <span class="lineNum">     174 </span>            :    * \brief Returns the name of the node which published this message
@@ -240,9 +240,9 @@
 <span class="lineNum">     178 </span>            :   /**
 <a name="179"><span class="lineNum">     179 </span>            :    * \brief Returns the time at which this message was received</a>
 <span class="lineNum">     180 </span>            :    */
-<a name="181"><span class="lineNum">     181 </span><span class="lineCov">       2517 :   ros::Time getReceiptTime() const { return receipt_time_; }</span></a>
+<a name="181"><span class="lineNum">     181 </span><span class="lineCov">        840 :   ros::Time getReceiptTime() const { return receipt_time_; }</span></a>
 <span class="lineNum">     182 </span>            : 
-<span class="lineNum">     183 </span><span class="lineCov">       2517 :   bool nonConstWillCopy() const { return nonconst_need_copy_; }</span>
+<span class="lineNum">     183 </span><span class="lineCov">        840 :   bool nonConstWillCopy() const { return nonconst_need_copy_; }</span>
 <span class="lineNum">     184 </span>            :   bool getMessageWillCopy() const { return !boost::is_const&lt;M&gt;::value &amp;&amp; nonconst_need_copy_; }
 <span class="lineNum">     185 </span>            : 
 <span class="lineNum">     186 </span>            :   bool operator&lt;(const MessageEvent&lt;M&gt;&amp; rhs)
@@ -274,11 +274,11 @@
 <span class="lineNum">     212 </span>            : 
 <a name="213"><span class="lineNum">     213 </span>            : private:</a>
 <span class="lineNum">     214 </span>            :   template&lt;typename M2&gt;
-<span class="lineNum">     215 </span><span class="lineCov">       2517 :   typename boost::disable_if&lt;boost::is_void&lt;M2&gt;, boost::shared_ptr&lt;M&gt; &gt;::type copyMessageIfNecessary() const</span>
+<span class="lineNum">     215 </span><span class="lineCov">        840 :   typename boost::disable_if&lt;boost::is_void&lt;M2&gt;, boost::shared_ptr&lt;M&gt; &gt;::type copyMessageIfNecessary() const</span>
 <span class="lineNum">     216 </span>            :   {
 <span class="lineNum">     217 </span>            :     if (boost::is_const&lt;M&gt;::value || !nonconst_need_copy_)
 <span class="lineNum">     218 </span>            :     {
-<span class="lineNum">     219 </span><span class="lineCov">       2517 :       return boost::const_pointer_cast&lt;Message&gt;(message_);</span>
+<span class="lineNum">     219 </span><span class="lineCov">        840 :       return boost::const_pointer_cast&lt;Message&gt;(message_);</span>
 <span class="lineNum">     220 </span>            :     }
 <span class="lineNum">     221 </span>            : 
 <span class="lineNum">     222 </span>            :     if (message_copy_)
@@ -294,9 +294,9 @@
 <span class="lineNum">     232 </span>            :   }
 <a name="233"><span class="lineNum">     233 </span>            : </a>
 <span class="lineNum">     234 </span>            :   template&lt;typename M2&gt;
-<span class="lineNum">     235 </span><span class="lineCov">       2517 :   typename boost::enable_if&lt;boost::is_void&lt;M2&gt;, boost::shared_ptr&lt;M&gt; &gt;::type copyMessageIfNecessary() const</span>
+<span class="lineNum">     235 </span><span class="lineCov">        840 :   typename boost::enable_if&lt;boost::is_void&lt;M2&gt;, boost::shared_ptr&lt;M&gt; &gt;::type copyMessageIfNecessary() const</span>
 <span class="lineNum">     236 </span>            :   {
-<span class="lineNum">     237 </span><span class="lineCov">       2517 :     return boost::const_pointer_cast&lt;Message&gt;(message_);</span>
+<span class="lineNum">     237 </span><span class="lineCov">        840 :     return boost::const_pointer_cast&lt;Message&gt;(message_);</span>
 <span class="lineNum">     238 </span>            :   }
 <span class="lineNum">     239 </span>            : 
 <span class="lineNum">     240 </span>            :   ConstMessagePtr message_;

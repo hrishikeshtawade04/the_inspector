@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -98,7 +98,7 @@
 <span class="lineNum">      36 </span>            : namespace ros
 <a name="37"><span class="lineNum">      37 </span>            : {</a>
 <span class="lineNum">      38 </span>            : 
-<span class="lineNum">      39 </span><span class="lineCov">  109095683 : class ROSCPP_SERIALIZATION_DECL SerializedMessage</span>
+<span class="lineNum">      39 </span><span class="lineCov">   16637048 : class ROSCPP_SERIALIZATION_DECL SerializedMessage</span>
 <span class="lineNum">      40 </span>            : {
 <span class="lineNum">      41 </span>            : public:
 <span class="lineNum">      42 </span>            :   boost::shared_array&lt;uint8_t&gt; buf;
@@ -108,12 +108,12 @@
 <span class="lineNum">      46 </span>            :   boost::shared_ptr&lt;void const&gt; message;
 <a name="47"><span class="lineNum">      47 </span>            :   const std::type_info* type_info;</a>
 <span class="lineNum">      48 </span>            : 
-<span class="lineNum">      49 </span><span class="lineCov">  218166128 :   SerializedMessage()</span>
+<span class="lineNum">      49 </span><span class="lineCov">   33274096 :   SerializedMessage()</span>
 <span class="lineNum">      50 </span>            :   : buf(boost::shared_array&lt;uint8_t&gt;())
 <span class="lineNum">      51 </span>            :   , num_bytes(0)
 <span class="lineNum">      52 </span>            :   , message_start(0)
-<span class="lineNum">      53 </span><span class="lineCov">  218166128 :   , type_info(0)</span>
-<span class="lineNum">      54 </span><span class="lineCov">  218166128 :   {}</span>
+<span class="lineNum">      53 </span><span class="lineCov">   33274096 :   , type_info(0)</span>
+<span class="lineNum">      54 </span><span class="lineCov">   33274096 :   {}</span>
 <span class="lineNum">      55 </span>            : 
 <span class="lineNum">      56 </span>            :   SerializedMessage(boost::shared_array&lt;uint8_t&gt; buf, size_t num_bytes)
 <span class="lineNum">      57 </span>            :   : buf(buf)

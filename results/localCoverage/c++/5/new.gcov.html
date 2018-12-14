@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -113,10 +113,10 @@
 <span class="lineNum">      51 </span>            :    *
 <a name="52"><span class="lineNum">      52 </span>            :    *  @c bad_alloc (or classes derived from it) is used to report allocation</a>
 <span class="lineNum">      53 </span>            :    *  errors from the throwing forms of @c new.  */
-<span class="lineNum">      54 </span><span class="lineCov">          6 :   class bad_alloc : public exception </span>
+<span class="lineNum">      54 </span><span class="lineCov">          2 :   class bad_alloc : public exception </span>
 <a name="55"><span class="lineNum">      55 </span>            :   {</a>
 <span class="lineNum">      56 </span>            :   public:
-<span class="lineNum">      57 </span><span class="lineCov">          3 :     bad_alloc() throw() { }</span>
+<span class="lineNum">      57 </span><span class="lineCov">          1 :     bad_alloc() throw() { }</span>
 <span class="lineNum">      58 </span>            : 
 <span class="lineNum">      59 </span>            :     // This declaration is not useless:
 <span class="lineNum">      60 </span>            :     // http://gcc.gnu.org/onlinedocs/gcc-3.0.2/gcc_6.html#SEC118
@@ -188,8 +188,8 @@
 <span class="lineNum">     126 </span>            :   __attribute__((__externally_visible__));
 <a name="127"><span class="lineNum">     127 </span>            : </a>
 <span class="lineNum">     128 </span>            : // Default placement versions of operator new.
-<span class="lineNum">     129 </span><span class="lineCov">   34147863 : inline void* operator new(std::size_t, void* __p) _GLIBCXX_USE_NOEXCEPT</span>
-<span class="lineNum">     130 </span><span class="lineCov">   34147863 : { return __p; }</span>
+<span class="lineNum">     129 </span><span class="lineCov">   16645930 : inline void* operator new(std::size_t, void* __p) _GLIBCXX_USE_NOEXCEPT</span>
+<span class="lineNum">     130 </span><span class="lineCov">   16645930 : { return __p; }</span>
 <span class="lineNum">     131 </span>            : inline void* operator new[](std::size_t, void* __p) _GLIBCXX_USE_NOEXCEPT
 <span class="lineNum">     132 </span>            : { return __p; }
 <a name="133"><span class="lineNum">     133 </span>            : </a>

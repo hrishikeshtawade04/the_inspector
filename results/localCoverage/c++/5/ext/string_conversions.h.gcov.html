@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2018-12-09 20:51:32</td>
+            <td class="headerValue">2018-12-14 05:28:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -142,23 +142,23 @@
 <span class="lineNum">      80 </span>            :   // Helper for the to_string / to_wstring functions.
 <a name="81"><span class="lineNum">      81 </span>            :   template&lt;typename _String, typename _CharT = typename _String::value_type&gt;</a>
 <span class="lineNum">      82 </span>            :     _String
-<span class="lineNum">      83 </span><span class="lineCov">         15 :     __to_xstring(int (*__convf) (_CharT*, std::size_t, const _CharT*,</span>
+<span class="lineNum">      83 </span><span class="lineCov">          1 :     __to_xstring(int (*__convf) (_CharT*, std::size_t, const _CharT*,</span>
 <span class="lineNum">      84 </span>            :                                  __builtin_va_list), std::size_t __n,
 <span class="lineNum">      85 </span>            :                  const _CharT* __fmt, ...)
 <span class="lineNum">      86 </span>            :     {
 <span class="lineNum">      87 </span>            :       // XXX Eventually the result will be constructed in place in
 <span class="lineNum">      88 </span>            :       // the C++0x string, likely with the help of internal hooks.
-<span class="lineNum">      89 </span><span class="lineCov">         15 :       _CharT* __s = static_cast&lt;_CharT*&gt;(__builtin_alloca(sizeof(_CharT)</span>
-<span class="lineNum">      90 </span><span class="lineCov">         15 :                                                           * __n));</span>
+<span class="lineNum">      89 </span><span class="lineCov">          1 :       _CharT* __s = static_cast&lt;_CharT*&gt;(__builtin_alloca(sizeof(_CharT)</span>
+<span class="lineNum">      90 </span><span class="lineCov">          1 :                                                           * __n));</span>
 <span class="lineNum">      91 </span>            : 
 <span class="lineNum">      92 </span>            :       __builtin_va_list __args;
-<span class="lineNum">      93 </span><span class="lineCov">         15 :       __builtin_va_start(__args, __fmt);</span>
+<span class="lineNum">      93 </span><span class="lineCov">          1 :       __builtin_va_start(__args, __fmt);</span>
 <span class="lineNum">      94 </span>            : 
-<span class="lineNum">      95 </span><span class="lineCov">         15 :       const int __len = __convf(__s, __n, __fmt, __args);</span>
+<span class="lineNum">      95 </span><span class="lineCov">          1 :       const int __len = __convf(__s, __n, __fmt, __args);</span>
 <span class="lineNum">      96 </span>            : 
-<span class="lineNum">      97 </span><span class="lineCov">         15 :       __builtin_va_end(__args);</span>
+<span class="lineNum">      97 </span><span class="lineCov">          1 :       __builtin_va_end(__args);</span>
 <span class="lineNum">      98 </span>            : 
-<span class="lineNum">      99 </span><span class="lineCov">         15 :       return _String(__s, __s + __len);</span>
+<span class="lineNum">      99 </span><span class="lineCov">          1 :       return _String(__s, __s + __len);</span>
 <span class="lineNum">     100 </span>            :     }
 <span class="lineNum">     101 </span>            : 
 <span class="lineNum">     102 </span>            : _GLIBCXX_END_NAMESPACE_VERSION
