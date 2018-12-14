@@ -111,9 +111,12 @@ class ImageProcessingModule {
    *  @param   storeImage 1 stores image in data folder
    *                      0 doesn't store image
    *
+   *  @param   path path to where the image needs to be stored
+   *
    *  @return  contour locations for the particular input image
    */
-  std::vector<double> detectContour(std::string wallNumber, int storeImage);
+  std::vector<double> detectContour(std::string wallNumber, int storeImage,
+                                    std::string path);
 };
 #endif  // INCLUDE_IMAGEPROCESSINGMODULE_H_
 

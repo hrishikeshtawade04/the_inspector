@@ -51,6 +51,7 @@
 #include "PathPlanningModule.h"
 #include <iostream>
 #include <vector>
+#include <string>
 #include "ros/ros.h"
 
 /**
@@ -74,9 +75,12 @@ class Robot {
    * @param mapCoordinates coordinates where the robot should stop and take picture
    *                       and find leakage
    *
+   * @param path path where the images need to be stored
+   *
    * @return Nothing
    */
-  void findLeakages(std::vector<std::vector<double>> mapCoordinates);
+  void findLeakages(std::vector<std::vector<double>> mapCoordinates,
+                    std::string path);
 
   /**
    * @brief puts the calculated coordinates in a vector for easy accessibility
@@ -115,3 +119,4 @@ class Robot {
   double leakageCount_;
 };
 #endif  // INCLUDE_ROBOTMODULE_H_
+
