@@ -22,7 +22,7 @@ The Inspector by Acme Robotics is one of there flagship products. It has the fol
 
 ## Presentation
 - Presentation slides [TODO]()
-- Presentation Video - Presentation [TODO]()|Building packages [TODO]()| Demo [TODO]() |Saving the map [TODO]().
+- Presentation Video - Presentation [TODO]()| Building packages video [TODO]()| Demo [TODO]().
 
 ## License
 This project is under the [BSD License](https://github.com/hrishikeshtawade04/the_inspector/blob/master/LICENSE).
@@ -81,6 +81,11 @@ $ sudo apt-get install ros-kinetic-map-server
 - To install Rviz go through this link [LINK](http://wiki.ros.org/rviz/UserGuide).
 
 ## Operation
+
+<p align="center">
+<img src="images_for_readme/world.png">
+</p>
+
 The Inspector Robot module has 3 sub modules
 
 ##### 1) Path Planning Module
@@ -231,18 +236,19 @@ $ cd <path to catkin_ws>
 $ source devel/setup.bash
 $ roslaunch the_inspector the_inspector.launch
 ```
->[NOTE: Make sure to run the source command otherwise the launch file won't detect the package. Also you will see **warnings** which our package will output, on the screen till gazebo is launched completely]
+>[NOTE: **Make sure to run the source devel/setup.bash command evertime you want to run the package** otherwise the launch file won't detect the package. Also you will see **warnings** which our package will output, on the screen till gazebo is launched completely]
 
-You can also launch the .world  in the World folder spearately by opening Gazebo. Now when the world opens up run the following commands to run 'the_inspector' node. Running both of them together
+Running the above command the images will automatically get stored to the data folder.
+
+You can also launch the .world  in the World folder spearately by opening Gazebo. Now when the world opens up run the following commands to run 'the_inspector' node.
+>[NOTE:**The example of "path to store directory" is /home/username/catkin_ws/src//the_inspector/data/**]
+
 ```
 $ roscore (in a new terminal)
 $ cd <path to catkin_ws>
 $ source devel/setup.bash
-$ cd <data folder in the_inspector>
-$ rosrun the_inspector the_inspector
+$ rosrun the_inspector the_inspector <path to the directory to store images>
 ```
-We are running the code in data folder because the images of the leakages can then be stored in data. The images will automatically get stored to the folder from where you run the rosrun command.
-
 ## Running ROS test via command-line
 The test is written using gtest and rostest. Close all the running processes before executing the commands below to run the rostest.
 ```
