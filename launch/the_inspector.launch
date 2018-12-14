@@ -7,7 +7,7 @@
       <arg name="world_file" value="$(find the_inspector)/World/Wall.world"/>
       <arg name="gui" value="1"/>
   </include>
-  <node pkg="the_inspector" name="the_inspector" type="the_inspector" output="screen"/>
+  <node pkg="the_inspector" name="the_inspector" type="the_inspector" output="screen" args="$(find the_inspector)/data/"/>
   <node pkg="rosbag" name="stored_inspector" type="record" args="--all --duration=15 --output-name=$(find the_inspector)/results/storedInspectorData.bag -x /camera/(.*)" if="$(arg enableBag)"
     />
 </launch>
