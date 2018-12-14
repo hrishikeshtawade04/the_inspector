@@ -97,7 +97,8 @@ TEST(RobotModuleTest, findLeakagesTest) {
   vector1.emplace_back(0);
   vector1.emplace_back(0);
   vector2.emplace_back(vector1);
-  robot.findLeakages(vector2);
+  std::string path = "../";
+  robot.findLeakages(vector2, path);
   EXPECT_NEAR(3, robot.getLeakageCount(), 1);
 }
 

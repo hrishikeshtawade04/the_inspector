@@ -75,7 +75,8 @@ TEST(ImageProcessingModuleTest, convertImageTest) {
 
 TEST(ImageProcessingModuleTest, detectContourTest) {
   ImageProcessingModule processor_;
-  std::vector<double> location = processor_.detectContour("1", 1);
+  std::string path = "../";
+  std::vector<double> location = processor_.detectContour("1", 1,path);
   std::cout << location.size() << std::endl;
   EXPECT_NEAR(2, (location.size()) / 2, 1);
 }
