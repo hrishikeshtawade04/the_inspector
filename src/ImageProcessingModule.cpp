@@ -62,8 +62,8 @@ ImageProcessingModule::ImageProcessingModule() {
   pubImage_ = it.advertise("camera/image", 10);
   subImage =
       n.subscribe < sensor_msgs::Image
-          > ("/camera/rgb/image_raw",
-          10, &ImageProcessingModule::convertImage, this);
+          > ("/camera/rgb/image_raw", 10,
+          &ImageProcessingModule::convertImage, this);
   ROS_INFO("Configuration setting done");
 }
 
@@ -83,7 +83,8 @@ cv::Mat ImageProcessingModule::getImage() {
 
 std::vector<double> ImageProcessingModule::detectContour(
     std::string wallNumber,
-                                                         int storeImage) {
+                                                         int storeImage,
+                                                         std::string path) {
   std::vector<double> countourLocations;
   int complete = 0;
   /// runs till all contours are found.
@@ -149,14 +150,12 @@ std::vector<double> ImageProcessingModule::detectContour(
           countourLocations.emplace_back(positionX);
           countourLocations.emplace_back(3 - positionY);
         }
-       ++i;
+        ++i;
       }
       /// Storing Image in data folder
       if (storeImage == 1) {
         std::stringstream sstream;
-        sstream
-            << "FinalOutput"
-            << wallNumber << ".png";
+        sstream << path << "FinalOutput" << wallNumber << ".png";
         ROS_ASSERT(cv::imwrite(sstream.str(), imageLeakage));
       }
       complete = 1;

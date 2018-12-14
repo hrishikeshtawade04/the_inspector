@@ -109,7 +109,8 @@ std::vector<std::vector<double>> Robot::genClickCoordinates(double length,
   }
 }
 
-void Robot::findLeakages(std::vector<std::vector<double>> mapCoordinates) {
+void Robot::findLeakages(std::vector<std::vector<double>> mapCoordinates,
+                         std::string path) {
   std::vector<double> locations;
   int counter = 0;
   double prevX = 0;
@@ -124,7 +125,8 @@ void Robot::findLeakages(std::vector<std::vector<double>> mapCoordinates) {
     pathPlanner_.moveToAngle(pos[2]);
   ros::Duration(3.0).sleep();
   ROS_INFO("Navigation Completed");
-    locations = imageProcessor_.detectContour(std::to_string(wallCount), 1);
+    locations = imageProcessor_.detectContour(std::to_string(wallCount), 1,
+                                              path);
     ROS_INFO_STREAM("Wall " << wallCount << "Leakages");
     for (auto leakage : locations) {
     if (counter % 2 == 0) {

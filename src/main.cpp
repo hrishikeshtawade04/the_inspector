@@ -49,8 +49,16 @@
 #include "RobotModule.h"
 #include <ros/ros.h>
 #include <iostream>
+#include<string>
 
-
+/**
+ * @brief  main function
+ *
+ * @param  argc  The count of the aruments and the program
+ * @param  argv  The pointer to the pointer of arguments
+ *
+ * @return 0 when everything is executed properly.
+ */
 int main(int argc, char** argv) {
   /// Initializing the node
   ros::init(argc, argv, "the_inspector");
@@ -60,7 +68,8 @@ int main(int argc, char** argv) {
   std::vector<std::vector<double>> mapCoordinates = turtleBot
       .genClickCoordinates(8, 8);
   /// find leakages only when there are map coordinates otherwise don't
-  turtleBot.findLeakages(mapCoordinates);
+  std::string path = argv[1];
+  turtleBot.findLeakages(mapCoordinates, path);
   /// shutdown the node
   ros::shutdown();
   return 0;
