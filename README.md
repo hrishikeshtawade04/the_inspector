@@ -11,8 +11,10 @@
 <h1 align=center> The Inspector </h1>
 
 <p align="center">
-<img src="images_for_readme/TheInspector.gif" width="50%" height="50%">
+<img src="images_for_readme/TheInspector.gif" width="50%" height="50%">  
 </p>
+
+>[NOTE:The video is for visualization purpose only. Video show here is 16x times faster then the actual process.]
 
 ## Project Overview
 The Inspector by Acme Robotics is one of there flagship products. It has the following features;
@@ -240,15 +242,6 @@ $ roslaunch the_inspector the_inspector.launch
 
 Running the above command the images will automatically get stored to the data folder.
 
-You can also launch the .world  in the World folder spearately by opening Gazebo. Now when the world opens up run the following commands to run 'the_inspector' node.
->[NOTE:**The example of "path to store directory" is /home/username/catkin_ws/src//the_inspector/data/**]
-
-```
-$ roscore (in a new terminal)
-$ cd <path to catkin_ws>
-$ source devel/setup.bash
-$ rosrun the_inspector the_inspector <path to the directory to store images>
-```
 ## Running ROS test via command-line
 The test is written using gtest and rostest. Close all the running processes before executing the commands below to run the rostest. The go to data folder and unzip the storedInspectorData.bag.zip file in the data folder itself and then run following commands.
 ```
