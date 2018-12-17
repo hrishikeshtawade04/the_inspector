@@ -24,7 +24,7 @@ The Inspector by Acme Robotics is one of there flagship products. It has the fol
 
 ## Presentation
 - Presentation slides [LINK](https://docs.google.com/presentation/d/1nl2gUU8E74_lpCWcO6B8TscY9HPtE7CA6Ctd7W9o5fc/edit?usp=sharing)
-- Presentation Video - Presentation [LINK](https://youtu.be/tLLl2PC55JY)| Building packages video [LINK](https://www.youtube.com/watch?v=Y9dvY4wcQtY)| Demo [LINK](https://www.youtube.com/watch?v=aau9anhOGMo&t=34s).
+- Presentation Video - Presentation [LINK](https://youtu.be/tLLl2PC55JY)| Building packages video [LINK](https://www.youtube.com/watch?v=Y9dvY4wcQtY)| Demo [LINK](https://www.youtube.com/watch?v=aau9anhOGMo&t=34s) | Test [LINK](https://youtu.be/cAvFvaFQGvY)
 
 ## License
 This project is under the [BSD License](https://github.com/hrishikeshtawade04/the_inspector/blob/master/LICENSE).
@@ -243,7 +243,7 @@ $ roslaunch the_inspector the_inspector.launch
 Running the above command the images will automatically get stored to the data folder.
 
 ## Running ROS test via command-line
-The test is written using gtest and rostest. Close all the running processes before executing the commands below to run the rostest. The go to data folder and unzip the storedInspectorData.bag.zip file in the data folder itself and then run following commands.
+The test is written using gtest and rostest. Close all the running processes before executing the commands below to run the rostest. The go to data folder and unzip the storedInspectorData.bag.zip file in the data folder itself and then run following commands. If the file doesn't unzip then this is the  [LINK](https://drive.google.com/file/d/1Aw7ig9w-1rQ2hEpKt8Vh5ZUW9NWPkM3J/view?ts=5c174e67) to the unzipped .bag file. It is 4GB in size. Put it in data folder.
 ```
 $ cd <path to catkin Workspace>
 $ source devel/setup.bash
@@ -269,7 +269,7 @@ $ lcov --directory . --capture --output-file coverage.info
 ```
 To create an html file of the local coverage, run the below command. It will create a `covout` folder in build folder wherein you can double-click on the `index.html` file which will open the graphical local coverage file in your default browser.
 ```
-$ cd <path to catkin Workspace>
+$ cd <path to build in Workspace>
 $ genhtml coverage.info --output-directory covout
 ```
 Now to output the coverage of each file in the terminal use the command below
