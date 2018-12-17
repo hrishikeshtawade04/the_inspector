@@ -23,8 +23,8 @@ The Inspector by Acme Robotics is one of there flagship products. It has the fol
 - Stores picture of walls having leakage and gives positions of leakage on the wall.
 
 ## Presentation
-- Presentation slides [TODO]()
-- Presentation Video - Presentation [TODO]()| Building packages video [TODO]()| Demo [TODO]().
+- Presentation slides [LINK](https://docs.google.com/presentation/d/1nl2gUU8E74_lpCWcO6B8TscY9HPtE7CA6Ctd7W9o5fc/edit?usp=sharing)
+- Presentation Video - Presentation [LINK](https://youtu.be/tLLl2PC55JY)| Building packages video [LINK](https://www.youtube.com/watch?v=Y9dvY4wcQtY)| Demo [LINK](https://www.youtube.com/watch?v=aau9anhOGMo&t=34s).
 
 ## License
 This project is under the [BSD License](https://github.com/hrishikeshtawade04/the_inspector/blob/master/LICENSE).
