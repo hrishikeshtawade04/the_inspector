@@ -1,7 +1,4 @@
 <launch>
-  <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
-      <arg name="world_file" value="$(find the_inspector)/World/Wall.world"/>
-      <arg name="gui" value="0"/>
-  </include>
-  <test pkg="the_inspector" test-name="test_the_inspector" type="test_the_inspector" time-limit="1000.0" />
+<node pkg="rosbag" type="play" name="rosbag" args="--clock -l $(find the_inspector)/data/storedInspectorData.bag"/>
+<test pkg="the_inspector" test-name="test_the_inspector" type="test_the_inspector" time-limit="1000.0" />
 </launch>
