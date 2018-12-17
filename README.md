@@ -250,7 +250,7 @@ $ source devel/setup.bash
 $ rosrun the_inspector the_inspector <path to the directory to store images>
 ```
 ## Running ROS test via command-line
-The test is written using gtest and rostest. Close all the running processes before executing the commands below to run the rostest.
+The test is written using gtest and rostest. Close all the running processes before executing the commands below to run the rostest. The go to data folder and unzip the storedInspectorData.bag.zip file in the data folder itself and then run following commands.
 ```
 $ cd <path to catkin Workspace>
 $ source devel/setup.bash
